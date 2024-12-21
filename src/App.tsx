@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import SignUp from "./components/signup/SignUp.tsx";
 import Home from "./components/Home.tsx";
+import Login from "./components/Login.tsx";
 
 import "./App.css";
 
@@ -14,6 +15,7 @@ function App() {
       <>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </>
     </Routes>
   );

@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import FormComp from "../formComp/FormComp.tsx";
+import AuthPageWrapper from "../AuthPageWrapper.tsx";
 
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
@@ -30,17 +31,25 @@ const SignUp = () => {
   const formElements = signupDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
       <div key={name}>
-        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} inputLabel={inputLabel} placeholder={placeholder} />
+        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} placeholder={placeholder}>
+          <p>{inputLabel}</p>
+        </TextInput>
       </div>
     );
   });
   return (
-    <main className="flex-grow-1 d-flex justify-content-center" id="signup">
-      <FormComp title="Create An Account" handleFormSubmit={handleSubmit}>
-        {formElements}
-        <FormButton value="Create Account" />
+    <AuthPageWrapper>
+      <FormComp title="Create An Account" handleFormSubmit={handleSubmit} linkSectionTitle="Already have an account?" link="/login" linkTitle="Login">
+        <div className="d-flex flex-column gap-3">
+          {formElements}
+          <p className="text-center">
+            By signing up you accept our terms and conditions
+            <br /> & privacy policy
+          </p>
+          <FormButton value="Create Account" />
+        </div>
       </FormComp>
-    </main>
+    </AuthPageWrapper>
   );
 };
 

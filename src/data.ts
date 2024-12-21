@@ -30,3 +30,18 @@ export const signupDetails: { name: string; type: "text" | "email" | "number" | 
     placeholder: "Enter Password",
   },
 ];
+
+export const loginDetails: { name: string; type: "text" | "email" | "number" | "password"; inputLabel: string; placeholder: string }[] = [
+  {
+    name: "email",
+    type: "text",
+    inputLabel: "Email Address",
+    placeholder: "Enter Email Address",
+  },
+  {
+    name: "password",
+    type: "text",
+    inputLabel: "Password",
+    placeholder: "Enter Password",
+  },
+];

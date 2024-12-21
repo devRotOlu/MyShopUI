@@ -1,3 +1,31 @@
 #formWrapper {
-  padding: 5px 30px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+  border-color: white;
+}
+
+#formWrapper > div:nth-child(2) {
+  padding: 20px 30px;
+}
+
+#formWrapper > div:last-child {
+  background-color: var(--Light_Grey);
+  box-sizing: border-box;
+  padding: 20px 30px;
+}
+
+#formWrapper > div:last-child a {
+  color: var(--deep_pink);
+  padding: 10px;
+  display: block;
+  border: solid thin var(--deep_pink);
+  text-align: center;
+  border-radius: 5;
+  border-radius: 5px;
+}
+
+#formWrapper > div:last-child > a:hover {
+  color: white;
+  width: 100%;
+  background-color: var(--deep_pink);
 }
