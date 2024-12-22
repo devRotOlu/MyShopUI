@@ -39,7 +39,7 @@ const SignUp = () => {
   });
   return (
     <AuthPageWrapper>
-      <FormComp title="Create An Account" handleFormSubmit={handleSubmit} linkSectionTitle="Already have an account?" link="/login" linkTitle="Login">
+      <FormComp title="Create An Account" handleFormSubmit={handleSubmit} linkSectionTitle="Already have an account?" link="/account/login" linkTitle="Login">
         <div className="d-flex flex-column gap-3">
           {formElements}
           <p className="text-center">

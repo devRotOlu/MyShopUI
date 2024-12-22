@@ -1,0 +1,7 @@
+#errorReport {
+  max-width: 364px;
+}
+
+#password_label_wrapper a {
+  color: var(--dark_wine);
+}

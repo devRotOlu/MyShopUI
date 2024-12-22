@@ -25,3 +25,13 @@ export type formCompProp = {
 export type AuthPageWrapperProp = {
   children: ReactNode;
 };
+
+export type AppContextProp = {
+  children: ReactNode;
+};
+
+export type AlertProp = {
+  alertMessage: string;
+  alertTitle?: string;
+  shouldDisplay: boolean;
+};
