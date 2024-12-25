@@ -1,0 +1,20 @@
+.product_card {
+  background-color: white;
+  padding: 10px;
+}
+
+.product_card > div:last-child > button {
+  color: var(--deep_pink);
+  padding: 5px;
+  display: block;
+  border: solid thin var(--deep_pink);
+  text-align: center;
+  border-radius: 5;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.product_card > div:last-child > button:hover {
+  background-color: var(--deep_pink);
+  color: white;
+}

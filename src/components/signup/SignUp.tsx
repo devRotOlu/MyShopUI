@@ -5,6 +5,9 @@ import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import FormComp from "../formComp/FormComp.tsx";
 import AuthPageWrapper from "../AuthPageWrapper.tsx";
+import AuthFormLink from "../authFormLink/AuthFormLink.tsx";
+import AuthFormTitle from "../AuthFormTitle.tsx";
+import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWrapper.tsx";
 
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
@@ -39,15 +42,19 @@ const SignUp = () => {
   });
   return (
     <AuthPageWrapper>
-      <FormComp title="Create An Account" handleFormSubmit={handleSubmit} linkSectionTitle="Already have an account?" link="/account/login" linkTitle="Login">
-        <div className="d-flex flex-column gap-3">
-          {formElements}
-          <p className="text-center">
-            By signing up you accept our terms and conditions
-            <br /> & privacy policy
-          </p>
-          <FormButton value="Create Account" />
-        </div>
+      <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }}>
+        <AuthFormTitle title="Create An Account" />
+        <AuthFormElementWrapper>
+          <div className="d-flex flex-column gap-3">
+            {formElements}
+            <p className="text-center">
+              By signing up you accept our terms and conditions
+              <br /> & privacy policy
+            </p>
+            <FormButton value="Create Account" />
+          </div>
+        </AuthFormElementWrapper>
+        <AuthFormLink link="/account/login" linkSectionTitle="Already have an account?" linkLabel="Login" />
       </FormComp>
     </AuthPageWrapper>
   );
