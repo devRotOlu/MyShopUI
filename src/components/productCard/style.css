@@ -18,3 +18,11 @@
   background-color: var(--deep_pink);
   color: white;
 }
+
+.product_card p {
+  font-size: 15px;
+}
+
+div#card_spinner {
+  background-color: var(--deep_pink);
+}

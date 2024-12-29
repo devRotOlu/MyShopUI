@@ -17,9 +17,9 @@ import "./style.css";
 const LoginPage = () => {
   const { isError, handleChange, formValues, handleSubmit } = useLogin();
 
-  const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
+  const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }, index) => {
     return (
-      <LoginFormElement isError={isError} name={name} inputLabel={inputLabel}>
+      <LoginFormElement key={index} isError={isError} name={name} inputLabel={inputLabel}>
         <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );

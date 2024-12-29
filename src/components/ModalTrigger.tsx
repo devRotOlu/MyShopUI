@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 
 import { openModal } from "../helperFunctions/utilityFunctions.ts";
-import { ModalTriggerProp } from "./types";
+import { ModalTriggerProp } from "../types.ts";
 
-const ModalTrigger = ({ modalInstance, className, styles, children }: ModalTriggerProp) => {
+const ModalTrigger = ({ modalInstance, class_name, styles, children }: ModalTriggerProp) => {
   const divRef = useRef();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ModalTrigger = ({ modalInstance, className, styles, children }: ModalTrigg
   }, [modalInstance]);
 
   return (
-    <div ref={divRef} className={className} style={styles}>
+    <div ref={divRef} className={class_name} style={styles}>
       {children}
     </div>
   );

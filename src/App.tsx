@@ -11,6 +11,7 @@ import UserDashboard from "./components/UserDashboard.tsx";
 import ForgotPassword from "./components/ForgotPassword.tsx";
 import Cart from "./components/Cart.tsx";
 import LoginPage from "./components/loginPage/LoginPage.tsx";
+import Checkout from "./components/Checkout.tsx";
 
 import "./App.css";
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/account/login" element={<LoginPage />} />
           <Route path="/account/forgot-password" element={<ForgotPassword />} />
           <Route path="/cart/overview" element={<Cart />} />
+          <Route path="/checkout/complete-order" element={<Checkout />} />
         </>
       </Routes>
     </AppContext>

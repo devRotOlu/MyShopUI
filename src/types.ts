@@ -30,7 +30,8 @@ export type AppContextProp = {
 export type AlertProp = {
   alertMessage: string;
   alertTitle?: string;
-  shouldDisplay: boolean;
+  setIsDisplayed: SetStateAction<boolean>;
+  children?: ReactNode;
 };
 
 export type BrandProp = {
@@ -50,7 +51,7 @@ export type ReactPortalProp = {
 
 export type ModalTriggerProp = {
   modalInstance: string;
-  className?: string;
+  class_name?: string;
   styles?: CSSProperties;
   children: ReactNode;
 };
@@ -105,4 +106,33 @@ export type cartType = {
   product: productType;
 };
 
-export type ProductCardProp = productType;
+export type ProductCardProp = {
+  name: string;
+  description: string;
+  unitPrice: number;
+  quantity: number;
+  index: number;
+  images: { url: string }[];
+  handleAddToCart: (index: number) => void;
+  isPending: boolean;
+};
+
+export type userDataType = {
+  id: string;
+  billingAddress: string;
+  shippingAddress?: string;
+  phoneNumber: string;
+  email: string;
+};
+
+export type loginDataType = {
+  accessToken: string;
+  user: userDataType;
+  refreshToken: string;
+};
+
+export type cartItemType = {
+  customerId: string;
+  productId: number;
+  quantity: number;
+};

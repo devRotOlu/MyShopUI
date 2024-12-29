@@ -1,5 +1,5 @@
 #alert {
-  width: 300px;
+  width: 350px;
   z-index: 1000;
   background-color: var(--light_Green);
   position: fixed;
@@ -26,4 +26,8 @@
   width: 40px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+#alert p {
+  font-size: 14px;
 }

@@ -1,6 +1,6 @@
 export const appendModalWrapperToBody = (wrapperId: string) => {
   const modalWrapper = document.createElement("div");
-  modalWrapper.className = "modal";
+  modalWrapper.classList.add("modal");
   modalWrapper.id = wrapperId;
   document.body.appendChild(modalWrapper);
   return modalWrapper;

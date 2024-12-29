@@ -7,9 +7,42 @@
   --lighter_pink: #ed017f;
 }
 
+@font-face {
+  font-family: Archivo_Black;
+  src: url("./assests/Archivo_Black/ArchivoBlack-Regular.ttf");
+}
+
+@font-face {
+  font-family: Archivo_Bold;
+  src: url("./assests/Archivo/Archivo-Bold.ttf");
+}
+
+@font-face {
+  font-family: Archivo_Light;
+  src: url("./assests/Archivo/Archivo-Regular.ttf");
+}
+
+@font-face {
+  font-family: Archivo_Italic;
+  src: url("./assests/Archivo/Archivo-Italic.ttf");
+}
+
 * {
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: Archivo_Light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Archivo_Black;
 }
 
 li {
@@ -18,6 +51,13 @@ li {
 
 a {
   text-decoration: none;
+  font-family: Archivo_Bold;
+  font-size: 14px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -27,6 +67,8 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  font-family: Archivo_Bold;
+  font-size: 14px;
 }
 
 #navbarWrapper {

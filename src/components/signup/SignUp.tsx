@@ -11,7 +11,7 @@ import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWra
 
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
-import { myShopAxios } from "../../axios.ts";
+import { myShopAxios } from "../../api/axios.ts";
 
 const SignUp = () => {
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });

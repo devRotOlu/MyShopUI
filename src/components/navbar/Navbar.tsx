@@ -10,7 +10,7 @@ import "./style.css";
 
 const Navbar = () => {
   const appStates = useContext(appContext);
-  const { isLoggedIn, cartCount } = appStates;
+  const { isLoggedIn, cartItemsCount } = appStates;
 
   return (
     <header className="d-flex justif y-content-between px-5" id="navbarWrapper">
@@ -19,7 +19,7 @@ const Navbar = () => {
       </div>
       <nav className="d-flex gap-5">
         <ModalTrigger modalInstance="login_shortCut">
-          <button id="loginTriggerBtn" className="px-5">
+          <button id="loginTriggerBtn" class_name="px-5">
             Login/
             <br />
             Signup
@@ -32,7 +32,7 @@ const Navbar = () => {
               My <br />
               Cart
             </span>
-            <span className="bg-light text-dark px-2 py-1">{cartCount}</span>
+            <span className="bg-light text-dark px-2 py-1">{cartItemsCount}</span>
           </Link>
         </div>
       </nav>

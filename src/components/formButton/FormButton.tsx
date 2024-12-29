@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formButtonProp } from "../types";
+import { formButtonProp } from "../../types.ts";
 import "./style.css";
 
 const FormButton = ({ value }: formButtonProp) => {

@@ -1,44 +1,31 @@
-import React, { useContext } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { reactLocalStorage } from "reactjs-localstorage";
+import React from "react";
 
 import { ProductCardProp } from "../../types.ts";
-import { myShopAxios } from "../../axios.ts";
-import { appContext } from "../AppContext.tsx";
 import "./style.css";
 
-const ProductCard = ({ name, unitPrice, quantity, images, id }: ProductCardProp) => {
-  const appStates = useContext(appContext);
-  const { isLoggedIn, setCart, products } = appStates;
-
-  const addToCart = (id: number) => {
-    const product = products[id];
-    if (!isLoggedIn) {
-      const _products = reactLocalStorage.getObject("cart", undefined, true);
-      if (!_products) {
-        reactLocalStorage.setObject("cart", [product]);
-      } else {
-        reactLocalStorage.setObject("cart", [..._products, product]);
-      }
-      setCart((cartItems) => [...cartItems, product]);
-    }
-  };
-
+const ProductCard = ({ name, unitPrice, quantity, images, index, handleAddToCart, isPending }: ProductCardProp) => {
   return (
     <div className="product_card w-100">
       <div className="w-100">
         <div className="product_image w-100">
-          <img src={images[0].url} alt={name} style={{ width: "100%" }} />
+          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%" }} />
         </div>
         <div className="product_title">
           <p>{name}</p>
         </div>
       </div>
-      <div className="product_price border-bottom border-top">
-        <p>{unitPrice}</p>
+      <div className="product_price border-bottom border-top d-flex justify-content-between">
+        <p>&#36;{unitPrice}</p>
+        <p>In stock: {quantity}</p>
       </div>
-      <div className="pt-2">
-        <button onClick={() => addToCart(id)}>Add To Cart</button>
+      <div className="pt-2 d-flex justify-content-center">
+        {isPending ? (
+          <div class="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          <button onClick={() => handleAddToCart(index)}>Add To Cart</button>
+        )}
       </div>
     </div>
   );
