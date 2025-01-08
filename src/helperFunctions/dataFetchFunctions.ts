@@ -1,12 +1,20 @@
 import { myShopAxios } from "../api/axios.ts";
-import { cartItemType } from "../types.ts";
+import { addedItemType, updatedItemType } from "../types.ts";
 
-export const addToCart = async (data: cartItemType) => {
-  return await myShopAxios.post("Cart", data);
+export const addItemToCart = async (data: addedItemType) => {
+  return await myShopAxios.post("Cart/add_item", data);
 };
 
-export const updateCart = async (data: cartItemType) => {
-  return await myShopAxios.put("Cart", data);
+export const addItemsToCart = async (data: addedItemType[]) => {
+  return await myShopAxios.post("Cart/add_items", data);
+};
+
+export const updateCartItem = async (data: updatedItemType) => {
+  return await myShopAxios.put("Cart/update_item", data);
+};
+
+export const updateCartItems = async (data: updatedItemType[]) => {
+  return await myShopAxios.put("Cart/update_items", data);
 };
 
 export const getProducts = async () => {
@@ -15,4 +23,16 @@ export const getProducts = async () => {
 
 export const getCartItems = async (email: string) => {
   return await myShopAxios.get(`Cart?email=${email}`);
+};
+
+export const deleteCartItem = async (data: addedItemType) => {
+  return await myShopAxios.delete("Cart");
+};
+
+export const validateAccessToken = async () => {
+  return await myShopAxios.get("Account/validate_token");
+};
+
+export const updateTokens = async (customerId: string) => {
+  return await myShopAxios.post(`Account/token_refresh?customerId=${customerId}`);
 };

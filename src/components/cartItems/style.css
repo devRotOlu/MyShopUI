@@ -1,0 +1,9 @@
+tr.cart_table_row > td:last-child button {
+  font-family: Archivo_Light;
+  color: var(--deep_pink);
+  font-weight: normal;
+}
+
+tr.cart_table_row > td {
+  vertical-align: top;
+}

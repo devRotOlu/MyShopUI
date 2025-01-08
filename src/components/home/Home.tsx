@@ -12,20 +12,20 @@ import "./style.css";
 
 const Home = () => {
   const appStates = useContext(appContext);
-  const { isLoggedIn, isfirstHomeRenderRef, products } = appStates;
+  const { isLoggedIn, isfirstHomeRenderRef, products, isOldSession } = appStates;
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isLoggedIn && isfirstHomeRenderRef.current) {
+    if (isLoggedIn && isfirstHomeRenderRef.current && !isOldSession) {
       isfirstHomeRenderRef.current = false;
       setShouldDisplayAlert(true);
     }
-  }, [isLoggedIn, isfirstHomeRenderRef]);
+  }, [isLoggedIn, isfirstHomeRenderRef, isOldSession]);
 
   return (
     <main className="min-vh-100" id="home">
       <Navbar />
-      {shouldDisplayAlert && <Alert alertTitle="Login" alertMessage="Login Succesful" setIsDisplayed={setShouldDisplayAlert} />}
+      {shouldDisplayAlert && <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertTitle="Login" alertMessage="Login Succesful" setIsDisplayed={setShouldDisplayAlert} />}
       <Modal modalInstance="login_shortCut" styles={{ marginLeft: "auto" }}>
         <ModalLogin />
       </Modal>

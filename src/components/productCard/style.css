@@ -21,6 +21,7 @@
 
 .product_card p {
   font-size: 15px;
+  word-wrap: break-word;
 }
 
 div#card_spinner {

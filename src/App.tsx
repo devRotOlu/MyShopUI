@@ -9,7 +9,7 @@ import SignUp from "./components/signup/SignUp.tsx";
 import Home from "./components/home/Home.tsx";
 import UserDashboard from "./components/UserDashboard.tsx";
 import ForgotPassword from "./components/ForgotPassword.tsx";
-import Cart from "./components/Cart.tsx";
+import Cart from "./components/cart/Cart.tsx";
 import LoginPage from "./components/loginPage/LoginPage.tsx";
 import Checkout from "./components/Checkout.tsx";
 

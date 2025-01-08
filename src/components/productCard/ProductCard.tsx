@@ -3,7 +3,7 @@ import React from "react";
 import { ProductCardProp } from "../../types.ts";
 import "./style.css";
 
-const ProductCard = ({ name, unitPrice, quantity, images, index, handleAddToCart, isPending }: ProductCardProp) => {
+const ProductCard = ({ name, unitPrice, quantity, images, index, handleAddToCart, isPending, disabled }: ProductCardProp) => {
   return (
     <div className="product_card w-100">
       <div className="w-100">
@@ -24,7 +24,9 @@ const ProductCard = ({ name, unitPrice, quantity, images, index, handleAddToCart
             <span class="visually-hidden">Loading...</span>
           </div>
         ) : (
-          <button onClick={() => handleAddToCart(index)}>Add To Cart</button>
+          <button disabled={disabled} onClick={() => handleAddToCart(index)}>
+            Add To Cart
+          </button>
         )}
       </div>
     </div>

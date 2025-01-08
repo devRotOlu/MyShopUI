@@ -1,4 +1,5 @@
 import { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties } from "react";
+import { AxiosRequestConfig } from "axios";
 
 export type textInputProps = {
   name: string;
@@ -32,6 +33,7 @@ export type AlertProp = {
   alertTitle?: string;
   setIsDisplayed: SetStateAction<boolean>;
   children?: ReactNode;
+  styles: CSSProperties;
 };
 
 export type BrandProp = {
@@ -102,8 +104,14 @@ export type productType = {
 };
 
 export type cartType = {
+  id?: number;
   cartQuantity: number;
   product: productType;
+};
+
+export type CartItemProp = {
+  item: cartType;
+  itemIndex: number;
 };
 
 export type ProductCardProp = {
@@ -115,6 +123,7 @@ export type ProductCardProp = {
   images: { url: string }[];
   handleAddToCart: (index: number) => void;
   isPending: boolean;
+  disabled?: boolean;
 };
 
 export type userDataType = {
@@ -125,14 +134,24 @@ export type userDataType = {
   email: string;
 };
 
-export type loginDataType = {
-  accessToken: string;
-  user: userDataType;
-  refreshToken: string;
-};
-
-export type cartItemType = {
+export type addedItemType = {
   customerId: string;
   productId: number;
   quantity: number;
+};
+
+export type updatedItemType = {
+  customerId: string;
+  productId: number;
+  quantity: number;
+  id: number;
+};
+export type CartTableProp = {
+  children: ReactNode;
+};
+
+export type failedRequestType = {
+  resolve: (value?: any) => void;
+  reject: (error?: any) => void;
+  config: AxiosRequestConfig;
 };

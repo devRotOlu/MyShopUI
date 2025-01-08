@@ -1,7 +1,6 @@
 #alert {
   width: 350px;
   z-index: 1000;
-  background-color: var(--light_Green);
   position: fixed;
   top: 70%;
   left: 10px;
@@ -21,7 +20,7 @@
 
 #alert > div:last-child {
   padding: 5px 0;
-  background-color: var(--dark_Green);
+  background-color: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
   width: 40px;
   border-top-right-radius: 5px;
