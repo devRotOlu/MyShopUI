@@ -1,4 +1,4 @@
-tr.cart_table_row > td:last-child button {
+tr.cart_table_row > td:nth-child(4) button {
   font-family: Archivo_Light;
   color: var(--deep_pink);
   font-weight: normal;
@@ -6,4 +6,18 @@ tr.cart_table_row > td:last-child button {
 
 tr.cart_table_row > td {
   vertical-align: top;
+  box-sizing: border-box;
+  padding-right: 1rem;
+}
+
+tr.cart_table_row p {
+  word-wrap: break-word;
+}
+
+tr.cart_table_row div.cart_toggle {
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+}
+
+tr.cart_table_row div.cart_toggle button {
+  padding: 0.35rem;
 }

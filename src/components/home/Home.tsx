@@ -12,15 +12,15 @@ import "./style.css";
 
 const Home = () => {
   const appStates = useContext(appContext);
-  const { isLoggedIn, isfirstHomeRenderRef, products, isOldSession } = appStates;
+  const { isLoggedIn, isInitialRender, products, isOldSession, setInitialRender } = appStates;
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isLoggedIn && isfirstHomeRenderRef.current && !isOldSession) {
-      isfirstHomeRenderRef.current = false;
+    if (isLoggedIn && isInitialRender.home && !isOldSession) {
+      setInitialRender("home", false);
       setShouldDisplayAlert(true);
     }
-  }, [isLoggedIn, isfirstHomeRenderRef, isOldSession]);
+  }, [isLoggedIn, isInitialRender, isOldSession, setInitialRender]);
 
   return (
     <main className="min-vh-100" id="home">

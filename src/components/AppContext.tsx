@@ -2,40 +2,32 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType } from "../types.ts";
-import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems } from "../helperFunctions/dataFetchFunctions.ts";
+import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../types.ts";
+import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist } from "../helperFunctions/dataFetchFunctions.ts";
 import { getLocalCartItems, emptyLocalCart } from "../helperFunctions/utilityFunctions.ts";
 
 // 10 minutes
-const tokenRefreshTime = 10 * 1000 * 60;
+const tokenRefreshTime = 65 * 1000 * 60;
 
-export const appContext = React.createContext();
+export const appContext = React.createContext({} as AppContextType);
 
 const AppContext = ({ children }: AppContextProp) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isOldSession, setIsOldSession] = useState(false);
-
-  const navigate = useNavigate();
-
-  const isfirstHomeRenderRef = useRef<boolean>(true);
-  const justRefreshedRef = useRef<boolean>(true);
-
   const [cart, setCart] = useState<cartType[]>([]);
-  const prevCartRef = useRef(cart);
-
-  // this signals if the cart items fetched
-  // from DB has hydrated our cart state
-  const isCartUpdatedRef = useRef(false);
-
-  // These keep hold of items that are added newly
-  // and those that already exists in the DB and
-  // needed to be updated
-  const updatedItemsRef = useRef<updatedItemType[]>([]);
-  const addedItemsRef = useRef<addedItemType[]>([]);
-
+  const [wishList, setWishList] = useState<wishlistType[]>([]);
   const [loginData, setLoginData] = useState<userDataType>({});
 
   const [products, setProducts] = useState<productType[]>([]);
+
+  const navigate = useNavigate();
+
+  const setInitialRender = (comp: string, value: boolean) => {
+    isInitialRenderRef.current = {
+      ...isInitialRenderRef.current,
+      [comp]: value,
+    };
+  };
 
   const { data: productData, isSuccess: productsFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
@@ -61,13 +53,23 @@ const AppContext = ({ children }: AppContextProp) => {
     data: cartData,
     isSuccess: cartFetched,
     isError: cartFetchError,
+    dataUpdatedAt,
   } = useQuery({
     queryKey: ["cart"],
     enabled: () => (isLoggedIn ? true : false),
     queryFn: async () => {
       return await getCartItems(loginData.email);
     },
-    refetchInterval: () => (isLoggedIn && (itemsAdded || itemsUpdated) ? 4000 : false),
+    refetchInterval: () => (isLoggedIn ? 4000 : false),
+  });
+
+  const { refetch: wishlistReftech, data: wishlistData } = useQuery({
+    queryFn: async () => {
+      return await getWishlist(loginData.email);
+    },
+    queryKey: ["wishlist"],
+    enabled: () => (isLoggedIn ? true : false),
+    refetchInterval: () => (isLoggedIn ? 4000 : false),
   });
 
   const { mutate: mutateTokensRefresh, isError: refreshFailed } = useMutation({
@@ -84,19 +86,39 @@ const AppContext = ({ children }: AppContextProp) => {
     setProducts(productData.data);
   }
 
-  if (isLoggedIn && !cartData && loginData?.email) {
+  if (isLoggedIn && !cartData) {
     cartRefetch();
   }
 
-  const cartItems = getLocalCartItems().length;
-
-  if (!isLoggedIn && !cart.length && cartItems.length) {
-    setCart([...cartItems]);
+  if (isLoggedIn && !wishlistData) {
+    wishlistReftech();
   }
 
-  if ((itemsAdded || itemsUpdated) && Object.keys(cartItems).length) {
-    emptyLocalCart();
-  }
+  // These keep hold of items that are added newly
+  // and those that already exists in the DB and
+  // needed to be updated
+  const updatedItemsRef = useRef<updatedItemType[]>([]);
+  const addedItemsRef = useRef<addedItemType[]>([]);
+
+  const prevCartUpdateRef = useRef<number>(dataUpdatedAt);
+
+  const prevCartRef = useRef(cart);
+  const isInitialRenderRef = useRef<isInitialRenderType>({
+    home: true,
+  });
+
+  useEffect(() => {
+    const localCartItems = getLocalCartItems();
+    const shouldDeleteCart =
+      (updatedItemsRef.current.length && addedItemsRef.current.length && itemsAdded && itemsUpdated) ||
+      (updatedItemsRef.current.length && !addedItemsRef.current.length && !itemsAdded && itemsUpdated) ||
+      (!updatedItemsRef.current.length && addedItemsRef.current.length && itemsAdded && !itemsUpdated);
+    if (shouldDeleteCart && localCartItems.length) {
+      emptyLocalCart();
+      updatedItemsRef.current = [];
+      addedItemsRef.current = [];
+    }
+  }, [itemsAdded, itemsUpdated]);
 
   const cartItemsCount = useMemo(() => {
     var count = 0;
@@ -110,49 +132,25 @@ const AppContext = ({ children }: AppContextProp) => {
   }, [isLoggedIn, cart]);
 
   useEffect(() => {
-    if (cartFetched && !isCartUpdatedRef.current) {
-      var fetchedData = cartData.data as cartType[];
-      var currentCart: cartType[] = [...cart];
-
-      // filter out all items that already exists
-      // in DB as cart items
-      currentCart = currentCart.filter((item) => {
-        const {
-          cartQuantity: itemQuantity,
-          product: { id },
-        } = item;
-
-        for (let index = 0; index < fetchedData.length; index++) {
-          const {
-            cartQuantity: productQuantity,
-            product: { id: productId },
-            id: cartId,
-          } = fetchedData[index];
-          if (id === productId) {
-            updatedItemsRef.current = [
-              ...updatedItemsRef.current,
-              {
-                quantity: itemQuantity + productQuantity,
-                productId: productId,
-                customerId: loginData.id,
-                id: cartId,
-              },
-            ];
-            return false;
-          }
-        }
-        const currentItem: addedItemType = {
-          customerId: loginData.id,
-          quantity: item.cartQuantity,
-          productId: item.product.id,
-        };
-        addedItemsRef.current = [...addedItemsRef.current, currentItem];
-        return true;
-      });
-      setCart([...currentCart, ...fetchedData]);
-      isCartUpdatedRef.current = true;
+    const isNewFetch = prevCartUpdateRef.current !== dataUpdatedAt;
+    if (isNewFetch) {
+      var fetchedData = cartData!.data as cartType[];
+      setCart([...fetchedData]);
+      prevCartUpdateRef.current = dataUpdatedAt;
     }
-  }, [cart, cartData, cartFetched, itemsAdded, itemsUpdated, loginData]);
+  }, [cartData, dataUpdatedAt]);
+
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      if (!isLoggedIn && !cartFetched) {
+        var cartItems = getLocalCartItems();
+        if (cartItems.length) {
+          setCart([...cartItems]);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(timeInterval);
+  }, [cartFetched, isLoggedIn]);
 
   useEffect(() => {
     if (cart !== prevCartRef.current) {
@@ -163,7 +161,6 @@ const AppContext = ({ children }: AppContextProp) => {
   useEffect(() => {
     const myTimeInterval = setInterval(() => {
       if (isLoggedIn) {
-        justRefreshedRef.current = true;
         mutateTokensRefresh();
       }
     }, tokenRefreshTime);
@@ -171,32 +168,64 @@ const AppContext = ({ children }: AppContextProp) => {
   }, [isLoggedIn, mutateTokensRefresh]);
 
   useEffect(() => {
-    if (isLoggedIn && refreshFailed && justRefreshedRef.current) {
-      justRefreshedRef.current = false;
+    if (isLoggedIn && refreshFailed) {
       setIsLoggedIn(false);
       navigate("/account/login");
     }
   }, [isLoggedIn, navigate, refreshFailed]);
 
   useEffect(() => {
-    if (isLoggedIn && !itemsUpdated && updatedItemsRef.current.length) {
-      updateItems(updatedItemsRef.current);
-      updatedItemsRef.current = [];
+    const localCartItems = getLocalCartItems();
+    if (localCartItems.length && cartFetched) {
+      var cart_data = cartData?.data as cartType[];
+      for (let i = 0; i < localCartItems.length; i++) {
+        const {
+          cartQuantity: quantity,
+          product: { id: localProductId },
+        } = localCartItems[i];
+        var isUpdate: boolean = false;
+        for (let j = 0; j < cart_data.length; j++) {
+          const {
+            cartQuantity,
+            product: { id: productId },
+            id,
+          } = cart_data[j];
+          if (localProductId === productId) {
+            updatedItemsRef.current.push({
+              customerId: loginData.id,
+              productId,
+              quantity: quantity + cartQuantity,
+              id,
+            });
+            isUpdate = true;
+            break;
+          }
+        }
+
+        if (!isUpdate) {
+          addedItemsRef.current.push({
+            customerId: loginData.id,
+            productId: localProductId,
+            quantity,
+          });
+        }
+      }
     }
-  }, [isLoggedIn, itemsUpdated, updateItems, cart]);
+  }, [cartData?.data, cartFetched, loginData.id]);
 
   useEffect(() => {
-    if (isLoggedIn && !itemsAdded && addedItemsRef.current.length) {
-      addItems(addedItemsRef.current);
-      addedItemsRef.current = [];
+    if (cartFetched && updatedItemsRef.current.length && !itemsAdded) {
+      updateItems(updatedItemsRef.current);
     }
-  }, [addItems, isLoggedIn, itemsAdded, cart]);
+  }, [cartFetched, itemsAdded, updateItems]);
 
-  return (
-    <appContext.Provider value={{ isLoggedIn, setIsLoggedIn, isfirstHomeRenderRef, products, cart, cartItemsCount, setCart, loginData, setLoginData, prevCartRef, cartFetchLastItem: cartData ? cartData.data[cartData.data.length - 1] : undefined, isOldSession, setIsOldSession }}>
-      {children}
-    </appContext.Provider>
-  );
+  useEffect(() => {
+    if (cartFetched && addedItemsRef.current.length && !itemsUpdated) {
+      addItems(addedItemsRef.current);
+    }
+  }, [addItems, cartFetched, itemsUpdated]);
+
+  return <appContext.Provider value={{ isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender }}>{children}</appContext.Provider>;
 };
 
 export default AppContext;

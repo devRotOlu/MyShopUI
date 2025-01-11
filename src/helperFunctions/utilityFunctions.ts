@@ -22,7 +22,7 @@ export const openModal = (modalInstance) => {
   document.body.classList.add("modal-open");
 };
 
-export const getLocalCartItems = () => reactLocalStorage.getObject("cart", [], true);
+export const getLocalCartItems = (): cartType[] => reactLocalStorage.getObject("cart", [], true);
 
 export const emptyLocalCart = () => reactLocalStorage.remove("cart");
 

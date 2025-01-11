@@ -13,7 +13,7 @@ import { getLocalCartItems, setLocalCart } from "../../helperFunctions/utilityFu
 
 const ProductList = () => {
   const appStates = useContext(appContext);
-  const { isLoggedIn, setCart, products, cart, loginData, cartItemsCount, cartFetchLastItem } = appStates;
+  const { isLoggedIn, products, cart, loginData, cartItemsCount } = appStates;
   const [isSuccessAlert, setIsSuccessAlert] = useState(false);
   const [isErrorAlert, setIsErrorAlert] = useState(false);
 
@@ -23,8 +23,8 @@ const ProductList = () => {
 
   const prevCountRef = useRef(cartItemsCount);
   const newCartItemRef = useRef<cartType>(null);
-  const isCartItemRef = useRef(false);
-  const possibleErrorRef = useRef(false);
+  const possibleErrorRef = useRef<boolean>(false);
+  const isCartModifiedRef = useRef<boolean>(false);
 
   var productName = "";
 
@@ -60,7 +60,6 @@ const ProductList = () => {
       } else {
         setLocalCart([...cartItems, newCartItem]);
       }
-      setCart([...cartItems, newCartItem]);
     } else {
       if (cartItem) {
         // If item already exists, we increase the
@@ -71,38 +70,25 @@ const ProductList = () => {
           quantity: cartItem.cartQuantity + 1,
           id: cartItem.id,
         });
-        isCartItemRef.current = true;
       } else {
         addCartMutate({
           customerId: loginData.id,
           productId: newproduct.id,
           quantity: 1,
         });
-        isCartItemRef.current = false;
       }
       newCartItemRef.current = newCartItem;
     }
+    isCartModifiedRef.current = true;
   };
 
   useEffect(() => {
-    const shouldDisplayAlert = (cartItemsCount !== prevCountRef.current && !cartFetchLastItem) || (cartItemsCount !== prevCountRef.current && cartFetchLastItem && cartFetchLastItem !== cart[cart.length - 1]);
-    if (shouldDisplayAlert) {
+    if (prevCountRef.current !== cartItemsCount && isCartModifiedRef.current) {
       prevCountRef.current = cartItemsCount;
+      isCartModifiedRef.current = false;
       setIsSuccessAlert(true);
     }
-  }, [cart, cartFetchLastItem, cartItemsCount]);
-
-  useEffect(() => {
-    if (((isLoggedIn && addCartSuccess) || (isLoggedIn && updateCartSuccess)) && cartItemsCount !== prevCountRef.current) {
-      var cartItems = [...cart];
-      if (isCartItemRef.current) {
-        // If the item already exists, remove its previous
-        // instance
-        cartItems = cartItems.filter(({ product: { id } }) => id !== newCartItemRef.current.product.id);
-      }
-      setCart([...cartItems, newCartItemRef.current]);
-    }
-  }, [addCartSuccess, cart, cartItemsCount, isLoggedIn, setCart, updateCartSuccess]);
+  }, [cart, cartItemsCount]);
 
   useEffect(() => {
     if (isAddingToCart || isUpdatingCart) {

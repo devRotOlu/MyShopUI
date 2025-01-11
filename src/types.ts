@@ -103,15 +103,12 @@ export type productType = {
   images: { url: string }[];
 };
 
-export type cartType = {
-  id?: number;
-  cartQuantity: number;
-  product: productType;
-};
-
 export type CartItemProp = {
   item: cartType;
   itemIndex: number;
+  delete_Item: (cartId: number, itemIndex: number) => void;
+  updateQuantity: (value: number, productId: number, itemIndex: number, product?: productType, cartQuantity?: number, id?: number) => void;
+  isModifying: boolean;
 };
 
 export type ProductCardProp = {
@@ -134,6 +131,12 @@ export type userDataType = {
   email: string;
 };
 
+export type cartType = {
+  id?: number;
+  cartQuantity: number;
+  product: productType;
+};
+
 export type addedItemType = {
   customerId: string;
   productId: number;
@@ -146,6 +149,12 @@ export type updatedItemType = {
   quantity: number;
   id: number;
 };
+
+export type wishlistType = {
+  id: number;
+  product: productType;
+};
+
 export type CartTableProp = {
   children: ReactNode;
 };
@@ -154,4 +163,21 @@ export type failedRequestType = {
   resolve: (value?: any) => void;
   reject: (error?: any) => void;
   config: AxiosRequestConfig;
+};
+export type isInitialRenderType = {
+  home: boolean;
+};
+export type AppContextType = {
+  isLoggedIn: boolean;
+  setIsLoggedIn: SetStateAction<boolean>;
+  products: productType[];
+  cart: cartType[];
+  cartItemsCount: number;
+  setCart: SetStateAction<cartType[]>;
+  loginData: userDataType;
+  setLoginData: SetStateAction<userDataType>;
+  isOldSession: boolean;
+  setIsOldSession: SetStateAction<boolean>;
+  isInitialRender: isInitialRenderType;
+  setInitialRender: (comp: string, value: boolean) => void;
 };
