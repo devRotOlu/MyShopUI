@@ -2,3 +2,13 @@ main#cart {
   background-color: var(--Light_Grey);
   max-width: 100vw;
 }
+
+#order_summary button {
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+#order_summary > div:nth-child(2) > p:last-child {
+  font-size: 0.69rem;
+}

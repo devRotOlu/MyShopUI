@@ -2,7 +2,7 @@ import React from "react";
 
 import Logo from "../assests/Logo.png";
 
-import { BrandProp } from "./types";
+import { BrandProp } from "../types.ts";
 
 const Brand = ({ styles }: BrandProp) => {
   return (

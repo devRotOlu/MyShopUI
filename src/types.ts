@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties } from "react";
+import { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent } from "react";
 import { AxiosRequestConfig } from "axios";
 
 export type textInputProps = {
@@ -31,7 +31,7 @@ export type AppContextProp = {
 export type AlertProp = {
   alertMessage: string;
   alertTitle?: string;
-  setIsDisplayed: SetStateAction<boolean>;
+  setIsDisplayed: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
   styles: CSSProperties;
 };
@@ -87,8 +87,7 @@ export type LoginStateType = { email: string; password: string };
 
 export type useLoginData = {
   formValues: LoginStateType;
-  setFormValues: SetStateAction<LoginStateType>;
-  prevFormValues: LoginStateType;
+  setFormValues: Dispatch<SetStateAction<LoginStateType>>;
   handleChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
   isError: boolean;
   handleSubmit: (event: FormEvent) => void;
@@ -123,12 +122,20 @@ export type ProductCardProp = {
   disabled?: boolean;
 };
 
+export type AccountDropDownProp = {
+  handleShowDropDown: (event: MouseEvent<HTMLButtonElement>) => void;
+  showDropDown: boolean;
+};
+
 export type userDataType = {
   id: string;
   billingAddress: string;
   shippingAddress?: string;
   phoneNumber: string;
   email: string;
+  profilePictureUri: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type cartType = {
@@ -167,17 +174,20 @@ export type failedRequestType = {
 export type isInitialRenderType = {
   home: boolean;
 };
+export type signupType = { firstName: string; lastName: string; email: string; phoneNumber: string; password: string };
 export type AppContextType = {
   isLoggedIn: boolean;
-  setIsLoggedIn: SetStateAction<boolean>;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   products: productType[];
   cart: cartType[];
   cartItemsCount: number;
-  setCart: SetStateAction<cartType[]>;
+  setCart: Dispatch<SetStateAction<cartType[]>>;
   loginData: userDataType;
-  setLoginData: SetStateAction<userDataType>;
+  setLoginData: Dispatch<SetStateAction<userDataType>>;
   isOldSession: boolean;
-  setIsOldSession: SetStateAction<boolean>;
+  setIsOldSession: Dispatch<SetStateAction<boolean>>;
   isInitialRender: isInitialRenderType;
   setInitialRender: (comp: string, value: boolean) => void;
+  handLogout: () => void;
+  cartItemsTotalPrice: number;
 };

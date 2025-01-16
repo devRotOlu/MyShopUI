@@ -1,6 +1,7 @@
 #loginTriggerBtn {
   height: 100%;
   color: white;
+  width: 150px;
 }
 
 #loginTriggerBtn:hover {
@@ -17,4 +18,20 @@
 
 #navbarWrapper > nav > div:last-child > a > span:last-child {
   border-radius: 2px;
+}
+
+#account_dropdown > div:nth-child(2) button {
+  background-color: rgb(252, 247, 240);
+  padding: 10px 0;
+}
+
+#account_dropdown > div:nth-child(2) li,
+#account_dropdown > div:nth-child(2) > p:first-child {
+  padding: 10px 0;
+}
+
+#account_dropdown > div:nth-child(2) > p:first-child:hover,
+#account_dropdown > div:nth-child(2) li:hover,
+#account_dropdown > div:nth-child(2) button:hover {
+  background-color: var(--Light_Grey);
 }

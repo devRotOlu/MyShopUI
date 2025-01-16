@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import AppContext from "./components/AppContext.tsx";
-
 import SignUp from "./components/signup/SignUp.tsx";
 import Home from "./components/home/Home.tsx";
 import UserDashboard from "./components/UserDashboard.tsx";

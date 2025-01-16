@@ -68,7 +68,7 @@ const ProductList = () => {
           customerId: loginData.id,
           productId: newproduct.id,
           quantity: cartItem.cartQuantity + 1,
-          id: cartItem.id,
+          id: cartItem.id!,
         });
       } else {
         addCartMutate({
@@ -104,8 +104,8 @@ const ProductList = () => {
   }, [addCartError, isAddingToCart, isUpdatingCart, updateCartError]);
 
   const _products = products.map(({ name, description, unitPrice, quantity, images, id }, index) => {
-    const isPending = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current.product.id === id;
-    const diasable = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current.product.id !== id;
+    const isPending = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current!.product.id === id;
+    const diasable = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current!.product.id !== id;
     return (
       <div key={id} className="w-100">
         <ProductCard handleAddToCart={handleAddToCart} name={name} description={description} unitPrice={unitPrice} quantity={quantity} images={images} index={index} isPending={isPending} disabled={diasable} />
@@ -124,7 +124,7 @@ const ProductList = () => {
           </div>
         </Alert>
       )}
-      {isErrorAlert && <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${newCartItemRef.current.product.name}`} setIsDisplayed={setIsErrorAlert} />}
+      {isErrorAlert && <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${newCartItemRef.current!.product.name}`} setIsDisplayed={setIsErrorAlert} />}
     </>
   );
 };

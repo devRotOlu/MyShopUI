@@ -5,6 +5,7 @@ import Navbar from "../navbar/Navbar.tsx";
 import CartItem from "../cartItems/CartItem.tsx";
 import CartTable from "../cartTable/CartTable.tsx";
 import Alert from "../alert/Alert.tsx";
+import OrderSummary from "./OrderSummary.tsx";
 
 import { cartType, productType } from "../../types.ts";
 import { updateCartItem, deleteCartItem } from "../../helperFunctions/dataFetchFunctions.ts";
@@ -44,14 +45,14 @@ const Cart = () => {
     deleteItem(cartId);
   };
 
-  const updateQuantity = (value: number, productId, itemIndex: number, product?: productType, cartQuantity?, id?) => {
+  const updateQuantity = (value: number, productId: number, itemIndex: number, product?: productType, cartQuantity?: number, id?: number) => {
     modifiedIndexRef.current = itemIndex;
     if (isLoggedIn) {
       updateItem({
         customerId: loginData.id,
         productId,
-        quantity: cartQuantity + value,
-        id,
+        quantity: cartQuantity! + value,
+        id: id!,
       });
     } else {
       let cartItems = getLocalCartItems();
@@ -64,7 +65,7 @@ const Cart = () => {
         setLocalCart([...cartItems]);
       } else {
         const item: cartType = {
-          cartQuantity: cartQuantity + value,
+          cartQuantity: cartQuantity! + value,
           product: product!,
         };
         setLocalCart([...cartItems, item]);
@@ -89,7 +90,7 @@ const Cart = () => {
         <div className="flex-grow-1 bg-white">
           <CartTable>{cartItems}</CartTable>
         </div>
-        <div style={{ width: "20%" }}></div>
+        <OrderSummary />
       </div>
       {shouldDisplayAlert && <Alert alertMessage="Product successfully removed from your Cart" styles={{ backgroundColor: `var(--light_Green)` }} setIsDisplayed={setShouldDisplayAlert} />}
     </main>

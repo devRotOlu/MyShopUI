@@ -14,12 +14,12 @@ import { loginDetails } from "../../data.ts";
 
 import "./style.css";
 
-const ModalLogin = () => {
+const LoginOnModal = () => {
   const { isError, handleChange, handleSubmit, formValues } = useLogin();
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
       <LoginFormElement key={name} isError={isError} name={name} inputLabel={inputLabel}>
-        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} placeholder={placeholder} />
+        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );
   });
@@ -43,4 +43,4 @@ const ModalLogin = () => {
   );
 };
 
-export default ModalLogin;
+export default LoginOnModal;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import TextInput from "../textInput/TextInput.tsx";
@@ -12,21 +12,22 @@ import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWra
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
 import { myShopAxios } from "../../api/axios.ts";
+import { signupType } from "../../types.ts";
 
 const SignUp = () => {
-  const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
+  const [formValues, setFormValues] = useState<signupType>({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
 
-  const handleChange = (event, name) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>, name: string) => {
     setFormValues((preValues) => {
       return { ...preValues, [name]: event.target.value };
     });
   };
 
-  const signUpUser = async (data) => await myShopAxios.post("Account/signup", data);
+  const signUpUser = async (data: signupType) => await myShopAxios.post("Account/signup", data);
 
   const { mutate, isError, isSuccess, isIdle, data, error } = useMutation({ mutationFn: signUpUser });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutate(formValues);
   };
@@ -34,7 +35,7 @@ const SignUp = () => {
   const formElements = signupDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
       <div key={name}>
-        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} placeholder={placeholder}>
+        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder}>
           <p>{inputLabel}</p>
         </TextInput>
       </div>

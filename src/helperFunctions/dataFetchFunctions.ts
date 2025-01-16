@@ -34,6 +34,8 @@ export const getProducts = async () => {
 
 // account controller functions
 
+export const signinUser = async (data) => await myShopAxios.post("Account/login", data);
+
 export const validateAccessToken = async () => {
   return await myShopAxios.get("Account/validate_token");
 };
@@ -42,8 +44,16 @@ export const updateTokens = async (customerId: string) => {
   return await myShopAxios.post(`Account/token_refresh?customerId=${customerId}`);
 };
 
+export const logoutUser = async () => await myShopAxios.post("Account/logout");
+
 // wishlist controller functions
 
 export const getWishlist = async (email: string) => {
-  return await myShopAxios.get("Wishlist/");
+  return await myShopAxios.get(`Wishlist?email=${email}`);
+};
+
+// checkout controller functions
+
+export const createOrder = async () => {
+  return await myShopAxios.post("Checkout");
 };

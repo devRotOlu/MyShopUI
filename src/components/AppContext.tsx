@@ -2,9 +2,13 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../types.ts";
-import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist } from "../helperFunctions/dataFetchFunctions.ts";
-import { getLocalCartItems, emptyLocalCart } from "../helperFunctions/utilityFunctions.ts";
+import Modal from "./Modal";
+import LoginOnModal from "./loginOnModal/LoginOnModal";
+import Alert from "./alert/Alert";
+
+import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../types";
+import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist, logoutUser } from "../helperFunctions/dataFetchFunctions";
+import { getLocalCartItems, emptyLocalCart } from "../helperFunctions/utilityFunctions";
 
 // 10 minutes
 const tokenRefreshTime = 65 * 1000 * 60;
@@ -16,9 +20,17 @@ const AppContext = ({ children }: AppContextProp) => {
   const [isOldSession, setIsOldSession] = useState(false);
   const [cart, setCart] = useState<cartType[]>([]);
   const [wishList, setWishList] = useState<wishlistType[]>([]);
-  const [loginData, setLoginData] = useState<userDataType>({});
-
+  const [loginData, setLoginData] = useState<userDataType>({
+    id: "",
+    billingAddress: "",
+    phoneNumber: "",
+    email: "",
+    profilePictureUri: "",
+    firstName: "",
+    lastName: "",
+  });
   const [products, setProducts] = useState<productType[]>([]);
+  const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -76,6 +88,10 @@ const AppContext = ({ children }: AppContextProp) => {
     mutationFn: () => updateTokens(loginData.id),
   });
 
+  const { mutate: logoutMutate, isSuccess: isLoggedOut } = useMutation({
+    mutationFn: logoutUser,
+  });
+
   if (tokenValidated && !isLoggedIn) {
     setIsLoggedIn(true);
     setLoginData(userData.data);
@@ -94,6 +110,12 @@ const AppContext = ({ children }: AppContextProp) => {
     wishlistReftech();
   }
 
+  if (isLoggedOut && isLoggedIn) {
+    setIsLoggedIn(false);
+    setShouldDisplayAlert(true);
+    navigate("/");
+  }
+
   // These keep hold of items that are added newly
   // and those that already exists in the DB and
   // needed to be updated
@@ -103,9 +125,14 @@ const AppContext = ({ children }: AppContextProp) => {
   const prevCartUpdateRef = useRef<number>(dataUpdatedAt);
 
   const prevCartRef = useRef(cart);
+
   const isInitialRenderRef = useRef<isInitialRenderType>({
     home: true,
   });
+
+  const handLogout = () => {
+    logoutMutate();
+  };
 
   useEffect(() => {
     const localCartItems = getLocalCartItems();
@@ -120,15 +147,23 @@ const AppContext = ({ children }: AppContextProp) => {
     }
   }, [itemsAdded, itemsUpdated]);
 
-  const cartItemsCount = useMemo(() => {
+  const { count: cartItemsCount, totalPrice: cartItemsTotalPrice } = useMemo(() => {
     var count = 0;
+    var totalPrice = 0;
     if (isLoggedIn || cart !== prevCartRef.current) {
       for (let index = 0; index < cart.length; index++) {
-        count += cart[index].cartQuantity;
+        const {
+          cartQuantity,
+          product: { unitPrice },
+        } = cart[index];
+        count += cartQuantity;
+        totalPrice += cartQuantity * unitPrice;
       }
-      return count;
     }
-    return count;
+    return {
+      count,
+      totalPrice,
+    };
   }, [isLoggedIn, cart]);
 
   useEffect(() => {
@@ -195,7 +230,7 @@ const AppContext = ({ children }: AppContextProp) => {
               customerId: loginData.id,
               productId,
               quantity: quantity + cartQuantity,
-              id,
+              id: id!,
             });
             isUpdate = true;
             break;
@@ -225,7 +260,15 @@ const AppContext = ({ children }: AppContextProp) => {
     }
   }, [addItems, cartFetched, itemsUpdated]);
 
-  return <appContext.Provider value={{ isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender }}>{children}</appContext.Provider>;
+  return (
+    <appContext.Provider value={{ isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
+      {children}
+      <Modal modalInstance="login_shortCut" styles={{ marginLeft: "auto" }}>
+        <LoginOnModal />
+      </Modal>
+      {shouldDisplayAlert && <Alert alertMessage="You have successfully logged out" setIsDisplayed={setShouldDisplayAlert} styles={{ backgroundColor: `var(--light_Green)` }} />}
+    </appContext.Provider>
+  );
 };
 
 export default AppContext;

@@ -20,7 +20,7 @@ const LoginPage = () => {
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }, index) => {
     return (
       <LoginFormElement key={index} isError={isError} name={name} inputLabel={inputLabel}>
-        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name]} name={name} type={type} placeholder={placeholder} />
+        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );
   });

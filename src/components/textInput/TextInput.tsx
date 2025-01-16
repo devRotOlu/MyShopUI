@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { textInputProps } from "../types";
+import { textInputProps } from "../../types";
 
 import "./style.css";
 

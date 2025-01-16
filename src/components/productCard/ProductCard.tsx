@@ -20,8 +20,8 @@ const ProductCard = ({ name, unitPrice, quantity, images, index, handleAddToCart
       </div>
       <div className="pt-2 d-flex justify-content-center">
         {isPending ? (
-          <div class="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
+            <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
           <button disabled={disabled} onClick={() => handleAddToCart(index)}>

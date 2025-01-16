@@ -1,14 +1,14 @@
 import { useState, useRef, useContext, ChangeEvent, FormEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-
-import { appContext } from "../components/AppContext.tsx";
-import { myShopAxios } from "../api/axios.ts";
-import { useLoginData } from "../types.ts";
 import { AxiosResponse } from "axios";
 
+import { appContext } from "../components/AppContext.tsx";
+import { useLoginData, LoginStateType } from "../types.ts";
+import { signinUser } from "../helperFunctions/dataFetchFunctions.ts";
+
 export const useLogin = (): useLoginData => {
-  const [formValues, setFormValues] = useState<{ email: string; password: string }>({ email: "", password: "" });
+  const [formValues, setFormValues] = useState<LoginStateType>({ email: "", password: "" });
   const navigate = useNavigate();
   const appStates = useContext(appContext);
   const { setIsLoggedIn, setLoginData, setIsOldSession } = appStates;
@@ -20,8 +20,6 @@ export const useLogin = (): useLoginData => {
       return { ...preValues, [name]: event.target.value };
     });
   };
-
-  const signinUser = async (data) => await myShopAxios.post("Account/login", data);
 
   const onSuccess = (data: AxiosResponse) => {
     setLoginData(data.data);
@@ -46,7 +44,6 @@ export const useLogin = (): useLoginData => {
   return {
     formValues,
     setFormValues,
-    prevFormValues,
     handleChange,
     isError: _isError,
     handleSubmit,
