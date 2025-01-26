@@ -15,7 +15,7 @@ import { loginDetails } from "../../data.ts";
 import "./style.css";
 
 const LoginOnModal = () => {
-  const { isError, handleChange, handleSubmit, formValues } = useLogin();
+  const { isError, handleChange, handleSubmit, formValues, isSuccess } = useLogin();
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
       <LoginFormElement key={name} isError={isError} name={name} inputLabel={inputLabel}>
@@ -23,8 +23,13 @@ const LoginOnModal = () => {
       </LoginFormElement>
     );
   });
+
+  if (isSuccess) {
+    closeModal("login_shortCut");
+  }
+
   return (
-    <FormComp handleFormSubmit={handleSubmit} styles={{ minHeight: "100vh", position: "relative" }}>
+    <FormComp handleFormSubmit={handleSubmit} styles={{ minHeight: "100vh", position: "relative", width: "400px", backgroundColor: "white" }}>
       <div className="d-flex justify-content-between py-2 " id="modal_login_header">
         <h2>Login</h2>
         <button type="button" onClick={() => closeModal("login_shortCut")} className="py-1 px-2" id="modal_cancel_btn">
@@ -34,7 +39,7 @@ const LoginOnModal = () => {
       </div>
       <AuthFormElementWrapper>
         {formElements}
-        <FormButton value="Login" />
+        <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
       </AuthFormElementWrapper>
       <div className="d-flex justify-content-center" id="modal_login_link">
         <Link to="/account/signup">Don’t have an account? Sign Up</Link>

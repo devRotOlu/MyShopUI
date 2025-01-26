@@ -23,6 +23,7 @@
     "types": ["node"],
     "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*", "src/custom.d.ts"],
+  "exclude": ["node_modules", "build"],
+  "typeRoots": ["../node_modules/@types", "../@types"]
 }

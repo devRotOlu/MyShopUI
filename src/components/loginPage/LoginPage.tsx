@@ -28,11 +28,11 @@ const LoginPage = () => {
   return (
     <div id="login_page">
       <AuthPageWrapper>
-        <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }}>
+        <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
           <AuthFormTitle title="Login" />
           <AuthFormElementWrapper>
             {formElements}
-            <FormButton value="Login" />
+            <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
           </AuthFormElementWrapper>
           <AuthFormLink link="/account/signup" linkLabel="Create an Account" linkSectionTitle="Don't have an Account?" />
         </FormComp>

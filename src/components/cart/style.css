@@ -3,7 +3,7 @@ main#cart {
   max-width: 100vw;
 }
 
-#order_summary button {
+#order_summary a {
   border: none;
   padding: 5px;
   border-radius: 4px;

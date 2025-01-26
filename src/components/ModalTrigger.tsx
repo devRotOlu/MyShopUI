@@ -4,10 +4,10 @@ import { openModal } from "../helperFunctions/utilityFunctions.ts";
 import { ModalTriggerProp } from "../types.ts";
 
 const ModalTrigger = ({ modalInstance, class_name, styles, children }: ModalTriggerProp) => {
-  const divRef = useRef();
+  const divRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
-    const _openModal = (event) => {
+    const _openModal = (event: MouseEvent) => {
       event.preventDefault();
       openModal(modalInstance);
     };

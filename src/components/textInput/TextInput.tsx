@@ -7,7 +7,7 @@ import "./style.css";
 const TextInput = ({ name, type, placeholder, value, handleChange, children }: textInputProps) => {
   const [inputType, setInputType] = useState("");
   return (
-    <label className="position-relative">
+    <label className="position-relative w-100">
       {children}
       {name === "password" ? (
         <>

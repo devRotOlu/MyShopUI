@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { appContext } from "../AppContext.tsx";
 
@@ -27,7 +28,9 @@ const OrderSummary = () => {
         <p>&#36; {cartItemsTotalPrice.toFixed(4)}</p>
       </div>
       <div className="d-flex justify-content-center px-2 py-3 border-bottom ">
-        <button className="bg-success w-100 f-bold text-light">Continue to Checkout</button>
+        <Link to="/checkout/complete-order" className="bg-success w-100 f-bold text-light text-center">
+          Continue to Checkout
+        </Link>
       </div>
     </div>
   );

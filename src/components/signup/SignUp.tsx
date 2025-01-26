@@ -52,7 +52,7 @@ const SignUp = () => {
               By signing up you accept our terms and conditions
               <br /> & privacy policy
             </p>
-            <FormButton value="Create Account" />
+            <FormButton value="Create Account" styles={{ backgroundColor: "var(--light_Green)" }} />
           </div>
         </AuthFormElementWrapper>
         <AuthFormLink link="/account/login" linkSectionTitle="Already have an account?" linkLabel="Login" />

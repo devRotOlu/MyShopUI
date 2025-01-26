@@ -9,9 +9,8 @@ const Modal = ({ modalInstance, children, styles }: ModalProp) => {
   const modal = document.getElementById(modalInstance);
 
   useEffect(() => {
-    const _closeModal = (event) => {
+    const _closeModal = (event: globalThis.MouseEvent) => {
       if (event.target === modal) {
-        console.log(modalInstance, "modal");
         closeModal(modalInstance);
       }
     };

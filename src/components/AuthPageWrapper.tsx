@@ -10,7 +10,7 @@ const AuthPageWrapper = ({ children }: AuthPageWrapperProp) => {
       <div className="mt-4">
         <Brand styles={{ height: "130px", width: "200px" }} />
       </div>
-      {children}
+      <div style={{ width: "30%" }}>{children}</div>
     </main>
   );
 };

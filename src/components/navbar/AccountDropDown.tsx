@@ -14,7 +14,7 @@ const AccountDropDown = ({ handleShowDropDown, showDropDown }: AccountDropDownPr
 
   return (
     <div className="position-relative" id="account_dropdown">
-      <button onClick={handleShowDropDown} id="loginTriggerBtn" className="d-flex px-4 align-items-center" style={{ height: "fit-content", width: "fit-content" }}>
+      <button onClick={handleShowDropDown} className="d-flex  align-items-center loginTriggerBtn justify-content-center">
         <span className="text-start text-wrap">My Account</span>
         <Icon icon="ri:arrow-drop-down-line" style={{ fontSize: "2rem" }} />
       </button>

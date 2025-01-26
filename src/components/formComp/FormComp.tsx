@@ -5,7 +5,7 @@ import "./style.css";
 
 const FormComp = ({ children, handleFormSubmit, styles }: formCompProp) => {
   return (
-    <form onSubmit={handleFormSubmit} className="d-flex flex-column gap-3 bg-white" id="formWrapper" style={styles}>
+    <form onSubmit={handleFormSubmit} className="d-flex flex-column gap-3" id="formWrapper" style={styles}>
       {children}
     </form>
   );

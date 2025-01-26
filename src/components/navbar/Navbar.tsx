@@ -36,8 +36,8 @@ const Navbar = () => {
       <nav className="d-flex gap-5">
         {isLoggedIn && <AccountDropDown showDropDown={showDropDown} handleShowDropDown={handleShowDropDown} />}
         {!isLoggedIn && (
-          <ModalTrigger modalInstance="login_shortCut">
-            <button id="loginTriggerBtn" className="px-4" style={{ height: "fit-content", width: "fit-content" }}>
+          <ModalTrigger styles={{ width: "fit-content" }} modalInstance="login_shortCut">
+            <button className="loginTriggerBtn">
               Login/
               <br />
               Signup

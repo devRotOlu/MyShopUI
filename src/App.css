@@ -92,7 +92,6 @@ button {
   position: relative;
   width: fit-content;
   height: fit-content;
-  background-color: red;
 }
 
 .modal-open {

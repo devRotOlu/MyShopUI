@@ -4,7 +4,7 @@ import { AxiosRequestConfig } from "axios";
 export type textInputProps = {
   name: string;
   type: "text" | "email" | "number" | "password";
-  placeholder: string;
+  placeholder?: string;
   value: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   children?: ReactNode;
@@ -12,6 +12,7 @@ export type textInputProps = {
 
 export type formButtonProp = {
   value: string;
+  styles: CSSProperties;
 };
 
 export type formCompProp = {
@@ -91,6 +92,7 @@ export type useLoginData = {
   handleChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
   isError: boolean;
   handleSubmit: (event: FormEvent) => void;
+  isSuccess: boolean;
 };
 
 export type productType = {
@@ -175,6 +177,43 @@ export type isInitialRenderType = {
   home: boolean;
 };
 export type signupType = { firstName: string; lastName: string; email: string; phoneNumber: string; password: string };
+
+export type PayPalProps = {
+  setIsSUccess: Dispatch<SetStateAction<boolean | undefined>>;
+};
+
+export type MonnifyProps = {
+  transactionRef: string;
+};
+
+export type payOptionType = { payMethod: string; message: string; icon: string };
+
+export type paymentOptionProp = {
+  payOption: payOptionType;
+  setPayOption: Dispatch<SetStateAction<"card" | "transfer" | "">>;
+};
+
+export type bankDetailsType = {
+  accountNumber: string;
+  accountName: string;
+  bankName: string;
+  accountDurationSeconds: string;
+  uSSDPayment: string;
+  expiresOn: string;
+  amount: number;
+  fee: number;
+  totalPayable: number;
+};
+
+export type userBankInfoProp = {
+  transactionRef: string;
+};
+
+export type paymentTitleProp = {
+  title: string;
+  setPayOption: Dispatch<SetStateAction<"card" | "transfer" | "">>;
+};
+
 export type AppContextType = {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;

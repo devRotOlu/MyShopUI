@@ -1,0 +1,19 @@
+main#checkout {
+  background-color: var(--Light_Grey);
+  max-width: 100vw;
+}
+section#order_details {
+  width: 32%;
+}
+
+main#checkout section#payment_option > div {
+  border-radius: 10px;
+}
+
+div#monnify {
+  width: 32rem;
+}
+
+div#monnify > div:last-child {
+  background-color: var(--Light_Grey);
+}

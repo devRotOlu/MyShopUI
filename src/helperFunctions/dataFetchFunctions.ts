@@ -1,5 +1,8 @@
+import { PayPalButtonsComponentProps } from "@paypal/react-paypal-js";
+
 import { myShopAxios } from "../api/axios.ts";
 import { addedItemType, updatedItemType } from "../types.ts";
+import { LoginStateType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -34,7 +37,7 @@ export const getProducts = async () => {
 
 // account controller functions
 
-export const signinUser = async (data) => await myShopAxios.post("Account/login", data);
+export const signinUser = async (data: LoginStateType) => await myShopAxios.post("Account/login", data);
 
 export const validateAccessToken = async () => {
   return await myShopAxios.get("Account/validate_token");
@@ -54,6 +57,19 @@ export const getWishlist = async (email: string) => {
 
 // checkout controller functions
 
-export const createOrder = async () => {
-  return await myShopAxios.post("Checkout");
+// export const createOrder = async (id: string) => {
+//   return await myShopAxios.post(`Checkout/create_order?customerId=${id}`);
+// };
+
+// export const onApprove: PayPalButtonsComponentProps["onApprove"] = async (data:onApproveData) => {
+//   return await myShopAxios.post("Checkout/capture_order");
+// };
+
+// monnify controller functions
+export const initializePayment = async (customerEmail: string) => {
+  return await myShopAxios.get(`MonnifyCheckout/initialize?customerEmail=${customerEmail}`);
+};
+
+export const getTranserInfo = async (bankCode: string, transactionRef: string) => {
+  return await myShopAxios.get(`MonnifyCheckout/initialize?bankCode=${bankCode} & transactionReference=${transactionRef}`);
 };

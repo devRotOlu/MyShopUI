@@ -28,7 +28,7 @@ export const useLogin = (): useLoginData => {
     navigate("/");
   };
 
-  const { mutate, isError } = useMutation({
+  const { mutate, isError, isSuccess } = useMutation({
     mutationFn: signinUser,
     onSuccess,
   });
@@ -40,6 +40,7 @@ export const useLogin = (): useLoginData => {
   };
 
   const _isError = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isError;
+  const _isSuccess = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isSuccess;
 
   return {
     formValues,
@@ -47,5 +48,6 @@ export const useLogin = (): useLoginData => {
     handleChange,
     isError: _isError,
     handleSubmit,
+    isSuccess: _isSuccess,
   };
 };

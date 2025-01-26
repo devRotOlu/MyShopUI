@@ -16,7 +16,7 @@ export const closeModal = (modalInstance: string) => {
   document.body.classList.remove("modal-open");
 };
 
-export const openModal = (modalInstance) => {
+export const openModal = (modalInstance: string) => {
   const modal = document.getElementById(modalInstance);
   modal!.style.display = "flex";
   document.body.classList.add("modal-open");

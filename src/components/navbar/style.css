@@ -1,10 +1,10 @@
-#loginTriggerBtn {
+button.loginTriggerBtn {
   height: 100%;
   color: white;
   width: 150px;
 }
 
-#loginTriggerBtn:hover {
+button.loginTriggerBtn:hover {
   background-color: white;
   color: var(--lighter_pink);
 }
