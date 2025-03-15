@@ -2,7 +2,8 @@ import React from "react";
 
 import AuthPageWrapper from "../AuthPageWrapper.tsx";
 import AuthFormTitle from "../AuthFormTitle.tsx";
-import AuthFormLink from "../authFormLink/AuthFormLink.tsx";
+import AuthPageLinkWrapper from "../authPageLinkWrapper/AuthPageLinkWrapper.tsx";
+import PageLink from "../pageLink/PageLink.tsx";
 import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWrapper.tsx";
 import FormComp from "../formComp/FormComp.tsx";
 import LoginFormElement from "../loginFormElement/LoginFormElement.tsx";
@@ -34,7 +35,9 @@ const LoginPage = () => {
             {formElements}
             <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
           </AuthFormElementWrapper>
-          <AuthFormLink link="/account/signup" linkLabel="Create an Account" linkSectionTitle="Don't have an Account?" />
+          <AuthPageLinkWrapper linkSectionTitle="Don't have an Account?">
+            <PageLink link="/account/signup" linkLabel="Create an Account" />
+          </AuthPageLinkWrapper>
         </FormComp>
       </AuthPageWrapper>
     </div>

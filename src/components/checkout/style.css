@@ -1,19 +1,33 @@
-main#checkout {
-  background-color: var(--Light_Grey);
-  max-width: 100vw;
-}
-section#order_details {
+#checkout section#order_details {
   width: 32%;
 }
 
-main#checkout section#payment_option > div {
+#checkout section#payment_option > div {
   border-radius: 10px;
 }
 
-div#monnify {
-  width: 32rem;
+#checkout div#monnify {
+  width: 40rem;
 }
 
-div#monnify > div:last-child {
+#checkout div#monnify > div:last-child {
   background-color: var(--Light_Grey);
+}
+
+#checkout div#transfer_details table th {
+  font-weight: 200;
+}
+
+#checkout div#transfer_details table tr {
+  font-weight: bold;
+}
+
+#checkout div#transfer_details table th,
+div#transfer_details table tr {
+  padding: 5px 0;
+}
+
+#checkout #transfer_btn,
+#checkout #closeTransferBtn {
+  padding: 10px 0.5rem;
 }

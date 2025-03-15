@@ -5,7 +5,8 @@ import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import FormComp from "../formComp/FormComp.tsx";
 import AuthPageWrapper from "../AuthPageWrapper.tsx";
-import AuthFormLink from "../authFormLink/AuthFormLink.tsx";
+import AuthPageLinkWrapper from "../authPageLinkWrapper/AuthPageLinkWrapper.tsx";
+import PageLink from "../pageLink/PageLink.tsx";
 import AuthFormTitle from "../AuthFormTitle.tsx";
 import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWrapper.tsx";
 
@@ -55,7 +56,9 @@ const SignUp = () => {
             <FormButton value="Create Account" styles={{ backgroundColor: "var(--light_Green)" }} />
           </div>
         </AuthFormElementWrapper>
-        <AuthFormLink link="/account/login" linkSectionTitle="Already have an account?" linkLabel="Login" />
+        <AuthPageLinkWrapper linkSectionTitle="Already have an account?">
+          <PageLink link="/account/login" linkLabel="Login" />
+        </AuthPageLinkWrapper>
       </FormComp>
     </AuthPageWrapper>
   );

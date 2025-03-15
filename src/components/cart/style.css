@@ -1,14 +1,19 @@
-main#cart {
-  background-color: var(--Light_Grey);
-  max-width: 100vw;
-}
-
-#order_summary a {
+#cart #order_summary a {
   border: none;
   padding: 5px;
   border-radius: 4px;
 }
 
-#order_summary > div:nth-child(2) > p:last-child {
+#cart #order_summary > div:nth-child(2) > p:last-child {
   font-size: 0.69rem;
+}
+
+#cart #empty_cart > div {
+  padding: 5rem;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+}
+
+#cart #empty_cart > div > div > p:last-child {
+  font-size: 14px;
 }

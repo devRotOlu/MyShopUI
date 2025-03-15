@@ -1,8 +1,4 @@
-#home {
-  background-color: var(--Light_Grey);
-}
-
-div#cart_alert a {
+#home div#cart_alert a {
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -10,10 +6,10 @@ div#cart_alert a {
   color: white;
 }
 
-div#cart_alert a:first-child {
+#home div#cart_alert a:first-child {
   border: solid thin white;
 }
 
-div#cart_alert a:last-child {
+#home div#cart_alert a:last-child {
   background-color: var(--dark_Green);
 }

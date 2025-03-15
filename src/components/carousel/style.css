@@ -1,0 +1,18 @@
+#carousel > div:first-child {
+  cursor: zoom-in;
+}
+
+#carousel_controls {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#carousel_controls button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--Light_Grey);
+  border: dashed thin grey;
+}

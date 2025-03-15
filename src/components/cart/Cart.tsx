@@ -6,13 +6,12 @@ import CartItem from "../cartItems/CartItem.tsx";
 import CartTable from "../cartTable/CartTable.tsx";
 import Alert from "../alert/Alert.tsx";
 import OrderSummary from "./OrderSummary.tsx";
+import EmptyCart from "./EmptyCart.tsx";
+import PageWrapper from "../PageWrapper.tsx";
 
-import { cartType, productType } from "../../types.ts";
-import { updateCartItem, deleteCartItem } from "../../helperFunctions/dataFetchFunctions.ts";
-import { setLocalCart, getLocalCartItems } from "../../helperFunctions/utilityFunctions.ts";
-
-import { appContext } from "../AppContext.tsx";
-
+import { deleteCartItem, addToWishlist } from "../../helperFunctions/dataFetchFunctions.ts";
+import { appContext } from "../context/AppContext.tsx";
+import { useUpdateCartItem } from "../../customHooks/useUpdateCartItem.ts";
 import "./style.css";
 
 const Cart = () => {
@@ -21,11 +20,8 @@ const Cart = () => {
 
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
   const isPossibleDeletionRef = useRef<boolean>(true);
-  const modifiedIndexRef = useRef<number>(null);
 
-  const { mutate: updateItem, isPending: isUpdating } = useMutation({
-    mutationFn: updateCartItem,
-  });
+  const { isUpdating, updateQuantity } = useUpdateCartItem();
 
   const {
     mutate: deleteItem,
@@ -40,41 +36,22 @@ const Cart = () => {
     setShouldDisplayAlert(true);
   }
 
-  const delete_Item = (cartId: number, itemIndex: number) => {
-    modifiedIndexRef.current = itemIndex;
-    deleteItem(cartId);
-  };
+  const delete_Item = (cartId: number) => deleteItem(cartId);
 
-  const updateQuantity = (value: number, productId: number, itemIndex: number, product?: productType, cartQuantity?: number, id?: number) => {
-    modifiedIndexRef.current = itemIndex;
-    if (isLoggedIn) {
-      updateItem({
-        customerId: loginData.id,
-        productId,
-        quantity: cartQuantity! + value,
-        id: id!,
-      });
-    } else {
-      let cartItems = getLocalCartItems();
-      let index = cartItems.findIndex(({ product: { id } }) => {
-        return id === productId;
-      });
+  const { mutate: saveForLater, isPending: isAddingToWishList } = useMutation({
+    mutationFn: addToWishlist,
+  });
 
-      if (index) {
-        cartItems[index].cartQuantity += value;
-        setLocalCart([...cartItems]);
-      } else {
-        const item: cartType = {
-          cartQuantity: cartQuantity! + value,
-          product: product!,
-        };
-        setLocalCart([...cartItems, item]);
-      }
-    }
+  const addItemToWishList = (customerId: string, productId: number) => {
+    const data = {
+      customerId,
+      productId,
+    };
+    saveForLater(data);
   };
 
   const cartItems = cart.map((item, index) => {
-    return <CartItem delete_Item={delete_Item} key={index} item={item} itemIndex={index} updateQuantity={updateQuantity} isModifying={modifiedIndexRef.current === index ? isDeleting || isUpdating : false} />;
+    return <CartItem delete_Item={delete_Item} key={index} item={item} updateQuantity={updateQuantity} addToWishlist={addItemToWishList} status={{ beingAddedToWhishlist: isAddingToWishList, beingDeleted: isDeleting, beingUpdated: isUpdating }} />;
   });
 
   useEffect(() => {
@@ -83,17 +60,26 @@ const Cart = () => {
     }
   }, [isDeleting]);
 
+  const isEmptyCart = cart.length === 0;
+
   return (
-    <main className="min-vh-100" id="cart">
+    <>
       <Navbar />
-      <div className="d-flex gap-5 py-5 px-3 w-100">
-        <div className="flex-grow-1 bg-white">
-          <CartTable>{cartItems}</CartTable>
-        </div>
-        <OrderSummary />
-      </div>
-      {shouldDisplayAlert && <Alert alertMessage="Product successfully removed from your Cart" styles={{ backgroundColor: `var(--light_Green)` }} setIsDisplayed={setShouldDisplayAlert} />}
-    </main>
+      <PageWrapper pageId="cart">
+        {isEmptyCart && <EmptyCart />}
+        {!isEmptyCart && (
+          <>
+            <div className="d-flex gap-5 px-3 w-100">
+              <div className="flex-grow-1 bg-white">
+                <CartTable>{cartItems}</CartTable>
+              </div>
+              <OrderSummary />
+            </div>
+            {shouldDisplayAlert && <Alert alertMessage="Product successfully removed from your Cart" styles={{ backgroundColor: `var(--light_Green)` }} setIsDisplayed={setShouldDisplayAlert} />}
+          </>
+        )}
+      </PageWrapper>
+    </>
   );
 };
 

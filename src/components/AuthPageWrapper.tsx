@@ -1,6 +1,6 @@
 import React from "react";
 
-import Brand from "./Brand.tsx";
+import Brand from "./brand/Brand.tsx";
 
 import { AuthPageWrapperProp } from "../types.ts";
 

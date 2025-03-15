@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 import { AccountDropDownProp } from "../../types";
 
-import { appContext } from "../AppContext.tsx";
+import { appContext } from "../context/AppContext.tsx";
 
 const AccountDropDown = ({ handleShowDropDown, showDropDown }: AccountDropDownProp) => {
   const appStates = useContext(appContext);

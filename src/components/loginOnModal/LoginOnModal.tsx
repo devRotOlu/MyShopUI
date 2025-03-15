@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWrapper.tsx";
 import FormComp from "../formComp/FormComp.tsx";
 import LoginFormElement from "../loginFormElement/LoginFormElement.tsx";
 import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
+import ModalCloseButton from "../ModalCloseButton.tsx";
 
 import { useLogin } from "../../customHooks/useLogin.ts";
-import { closeModal } from "../../helperFunctions/utilityFunctions.ts";
+import { appContext } from "../context/AppContext.tsx";
 import { loginDetails } from "../../data.ts";
-
 import "./style.css";
 
 const LoginOnModal = () => {
+  const { setShowModal } = useContext(appContext);
+
   const { isError, handleChange, handleSubmit, formValues, isSuccess } = useLogin();
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
@@ -25,17 +26,14 @@ const LoginOnModal = () => {
   });
 
   if (isSuccess) {
-    closeModal("login_shortCut");
+    setShowModal(false);
   }
 
   return (
     <FormComp handleFormSubmit={handleSubmit} styles={{ minHeight: "100vh", position: "relative", width: "400px", backgroundColor: "white" }}>
       <div className="d-flex justify-content-between py-2 " id="modal_login_header">
         <h2>Login</h2>
-        <button type="button" onClick={() => closeModal("login_shortCut")} className="py-1 px-2" id="modal_cancel_btn">
-          <Icon icon="iconoir:cancel" />
-          <span>Cancel</span>
-        </button>
+        <ModalCloseButton setShowModal={setShowModal} />
       </div>
       <AuthFormElementWrapper>
         {formElements}

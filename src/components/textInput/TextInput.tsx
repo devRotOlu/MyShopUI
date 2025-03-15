@@ -4,7 +4,7 @@ import { textInputProps } from "../../types";
 
 import "./style.css";
 
-const TextInput = ({ name, type, placeholder, value, handleChange, children }: textInputProps) => {
+const TextInput = ({ name, type, placeholder, value, handleChange, children, handleFocus }: textInputProps) => {
   const [inputType, setInputType] = useState("");
   return (
     <label className="position-relative w-100">
@@ -28,7 +28,7 @@ const TextInput = ({ name, type, placeholder, value, handleChange, children }: t
           </button>
         </>
       ) : (
-        <input autoComplete="off" className="inputs" type={type} name={name} placeholder={placeholder} value={value} onChange={handleChange} />
+        <input autoComplete="off" className="inputs" type={type} name={name} placeholder={placeholder} value={value} onChange={handleChange} onFocus={handleFocus} />
       )}
     </label>
   );

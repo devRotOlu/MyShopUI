@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useAlert = (shouldDisplay) => {
+export const useAlert = (shouldDisplay: boolean) => {
   const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
 
   if (shouldDisplay) {

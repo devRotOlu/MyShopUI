@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
-import { appContext } from "../components/AppContext.tsx";
+import { appContext } from "../components/context/AppContext.tsx";
 import { useLoginData, LoginStateType } from "../types.ts";
 import { signinUser } from "../helperFunctions/dataFetchFunctions.ts";
 

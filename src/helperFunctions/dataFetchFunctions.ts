@@ -1,8 +1,5 @@
-import { PayPalButtonsComponentProps } from "@paypal/react-paypal-js";
-
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType } from "../types.ts";
-import { LoginStateType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -55,6 +52,10 @@ export const getWishlist = async (email: string) => {
   return await myShopAxios.get(`Wishlist?email=${email}`);
 };
 
+export const addToWishlist = async (data: addWishlistType) => {
+  return await myShopAxios.post("Wishlist", data);
+};
+
 // checkout controller functions
 
 // export const createOrder = async (id: string) => {
@@ -66,10 +67,45 @@ export const getWishlist = async (email: string) => {
 // };
 
 // monnify controller functions
+
 export const initializePayment = async (customerEmail: string) => {
   return await myShopAxios.get(`MonnifyCheckout/initialize?customerEmail=${customerEmail}`);
 };
 
 export const getTranserInfo = async (bankCode: string, transactionRef: string) => {
-  return await myShopAxios.get(`MonnifyCheckout/initialize?bankCode=${bankCode} & transactionReference=${transactionRef}`);
+  return await myShopAxios.get(`MonnifyCheckout/bank_transfer?bankCode=${bankCode}&transactionReference=${transactionRef}`);
+};
+
+export const getTransactionStatus = async (transactionRef: string) => {
+  return await myShopAxios.get(`MonnifyCheckout/transaction_status?transactionRef=${transactionRef}`);
+};
+
+export const sendCardDetails = async (cardDetails: cardRequestType) => {
+  console.log(cardDetails, "details");
+  return await myShopAxios.post("MonnifyCheckout/card_charge", cardDetails);
+};
+
+export const appendBuffer = (buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer => {
+  var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+  tmp.set(new Uint8Array(buffer1), 0);
+  tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
+  return tmp.buffer;
+};
+
+export const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
+  var binary_string = atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+};
+
+export const arrayBufferToBase64 = (arrayBuffer: ArrayBuffer): string => {
+  return btoa(
+    new Uint8Array(arrayBuffer).reduce(function (data, byte) {
+      return data + String.fromCharCode(byte);
+    }, "")
+  );
 };

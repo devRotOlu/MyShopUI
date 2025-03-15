@@ -2,16 +2,15 @@ import React, { useContext, useState, useEffect, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-import Brand from "../Brand.tsx";
-import ModalTrigger from "../ModalTrigger.tsx";
+import Brand from "../brand/Brand.tsx";
 import AccountDropDown from "./AccountDropDown.tsx";
 
-import { appContext } from "../AppContext.tsx";
+import { appContext } from "../context/AppContext.tsx";
 import "./style.css";
 
 const Navbar = () => {
   const appStates = useContext(appContext);
-  const { isLoggedIn, cartItemsCount } = appStates;
+  const { isLoggedIn, cartItemsCount, setShowModal } = appStates;
 
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
@@ -36,13 +35,11 @@ const Navbar = () => {
       <nav className="d-flex gap-5">
         {isLoggedIn && <AccountDropDown showDropDown={showDropDown} handleShowDropDown={handleShowDropDown} />}
         {!isLoggedIn && (
-          <ModalTrigger styles={{ width: "fit-content" }} modalInstance="login_shortCut">
-            <button className="loginTriggerBtn">
-              Login/
-              <br />
-              Signup
-            </button>
-          </ModalTrigger>
+          <button className="loginTriggerBtn" onClick={() => setShowModal(true)}>
+            Login/
+            <br />
+            Signup
+          </button>
         )}
         <div className="py-2">
           <Link to="/cart/overview" className="text-light d-flex align-items-center">

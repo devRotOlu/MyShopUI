@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 //import reportWebVitals from './reportWebVitals';
 
@@ -13,7 +14,9 @@ root.render(
   <BrowserRouter>
     {/* <React.StrictMode> */}
     <QueryClientProvider client={client}>
-      <App />
+      <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+        <App />
+      </SkeletonTheme>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
     {/* </React.StrictMode> */}

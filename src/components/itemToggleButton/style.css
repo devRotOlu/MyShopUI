@@ -1,0 +1,17 @@
+#toggle_items {
+  width: fit-content;
+  max-width: 100%;
+  border: solid thin var(--darker_Grey);
+}
+
+#toggle_items button:first-child {
+  border-right: solid thin var(--darker_Grey);
+}
+
+#toggle_items button:last-child {
+  border-left: solid thin var(--darker_Grey);
+}
+
+#toggle_items button {
+  padding: 0.4rem;
+}

@@ -13,11 +13,3 @@ tr.cart_table_row > td {
 tr.cart_table_row p {
   word-wrap: break-word;
 }
-
-tr.cart_table_row div.cart_toggle {
-  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
-}
-
-tr.cart_table_row div.cart_toggle button {
-  padding: 0.35rem;
-}

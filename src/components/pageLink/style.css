@@ -1,10 +1,4 @@
-div#authFormLink {
-  background-color: var(--Light_Grey);
-  box-sizing: border-box;
-  padding: 20px 30px;
-}
-
-div#authFormLink > a {
+span#page_link > a {
   color: var(--deep_pink);
   padding: 10px;
   display: block;
@@ -14,7 +8,7 @@ div#authFormLink > a {
   border-radius: 5px;
 }
 
-div#authFormLink > a:hover {
+span#page_link > a:hover {
   color: white;
   width: 100%;
   background-color: var(--deep_pink);

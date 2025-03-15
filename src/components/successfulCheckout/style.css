@@ -1,0 +1,27 @@
+main#successful_checkout {
+  background-color: var(--Light_Grey);
+}
+
+main#successful_checkout h1 {
+  color: var(--light_Green);
+}
+
+main#successful_checkout > div {
+  padding: 2em 2em;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+}
+
+main#successful_checkout > div > div:first-child {
+  color: var(--light_Green);
+}
+
+main#successful_checkout #order_id {
+  font-size: 0.8rem;
+}
+
+main#successful_checkout > div > div:last-child > div > p:last-child {
+  font-size: 0.9rem;
+  font-family: Archivo_Italic;
+}

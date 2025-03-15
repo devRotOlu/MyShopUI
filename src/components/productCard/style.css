@@ -1,9 +1,22 @@
 .product_card {
   background-color: white;
   padding: 10px;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+  cursor: pointer;
+  width: 19%;
 }
 
-.product_card > div:last-child > button {
+.product_card_skeleton {
+  width: 19%;
+  padding: 10px;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+}
+
+.product_card:hover {
+  box-shadow: 1px 1px 20px -13px, -1px -1px 20px -13px;
+}
+
+.product_card button {
   color: var(--deep_pink);
   padding: 5px;
   display: block;
@@ -14,7 +27,7 @@
   width: 100%;
 }
 
-.product_card > div:last-child > button:hover {
+.product_card button:hover {
   background-color: var(--deep_pink);
   color: white;
 }

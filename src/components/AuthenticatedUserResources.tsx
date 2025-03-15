@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import { appContext } from "./AppContext";
+import { appContext } from "./context/AppContext";
 
 const AuthenticatedUserResources = () => {
   const navigate = useNavigate();

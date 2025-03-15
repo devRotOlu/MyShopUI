@@ -1,16 +1,50 @@
-import React, { useContext } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import React, { useContext, useLayoutEffect, useRef } from "react";
 
-import { CartItemProp } from "../../types.ts";
-import { appContext } from "../AppContext.tsx";
+import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
+import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
+
+import { CartItemProp, productType } from "../../types.ts";
+import { appContext } from "../context/AppContext.tsx";
 import "./style.css";
 
-const CartItem = ({ item, itemIndex, delete_Item, updateQuantity, isModifying }: CartItemProp) => {
+const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: CartItemProp) => {
   const { id: cartId, cartQuantity, product } = item;
 
   const { name, unitPrice, id: productId, images } = product;
 
-  const { isLoggedIn } = useContext(appContext);
+  const beingModifiedRef = useRef(false);
+
+  const {
+    isLoggedIn,
+    loginData: { id: customerId },
+  } = useContext(appContext);
+
+  const handleQuantityUpdate = (value: number, product: productType | undefined = undefined) => {
+    if (isLoggedIn) {
+      updateQuantity(value, productId, undefined, cartQuantity, cartId);
+      beingModifiedRef.current = true;
+    } else {
+      updateQuantity(value, productId, product);
+    }
+  };
+
+  const handleAddToWishlist = () => {
+    if (isLoggedIn) beingModifiedRef.current = true;
+    addToWishlist(customerId, productId);
+  };
+
+  const handleDeleteItem = () => {
+    if (isLoggedIn) beingModifiedRef.current = true;
+    delete_Item(cartId!);
+  };
+
+  const { beingAddedToWhishlist, beingDeleted, beingUpdated } = status;
+
+  useLayoutEffect(() => {
+    if (beingModifiedRef.current && !beingAddedToWhishlist && !beingDeleted && !beingUpdated) {
+      beingModifiedRef.current = false;
+    }
+  }, [beingAddedToWhishlist, beingDeleted, beingUpdated]);
 
   return (
     <tr className="cart_table_row position-relative">
@@ -28,15 +62,7 @@ const CartItem = ({ item, itemIndex, delete_Item, updateQuantity, isModifying }:
         </div>
       </td>
       <td className="border-bottom h-100 py-3">
-        <div className="d-flex align-items-center border justify-content-between cart_toggle" style={{ borderRadius: "0.15rem" }}>
-          <button onClick={isLoggedIn ? () => updateQuantity(-1, productId, itemIndex, undefined, cartQuantity, cartId) : () => updateQuantity(-1, productId, itemIndex)} className="border border-left-0 border-bottom-0 border-top-0">
-            <Icon style={{ fontSize: "1.1rem" }} icon="material-symbols:remove" />
-          </button>
-          <span>{cartQuantity}</span>
-          <button className="border border-left-0 border-bottom-0 border-top-0" onClick={isLoggedIn ? () => updateQuantity(1, productId, itemIndex, undefined, cartQuantity, cartId) : () => updateQuantity(1, productId, itemIndex, product)}>
-            <Icon style={{ fontSize: "1.1rem" }} icon="material-symbols:add-2-rounded" />
-          </button>
-        </div>
+        <ItemToggleButton itemQuantity={cartQuantity} handleDecreaseItem={() => handleQuantityUpdate(-1)} handleIncreaseItem={() => handleQuantityUpdate(1, product)} styles={{ boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }} />
       </td>
       <td className="border-bottom h-100 py-3 text-center">
         <div>
@@ -46,11 +72,11 @@ const CartItem = ({ item, itemIndex, delete_Item, updateQuantity, isModifying }:
       </td>
       <td className="border-bottom h-100 py-3 text-end">
         <div>
-          <button onClick={() => delete_Item(cartId!, itemIndex)}>Remove item</button>
+          <button onClick={() => handleDeleteItem()}>Remove item</button>
         </div>
-        <button>Save for Later</button>
+        <button onClick={() => handleAddToWishlist()}>Save for Later</button>
       </td>
-      {isModifying && <td className="position-absolute w-100 h-100" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", top: "0", left: "0" }}></td>}
+      {beingModifiedRef.current && <ComponentOverlay as="td" />}
     </tr>
   );
 };

@@ -2,13 +2,18 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import Modal from "./Modal";
-import LoginOnModal from "./loginOnModal/LoginOnModal";
-import Alert from "./alert/Alert";
+import LoginOnModal from "../loginOnModal/LoginOnModal";
+import Alert from "../alert/Alert";
+import Modal from "../modal/Modal";
 
-import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../types";
-import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist, logoutUser } from "../helperFunctions/dataFetchFunctions";
-import { getLocalCartItems, emptyLocalCart } from "../helperFunctions/utilityFunctions";
+import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../../types";
+import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist, logoutUser } from "../../helperFunctions/dataFetchFunctions";
+import { getLocalCartItems, emptyLocalCart } from "../../helperFunctions/utilityFunctions";
+import { useModal } from "../../customHooks/useModal";
+
+const clientId: string = process.env.REACT_APP_RSA_Public_Key!;
+
+console.log(clientId, "clientId");
 
 // 10 minutes
 const tokenRefreshTime = 65 * 1000 * 60;
@@ -260,12 +265,16 @@ const AppContext = ({ children }: AppContextProp) => {
     }
   }, [addItems, cartFetched, itemsUpdated]);
 
+  const { setShowModal, showModal } = useModal();
+
   return (
-    <appContext.Provider value={{ isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
+    <appContext.Provider value={{ setShowModal, isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
       {children}
-      <Modal modalInstance="login_shortCut" styles={{ marginLeft: "auto" }}>
-        <LoginOnModal />
-      </Modal>
+      {showModal && (
+        <Modal styles={{ display: "flex", justifyContent: "end" }}>
+          <LoginOnModal />
+        </Modal>
+      )}
       {shouldDisplayAlert && <Alert alertMessage="You have successfully logged out" setIsDisplayed={setShouldDisplayAlert} styles={{ backgroundColor: `var(--light_Green)` }} />}
     </appContext.Provider>
   );

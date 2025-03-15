@@ -4,8 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 
 import ProductCard from "../productCard/ProductCard.tsx";
 import Alert from "../alert/Alert.tsx";
+import ProductCardSkeleton from "../productCard/ProductCardSkeleton.tsx";
 
-import { appContext } from "../AppContext.tsx";
+import { appContext } from "../context/AppContext.tsx";
 import { cartType } from "../../types.ts";
 import { addItemToCart, updateCartItem } from "../../helperFunctions/dataFetchFunctions.ts";
 import "./style.css";
@@ -103,19 +104,18 @@ const ProductList = () => {
     }
   }, [addCartError, isAddingToCart, isUpdatingCart, updateCartError]);
 
-  const _products = products.map(({ name, description, unitPrice, quantity, images, id }, index) => {
+  const _products = products.map(({ id }, index) => {
     const isPending = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current!.product.id === id;
-    const diasable = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current!.product.id !== id;
-    return (
-      <div key={id} className="w-100">
-        <ProductCard handleAddToCart={handleAddToCart} name={name} description={description} unitPrice={unitPrice} quantity={quantity} images={images} index={index} isPending={isPending} disabled={diasable} />
-      </div>
-    );
+    const disable = (isAddingToCart || isUpdatingCart) === true && newCartItemRef.current!.product.id !== id;
+    return <ProductCard key={id} handleAddToCart={handleAddToCart} index={index} isPending={isPending} disabled={disable} />;
   });
 
   return (
     <>
-      <div id="product_list">{_products}</div>
+      <div id="product_list" className="w-100 d-flex justify-content-between">
+        {!products.length && <ProductCardSkeleton count={4} />}
+        {products.length && _products}
+      </div>
       {isSuccessAlert && (
         <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${productName} has been added to cart`} setIsDisplayed={setIsSuccessAlert}>
           <div id="cart_alert" className="d-flex cart_alert justify-content-between">
