@@ -9,19 +9,21 @@ import OrderSummary from "./OrderSummary.tsx";
 import EmptyCart from "./EmptyCart.tsx";
 import PageWrapper from "../PageWrapper.tsx";
 
-import { deleteCartItem, addToWishlist } from "../../helperFunctions/dataFetchFunctions.ts";
+import { deleteCartItem } from "../../helperFunctions/dataFetchFunctions.ts";
 import { appContext } from "../context/AppContext.tsx";
 import { useUpdateCartItem } from "../../customHooks/useUpdateCartItem.ts";
+import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.tsx";
 import "./style.css";
 
 const Cart = () => {
   const appstates = useContext(appContext);
-  const { cart, loginData, isLoggedIn } = appstates;
+  const { cart } = appstates;
 
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
   const isPossibleDeletionRef = useRef<boolean>(true);
 
   const { isUpdating, updateQuantity } = useUpdateCartItem();
+  const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
 
   const {
     mutate: deleteItem,
@@ -37,18 +39,6 @@ const Cart = () => {
   }
 
   const delete_Item = (cartId: number) => deleteItem(cartId);
-
-  const { mutate: saveForLater, isPending: isAddingToWishList } = useMutation({
-    mutationFn: addToWishlist,
-  });
-
-  const addItemToWishList = (customerId: string, productId: number) => {
-    const data = {
-      customerId,
-      productId,
-    };
-    saveForLater(data);
-  };
 
   const cartItems = cart.map((item, index) => {
     return <CartItem delete_Item={delete_Item} key={index} item={item} updateQuantity={updateQuantity} addToWishlist={addItemToWishList} status={{ beingAddedToWhishlist: isAddingToWishList, beingDeleted: isDeleting, beingUpdated: isUpdating }} />;

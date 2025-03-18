@@ -1,36 +1,24 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { addItemToCart, updateCartItem } from "../helperFunctions/dataFetchFunctions";
-import { cartType } from "../types";
+import { cartType, useModifyCartDataType } from "../types";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
 import { appContext } from "../components/context/AppContext";
 
-const useAddToCart = () => {
+export const useModifyCart = (): useModifyCartDataType => {
   const {
     isLoggedIn,
     loginData: { id },
     products,
     cart,
-    cartItemsCount,
   } = useContext(appContext);
 
-  const prevCountRef = useRef(cartItemsCount);
   const newCartItemRef = useRef<cartType>(null);
-  const possibleErrorRef = useRef<boolean>(false);
-  const isCartModifiedRef = useRef<boolean>(false);
 
   const { mutate: addCartMutate, isError: addCartError, isSuccess: addCartSuccess, isPending: isAddingToCart } = useMutation({ mutationFn: addItemToCart });
 
   const { mutate: updateCartMutate, isError: updateCartError, isSuccess: updateCartSuccess, isPending: isUpdatingCart } = useMutation({ mutationFn: updateCartItem });
-
-  useEffect(() => {
-    if (prevCountRef.current !== cartItemsCount && isCartModifiedRef.current) {
-      prevCountRef.current = cartItemsCount;
-      isCartModifiedRef.current = false;
-      setIsSuccessAlert(true);
-    }
-  }, [cart, cartItemsCount]);
 
   const handleAddToCart = (productIndex: number) => {
     const newproduct = products[productIndex];
@@ -76,6 +64,6 @@ const useAddToCart = () => {
       }
       newCartItemRef.current = newCartItem;
     }
-    isCartModifiedRef.current = true;
   };
+  return { handleAddToCart, addedItem: `${newCartItemRef.current ? newCartItemRef.current.product.name : ""}`, addCartError, addCartSuccess, isAddingToCart, updateCartError, updateCartSuccess, isUpdatingCart };
 };

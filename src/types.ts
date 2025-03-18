@@ -143,10 +143,12 @@ export type useUpdateItemDataType = {
 };
 
 export type ProductCardProp = {
+  status: {
+    isAddingToCart: boolean;
+    isUpdatingCart: boolean;
+  };
   index: number;
   handleAddToCart: (index: number) => void;
-  isPending: boolean;
-  disabled?: boolean;
 };
 
 export type itemToggleButtonProps = {
@@ -325,6 +327,7 @@ export type skeletonProps = {
 export type productProps = {
   product: productType;
   children: ReactNode;
+  index: number;
 };
 
 export type thumbnailProps = {
@@ -360,7 +363,41 @@ export type modalCloseButtonProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export type useModifyCartDataType = {
+  handleAddToCart: (productIndex: number) => void;
+  addedItem: string;
+  addCartError: boolean;
+  addCartSuccess: boolean;
+  isAddingToCart: boolean;
+  updateCartError: boolean;
+  updateCartSuccess: boolean;
+  isUpdatingCart: boolean;
+};
+
+export type useAddToWhishlistDataType = {
+  isAddingToWishList: boolean;
+  addItemToWishList: (customerId: string, productId: number) => void;
+};
+
+export type loaderProps = {
+  size?: string;
+  color?: string;
+};
+
+export type addToWishlistProps = {
+  productId: number;
+  setDisplayAlert: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type quantityExceededErrorProps = {
+  quantityExceedRef: React.RefObject<boolean>;
+  quantity: number;
+  validateQuantity: boolean;
+  setValidateQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export type AppContextType = {
+  wishList: wishlistType[];
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;

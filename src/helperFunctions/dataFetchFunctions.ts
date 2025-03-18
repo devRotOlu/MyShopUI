@@ -53,7 +53,7 @@ export const getWishlist = async (email: string) => {
 };
 
 export const addToWishlist = async (data: addWishlistType) => {
-  return await myShopAxios.post("Wishlist", data);
+  return await myShopAxios.post("Wishlist/add_item", data);
 };
 
 // checkout controller functions

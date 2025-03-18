@@ -1,3 +1,27 @@
 #product #quantity_validation {
   font-size: 0.7rem;
 }
+
+#product #save_item > button:first-child {
+  background-color: var(--light_Green);
+  padding: 0.7rem 6rem;
+}
+
+#product #save_item > div:last-child span {
+  font-size: 12px;
+  color: grey;
+}
+
+#add_to_wishlist button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+}
+
+#add_to_wishlist button:hover {
+  background-color: var(--dark_orange);
+}

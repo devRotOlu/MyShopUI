@@ -1,8 +1,10 @@
 import React from "react";
 
-const Loader = () => {
+import { loaderProps } from "../types";
+
+const Loader = ({ size, color }: loaderProps) => {
   return (
-    <div className="spinner-border" role="status">
+    <div className={`spinner-border ${size} text-${color}`} role="status">
       <span className="visually-hidden">Loading...</span>
     </div>
   );

@@ -1,14 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ProductCardProp } from "../../types.ts";
 import { appContext } from "../context/AppContext.tsx";
 import "./style.css";
 
-const ProductCard = ({ index, handleAddToCart, isPending, disabled }: ProductCardProp) => {
-  const { products } = useContext(appContext);
+const ProductCard = ({ index, handleAddToCart, status }: ProductCardProp) => {
+  const { products, isLoggedIn } = useContext(appContext);
   const { name, unitPrice, quantity, images, id } = products[index];
   const navigate = useNavigate();
+
+  const { isAddingToCart, isUpdatingCart } = status;
+
+  const beingModifiedRef = useRef(false);
+
+  const _handleAddToCart = (event: MouseEvent<HTMLButtonElement>, index: number) => {
+    event.stopPropagation();
+    if (isLoggedIn) beingModifiedRef.current = true;
+    handleAddToCart(index);
+  };
+
+  useEffect(() => {
+    if (beingModifiedRef.current && !isAddingToCart && !isUpdatingCart) beingModifiedRef.current = false;
+  }, [isAddingToCart, isUpdatingCart]);
+
+  const isPending = (isAddingToCart || isUpdatingCart) === true && beingModifiedRef.current === true;
+  const disable = (isAddingToCart || isUpdatingCart) === true && beingModifiedRef.current === false;
 
   return (
     <div className="product_card rounded d-flex flex-column justify-content-between" onClick={() => navigate(`/product/${name}-${id}`)}>
@@ -33,7 +50,7 @@ const ProductCard = ({ index, handleAddToCart, isPending, disabled }: ProductCar
               <span className="visually-hidden">Loading...</span>
             </div>
           ) : (
-            <button disabled={disabled} onClick={() => handleAddToCart(index)}>
+            <button disabled={disable} onClick={(e) => _handleAddToCart(e, index)}>
               Add To Cart
             </button>
           )}

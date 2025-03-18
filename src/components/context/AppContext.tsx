@@ -13,8 +13,6 @@ import { useModal } from "../../customHooks/useModal";
 
 const clientId: string = process.env.REACT_APP_RSA_Public_Key!;
 
-console.log(clientId, "clientId");
-
 // 10 minutes
 const tokenRefreshTime = 65 * 1000 * 60;
 
@@ -66,11 +64,10 @@ const AppContext = ({ children }: AppContextProp) => {
   });
 
   const {
-    refetch: cartRefetch,
     data: cartData,
     isSuccess: cartFetched,
     isError: cartFetchError,
-    dataUpdatedAt,
+    dataUpdatedAt: cartUpdateTime,
   } = useQuery({
     queryKey: ["cart"],
     enabled: () => (isLoggedIn ? true : false),
@@ -80,7 +77,7 @@ const AppContext = ({ children }: AppContextProp) => {
     refetchInterval: () => (isLoggedIn ? 4000 : false),
   });
 
-  const { refetch: wishlistReftech, data: wishlistData } = useQuery({
+  const { data: wishlistData, dataUpdatedAt: wishlistDateTime } = useQuery({
     queryFn: async () => {
       return await getWishlist(loginData.email);
     },
@@ -107,14 +104,6 @@ const AppContext = ({ children }: AppContextProp) => {
     setProducts(productData.data);
   }
 
-  if (isLoggedIn && !cartData) {
-    cartRefetch();
-  }
-
-  if (isLoggedIn && !wishlistData) {
-    wishlistReftech();
-  }
-
   if (isLoggedOut && isLoggedIn) {
     setIsLoggedIn(false);
     setShouldDisplayAlert(true);
@@ -127,13 +116,12 @@ const AppContext = ({ children }: AppContextProp) => {
   const updatedItemsRef = useRef<updatedItemType[]>([]);
   const addedItemsRef = useRef<addedItemType[]>([]);
 
-  const prevCartUpdateRef = useRef<number>(dataUpdatedAt);
-
+  const prevCartUpdateRef = useRef(cartUpdateTime);
   const prevCartRef = useRef(cart);
-
   const isInitialRenderRef = useRef<isInitialRenderType>({
     home: true,
   });
+  const prevWishlistUpdateTimeRef = useRef(wishlistDateTime);
 
   const handLogout = () => {
     logoutMutate();
@@ -172,13 +160,22 @@ const AppContext = ({ children }: AppContextProp) => {
   }, [isLoggedIn, cart]);
 
   useEffect(() => {
-    const isNewFetch = prevCartUpdateRef.current !== dataUpdatedAt;
+    const isNewFetch = prevCartUpdateRef.current !== cartUpdateTime;
     if (isNewFetch) {
       var fetchedData = cartData!.data as cartType[];
       setCart([...fetchedData]);
-      prevCartUpdateRef.current = dataUpdatedAt;
+      prevCartUpdateRef.current = cartUpdateTime;
     }
-  }, [cartData, dataUpdatedAt]);
+  }, [cartData, cartUpdateTime]);
+
+  useEffect(() => {
+    const isNewFetch = prevWishlistUpdateTimeRef.current !== wishlistDateTime;
+    if (isNewFetch) {
+      const fetchedData = wishlistData!.data as wishlistType[];
+      setWishList([...fetchedData]);
+      prevWishlistUpdateTimeRef.current = wishlistDateTime;
+    }
+  }, [wishlistDateTime, wishlistData]);
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
@@ -268,7 +265,7 @@ const AppContext = ({ children }: AppContextProp) => {
   const { setShowModal, showModal } = useModal();
 
   return (
-    <appContext.Provider value={{ setShowModal, isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
+    <appContext.Provider value={{ wishList, setShowModal, isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
       {children}
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "end" }}>

@@ -1,16 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Icon } from "@iconify/react";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
+import QuantityExceededError from "./QuantityExceededError";
+import AddToWishlist from "./AddToWishlist";
+import Alert from "../alert/Alert";
 
 import { productProps } from "../../types";
+import { useModifyCart } from "../../customHooks/useModifyCart";
+import { appContext } from "../context/AppContext";
 import "./style.css";
 
-const Product = ({ product, children }: productProps) => {
+const Product = ({ product, children, index }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
+  const [displayAlert, setDisplayAlert] = useState(false);
 
-  const { name, description, unitPrice, quantity } = product;
+  const { setShowModal } = useContext(appContext);
+
+  const { handleAddToCart } = useModifyCart();
+
+  const { name, description, unitPrice, quantity, id: productId } = product;
 
   const quantityExceedRef = useRef(false);
 
@@ -22,20 +32,6 @@ const Product = ({ product, children }: productProps) => {
   const handleDecreaseItem = () => {
     setQuantityToAdd((prevQuantiy) => (prevQuantiy > 1 ? --prevQuantiy : prevQuantiy));
   };
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined = undefined;
-    if (validateQuantity) {
-      timeout = setTimeout(() => {
-        quantityExceedRef.current = false;
-        setValidateQuantity(false);
-        clearTimeout(timeout);
-      }, 4000);
-    }
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
-  }, [validateQuantity]);
 
   if (quantityExceedRef.current && !validateQuantity) {
     setValidateQuantity(true);
@@ -64,24 +60,28 @@ const Product = ({ product, children }: productProps) => {
                   <span className="fs-6">Quantity:</span>
                   <div>
                     <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
-                    {validateQuantity && (
-                      <span id="quantity_validation" className="text-danger">
-                        only {quantity} items left
-                      </span>
-                    )}
+                    {validateQuantity && <QuantityExceededError quantity={quantity} validateQuantity={validateQuantity} setValidateQuantity={setValidateQuantity} quantityExceedRef={quantityExceedRef} />}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="py-3 border-bottom">
-              {/* <button  onClick={() => handleAddToCart(index)}>
+            <div id="save_item" className="py-3 border-bottom">
+              <button className="text-light rounded me-4" onClick={() => handleAddToCart(index)}>
                 Add To Cart
-              </button> */}
+              </button>
+              <AddToWishlist productId={productId} setDisplayAlert={setDisplayAlert} />
             </div>
           </div>
         </div>
         <div className="w-25"></div>
       </div>
+      {displayAlert && (
+        <Alert alertMessage="You need to be logged in to Save an Item" setIsDisplayed={setDisplayAlert} styles={{ backgroundColor: "var(--darkest_Grey)" }}>
+          <button className="py-1 px-2 border border-white rounded" onClick={() => setShowModal(true)} style={{ width: "fit-content", color: "var(--dark_orange)" }}>
+            Click here to Login
+          </button>
+        </Alert>
+      )}
     </div>
   );
 };
