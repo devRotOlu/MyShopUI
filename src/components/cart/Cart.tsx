@@ -12,7 +12,7 @@ import PageWrapper from "../PageWrapper.tsx";
 import { deleteCartItem } from "../../helperFunctions/dataFetchFunctions.ts";
 import { appContext } from "../context/AppContext.tsx";
 import { useUpdateCartItem } from "../../customHooks/useUpdateCartItem.ts";
-import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.tsx";
+import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.ts";
 import "./style.css";
 
 const Cart = () => {

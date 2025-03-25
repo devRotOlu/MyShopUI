@@ -2,6 +2,15 @@
   font-size: 0.7rem;
 }
 
+#product_tab button {
+  font-size: 1rem;
+}
+
+#product_tab > #description_wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 #product #save_item > button:first-child {
   background-color: var(--light_Green);
   padding: 0.7rem 6rem;

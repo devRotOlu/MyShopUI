@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Link } from "react-router-dom";
 
 import { AccountDropDownProp } from "../../types";
 
@@ -26,7 +27,7 @@ const AccountDropDown = ({ handleShowDropDown, showDropDown }: AccountDropDownPr
           <ol className="p-0 d-flex flex-column m-0">
             <li className="d-flex gap-2  px-3  align-items-center">
               <Icon icon="et:profile-male" />
-              <p>My Porifile</p>
+              <Link to="/account/profile">My Porifile</Link>
             </li>
             <li className="d-flex gap-2  px-3  align-items-center">
               <Icon icon="lsicon:work-order-outline" />

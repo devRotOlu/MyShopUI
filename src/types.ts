@@ -2,6 +2,16 @@ import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 
+type baseUserType = {
+  firstName: string;
+  lastName: string;
+};
+
+export type userProfileDataType = {
+  name: string;
+  label: string;
+};
+
 export type textInputProps = {
   name: string;
   type: "text" | "email" | "number" | "password";
@@ -15,6 +25,7 @@ export type textInputProps = {
 export type formButtonProp = {
   value: string;
   styles: CSSProperties;
+  isPending?: boolean;
 };
 
 export type formCompProp = {
@@ -118,6 +129,10 @@ export type useMonnifyType = {
   detailsSent: boolean;
 };
 
+type reviewsType = baseUserType & {
+  profilePictureURI?: string;
+};
+
 export type productType = {
   name: string;
   description: string;
@@ -125,6 +140,7 @@ export type productType = {
   quantity: number;
   id: number;
   images: { url: string }[];
+  reviews: reviewsType[];
 };
 
 type updateQuantityType = (value: number, productId: number, product?: productType, cartQuantity?: number, id?: number) => void;
@@ -163,16 +179,39 @@ export type AccountDropDownProp = {
   showDropDown: boolean;
 };
 
-export type userDataType = {
-  id: string;
-  billingAddress: string;
-  shippingAddress?: string;
-  phoneNumber: string;
-  email: string;
-  profilePictureUri: string;
-  firstName: string;
-  lastName: string;
+type userAddressType = {
+  streetAddress: string;
+  city: string;
+  state: string;
 };
+
+export type userDataType = baseUserType &
+  userAddressType & {
+    id: string;
+    phoneNumber: string;
+    email: string;
+  };
+
+export type modifyUserType = baseUserType &
+  userAddressType & {
+    currentPassword?: string;
+    newPassword?: string;
+  };
+
+export type profileDataType = baseUserType &
+  userAddressType & {
+    currentPassword: string | undefined;
+    newPassword: string | undefined;
+  };
+
+export type deliveryDataType = baseUserType &
+  userAddressType & {
+    id: number | undefined;
+    phoneNumber: string;
+    lGA: string;
+    directions: string;
+    additionalInformation: string;
+  };
 
 export type cartType = {
   id?: number;
@@ -210,7 +249,7 @@ export type failedRequestType = {
 export type isInitialRenderType = {
   home: boolean;
 };
-export type signupType = { firstName: string; lastName: string; email: string; phoneNumber: string; password: string };
+export type signupType = baseUserType & { email: string; phoneNumber: string; password: string };
 
 export type MonnifyProps = {
   transactionRef: string;
@@ -312,6 +351,7 @@ export type transactionStatusType = {
 
 type componentOverlayOwnProps<E extends React.ElementType> = {
   as?: E;
+  children?: ReactNode;
 };
 
 export type componentOverlayProps<E extends React.ElementType> = componentOverlayOwnProps<E> & Omit<React.ComponentProps<E>, keyof componentOverlayOwnProps<E>>;
@@ -322,6 +362,10 @@ export type dialogHeaderProps = {
 
 export type skeletonProps = {
   count: number;
+};
+
+export type productTabProps = {
+  description: string;
 };
 
 export type productProps = {
@@ -396,7 +440,19 @@ export type quantityExceededErrorProps = {
   setValidateQuantity: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export type userTabDataType = {
+  tab: string;
+  icon: string;
+  link: { linkLabel: string; to: string }[];
+};
+
+export type TabProps = userTabDataType & {};
+
 export type AppContextType = {
+  deliveryProfile: deliveryDataType;
+  setDeliveryProfile: React.Dispatch<React.SetStateAction<deliveryDataType>>;
+  modifyingProfile: boolean;
+  profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
   wishList: wishlistType[];
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   isLoggedIn: boolean;
@@ -413,4 +469,8 @@ export type AppContextType = {
   setInitialRender: (comp: string, value: boolean) => void;
   handLogout: () => void;
   cartItemsTotalPrice: number;
+};
+
+export type useGetDeliveryProfileDataType = {
+  loadingDeliveryProfile: boolean;
 };

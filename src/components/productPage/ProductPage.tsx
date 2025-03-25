@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import ProductSkeleton from "../product/ProductSkeleton";
+import ProductSkeleton from "../SkeletonPageLoader";
 import Product from "../product/Product";
 import PageWrapper from "../PageWrapper";
 import Carousel from "../carousel/Carousel";

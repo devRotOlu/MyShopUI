@@ -12,7 +12,7 @@ import Modal from "../modal/Modal.tsx";
 import { checkoutContextType, payPlatformType } from "../../types.ts";
 import { appContext } from "../context/AppContext.tsx";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
-import { useModal } from "../../customHooks/useModal.tsx";
+import { useModal } from "../../customHooks/useModal.ts";
 import "./style.css";
 
 const clientId: string = process.env.REACT_APP_PayPal_ClientID!;

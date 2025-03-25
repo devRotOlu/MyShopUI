@@ -22,7 +22,7 @@ export const useLogin = (): useLoginData => {
   };
 
   const onSuccess = (data: AxiosResponse) => {
-    setLoginData(data.data);
+    setLoginData((prevData) => ({ ...prevData, ...data.data }));
     setIsLoggedIn(true);
     setIsOldSession(false);
     navigate("/");

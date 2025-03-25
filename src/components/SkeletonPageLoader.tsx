@@ -1,9 +1,9 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { skeletonProps } from "../../types";
+import { skeletonProps } from "../types";
 
-const ProductSkeleton = ({ count }: skeletonProps) => {
+const SkeletonPageLoader = ({ count }: skeletonProps) => {
   return (
     <div className="d-flex flex-column gap-5">
       {Array(count)
@@ -50,4 +50,4 @@ const ProductSkeleton = ({ count }: skeletonProps) => {
   );
 };
 
-export default ProductSkeleton;
+export default SkeletonPageLoader;

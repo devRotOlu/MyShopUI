@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType, modifyUserType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -45,6 +45,14 @@ export const updateTokens = async (customerId: string) => {
 };
 
 export const logoutUser = async () => await myShopAxios.post("Account/logout");
+
+export const modifyProfile = async (user: modifyUserType) => {
+  return await myShopAxios.patch("Account/modify-details", user);
+};
+
+export const getDeliveryProfile = async (userId: string) => {
+  return await myShopAxios.get(`Account/get_delivery_profile?userId=${userId}`);
+};
 
 // wishlist controller functions
 

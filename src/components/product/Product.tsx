@@ -5,6 +5,7 @@ import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityExceededError from "./QuantityExceededError";
 import AddToWishlist from "./AddToWishlist";
 import Alert from "../alert/Alert";
+import ProductTab from "./ProductTab";
 
 import { productProps } from "../../types";
 import { useModifyCart } from "../../customHooks/useModifyCart";
@@ -48,8 +49,8 @@ const Product = ({ product, children, index }: productProps) => {
           <span>Product</span>
         </div>
       </div>
-      <div className="d-flex gap-3 bg-white">
-        <div className="flex-grow-1 d-flex gap-4 px-3 pt-2 pb-5">
+      <div className="d-flex gap-3">
+        <div className="w-75 d-flex gap-4 px-3 pt-2 pb-5 bg-white">
           <div className="w-50">{children}</div>
           <div className="w-50">
             <div className="border-bottom pb-3 d-flex flex-column gap-3">
@@ -71,9 +72,10 @@ const Product = ({ product, children, index }: productProps) => {
               </button>
               <AddToWishlist productId={productId} setDisplayAlert={setDisplayAlert} />
             </div>
+            <ProductTab description={description} />
           </div>
         </div>
-        <div className="w-25"></div>
+        <div className="w-25 bg-white"></div>
       </div>
       {displayAlert && (
         <Alert alertMessage="You need to be logged in to Save an Item" setIsDisplayed={setDisplayAlert} styles={{ backgroundColor: "var(--darkest_Grey)" }}>

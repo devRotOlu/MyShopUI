@@ -6,8 +6,8 @@ import LoginOnModal from "../loginOnModal/LoginOnModal";
 import Alert from "../alert/Alert";
 import Modal from "../modal/Modal";
 
-import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType } from "../../types";
-import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist, logoutUser } from "../../helperFunctions/dataFetchFunctions";
+import { AppContextProp, productType, cartType, userDataType, addedItemType, updatedItemType, AppContextType, isInitialRenderType, wishlistType, deliveryDataType } from "../../types";
+import { getProducts, getCartItems, validateAccessToken, updateTokens, addItemsToCart, updateCartItems, getWishlist, logoutUser, modifyProfile } from "../../helperFunctions/dataFetchFunctions";
 import { getLocalCartItems, emptyLocalCart } from "../../helperFunctions/utilityFunctions";
 import { useModal } from "../../customHooks/useModal";
 
@@ -25,13 +25,30 @@ const AppContext = ({ children }: AppContextProp) => {
   const [wishList, setWishList] = useState<wishlistType[]>([]);
   const [loginData, setLoginData] = useState<userDataType>({
     id: "",
-    billingAddress: "",
     phoneNumber: "",
     email: "",
-    profilePictureUri: "",
     firstName: "",
     lastName: "",
+    streetAddress: "",
+    state: "",
+    city: "",
   });
+
+  const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({
+    id: undefined,
+    streetAddress: "",
+    city: "",
+    lastName: "",
+    firstName: "",
+    additionalInformation: "",
+    directions: "",
+    phoneNumber: "",
+    state: "",
+    lGA: "",
+  });
+
+  console.log(loginData, "data_login");
+
   const [products, setProducts] = useState<productType[]>([]);
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
 
@@ -94,6 +111,15 @@ const AppContext = ({ children }: AppContextProp) => {
     mutationFn: logoutUser,
   });
 
+  const {
+    mutate: profileMutate,
+    data: modifiedUserData,
+    isPending: modifyingProfile,
+    isSuccess: profileModified,
+  } = useMutation({
+    mutationFn: modifyProfile,
+  });
+
   if (tokenValidated && !isLoggedIn) {
     setIsLoggedIn(true);
     setLoginData(userData.data);
@@ -122,6 +148,8 @@ const AppContext = ({ children }: AppContextProp) => {
     home: true,
   });
   const prevWishlistUpdateTimeRef = useRef(wishlistDateTime);
+
+  const modifyingProfileRef = useRef(false);
 
   const handLogout = () => {
     logoutMutate();
@@ -262,10 +290,49 @@ const AppContext = ({ children }: AppContextProp) => {
     }
   }, [addItems, cartFetched, itemsUpdated]);
 
+  useEffect(() => {
+    if (modifyingProfile) {
+      modifyingProfileRef.current = true;
+    }
+  }, [modifyingProfile]);
+
+  useEffect(() => {
+    const isUpdated = modifyingProfileRef.current === true && profileModified === true;
+    if (isUpdated) {
+      modifyingProfileRef.current = false;
+      const _data = modifiedUserData?.data;
+      console.log(_data, "data");
+      setLoginData((prevData) => ({ ...prevData, ..._data }));
+    }
+  }, [modifiedUserData, profileModified]);
+
   const { setShowModal, showModal } = useModal();
 
   return (
-    <appContext.Provider value={{ wishList, setShowModal, isLoggedIn, setIsLoggedIn, products, cart, cartItemsCount, setCart, loginData, setLoginData, isOldSession, setIsOldSession, isInitialRender: isInitialRenderRef.current, setInitialRender, handLogout, cartItemsTotalPrice }}>
+    <appContext.Provider
+      value={{
+        deliveryProfile,
+        setDeliveryProfile,
+        modifyingProfile,
+        profileMutate,
+        wishList,
+        setShowModal,
+        isLoggedIn,
+        setIsLoggedIn,
+        products,
+        cart,
+        cartItemsCount,
+        setCart,
+        loginData,
+        setLoginData,
+        isOldSession,
+        setIsOldSession,
+        isInitialRender: isInitialRenderRef.current,
+        setInitialRender,
+        handLogout,
+        cartItemsTotalPrice,
+      }}
+    >
       {children}
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "end" }}>
