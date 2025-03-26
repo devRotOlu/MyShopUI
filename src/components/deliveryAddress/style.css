@@ -1,0 +1,7 @@
+#profile_summary #contact_card {
+  width: fit-content;
+}
+
+#profile_summary #contact_card > div:first-child > p {
+  font-size: 12px;
+}

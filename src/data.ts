@@ -1,4 +1,4 @@
-import { payOptionType, userProfileDataType, userTabDataType } from "./types";
+import { deliveryProfileDataType, payOptionType, userProfileDataType, userTabDataType } from "./types";
 
 export const signupDetails: { name: string; type: "text" | "email" | "number" | "password"; inputLabel: string; placeholder: string }[] = [
   {
@@ -82,18 +82,39 @@ export const userTabData: userTabDataType[] = [
   },
 ];
 
-export const userProfileData: userProfileDataType[] = [
+const baseProfile: userProfileDataType[] = [
   {
     name: "firstName",
     label: "First Name",
+    placeholder: "Enter First Name",
   },
   {
     name: "lastName",
     label: "Last Name",
+    placeholder: "Enter Last Name",
   },
-  { name: "streetAddress", label: "Street Address" },
-  { name: "state", label: "State" },
-  { name: "city", label: "City" },
-  { name: "currentPassword", label: "Current Password" },
-  { name: "newPassword", label: "New Password" },
+  { name: "streetAddress", label: "Street Address", placeholder: "Street Address" },
+  { name: "state", label: "State", placeholder: "State" },
+  { name: "city", label: "City", placeholder: "City" },
 ];
+
+export const deliveryProfileData: deliveryProfileDataType[] = [
+  ...baseProfile,
+  {
+    name: "direction",
+    label: "Directions (optional)",
+    placeholder: "Directions",
+  },
+  {
+    name: "lGA",
+    label: "LGA  (Local Govt.Area)",
+    placeholder: "",
+  },
+  {
+    name: "phoneNumber",
+    label: "Phone Number",
+    placeholder: "Mobile Number",
+  },
+];
+
+export const userProfileData: userProfileDataType[] = [...baseProfile, { name: "currentPassword", label: "Current Password", placeholder: "" }, { name: "newPassword", label: "New Password", placeholder: "" }];

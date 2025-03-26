@@ -18,6 +18,8 @@ export const useGetDeliveryProfile = (): useGetDeliveryProfileDataType => {
   } = useQuery({
     queryKey: ["delivery_profile"],
     queryFn: () => getDeliveryProfile(customerId),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   // const dataUpdatedAtRef = useRef(dataUpdatedAt);

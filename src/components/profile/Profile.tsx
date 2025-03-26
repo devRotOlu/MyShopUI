@@ -30,6 +30,8 @@ const Profile = () => {
     newPassword: undefined,
   });
 
+  console.log(profile, "profile");
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.currentTarget.name;
     const value = event.currentTarget.value;

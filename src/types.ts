@@ -10,7 +10,10 @@ type baseUserType = {
 export type userProfileDataType = {
   name: string;
   label: string;
+  placeholder: string;
 };
+
+export type deliveryProfileDataType = userProfileDataType;
 
 export type textInputProps = {
   name: string;
@@ -200,17 +203,16 @@ export type modifyUserType = baseUserType &
 
 export type profileDataType = baseUserType &
   userAddressType & {
-    currentPassword: string | undefined;
-    newPassword: string | undefined;
+    currentPassword?: string;
+    newPassword?: string;
   };
 
 export type deliveryDataType = baseUserType &
   userAddressType & {
-    id: number | undefined;
     phoneNumber: string;
     lGA: string;
-    directions: string;
-    additionalInformation: string;
+    directions?: string;
+    additionalInformation?: string;
   };
 
 export type cartType = {
@@ -448,6 +450,13 @@ export type userTabDataType = {
 
 export type TabProps = userTabDataType & {};
 
+export type profileSummaryProps = {
+  setHideProfileEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  isEmptyProfile: boolean;
+};
+
+export type editProfileProps = profileSummaryProps;
+
 export type AppContextType = {
   deliveryProfile: deliveryDataType;
   setDeliveryProfile: React.Dispatch<React.SetStateAction<deliveryDataType>>;
@@ -473,4 +482,14 @@ export type AppContextType = {
 
 export type useGetDeliveryProfileDataType = {
   loadingDeliveryProfile: boolean;
+};
+
+export type useAddDeliveryProfileDataType = {
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  addingDeliveryProfile: boolean;
+};
+
+export type useUpdateDeliveryProfileDataType = {
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  updatingDeliveryProfile: boolean;
 };

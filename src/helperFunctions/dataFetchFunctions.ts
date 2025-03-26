@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType, modifyUserType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType, modifyUserType, deliveryDataType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -52,6 +52,14 @@ export const modifyProfile = async (user: modifyUserType) => {
 
 export const getDeliveryProfile = async (userId: string) => {
   return await myShopAxios.get(`Account/get_delivery_profile?userId=${userId}`);
+};
+
+export const addDeliveryProfile = async (deliveryProfile: deliveryDataType) => {
+  return await myShopAxios.post("Account/add_delivery_profile", deliveryProfile);
+};
+
+export const updateDeliveryProfile = async (deliveryProfile: deliveryDataType) => {
+  return await myShopAxios.patch("Account/modify_delivery_profile", deliveryProfile);
 };
 
 // wishlist controller functions

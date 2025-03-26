@@ -35,19 +35,16 @@ const AppContext = ({ children }: AppContextProp) => {
   });
 
   const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({
-    id: undefined,
     streetAddress: "",
     city: "",
     lastName: "",
     firstName: "",
-    additionalInformation: "",
-    directions: "",
+    additionalInformation: undefined,
+    directions: undefined,
     phoneNumber: "",
     state: "",
     lGA: "",
   });
-
-  console.log(loginData, "data_login");
 
   const [products, setProducts] = useState<productType[]>([]);
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);

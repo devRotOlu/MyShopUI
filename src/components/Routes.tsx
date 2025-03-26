@@ -14,7 +14,7 @@ import ProductPage from "./productPage/ProductPage.tsx";
 import GroupedResources from "./GroupedResources.tsx";
 import OrderDetails from "./orderDetails/OrderDetails.tsx";
 import Profile from "./profile/Profile.tsx";
-import DeliveryAddress from "./DeliveryAddress.tsx";
+import DeliveryAddress from "./deliveryAddress/DeliveryAddress.tsx";
 import DeleteAccount from "./DeleteAccount.tsx";
 
 const Routes = () => {
