@@ -19,7 +19,7 @@ export type textInputProps = {
   name: string;
   type: "text" | "email" | "number" | "password";
   placeholder?: string;
-  value: string;
+  value?: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   children?: ReactNode;
   handleFocus?: (event: FocusEvent<HTMLInputElement>) => void;
@@ -28,7 +28,6 @@ export type textInputProps = {
 export type formButtonProp = {
   value: string;
   styles: CSSProperties;
-  isPending?: boolean;
 };
 
 export type formCompProp = {
@@ -209,8 +208,9 @@ export type profileDataType = baseUserType &
 
 export type deliveryDataType = baseUserType &
   userAddressType & {
+    id?: string | number;
     phoneNumber: string;
-    lGA: string;
+    lga: string;
     directions?: string;
     additionalInformation?: string;
   };
@@ -451,15 +451,16 @@ export type userTabDataType = {
 export type TabProps = userTabDataType & {};
 
 export type profileSummaryProps = {
-  setHideProfileEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  isEmptyProfile: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
+  profileIndex: number;
+  setProfileofInterestIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type editProfileProps = profileSummaryProps;
-
 export type AppContextType = {
-  deliveryProfile: deliveryDataType;
-  setDeliveryProfile: React.Dispatch<React.SetStateAction<deliveryDataType>>;
+  initialDeliveryProfile: deliveryDataType;
+  deliveryProfiles: deliveryDataType[];
+  setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
   modifyingProfile: boolean;
   profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
   wishList: wishlistType[];
@@ -484,12 +485,46 @@ export type useGetDeliveryProfileDataType = {
   loadingDeliveryProfile: boolean;
 };
 
+export type ConfirmationDialogProps = {
+  handleDeletion: (_: MouseEvent<HTMLButtonElement>) => void;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type useDeleteDeliveryProfileDataType = {
+  deleteProfile: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  isDeleted: boolean;
+};
+
 export type useAddDeliveryProfileDataType = {
+  isAdded: boolean;
   addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   addingDeliveryProfile: boolean;
 };
 
 export type useUpdateDeliveryProfileDataType = {
+  isUpdated: boolean;
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  updatingDeliveryProfile: boolean;
+};
+
+export type ProfileFormProps = {
+  children: React.ReactNode;
+  handleDeliveryProfile: () => void;
+  isPending: boolean;
+};
+
+export type ProfileWrapperProps = {
+  children: ReactNode;
+  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
+};
+
+export type AddProfileProps = {
+  addingDeliveryProfile: boolean;
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+};
+
+export type EditProfileProps = {
+  profileToEditIndex: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
 };

@@ -74,7 +74,7 @@ const Profile = () => {
             <FormComp handleFormSubmit={handleProfileSubmit}>
               <div className="d-flex  flex-wrap gap-4">{profileInputs}</div>
               <div className="mt-3 position-relative">
-                <FormButton value="Save Changes" styles={{ backgroundColor: modifyingProfile ? "black" : "var(--light_Green)", fontWeight: "bold", color: "black" }} isPending={modifyingProfile} />
+                <FormButton value={modifyingProfile ? "" : "Save Changes"} styles={{ backgroundColor: modifyingProfile ? "black" : "var(--light_Green)", fontWeight: "bold", color: "black" }} />
                 {modifyingProfile && (
                   <ComponentOverlay>
                     <div className="d-flex h-100 justify-content-center align-items-center">

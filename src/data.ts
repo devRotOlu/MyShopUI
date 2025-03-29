@@ -106,7 +106,7 @@ export const deliveryProfileData: deliveryProfileDataType[] = [
     placeholder: "Directions",
   },
   {
-    name: "lGA",
+    name: "lga",
     label: "LGA  (Local Govt.Area)",
     placeholder: "",
   },

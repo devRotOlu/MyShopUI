@@ -18,6 +18,19 @@ const tokenRefreshTime = 65 * 1000 * 60;
 
 export const appContext = React.createContext({} as AppContextType);
 
+const initialDeliveryProfile = {
+  id: undefined,
+  streetAddress: "",
+  city: "",
+  lastName: "",
+  firstName: "",
+  additionalInformation: undefined,
+  directions: undefined,
+  phoneNumber: "",
+  state: "",
+  lga: "",
+};
+
 const AppContext = ({ children }: AppContextProp) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isOldSession, setIsOldSession] = useState(false);
@@ -34,17 +47,7 @@ const AppContext = ({ children }: AppContextProp) => {
     city: "",
   });
 
-  const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({
-    streetAddress: "",
-    city: "",
-    lastName: "",
-    firstName: "",
-    additionalInformation: undefined,
-    directions: undefined,
-    phoneNumber: "",
-    state: "",
-    lGA: "",
-  });
+  const [deliveryProfiles, setDeliveryProfiles] = useState<deliveryDataType[]>([]);
 
   const [products, setProducts] = useState<productType[]>([]);
   const [shouldDisplayAlert, setShouldDisplayAlert] = useState<boolean>(false);
@@ -308,8 +311,8 @@ const AppContext = ({ children }: AppContextProp) => {
   return (
     <appContext.Provider
       value={{
-        deliveryProfile,
-        setDeliveryProfile,
+        deliveryProfiles,
+        setDeliveryProfiles,
         modifyingProfile,
         profileMutate,
         wishList,
@@ -328,6 +331,7 @@ const AppContext = ({ children }: AppContextProp) => {
         setInitialRender,
         handLogout,
         cartItemsTotalPrice,
+        initialDeliveryProfile,
       }}
     >
       {children}

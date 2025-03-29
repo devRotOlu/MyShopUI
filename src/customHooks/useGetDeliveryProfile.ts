@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useGetDeliveryProfileDataType } from "../types";
@@ -8,7 +8,7 @@ import { appContext } from "../components/context/AppContext";
 export const useGetDeliveryProfile = (): useGetDeliveryProfileDataType => {
   const {
     loginData: { id: customerId },
-    setDeliveryProfile,
+    setDeliveryProfiles,
   } = useContext(appContext);
   const {
     data,
@@ -22,18 +22,18 @@ export const useGetDeliveryProfile = (): useGetDeliveryProfileDataType => {
     refetchOnWindowFocus: false,
   });
 
-  // const dataUpdatedAtRef = useRef(dataUpdatedAt);
+  const dataUpdatedAtRef = useRef(dataUpdatedAt);
 
   useEffect(() => {
-    // const isUpdated = dataUpdatedAt !== dataUpdatedAtRef.current;
-    if (isSuccess) {
-      console.log("in here");
+    const isUpdated = dataUpdatedAt !== dataUpdatedAtRef.current;
+    if (isUpdated) {
+      dataUpdatedAtRef.current = dataUpdatedAt;
       const _data = data?.data;
       if (_data) {
-        setDeliveryProfile({ ..._data });
+        setDeliveryProfiles([..._data]);
       }
     }
-  }, [data?.data, isSuccess, setDeliveryProfile]);
+  }, [data?.data, dataUpdatedAt, isSuccess, setDeliveryProfiles]);
 
   return {
     loadingDeliveryProfile,

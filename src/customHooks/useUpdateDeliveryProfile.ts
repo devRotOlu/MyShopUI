@@ -5,8 +5,8 @@ import { updateDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
 import { appContext } from "../components/context/AppContext";
 import { useUpdateDeliveryProfileDataType } from "../types";
 
-export const useUpdateDeliveryProfile = (): useUpdateDeliveryProfileDataType => {
-  const { setDeliveryProfile } = useContext(appContext);
+export const useUpdateDeliveryProfile = (navigateFunc?: () => void): useUpdateDeliveryProfileDataType => {
+  const { setDeliveryProfiles } = useContext(appContext);
 
   const { mutate, data, isSuccess, submittedAt, isPending } = useMutation({
     mutationFn: updateDeliveryProfile,
@@ -17,12 +17,17 @@ export const useUpdateDeliveryProfile = (): useUpdateDeliveryProfileDataType => 
   useEffect(() => {
     if (isSuccess && submittedAt !== submittedAtRef.current) {
       submittedAtRef.current = submittedAt;
-      setDeliveryProfile((prevProfile) => ({ ...prevProfile, ...data?.data }));
+      var _data = data?.data;
+      setDeliveryProfiles([..._data]);
+      if (navigateFunc) navigateFunc();
     }
-  }, [submittedAt, isSuccess, setDeliveryProfile, data]);
+  }, [submittedAt, isSuccess, setDeliveryProfiles, data, navigateFunc]);
+
+  const isUpdated = isSuccess && submittedAt !== submittedAtRef.current;
 
   return {
     updateDeliveryProfile: mutate,
     updatingDeliveryProfile: isPending,
+    isUpdated,
   };
 };

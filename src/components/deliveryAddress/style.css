@@ -1,7 +1,24 @@
-#profile_summary #contact_card {
-  width: fit-content;
+#contact_card {
+  width: 60%;
 }
 
-#profile_summary #contact_card > div:first-child > p {
+#contact_card > div:first-child > p {
   font-size: 12px;
+}
+
+#delete_confirmation_dialog {
+  background-color: var(--darkest_Grey);
+  width: 400px;
+}
+
+#delete_confirmation_dialog p {
+  font-size: 12px;
+}
+
+#delete_confirmation_dialog > div:last-child > button:first-child {
+  background-color: var(--deep_sky_blue);
+}
+
+#delete_confirmation_dialog > div:last-child > button:last-child {
+  background-color: var(--grayish_blue);
 }

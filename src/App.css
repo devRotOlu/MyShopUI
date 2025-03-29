@@ -1,4 +1,5 @@
 :root {
+  --grayish_blue: #4f4e5a;
   --Light_Grey: #f2f2f2;
   --darker_Grey: #e6e6e6;
   --darkest_Grey: #3f3f3f;
@@ -8,6 +9,7 @@
   --dark_Green: #319c6e;
   --lighter_pink: #ed017f;
   --dark_orange: #fba100;
+  --deep_sky_blue: #00ddff;
 }
 
 @font-face {

@@ -62,6 +62,10 @@ export const updateDeliveryProfile = async (deliveryProfile: deliveryDataType) =
   return await myShopAxios.patch("Account/modify_delivery_profile", deliveryProfile);
 };
 
+export const deleteDeliveryProfile = async (profileId: number) => {
+  return await myShopAxios.delete(`Account/delete_delivery_profile?profileId=${profileId}`);
+};
+
 // wishlist controller functions
 
 export const getWishlist = async (email: string) => {
