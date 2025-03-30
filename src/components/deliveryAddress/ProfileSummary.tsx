@@ -20,8 +20,8 @@ const ProfileSummary = ({ setPageIndex, profileIndex, setProfileofInterestIndex,
   };
 
   return (
-    <div className="px-3">
-      <div className="py-2 border rounded pb-4" id="contact_card">
+    <div className="px-3 profile_summary">
+      <div className="py-2 border rounded pb-4 contact_card">
         <div className="d-flex justify-content-between pb-2 border-bottom px-3">
           <p className="fw-bold">
             Default Delivery <br />
@@ -46,8 +46,7 @@ const ProfileSummary = ({ setPageIndex, profileIndex, setProfileofInterestIndex,
           <div className="d-flex align-items-center gap-3">
             <Icon icon="ion:location-outline" color="var(--dark_orange)" />
             <p>
-              {streetAddress}, {city}, <br />
-              {state}
+              {streetAddress}, {city}, {state}
             </p>
           </div>
           <div className="d-flex align-items-center gap-3">

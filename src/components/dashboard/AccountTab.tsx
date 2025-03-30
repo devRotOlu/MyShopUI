@@ -21,7 +21,11 @@ const AccountTab = () => {
       </div>
     );
   });
-  return <div className="bg-white px-3 rounded pb-5">{tabs}</div>;
+  return (
+    <div className="bg-white px-3 rounded pb-5" id="tab_wrapper">
+      {tabs}
+    </div>
+  );
 };
 
 export default AccountTab;

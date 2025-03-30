@@ -1,0 +1,32 @@
+#delete_account p {
+  font-size: 15px;
+}
+
+#delete_account #content_wrapper {
+  padding: 0 7rem;
+}
+
+#delete_account #signTerms {
+  appearance: none;
+  width: 25px;
+  height: 20px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  position: relative;
+}
+
+#delete_account #signTerms:checked {
+  background-color: var(--lighter_pink);
+  border-color: var(--lighter_pink);
+}
+
+#delete_account #signTerms:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

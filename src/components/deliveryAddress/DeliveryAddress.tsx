@@ -1,4 +1,4 @@
-import React, { useContext, useState, MouseEvent } from "react";
+import React, { useContext, useState, MouseEvent, useEffect, useRef } from "react";
 
 import PageWrapper from "../PageWrapper";
 import AccountTab from "../dashboard/AccountTab";
@@ -33,14 +33,15 @@ const DeliveryAddress = () => {
   const { updateDeliveryProfile, updatingDeliveryProfile, isUpdated } = useUpdateDeliveryProfile(() => setPageIndex("0"));
   const { addDeliveryProfile, addingDeliveryProfile, isAdded } = useAddDeliveryProfile(() => setPageIndex("0"));
 
-  const alertMessage = isDeleted ? "Address successfully deleted!" : isUpdated ? "Delivery Address updated successfully!" : isAdded ? "New Delivery Address saved successfully!" : "";
+  const alertMessageRef = useRef("");
 
-  console.log(isUpdated, "updated");
-  console.log(alertMessage, "message");
-
-  if ((isAdded || isDeleted || isUpdated) && !showAlert) {
-    setShowAlert(true);
-  }
+  useEffect(() => {
+    if ((isAdded || isDeleted || isUpdated) && !showAlert) {
+      const alertMessage = isDeleted ? "Address successfully deleted!" : isUpdated ? "Delivery Address updated successfully!" : isAdded ? "New Delivery Address saved successfully!" : "";
+      alertMessageRef.current = alertMessage;
+      setShowAlert(true);
+    }
+  }, [isAdded, isDeleted, isUpdated, showAlert]);
 
   const handleDeletion = (_: MouseEvent<HTMLButtonElement>) => {
     const profile = deliveryProfiles[profileofInterestIndex];
@@ -64,8 +65,6 @@ const DeliveryAddress = () => {
     .map((_, index) => {
       return <ProfileSummary setPageIndex={setPageIndex} profileIndex={index} setProfileofInterestIndex={setProfileofInterestIndex} setShowModal={setShowModal} />;
     });
-
-  console.log(showAlert, "show");
 
   return (
     <>
@@ -96,7 +95,7 @@ const DeliveryAddress = () => {
           </div>
         </div>
       </PageWrapper>
-      {showAlert && <Alert alertMessage={alertMessage} setIsDisplayed={setShowAlert} styles={{ backgroundColor: "green" }} />}
+      {showAlert && <Alert alertMessage={alertMessageRef.current} setIsDisplayed={setShowAlert} styles={{ backgroundColor: "var(--light_Green)", height: "60px " }} />}
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <ConfirmationDialog setShowModal={setShowModal} handleDeletion={handleDeletion} />

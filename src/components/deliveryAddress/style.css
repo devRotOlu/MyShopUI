@@ -1,8 +1,8 @@
-#contact_card {
+.profile_summary .contact_card {
   width: 60%;
 }
 
-#contact_card > div:first-child > p {
+.profile_summary .contact_card > div:first-child > p {
   font-size: 12px;
 }
 

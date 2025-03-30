@@ -16,7 +16,7 @@ const Tab = ({ icon, tab, link }: TabProps) => {
     );
   });
   return (
-    <div id="tab" className="d-flex gap-2">
+    <div className="d-flex gap-2 tab">
       <div>
         <Icon icon={icon} className="fs-5" />
       </div>
