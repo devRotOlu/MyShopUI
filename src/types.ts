@@ -47,7 +47,7 @@ export type AppContextProp = {
 export type AlertProp = {
   alertMessage: string;
   alertTitle?: string;
-  setIsDisplayed: Dispatch<SetStateAction<boolean>>;
+  setIsDisplayed?: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
   styles: CSSProperties;
 };
@@ -450,6 +450,10 @@ export type userTabDataType = {
 
 export type TabProps = userTabDataType & {};
 
+export type profileCardProps = {
+  profileIndex: number;
+};
+
 export type profileSummaryProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
@@ -528,3 +532,9 @@ export type EditProfileProps = {
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
 };
+
+export type deliveryAddressProps = {
+  selectedProfile: deliveryDataType | undefined;
+};
+
+export type changeDeliveryAddressProps = {};

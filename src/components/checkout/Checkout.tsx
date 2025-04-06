@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, CSSProperties } from "react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -8,21 +8,21 @@ import DeliveryOption from "./DeliveryOption.tsx";
 import PaymentOption from "./PaymentOption.tsx";
 import PageWrapper from "../PageWrapper.tsx";
 import Modal from "../modal/Modal.tsx";
+import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
+import AddressBook from "./AddressBook.tsx";
 
 import { checkoutContextType, payPlatformType } from "../../types.ts";
-import { appContext } from "../context/AppContext.tsx";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
 import { useModal } from "../../customHooks/useModal.ts";
 import "./style.css";
+import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile.ts";
 
 const clientId: string = process.env.REACT_APP_PayPal_ClientID!;
 
 export const checkoutContext = React.createContext({} as checkoutContextType);
 
 const Checkout = () => {
-  const {
-    loginData: { email },
-  } = useContext(appContext);
+  const { loadingDeliveryProfile } = useGetDeliveryProfile();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,6 +46,18 @@ const Checkout = () => {
     navigate(`/checkout/successful/${orderId}`, { state: data, replace: true });
   }
 
+  if (loadingDeliveryProfile) {
+    return (
+      <PageWrapper pageId="checkout">
+        <div className="bg-white">
+          <SkeletonPageLoader count={2} />
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  const styles: CSSProperties = payOption === "" ? { display: "flex", justifyContent: "end" } : { display: "flex", justifyContent: "center", alignItems: "center" };
+
   return (
     <checkoutContext.Provider value={{ ...monnifyData, payPalIsSuccess, setPayPalIsSuccess, setPayPalOrderID, monnifyOption, setMonnifyOption, setShowModal }} key={location.pathname}>
       <PageWrapper pageId="checkout">
@@ -58,17 +70,18 @@ const Checkout = () => {
             <div></div>
           </section>
         </div>
-        {showModal && (
-          <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            {payOption === "payPal" && (
-              <PayPalScriptProvider options={{ clientId }}>
-                <PayPal />
-              </PayPalScriptProvider>
-            )}
-            {payOption === "monnify" && <MonnifyDialog />}
-          </Modal>
-        )}
       </PageWrapper>
+      {showModal && (
+        <Modal styles={styles}>
+          {payOption === "payPal" && (
+            <PayPalScriptProvider options={{ clientId }}>
+              <PayPal />
+            </PayPalScriptProvider>
+          )}
+          {payOption === "monnify" && <MonnifyDialog />}
+          {payOption === "" && <AddressBook />}
+        </Modal>
+      )}
     </checkoutContext.Provider>
   );
 };

@@ -1,31 +1,43 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+
+import DeliveryAddress from "./DeliveryAddress";
+import ChangeDeliveryAddress from "./ChangeDeliveryAddress";
 
 import { appContext } from "../context/AppContext";
+import { deliveryDataType } from "../../types";
+import { Icon } from "@iconify/react";
 
 const DeliveryOption = () => {
-  const appstates = useContext(appContext);
-  const [hasInstruction, setHasInstruction] = useState(false);
-  const {
-    loginData: { firstName, lastName, shippingAddress, phoneNumber },
-  } = appstates;
+  const { deliveryProfiles } = useContext(appContext);
+
+  const [selectedProfile, setSelectedProfile] = useState<deliveryDataType | undefined>(undefined);
+
+  const isInitialProfileRef = useRef(false);
+
+  useEffect(() => {
+    if (deliveryProfiles.length && !isInitialProfileRef.current) {
+      setSelectedProfile(deliveryProfiles[0]);
+      isInitialProfileRef.current = true;
+    }
+  }, [deliveryProfiles, deliveryProfiles.length]);
+
+  const iconColor = selectedProfile ? "var( --light_Green)" : "var(--darker_Grey)";
+  const headerBg = selectedProfile ? "white" : "var(--lavender_blush)";
   return (
-    <div className="bg-white">
-      <div className="d-flex px-3 py-2 border-bottom justify-content-between">
-        <h2>1. Choose Delivery Option</h2>
-        <button>Change</button>
+    <div className="" id="delivery_option">
+      <div className="d-flex py-2 border-bottom justify-content-between align-items-center" style={{ backgroundColor: headerBg }}>
+        <h2 className="fs-6">
+          <Icon icon="pixel:check-circle-solid" className="fs-4" color={iconColor} />
+          <span className="ms-2">1. Choose Delivery Option</span>
+        </h2>
+        {selectedProfile && (
+          <button id="change_address_btn" className="px-3 py-2" onClick={() => setSelectedProfile(undefined)}>
+            Change
+          </button>
+        )}
       </div>
-      <div className="py-4 px-3">
-        <p>
-          {firstName} {lastName}
-        </p>
-        <p>{shippingAddress}</p>
-        <p>{phoneNumber}</p>
-        <label>
-          <input type="checkbox" onChange={() => setHasInstruction((preValue) => !preValue)} />
-          <span>Check this box if you have any instruction regarding this order</span>
-        </label>
-        {hasInstruction && <textarea className="w-100" placeholder="(If you want to add a comment e.g delivery instruction)"></textarea>}
-      </div>
+      {!selectedProfile && <ChangeDeliveryAddress />}
+      {selectedProfile && <DeliveryAddress selectedProfile={selectedProfile} />}
     </div>
   );
 };

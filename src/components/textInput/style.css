@@ -1,15 +1,15 @@
-.inputs {
+#text_input .inputs {
   width: 100%;
   padding: 7px;
   border: solid thin black;
   border-radius: 4px;
 }
 
-.inputs:focus {
+#text_input .inputs:focus {
   outline: none;
 }
 
-label button {
+#text_input label button {
   position: absolute;
   bottom: 7px;
   right: 10px;

@@ -39,7 +39,7 @@ const LoginOnModal = () => {
         {formElements}
         <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
       </AuthFormElementWrapper>
-      <div className="d-flex justify-content-center" id="modal_login_link">
+      <div className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
         <Link to="/account/signup">Don’t have an account? Sign Up</Link>
       </div>
     </FormComp>

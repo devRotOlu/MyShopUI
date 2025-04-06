@@ -6,8 +6,15 @@ import "./style.css";
 
 const Alert = ({ alertMessage, alertTitle, setIsDisplayed, children, styles }: AlertProp) => {
   useEffect(() => {
-    const myTimeOut = setTimeout(() => setIsDisplayed(false), 10000);
-    return () => clearTimeout(myTimeOut);
+    let myTimeOut = null;
+    if (setIsDisplayed) {
+      myTimeOut = setTimeout(() => setIsDisplayed(false), 10000);
+    }
+    return () => {
+      if (myTimeOut) {
+        clearTimeout(myTimeOut);
+      }
+    };
   }, [setIsDisplayed]);
 
   return (
@@ -17,11 +24,13 @@ const Alert = ({ alertMessage, alertTitle, setIsDisplayed, children, styles }: A
         <p>{alertMessage}</p>
         {children}
       </div>
-      <div className="d-flex align-items-center justify-content-center">
-        <button onClick={() => setIsDisplayed(false)} className="d-flex">
-          <Icon icon="iconoir:cancel" style={{ fontSize: "30px" }} />
-        </button>
-      </div>
+      {setIsDisplayed && (
+        <div className="d-flex align-items-center justify-content-center">
+          <button onClick={() => setIsDisplayed(false)} className="d-flex">
+            <Icon icon="iconoir:cancel" style={{ fontSize: "30px" }} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

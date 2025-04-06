@@ -31,3 +31,69 @@ div#transfer_details table tr {
 #checkout #closeTransferBtn {
   padding: 10px 0.5rem;
 }
+
+#delivery_option {
+  font-size: 14px;
+}
+
+#delivery_option > div {
+  padding: 0 2.1rem;
+}
+
+#delivery_option button#change_address_btn {
+  border: solid thin var(--lighter_pink);
+  color: var(--lighter_pink);
+  border-radius: 3px;
+}
+
+#delivery_option button#add_address_btn {
+  background-color: var(--lighter_pink);
+  border-radius: 3px;
+  width: fit-content;
+}
+
+#delivery_option #delivery_details > div:nth-child(2),
+#delivery_option #delivery_details > label {
+  font-size: 13px;
+}
+
+#change_address {
+  background-color: var(--lightest_grey);
+}
+
+#change_address > div > div:first-child {
+  width: 55%;
+}
+
+#change_address > div {
+  font-size: 12px;
+}
+
+#change_address > div > div:last-child {
+  width: 42%;
+  background-color: var(--lavender_blush);
+  height: fit-content;
+  color: var(--lighter_pink);
+}
+
+#address_book {
+  width: 450px;
+}
+
+#address_book > div:first-child {
+  box-shadow: -1px 0 10px -7px;
+}
+
+#address_book > div:nth-child(2) > div button {
+  border: solid thin var(--lighter_pink);
+  border-radius: 3px;
+  color: var(--lighter_pink);
+}
+
+#address_book > div:nth-child(2) > div p {
+  font-size: 13px;
+}
+
+.profileCard {
+  border-radius: 5px;
+}

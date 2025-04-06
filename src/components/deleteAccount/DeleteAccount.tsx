@@ -1,13 +1,46 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 import AccountTab from "../dashboard/AccountTab";
 import PageWrapper from "../PageWrapper";
 import ComponentOverlay from "../ComponentOverlay.tsx";
+import Loader from "../Loader.tsx";
 
+import { deleteAccount } from "../../helperFunctions/dataFetchFunctions.ts";
+import { appContext } from "../context/AppContext.tsx";
 import "./style.css";
+import { alertContext } from "../context/AlertProvider.tsx";
 
 const DeleteAccount = () => {
   const [signTerms, setSignTerms] = useState(false);
+
+  const { setIsLoggedIn } = useContext(appContext);
+  const { handleAlert } = useContext(alertContext);
+
+  const { mutate, isSuccess, isPending, submittedAt } = useMutation({
+    mutationFn: deleteAccount,
+  });
+
+  const submittedAtRef = useRef(submittedAt);
+
+  const navigate = useNavigate();
+
+  if (isSuccess && submittedAtRef.current !== submittedAt) {
+    submittedAtRef.current = submittedAt;
+    handleAlert({
+      showAlert: true,
+      alertMessage: "Account deleted",
+      styles: { backgroundColor: "green" },
+    });
+  }
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setIsLoggedIn(false);
+  //     navigate("/");
+  //   }
+  // }, [isSuccess, navigate, setIsLoggedIn]);
 
   return (
     <PageWrapper pageId="delete_account">
@@ -26,10 +59,19 @@ const DeleteAccount = () => {
                 <p>Yes, please erase my myShop account and all of my personal data permanently.</p>
               </label>
               <div className="position-relative">
-                <button onClick={() => console.log("hello")} className="text-white py-3 rounded w-100" style={{ backgroundColor: signTerms ? "var(--lighter_pink)" : "var(--darkest_Grey)" }}>
+                <button onClick={() => mutate()} className="text-white py-3 rounded w-100" style={{ backgroundColor: signTerms ? "var(--lighter_pink)" : "var(--darkest_Grey)" }}>
                   DELETE MY ACCOUNT
                 </button>
-                {!signTerms && <ComponentOverlay />}
+                {!signTerms ||
+                  (isPending && (
+                    <ComponentOverlay>
+                      {isPending && (
+                        <div className="d-flex h-100 justify-content-center align-items-center">
+                          <Loader size="spinner-border-sm" color="white" />
+                        </div>
+                      )}
+                    </ComponentOverlay>
+                  ))}
               </div>
             </div>
           </div>

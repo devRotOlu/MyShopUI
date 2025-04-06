@@ -66,6 +66,10 @@ export const deleteDeliveryProfile = async (profileId: number) => {
   return await myShopAxios.delete(`Account/delete_delivery_profile?profileId=${profileId}`);
 };
 
+export const deleteAccount = async () => {
+  return await myShopAxios.delete("Account/delete_account");
+};
+
 // wishlist controller functions
 
 export const getWishlist = async (email: string) => {
