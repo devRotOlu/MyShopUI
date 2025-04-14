@@ -3,12 +3,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getTransactionStatus, getTranserInfo, initializePayment, sendCardDetails } from "../helperFunctions/dataFetchFunctions";
 import { bankDetailsType, useMonnifyType } from "../types";
-import { appContext } from "../components/context/AppContext";
+import { userContext } from "../components/context/UserProvider";
 
 export const useMonnify = (): useMonnifyType => {
   const {
     loginData: { email },
-  } = useContext(appContext);
+  } = useContext(userContext);
   const [bankCode, setBankCode] = useState<string>("");
 
   const queryClient = useQueryClient();

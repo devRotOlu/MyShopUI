@@ -1,11 +1,8 @@
-import React, { createContext, CSSProperties, ReactNode, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-import Alert from "../alert/Alert";
-
-type alertDataType = {
+export type alertDataType = {
   showAlert: boolean;
-  alertMessage: string;
-  styles: CSSProperties;
+  alertDialog?: ReactNode;
 };
 
 export type alertContextType = {
@@ -20,8 +17,6 @@ export type AlertProviderProps = {
 
 const initialAlert = {
   showAlert: false,
-  alertMessage: "",
-  styles: {},
 };
 
 const AlertProvider = ({ children }: AlertProviderProps) => {
@@ -29,20 +24,23 @@ const AlertProvider = ({ children }: AlertProviderProps) => {
 
   // Show alert function
   const handleAlert = (alert: alertDataType) => {
-    setAlert(alert);
+    setAlert((prevObj) => ({ ...prevObj, ...alert }));
   };
 
-  const { showAlert, alertMessage, styles } = alert;
+  const { showAlert, alertDialog } = alert;
 
   useEffect(() => {
     if (showAlert) {
-      setTimeout(() => setAlert(initialAlert), 3000);
+      const timeOut = setTimeout(() => {
+        setAlert(initialAlert);
+        clearTimeout(timeOut);
+      }, 10000);
     }
   }, [showAlert]);
   return (
     <alertContext.Provider value={{ handleAlert }}>
       {children}
-      {showAlert && <Alert alertMessage={alertMessage} styles={styles} />}
+      {showAlert && alertDialog && alertDialog}
     </alertContext.Provider>
   );
 };

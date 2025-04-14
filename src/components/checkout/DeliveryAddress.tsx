@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-import { deliveryAddressProps } from "../../types";
+import { checkoutContext } from "./Checkout";
+import { deliveryContext } from "../context/DeliveryProfileProvider";
 
-const DeliveryAddress = ({ selectedProfile }: deliveryAddressProps) => {
-  const { firstName, lastName, streetAddress, city, state, phoneNumber } = selectedProfile!;
+const DeliveryAddress = () => {
+  const { deliveryProfiles } = useContext(deliveryContext);
+  const { profileIndex } = useContext(checkoutContext);
+  const { firstName, lastName, streetAddress, city, state, phoneNumber } = deliveryProfiles[profileIndex!];
 
   const [hasInstruction, setHasInstruction] = useState(false);
 

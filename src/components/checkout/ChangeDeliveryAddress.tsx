@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 
-import { appContext } from "../context/AppContext";
+import { userContext } from "../context/UserProvider";
 import { checkoutContext } from "./Checkout";
 
 const ChangeDeliveryAddress = () => {
   const {
     loginData: { firstName },
-  } = useContext(appContext);
+  } = useContext(userContext);
   const { setShowModal } = useContext(checkoutContext);
   return (
     <div id="change_address" className="pt-4 pb-5">

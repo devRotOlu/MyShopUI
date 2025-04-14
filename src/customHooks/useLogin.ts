@@ -1,17 +1,12 @@
-import { useState, useRef, useContext, ChangeEvent, FormEvent } from "react";
+import { useState, useRef, ChangeEvent, FormEvent, SetStateAction, Dispatch } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
-import { appContext } from "../components/context/AppContext.tsx";
-import { useLoginData, LoginStateType } from "../types.ts";
+import { useLoginData, LoginStateType, userDataType } from "../types.ts";
 import { signinUser } from "../helperFunctions/dataFetchFunctions.ts";
 
-export const useLogin = (): useLoginData => {
+export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, setIsLoggedIn: Dispatch<SetStateAction<boolean>>, setLoginData: Dispatch<SetStateAction<userDataType>>): useLoginData => {
   const [formValues, setFormValues] = useState<LoginStateType>({ email: "", password: "" });
-  const navigate = useNavigate();
-  const appStates = useContext(appContext);
-  const { setIsLoggedIn, setLoginData, setIsOldSession } = appStates;
 
   const prevFormValues = useRef<{ email: string; password: string }>({ email: "", password: "" });
 
@@ -25,10 +20,14 @@ export const useLogin = (): useLoginData => {
     setLoginData((prevData) => ({ ...prevData, ...data.data }));
     setIsLoggedIn(true);
     setIsOldSession(false);
-    navigate("/");
   };
 
-  const { mutate, isError, isSuccess } = useMutation({
+  const {
+    mutate,
+    isError,
+    isSuccess,
+    submittedAt: loginTime,
+  } = useMutation({
     mutationFn: signinUser,
     onSuccess,
   });
@@ -43,11 +42,12 @@ export const useLogin = (): useLoginData => {
   const _isSuccess = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isSuccess;
 
   return {
-    formValues,
-    setFormValues,
-    handleChange,
-    isError: _isError,
-    handleSubmit,
-    isSuccess: _isSuccess,
+    loginTime,
+    loginInputValues: formValues,
+    setLoginInputValues: setFormValues,
+    handleLoginInputChange: handleChange,
+    isLoginError: _isError,
+    handleLoginFormSubmit: handleSubmit,
+    isLoginSuccess: _isSuccess,
   };
 };

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef } from "react";
 
-import { appContext } from "../components/context/AppContext";
 import { useMutation } from "@tanstack/react-query";
 import { addDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
 import { useAddDeliveryProfileDataType } from "../types";
+import { deliveryContext } from "../components/context/DeliveryProfileProvider";
 
 export const useAddDeliveryProfile = (navigateFunc?: () => void): useAddDeliveryProfileDataType => {
-  const { setDeliveryProfiles } = useContext(appContext);
+  const { setDeliveryProfiles } = useContext(deliveryContext);
 
   const { mutate, data, isSuccess, submittedAt, isPending } = useMutation({
     mutationFn: addDeliveryProfile,

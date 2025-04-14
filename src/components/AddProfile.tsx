@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 
-import TextInput from "../textInput/TextInput";
+import TextInput from "./textInput/TextInput";
 import ProfileForm from "./ProfileForm";
 
-import { deliveryProfileData } from "../../data";
-import { AddProfileProps, deliveryDataType } from "../../types";
+import { deliveryProfileData } from "../data";
+import { AddProfileProps, deliveryDataType } from "../types";
 
 const AddProfile = ({ addDeliveryProfile, addingDeliveryProfile }: AddProfileProps) => {
   const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({

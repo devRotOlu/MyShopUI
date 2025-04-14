@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { appContext } from "../context/AppContext.tsx";
+import { cartContext } from "../context/CartProvider.tsx";
 
 const OrderSummary = () => {
-  const appStates = useContext(appContext);
-  const { cartItemsCount, cartItemsTotalPrice } = appStates;
+  const { cartItemsCount, cartItemsTotalPrice } = useContext(cartContext);
+
   return (
     <div id="order_summary" className="bg-white" style={{ width: "20%" }}>
       <div className="d-flex justify-content-between px-2 py-3 border-bottom">

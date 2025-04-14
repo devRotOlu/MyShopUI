@@ -3,11 +3,11 @@ import { Icon } from "@iconify/react";
 
 import Brand from "../../brand/Brand";
 
-import { appContext } from "../../context/AppContext";
 import { dialogHeaderProps } from "../../../types";
+import { cartContext } from "../../context/CartProvider";
 
 const DialogHeader = ({ children }: dialogHeaderProps) => {
-  const { cartItemsTotalPrice } = useContext(appContext);
+  const { cartItemsTotalPrice } = useContext(cartContext);
 
   return (
     <>

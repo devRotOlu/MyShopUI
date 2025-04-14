@@ -4,14 +4,14 @@ import { PayPalButtons, PayPalButtonsComponentProps, usePayPalScriptReducer } fr
 import Loader from "../Loader";
 import CheckoutError from "./CheckoutError";
 
-import { appContext } from "../context/AppContext";
+import { userContext } from "../context/UserProvider";
 import { myShopAxios } from "../../api/axios";
 import { checkoutContext } from "./Checkout";
 
 const PayPal = () => {
   const {
     loginData: { id },
-  } = useContext(appContext);
+  } = useContext(userContext);
 
   const { setPayPalIsSuccess, setPayPalOrderID, payPalIsSuccess } = useContext(checkoutContext);
 

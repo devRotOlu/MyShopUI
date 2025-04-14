@@ -5,13 +5,13 @@ import { updateCartItem } from "../helperFunctions/dataFetchFunctions";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
 import { cartType, productType } from "../types";
 import { useUpdateItemDataType } from "../types";
-import { appContext } from "../components/context/AppContext";
+import { userContext } from "../components/context/UserProvider";
 
 export const useUpdateCartItem = (): useUpdateItemDataType => {
   const {
     loginData: { id: customerId },
     isLoggedIn,
-  } = useContext(appContext);
+  } = useContext(userContext);
 
   const { mutate: updateItem, isPending: isUpdating } = useMutation({
     mutationFn: updateCartItem,

@@ -40,14 +40,13 @@ export type AuthPageWrapperProp = {
   children: ReactNode;
 };
 
-export type AppContextProp = {
+export type ProvidersProp = {
   children: ReactNode;
 };
 
 export type AlertProp = {
   alertMessage: string;
   alertTitle?: string;
-  setIsDisplayed?: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
   styles: CSSProperties;
 };
@@ -97,13 +96,27 @@ export type useModalDataType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export type useLogoutDataType = {
+  logoutUser: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  isLoggedOut: boolean;
+  logoutTime: number;
+};
+
+export type useDeleteAccountDataType = {
+  isDeletingAccount: boolean;
+  isAccountDeleted: boolean;
+  deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  accountDeletionTime: number;
+};
+
 export type useLoginData = {
-  formValues: LoginStateType;
-  setFormValues: Dispatch<SetStateAction<LoginStateType>>;
-  handleChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
-  isError: boolean;
-  handleSubmit: (event: FormEvent) => void;
-  isSuccess: boolean;
+  loginTime: number;
+  loginInputValues: LoginStateType;
+  setLoginInputValues: Dispatch<SetStateAction<LoginStateType>>;
+  handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
+  isLoginError: boolean;
+  handleLoginFormSubmit: (event: FormEvent) => void;
+  isLoginSuccess: boolean;
 };
 
 export type useMonnifyType = {
@@ -248,9 +261,7 @@ export type failedRequestType = {
   reject: (error?: any) => void;
   config: AxiosRequestConfig;
 };
-export type isInitialRenderType = {
-  home: boolean;
-};
+
 export type signupType = baseUserType & { email: string; phoneNumber: string; password: string };
 
 export type MonnifyProps = {
@@ -312,6 +323,11 @@ export type confirmTransferBtnProps = {
 };
 
 export type checkoutContextType = {
+  isAddedAddress: boolean;
+  addingDeliveryProfile: boolean;
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  setProfileIndex: Dispatch<SetStateAction<number>>;
+  profileIndex: number;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   isBankTransferError: boolean;
   isPaymentError: boolean;
@@ -373,7 +389,7 @@ export type productTabProps = {
 export type productProps = {
   product: productType;
   children: ReactNode;
-  index: number;
+  index?: number;
 };
 
 export type thumbnailProps = {
@@ -432,7 +448,6 @@ export type loaderProps = {
 
 export type addToWishlistProps = {
   productId: number;
-  setDisplayAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type quantityExceededErrorProps = {
@@ -452,6 +467,17 @@ export type TabProps = userTabDataType & {};
 
 export type profileCardProps = {
   profileIndex: number;
+  handleCardClick: (profileIndex: number) => void;
+  selectedIndex: number;
+  setSelectedIndex: Dispatch<SetStateAction<number>>;
+};
+
+export type addressBookProps = {
+  setAddAddress: Dispatch<SetStateAction<boolean>>;
+};
+
+export type addressFormProps = {
+  setAddAddress: Dispatch<SetStateAction<boolean>>;
 };
 
 export type profileSummaryProps = {
@@ -461,28 +487,51 @@ export type profileSummaryProps = {
   setProfileofInterestIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type AppContextType = {
-  initialDeliveryProfile: deliveryDataType;
+export type cartContextType = {
+  isDeletingCartItem: boolean;
+  deleteCartItem: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  cart: cartType[];
+  cartItemsCount: number;
+  setCart: Dispatch<SetStateAction<cartType[]>>;
+  cartItemsTotalPrice: number;
+};
+
+export type wishlistContextType = {
+  wishList: wishlistType[];
+  setWishList: Dispatch<SetStateAction<wishlistType[]>>;
+};
+
+export type useGetWishlistData = {
+  isLoadingWishlist: boolean;
+};
+
+export type deliveryContextType = {
   deliveryProfiles: deliveryDataType[];
   setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
+};
+
+export type userContextType = {
+  deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  isDeletingAccount: boolean;
+  isJustLoggedIn: boolean;
+  isLoginSuccess: boolean;
+  handleLoginFormSubmit: (event: FormEvent) => void;
+  isLoginError: boolean;
+  handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
+  loginInputValues: LoginStateType;
+  setLoginInputValues: Dispatch<SetStateAction<LoginStateType>>;
+  initialDeliveryProfile: deliveryDataType;
   modifyingProfile: boolean;
   profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
-  wishList: wishlistType[];
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   products: productType[];
-  cart: cartType[];
-  cartItemsCount: number;
-  setCart: Dispatch<SetStateAction<cartType[]>>;
   loginData: userDataType;
   setLoginData: Dispatch<SetStateAction<userDataType>>;
   isOldSession: boolean;
   setIsOldSession: Dispatch<SetStateAction<boolean>>;
-  isInitialRender: isInitialRenderType;
-  setInitialRender: (comp: string, value: boolean) => void;
   handLogout: () => void;
-  cartItemsTotalPrice: number;
 };
 
 export type useGetDeliveryProfileDataType = {
@@ -524,17 +573,13 @@ export type ProfileWrapperProps = {
 
 export type AddProfileProps = {
   addingDeliveryProfile: boolean;
-  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  addDeliveryProfile: (deliveryProfile: deliveryDataType) => void;
 };
 
 export type EditProfileProps = {
   profileToEditIndex: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
-};
-
-export type deliveryAddressProps = {
-  selectedProfile: deliveryDataType | undefined;
 };
 
 export type changeDeliveryAddressProps = {};

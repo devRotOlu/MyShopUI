@@ -4,15 +4,16 @@ import { useMutation } from "@tanstack/react-query";
 import { addItemToCart, updateCartItem } from "../helperFunctions/dataFetchFunctions";
 import { cartType, useModifyCartDataType } from "../types";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
-import { appContext } from "../components/context/AppContext";
+import { userContext } from "../components/context/UserProvider";
+import { cartContext } from "../components/context/CartProvider";
 
 export const useModifyCart = (): useModifyCartDataType => {
   const {
     isLoggedIn,
     loginData: { id },
     products,
-    cart,
-  } = useContext(appContext);
+  } = useContext(userContext);
+  const { cart } = useContext(cartContext);
 
   const newCartItemRef = useRef<cartType>(null);
 

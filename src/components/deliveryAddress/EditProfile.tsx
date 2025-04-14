@@ -1,16 +1,16 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 
 import TextInput from "../textInput/TextInput";
-import ProfileForm from "./ProfileForm.tsx";
+import ProfileForm from "../ProfileForm.tsx";
 
-import { appContext } from "../context/AppContext";
 import { deliveryProfileData } from "../../data";
 import { deliveryDataType, EditProfileProps } from "../../types.ts";
+import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 
 const EditProfile = ({ ...props }: EditProfileProps) => {
   const { profileToEditIndex, updateDeliveryProfile, updatingDeliveryProfile } = props;
 
-  const { deliveryProfiles } = useContext(appContext);
+  const { deliveryProfiles } = useContext(deliveryContext);
 
   const _deliveryProfile = deliveryProfiles[profileToEditIndex];
 
@@ -51,9 +51,11 @@ const EditProfile = ({ ...props }: EditProfileProps) => {
   });
 
   return (
-    <ProfileForm handleDeliveryProfile={handleDeliveryProfile} isPending={updatingDeliveryProfile}>
-      {profileInputs}
-    </ProfileForm>
+    <div className="px-5 pt-3">
+      <ProfileForm handleDeliveryProfile={handleDeliveryProfile} isPending={updatingDeliveryProfile}>
+        {profileInputs}
+      </ProfileForm>
+    </div>
   );
 };
 

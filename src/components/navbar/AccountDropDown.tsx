@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 import { AccountDropDownProp } from "../../types";
 
-import { appContext } from "../context/AppContext.tsx";
+import { userContext } from "../context/UserProvider.tsx";
 
 const AccountDropDown = ({ handleShowDropDown, showDropDown }: AccountDropDownProp) => {
-  const appStates = useContext(appContext);
+  const appStates = useContext(userContext);
   const {
     loginData: { lastName },
     handLogout,

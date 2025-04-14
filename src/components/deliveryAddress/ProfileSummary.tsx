@@ -2,10 +2,10 @@ import React, { useContext, MouseEvent } from "react";
 import { Icon } from "@iconify/react";
 
 import { profileSummaryProps } from "../../types";
-import { appContext } from "../context/AppContext";
+import { deliveryContext } from "../context/DeliveryProfileProvider";
 
 const ProfileSummary = ({ setPageIndex, profileIndex, setProfileofInterestIndex, setShowModal }: profileSummaryProps) => {
-  const { deliveryProfiles } = useContext(appContext);
+  const { deliveryProfiles } = useContext(deliveryContext);
 
   const { streetAddress, state, city, firstName, lastName, phoneNumber } = deliveryProfiles[profileIndex];
 

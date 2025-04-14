@@ -5,12 +5,11 @@ import ProductCard from "../productCard/ProductCard.tsx";
 import Alert from "../alert/Alert.tsx";
 import ProductCardSkeleton from "../productCard/ProductCardSkeleton.tsx";
 
-import { appContext } from "../context/AppContext.tsx";
+import { userContext } from "../context/UserProvider.tsx";
 import { useModifyCart } from "../../customHooks/useModifyCart.ts";
 
 const ProductList = () => {
-  const appStates = useContext(appContext);
-  const { products } = appStates;
+  const { products } = useContext(userContext);
   const [isSuccessAlert, setIsSuccessAlert] = useState(false);
   const [isErrorAlert, setIsErrorAlert] = useState(false);
 
@@ -46,19 +45,20 @@ const ProductList = () => {
 
   return (
     <>
-      <div id="product_list" className="w-100 d-flex justify-content-between">
+      <div id="product_list" className="w-100 d-flex justify-content-between px-4 py-5">
         {!products.length && <ProductCardSkeleton count={4} />}
         {products.length && _products}
       </div>
       {isSuccessAlert && (
-        <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`} setIsDisplayed={setIsSuccessAlert}>
+        <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`}>
           <div id="cart_alert" className="d-flex cart_alert justify-content-between">
             <Link to="/cart/overview">View Cart</Link>
             <Link to="/checkout/complete-order">Proceed to Checkout</Link>
           </div>
         </Alert>
       )}
-      {isErrorAlert && <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${addedItem}`} setIsDisplayed={setIsErrorAlert} />}
+
+      {isErrorAlert && <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${addedItem}`} />}
     </>
   );
 };

@@ -1,14 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, MouseEvent } from "react";
 
 import { profileCardProps } from "../../types";
-import { appContext } from "../context/AppContext";
 import { Icon } from "@iconify/react";
+import { deliveryContext } from "../context/DeliveryProfileProvider";
 
-const ProfileCard = ({ profileIndex }: profileCardProps) => {
-  const { deliveryProfiles } = useContext(appContext);
+const ProfileCard = ({ ...props }: profileCardProps) => {
+  const { profileIndex, handleCardClick, selectedIndex, setSelectedIndex } = props;
+  const { deliveryProfiles } = useContext(deliveryContext);
+
   const { firstName, lastName, streetAddress, city, state, phoneNumber } = deliveryProfiles[profileIndex];
+
+  const borderColor = selectedIndex === profileIndex ? "var(--dark_orange)" : "var(--darker_Grey)";
+  const bgColor = selectedIndex === profileIndex ? "var(--lavender_blush)" : "";
+
+  const handleBtnClick = (_: MouseEvent<HTMLDivElement>) => {
+    handleCardClick(profileIndex);
+    setSelectedIndex(profileIndex);
+  };
+
   return (
-    <div className="border w-100 pb-4 profileCard">
+    <div className="w-100 pb-4 profileCard" onClick={handleBtnClick} style={{ border: `solid thin ${borderColor}`, backgroundColor: bgColor }}>
       <div className="py-2 px-1  border-bottom">
         <label>
           <input type="radio" name="profile" />

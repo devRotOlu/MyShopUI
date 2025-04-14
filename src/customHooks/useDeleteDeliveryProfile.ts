@@ -2,11 +2,11 @@ import { useContext, useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { deleteDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
-import { appContext } from "../components/context/AppContext";
 import { useDeleteDeliveryProfileDataType } from "../types";
+import { deliveryContext } from "../components/context/DeliveryProfileProvider";
 
 export const useDeleteDeliveryProfile = (profileIndex: number): useDeleteDeliveryProfileDataType => {
-  const { setDeliveryProfiles } = useContext(appContext);
+  const { setDeliveryProfiles } = useContext(deliveryContext);
 
   const { mutate, isSuccess, submittedAt } = useMutation({ mutationFn: deleteDeliveryProfile });
 

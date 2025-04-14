@@ -11,7 +11,7 @@ import ResetPayOptionBtn from "./ResetPayOptionBtn";
 
 import { cardType, cardRequestType } from "../../../types";
 import { sendCardDetails, appendBuffer, base64ToArrayBuffer, arrayBufferToBase64 } from "../../../helperFunctions/dataFetchFunctions";
-import { appContext } from "../../context/AppContext";
+import { userContext } from "../../context/UserProvider";
 import { checkoutContext } from "../Checkout";
 
 const privateKey: string = process.env.REACT_APP_Crypto_Key!;
@@ -40,7 +40,7 @@ const splitString = (value: string, separator: string, divisor: number): string 
 const CardPayment = () => {
   const {
     loginData: { lastName, firstName },
-  } = useContext(appContext);
+  } = useContext(userContext);
 
   const { transactionRef, sendCardDetails, isCardPaymentError } = useContext(checkoutContext);
 

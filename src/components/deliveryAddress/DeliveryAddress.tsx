@@ -6,18 +6,19 @@ import SkeletonPageLoader from "../SkeletonPageLoader";
 import ProfileSummary from "./ProfileSummary";
 import EditProfile from "./EditProfile";
 import ProfileWrapper from "./ProfileWrapper";
-import AddProfile from "./AddProfile";
+import AddProfile from "../AddProfile";
 import Modal from "../modal/Modal";
 import ConfirmationDialog from "./ConfirmationDialog";
 import Alert from "../alert/Alert";
 
 import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile";
 import "./style.css";
-import { appContext } from "../context/AppContext";
 import { useModal } from "../../customHooks/useModal";
 import { useDeleteDeliveryProfile } from "../../customHooks/useDeleteDeliveryProfile";
 import { useUpdateDeliveryProfile } from "../../customHooks/useUpdateDeliveryProfile";
 import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile";
+import { deliveryDataType } from "../../types";
+import { deliveryContext } from "../context/DeliveryProfileProvider";
 
 const DeliveryAddress = () => {
   const { showModal, setShowModal } = useModal();
@@ -26,7 +27,7 @@ const DeliveryAddress = () => {
   const [profileofInterestIndex, setProfileofInterestIndex] = useState(-1);
   const [showAlert, setShowAlert] = useState(false);
 
-  const { deliveryProfiles } = useContext(appContext);
+  const { deliveryProfiles } = useContext(deliveryContext);
 
   const { deleteProfile, isDeleted } = useDeleteDeliveryProfile(profileofInterestIndex);
   const { loadingDeliveryProfile } = useGetDeliveryProfile();
@@ -66,6 +67,10 @@ const DeliveryAddress = () => {
       return <ProfileSummary setPageIndex={setPageIndex} profileIndex={index} setProfileofInterestIndex={setProfileofInterestIndex} setShowModal={setShowModal} />;
     });
 
+  const handleAddDeliveryProfile = (deliveryProfile: deliveryDataType) => {
+    addDeliveryProfile(deliveryProfile);
+  };
+
   return (
     <>
       <PageWrapper pageId="delivery_page">
@@ -89,7 +94,9 @@ const DeliveryAddress = () => {
             )}
             {pageIndex === "2" && (
               <ProfileWrapper setPageIndex={setPageIndex}>
-                <AddProfile addDeliveryProfile={addDeliveryProfile} addingDeliveryProfile={addingDeliveryProfile} />
+                <div className="px-5 pt-3">
+                  <AddProfile addDeliveryProfile={handleAddDeliveryProfile} addingDeliveryProfile={addingDeliveryProfile} />
+                </div>
               </ProfileWrapper>
             )}
           </div>

@@ -1,23 +1,18 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityExceededError from "./QuantityExceededError";
 import AddToWishlist from "./AddToWishlist";
-import Alert from "../alert/Alert";
 import ProductTab from "./ProductTab";
 
 import { productProps } from "../../types";
 import { useModifyCart } from "../../customHooks/useModifyCart";
-import { appContext } from "../context/AppContext";
 import "./style.css";
 
 const Product = ({ product, children, index }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
-  const [displayAlert, setDisplayAlert] = useState(false);
-
-  const { setShowModal } = useContext(appContext);
 
   const { handleAddToCart } = useModifyCart();
 
@@ -49,7 +44,7 @@ const Product = ({ product, children, index }: productProps) => {
           <span>Product</span>
         </div>
       </div>
-      <div className="d-flex gap-3">
+      <div className="d-flex gap-3 px-4">
         <div className="w-75 d-flex gap-4 px-3 pt-2 pb-5 bg-white">
           <div className="w-50">{children}</div>
           <div className="w-50">
@@ -67,23 +62,16 @@ const Product = ({ product, children, index }: productProps) => {
               </div>
             </div>
             <div id="save_item" className="py-3 border-bottom">
-              <button className="text-light rounded me-4" onClick={() => handleAddToCart(index)}>
+              <button className="text-light rounded me-4" onClick={() => handleAddToCart(index!)}>
                 Add To Cart
               </button>
-              <AddToWishlist productId={productId} setDisplayAlert={setDisplayAlert} />
+              <AddToWishlist productId={productId} />
             </div>
             <ProductTab description={description} />
           </div>
         </div>
         <div className="w-25 bg-white"></div>
       </div>
-      {displayAlert && (
-        <Alert alertMessage="You need to be logged in to Save an Item" setIsDisplayed={setDisplayAlert} styles={{ backgroundColor: "var(--darkest_Grey)" }}>
-          <button className="py-1 px-2 border border-white rounded" onClick={() => setShowModal(true)} style={{ width: "fit-content", color: "var(--dark_orange)" }}>
-            Click here to Login
-          </button>
-        </Alert>
-      )}
     </div>
   );
 };

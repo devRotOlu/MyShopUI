@@ -5,12 +5,13 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Brand from "../brand/Brand.tsx";
 import AccountDropDown from "./AccountDropDown.tsx";
 
-import { appContext } from "../context/AppContext.tsx";
+import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
+import { cartContext } from "../context/CartProvider.tsx";
 
 const Navbar = () => {
-  const appStates = useContext(appContext);
-  const { isLoggedIn, cartItemsCount, setShowModal } = appStates;
+  const { isLoggedIn, setShowModal } = useContext(userContext);
+  const { cartItemsCount } = useContext(cartContext);
 
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 

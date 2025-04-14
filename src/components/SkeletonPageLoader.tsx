@@ -13,34 +13,34 @@ const SkeletonPageLoader = ({ count }: skeletonProps) => {
             <div className="d-flex gap-3" key={index}>
               <div className="d-flex flex-column gap-3 w-25">
                 <div>
-                  <Skeleton />
+                  <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                 </div>
                 <div className="d-flex gap-2">
                   <div className="w-50">
-                    <Skeleton />
+                    <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                   </div>
                   <div className="w-50">
                     <div className="w-50">
-                      <Skeleton />
+                      <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                     </div>
                   </div>
                 </div>
                 <div>
                   <div style={{ width: "70%" }}>
-                    <Skeleton />
+                    <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                   </div>
                 </div>
               </div>
 
               <div className="flex-grow-1 d-flex flex-column gap-3">
                 <div className="w-50">
-                  <Skeleton />
+                  <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                 </div>
                 <div className="w-75">
-                  <Skeleton />
+                  <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                 </div>
                 <div className="w-100">
-                  <Skeleton />
+                  <Skeleton height="25px" borderRadius="10px" baseColor="#f6f7f9" />
                 </div>
               </div>
             </div>

@@ -8,7 +8,7 @@ import FormButton from "../formButton/FormButton";
 import ComponentOverlay from "../ComponentOverlay.tsx";
 import Loader from "../Loader.tsx";
 
-import { appContext } from "../context/AppContext";
+import { userContext } from "../context/UserProvider.tsx";
 import { profileDataType } from "../../types";
 import { userProfileData } from "../../data";
 import "./style.css";
@@ -18,7 +18,7 @@ const Profile = () => {
     loginData: { firstName, lastName, streetAddress, state, city },
     profileMutate,
     modifyingProfile,
-  } = useContext(appContext);
+  } = useContext(userContext);
 
   const [profile, setProfile] = useState<profileDataType>({
     firstName,

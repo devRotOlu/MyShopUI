@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import AuthPageWrapper from "../AuthPageWrapper.tsx";
 import AuthFormTitle from "../AuthFormTitle.tsx";
@@ -10,18 +10,24 @@ import LoginFormElement from "../loginFormElement/LoginFormElement.tsx";
 import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 
-import { useLogin } from "../../customHooks/useLogin.ts";
 import { loginDetails } from "../../data.ts";
-
+import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const { isError, handleChange, formValues, handleSubmit } = useLogin();
+  const { isLoginError, loginInputValues, handleLoginInputChange, handleLoginFormSubmit, isJustLoggedIn } = useContext(userContext);
+
+  const navigate = useNavigate();
+
+  if (isJustLoggedIn) {
+    navigate("/");
+  }
 
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }, index) => {
     return (
-      <LoginFormElement key={index} isError={isError} name={name} inputLabel={inputLabel}>
-        <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder} />
+      <LoginFormElement key={index} isError={isLoginError} name={name} inputLabel={inputLabel}>
+        <TextInput handleChange={(event) => handleLoginInputChange(event, name)} value={loginInputValues[name as keyof typeof loginInputValues]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );
   });
@@ -29,7 +35,7 @@ const LoginPage = () => {
   return (
     <div id="login_page">
       <AuthPageWrapper>
-        <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
+        <FormComp handleFormSubmit={handleLoginFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
           <AuthFormTitle title="Login" />
           <AuthFormElementWrapper>
             {formElements}

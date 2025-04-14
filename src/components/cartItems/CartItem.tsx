@@ -4,7 +4,7 @@ import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
 
 import { CartItemProp, productType } from "../../types.ts";
-import { appContext } from "../context/AppContext.tsx";
+import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 
 const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: CartItemProp) => {
@@ -17,7 +17,7 @@ const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: 
   const {
     isLoggedIn,
     loginData: { id: customerId },
-  } = useContext(appContext);
+  } = useContext(userContext);
 
   const handleQuantityUpdate = (value: number, product: productType | undefined = undefined) => {
     if (isLoggedIn) {

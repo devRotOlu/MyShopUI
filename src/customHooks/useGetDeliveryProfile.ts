@@ -3,13 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useGetDeliveryProfileDataType } from "../types";
 import { getDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
-import { appContext } from "../components/context/AppContext";
+import { userContext } from "../components/context/UserProvider";
+import { deliveryContext } from "../components/context/DeliveryProfileProvider";
 
 export const useGetDeliveryProfile = (): useGetDeliveryProfileDataType => {
   const {
     loginData: { id: customerId },
-    setDeliveryProfiles,
-  } = useContext(appContext);
+  } = useContext(userContext);
+  const { setDeliveryProfiles } = useContext(deliveryContext);
   const {
     data,
     dataUpdatedAt,

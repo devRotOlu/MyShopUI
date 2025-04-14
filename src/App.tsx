@@ -4,8 +4,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import AppContext from "./components/context/AppContext.tsx";
+import UserProvider from "./components/context/UserProvider.tsx";
 import AlertProvider from "./components/context/AlertProvider.tsx";
+import CartProvider from "./components/context/CartProvider.tsx";
+import WishlistProvider from "./components/context/WishlistProvider.tsx";
 import Routes from "./components/Routes.tsx";
 
 import "./App.css";
@@ -13,11 +15,15 @@ import "./App.css";
 function App() {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-      <AppContext>
-        <AlertProvider>
-          <Routes />
-        </AlertProvider>
-      </AppContext>
+      <AlertProvider>
+        <UserProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <Routes />
+            </CartProvider>
+          </WishlistProvider>
+        </UserProvider>
+      </AlertProvider>
     </SkeletonTheme>
   );
 }

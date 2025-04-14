@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useRef, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ProductCardProp } from "../../types.ts";
-import { appContext } from "../context/AppContext.tsx";
+import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 
 const ProductCard = ({ index, handleAddToCart, status }: ProductCardProp) => {
-  const { products, isLoggedIn } = useContext(appContext);
+  const { products, isLoggedIn } = useContext(userContext);
   const { name, unitPrice, quantity, images, id } = products[index];
   const navigate = useNavigate();
 

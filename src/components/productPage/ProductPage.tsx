@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import ProductSkeleton from "../SkeletonPageLoader";
+import SkeletonPageLoader from "../SkeletonPageLoader";
 import Product from "../product/Product";
 import PageWrapper from "../PageWrapper";
 import Carousel from "../carousel/Carousel";
@@ -10,13 +10,16 @@ import ThumbnailWrap from "./ThumbnailWrap";
 import Modal from "../modal/Modal";
 import ModalCloseButton from "../ModalCloseButton";
 
-import { appContext } from "../context/AppContext";
+import { userContext } from "../context/UserProvider";
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
+import { useGetWishlist } from "../../customHooks/useGetWishlist";
 
 const ProductPage = () => {
-  const { products } = useContext(appContext);
+  const { products } = useContext(userContext);
   const { setShowModal, showModal } = useModal();
+
+  const { isLoadingWishlist } = useGetWishlist();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -24,10 +27,12 @@ const ProductPage = () => {
   const splits = (productName as string).split("-");
   const id = Number(splits[splits.length - 1]);
 
-  if (!products.length) {
+  if (!products.length || isLoadingWishlist) {
     return (
       <PageWrapper pageId="productPage">
-        <ProductSkeleton count={2} />
+        <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
+          <SkeletonPageLoader count={2} />
+        </div>
       </PageWrapper>
     );
   }

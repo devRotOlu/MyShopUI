@@ -76,7 +76,7 @@ div#transfer_details table tr {
   color: var(--lighter_pink);
 }
 
-#address_book {
+#address_dialog {
   width: 450px;
 }
 
@@ -84,16 +84,60 @@ div#transfer_details table tr {
   box-shadow: -1px 0 10px -7px;
 }
 
-#address_book > div:nth-child(2) > div button {
+#address_book {
+  overflow-y: scroll;
+}
+
+#address_book > div:last-child > div:first-child {
+  overflow-y: scroll;
+}
+
+#profile_list > div:first-child > div button {
   border: solid thin var(--lighter_pink);
   border-radius: 3px;
   color: var(--lighter_pink);
 }
 
-#address_book > div:nth-child(2) > div p {
+#profile_list > div:first-child > div p {
   font-size: 13px;
 }
 
 .profileCard {
   border-radius: 5px;
+}
+
+#profile_list > div:last-child {
+  position: absolute;
+  bottom: 0;
+  box-shadow: 1px 0 10px -7px;
+  width: 100%;
+}
+
+#profile_list > div:last-child button {
+  background-color: var(--light_Green);
+  border-radius: 5px;
+}
+
+#add_address {
+  overflow-y: scroll;
+}
+
+#add_address > div:last-child {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+#add_address > div:last-child > button:last-child {
+  color: var(--lighter_pink);
+  border: solid thin var(--lighter_pink);
+  border-radius: 5px;
+}
+
+#add_address > div:last-child > button:last-child:hover {
+  background-color: var(--lighter_pink);
+  color: white;
+}
+
+#add_address > div:first-child {
+  box-shadow: -1px 0 10px -7px;
 }
