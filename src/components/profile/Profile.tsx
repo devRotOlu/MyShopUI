@@ -30,8 +30,6 @@ const Profile = () => {
     newPassword: undefined,
   });
 
-  console.log(profile, "profile");
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.currentTarget.name;
     const value = event.currentTarget.value;
@@ -64,7 +62,7 @@ const Profile = () => {
 
   return (
     <PageWrapper pageId="profile">
-      <div className="d-flex justify-content-center gap-4">
+      <div className="d-flex justify-content-center gap-4 py-5">
         <AccountTab />
         <div className="bg-white pt-3 pb-5 w-50 rounded">
           <div className="pb-2 border-bottom border-secondary px-4">

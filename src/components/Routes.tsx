@@ -16,7 +16,7 @@ import OrderDetails from "./orderDetails/OrderDetails.tsx";
 import Profile from "./profile/Profile.tsx";
 import DeliveryAddress from "./deliveryAddress/DeliveryAddress.tsx";
 import DeleteAccount from "./deleteAccount/DeleteAccount.tsx";
-import SavedItems from "./SavedItems.tsx";
+import SavedItems from "./savedItems/SavedItems.tsx";
 
 const Routes = () => {
   return (
@@ -26,6 +26,7 @@ const Routes = () => {
           <Route element={<GroupedResources />}>
             <Route path="/" element={<Home />} />
             <Route path="/product/:productName" element={<ProductPage />} />
+            <Route path="/cart/overview" element={<Cart />} />
           </Route>
           <Route path="/account/signup" element={<SignUp />} />
           <Route path="/account/login" element={<LoginPage />} />
@@ -34,9 +35,8 @@ const Routes = () => {
         <Route element={<AuthenticatedUserResources />}>
           <Route path="/checkout/complete-order" element={<Checkout />} />
           <Route path="checkout/successful/:checkoutId" element={<SuccessfulCheckout />} />
-          <Route path="/cart/overview" element={<Cart />} />
-          <Route path="/account/favourites" element={<SavedItems />} />
           <Route element={<GroupedResources />}>
+            <Route path="/account/favourites" element={<SavedItems />} />
             <Route path="/account/orders" element={<OrderDetails />} />
             <Route path="/account/profile" element={<Profile />} />
             <Route path="/account/delivery-addresses" element={<DeliveryAddress />} />

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, MouseEvent } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
@@ -13,28 +13,13 @@ const Navbar = () => {
   const { isLoggedIn, setShowModal } = useContext(userContext);
   const { cartItemsCount } = useContext(cartContext);
 
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-
-  const handleShowDropDown = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setShowDropDown((prevState) => !prevState);
-  };
-
-  useEffect(() => {
-    const handleDropDown = () => {
-      setShowDropDown(false);
-    };
-    window.addEventListener("click", handleDropDown);
-    return () => window.removeEventListener("click", handleDropDown);
-  }, []);
-
   return (
     <header className="d-flex justif y-content-between px-5" id="navbarWrapper">
       <div className="flex-grow-1 py-2">
         <Brand styles={{ width: "100px", height: "50px" }} />
       </div>
       <nav className="d-flex gap-5">
-        {isLoggedIn && <AccountDropDown showDropDown={showDropDown} handleShowDropDown={handleShowDropDown} />}
+        {isLoggedIn && <AccountDropDown />}
         {!isLoggedIn && (
           <button className="loginTriggerBtn" onClick={() => setShowModal(true)}>
             Login/

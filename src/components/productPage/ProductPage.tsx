@@ -9,6 +9,7 @@ import Thumbnail from "../thumbnail/Thumbnail";
 import ThumbnailWrap from "./ThumbnailWrap";
 import Modal from "../modal/Modal";
 import ModalCloseButton from "../ModalCloseButton";
+import BreadCrumb from "../breadCrumbs/BreadCrumb";
 
 import { userContext } from "../context/UserProvider";
 import { useModal } from "../../customHooks/useModal";
@@ -59,12 +60,15 @@ const ProductPage = () => {
   return (
     <>
       <PageWrapper pageId="productPage">
+        <div>
+        <BreadCrumb currentLinkLabel="Product"/>
         <Product product={product!}>
           <>
             <div onClick={() => setShowModal(true)}>{carousel}</div>
             {thumbnailsWraps}
           </>
         </Product>
+        </div>
       </PageWrapper>
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "center" }}>

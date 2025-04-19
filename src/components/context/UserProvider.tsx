@@ -13,7 +13,7 @@ import { alertContext } from "./AlertProvider";
 import { useLogout } from "../../customHooks/useLogout";
 import { useDeleteAccount } from "../../customHooks/useDeleteAccount";
 import { useTokenValidation } from "../../customHooks/useTokenValidation";
-import { useTokenRefresh } from "./useTokenRefresh";
+import { useTokenRefresh } from "../../customHooks/useTokenRefresh";
 
 const clientId: string = process.env.REACT_APP_RSA_Public_Key!;
 

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { updateTokens } from "../../helperFunctions/dataFetchFunctions";
+import { updateTokens } from "../helperFunctions/dataFetchFunctions";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

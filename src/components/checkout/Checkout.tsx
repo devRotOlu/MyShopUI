@@ -10,15 +10,12 @@ import PageWrapper from "../PageWrapper.tsx";
 import Modal from "../modal/Modal.tsx";
 import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
 import AddressDialog from "./AddressDialog.tsx";
-import Alert from "../alert/Alert.tsx";
 
 import { checkoutContextType, payPlatformType } from "../../types.ts";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
 import { useModal } from "../../customHooks/useModal.ts";
 import "./style.css";
 import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile.ts";
-import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile.ts";
-import { alertContext, alertDataType } from "../context/AlertProvider.tsx";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 
 const clientId: string = process.env.REACT_APP_PayPal_ClientID!;
@@ -27,10 +24,8 @@ export const checkoutContext = React.createContext({} as checkoutContextType);
 
 const Checkout = () => {
   const { deliveryProfiles } = useContext(deliveryContext);
-  const { handleAlert } = useContext(alertContext);
 
   const { loadingDeliveryProfile } = useGetDeliveryProfile();
-  const { addDeliveryProfile, addingDeliveryProfile, isAdded } = useAddDeliveryProfile();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -74,16 +69,12 @@ const Checkout = () => {
     );
   }
 
-  const alertObject: alertDataType = { styles: { backgroundColor: "green" }, alertMessage: "Profile added successfully!", showAlert: true };
-
-  if (isAdded) handleAlert(alertObject);
-
   const styles: CSSProperties = payOption === "" ? { display: "flex", justifyContent: "end" } : { display: "flex", justifyContent: "center", alignItems: "center" };
 
   return (
-    <checkoutContext.Provider value={{ ...monnifyData, payPalIsSuccess, setPayPalIsSuccess, setPayPalOrderID, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex, addDeliveryProfile, addingDeliveryProfile, isAddedAddress: isAdded }} key={location.pathname}>
+    <checkoutContext.Provider value={{ ...monnifyData, payPalIsSuccess, setPayPalIsSuccess, setPayPalOrderID, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex }} key={location.pathname}>
       <PageWrapper pageId="checkout">
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-3 w-100 py-5 px-4">
           <section className="d-flex flex-column gap-3 flex-grow-1" id="payment_option">
             <DeliveryOption />
             <PaymentOption setPayOption={setPayOption} payOption={payOption} />

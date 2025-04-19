@@ -1,62 +1,43 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 import Alert from "../alert/Alert";
 
 import { addedItemType, cartContextType, cartType, ProvidersProp, updatedItemType } from "../../types";
-import { addItemsToCart, deleteCartItem, getCartItems, updateCartItems } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "./UserProvider";
 import { emptyLocalCart, getLocalCartItems } from "../../helperFunctions/utilityFunctions";
 import { alertContext } from "./AlertProvider";
+import { useGetCartItems } from "../../customHooks/useGetCartItems";
+import { useUpdateCartItems } from "../../customHooks/useUpdateCartItems";
+import { useAddCartItems } from "../../customHooks/useAddCartItems";
+import { useDeleteCartItem } from "../../customHooks/useDeleteCartItem";
+import { useModifyCart } from "../../customHooks/useModifyCart";
+import "./style.css"
+
 
 export const cartContext = React.createContext({} as cartContextType);
 
 const CartProvider = ({ children }: ProvidersProp) => {
+  const [localStorageIndex, setLocalStorageIndex] = useState(1);
   const [cart, setCart] = useState<cartType[]>([]);
 
   const { loginData, isLoggedIn } = useContext(userContext);
   const { handleAlert } = useContext(alertContext);
 
-  const { mutate: updateItems, isSuccess: itemsUpdated } = useMutation({
-    mutationFn: updateCartItems,
-  });
-
-  const { mutate: addItems, isSuccess: itemsAdded } = useMutation({
-    mutationFn: addItemsToCart,
-  });
-
-  const {
-    mutate: deleteItem,
-    isPending: isDeletingCartItem,
-    isSuccess: itemDeleted,
-    submittedAt: deletionTime,
-  } = useMutation({
-    mutationFn: deleteCartItem,
-  });
-
-  const {
-    data: cartData,
-    isSuccess: cartFetched,
-    isError: cartFetchError,
-    dataUpdatedAt: cartUpdateTime,
-  } = useQuery({
-    queryKey: ["cart"],
-    enabled: () => (isLoggedIn ? true : false),
-    queryFn: async () => {
-      return await getCartItems(loginData.email);
-    },
-    refetchInterval: () => (isLoggedIn ? 4000 : false),
-  });
-
-  const prevCartRef = useRef(cart);
-  const prevCartUpdateRef = useRef(cartUpdateTime);
-  const deletionTimeRef = useRef(deletionTime);
-
-  // These keep hold of items that are added newly
-  // and those that already exists in the DB and
-  // needed to be updated
+  // to separate cartItems in the localstorage
+  // into those that already exits in the database
+  // and just needs updating and those that are to be
+  // newly added.
   const updatedItemsRef = useRef<updatedItemType[]>([]);
   const addedItemsRef = useRef<addedItemType[]>([]);
+
+  const { cartFetched, cartData } = useGetCartItems(setCart);
+  const { itemsUpdated} = useUpdateCartItems(updatedItemsRef.current);
+  const { cartItemsAdded } = useAddCartItems(addedItemsRef.current);
+  const { deleteCartItem, cartItemDeleted, isDeletingCartItem,isLocalDelete } = useDeleteCartItem(setLocalStorageIndex);
+  const { handleAddCartItem, isUpdatingCartItem, isUpatedCartItem, isAddedCartItem, isAddingCartItem,addedItem,isLocalModification,addCartItemError,updateCartItemError} = useModifyCart(setLocalStorageIndex, cart);
+
+  const prevCartRef = useRef(cart);
 
   const { count: cartItemsCount, totalPrice: cartItemsTotalPrice } = useMemo(() => {
     var count = 0;
@@ -77,29 +58,14 @@ const CartProvider = ({ children }: ProvidersProp) => {
     };
   }, [isLoggedIn, cart]);
 
+  // set cart items that are added to local storage
+  // as items of "state" cart.
   useEffect(() => {
-    if (cartFetched && updatedItemsRef.current.length && !itemsAdded) {
-      updateItems(updatedItemsRef.current);
+    var cartItems = getLocalCartItems();
+    if (!isLoggedIn && cartItems.length && localStorageIndex) {
+      setCart([...cartItems]);
     }
-  }, [cartFetched, itemsAdded, updateItems]);
-
-  useEffect(() => {
-    if (cartFetched && addedItemsRef.current.length && !itemsUpdated) {
-      addItems(addedItemsRef.current);
-    }
-  }, [addItems, cartFetched, itemsUpdated]);
-
-  useEffect(() => {
-    const timeInterval = setInterval(() => {
-      if (!isLoggedIn && !cartFetched) {
-        var cartItems = getLocalCartItems();
-        if (cartItems.length) {
-          setCart([...cartItems]);
-        }
-      }
-    }, 1000);
-    return () => clearInterval(timeInterval);
-  }, [cartFetched, isLoggedIn]);
+  }, [isLoggedIn, localStorageIndex]);
 
   useEffect(() => {
     if (cart !== prevCartRef.current) {
@@ -107,6 +73,11 @@ const CartProvider = ({ children }: ProvidersProp) => {
     }
   }, [cart]);
 
+  // separates items in the local cart i.e.,
+  // local storage into those that are to be
+  // added newly into cart and those that
+  // their quantity in the cart are to be
+  // updated.
   useEffect(() => {
     const localCartItems = getLocalCartItems();
     if (localCartItems.length && cartFetched) {
@@ -146,38 +117,64 @@ const CartProvider = ({ children }: ProvidersProp) => {
     }
   }, [cartData?.data, cartFetched, loginData.id]);
 
+  // empties the local storage of cart items stored
+  // after updating the database.
   useEffect(() => {
     const localCartItems = getLocalCartItems();
     const shouldDeleteCart =
-      (updatedItemsRef.current.length && addedItemsRef.current.length && itemsAdded && itemsUpdated) ||
-      (updatedItemsRef.current.length && !addedItemsRef.current.length && !itemsAdded && itemsUpdated) ||
-      (!updatedItemsRef.current.length && addedItemsRef.current.length && itemsAdded && !itemsUpdated);
+      (updatedItemsRef.current.length && addedItemsRef.current.length && cartItemsAdded && itemsUpdated) ||
+      (updatedItemsRef.current.length && !addedItemsRef.current.length && !cartItemsAdded && itemsUpdated) ||
+      (!updatedItemsRef.current.length && addedItemsRef.current.length && cartItemsAdded && !itemsUpdated);
     if (shouldDeleteCart && localCartItems.length) {
       emptyLocalCart();
       updatedItemsRef.current = [];
       addedItemsRef.current = [];
     }
-  }, [itemsAdded, itemsUpdated]);
+  }, [cartItemsAdded, itemsUpdated]);
 
   useEffect(() => {
-    const isNewFetch = prevCartUpdateRef.current !== cartUpdateTime;
-    if (isNewFetch) {
-      var fetchedData = cartData!.data as cartType[];
-      setCart([...fetchedData]);
-      prevCartUpdateRef.current = cartUpdateTime;
-    }
-  }, [cartData, cartUpdateTime]);
-
-  useEffect(() => {
-    const isNewDeletion = itemDeleted && deletionTimeRef.current !== deletionTime;
-    if (isNewDeletion) {
+    if (cartItemDeleted || isLocalDelete) {
       const alertDialog = <Alert alertMessage="Product successfully removed from your Cart" styles={{ backgroundColor: `var(--light_Green)` }} />;
-      deletionTimeRef.current = deletionTime;
       handleAlert({ showAlert: true, alertDialog });
     }
-  });
+  }, [cartItemDeleted, handleAlert, isLocalDelete]);
 
-  return <cartContext.Provider value={{ isDeletingCartItem, deleteCartItem: deleteItem, cart, cartItemsCount, cartItemsTotalPrice, setCart }}>{children}</cartContext.Provider>;
+  useEffect(()=>{
+    if (isAddedCartItem || isUpatedCartItem || isLocalModification) {
+      const alertDialog = <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`}>
+      <div id="cart_alert" className="d-flex cart_alert justify-content-between">
+        <Link className="" to="/cart/overview">View Cart</Link>
+        <Link to="/checkout/complete-order">Proceed to Checkout</Link>
+      </div>
+    </Alert>
+    handleAlert({ showAlert: true, alertDialog });
+    }
+  },[addedItem, handleAlert, isAddedCartItem, isLocalModification, isUpatedCartItem])
+
+  useEffect(()=>{
+    if (addCartItemError || updateCartItemError) {
+      const alertDialog = <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${addedItem}`} />
+      handleAlert({ showAlert: true, alertDialog });
+    }
+  },[addCartItemError, addedItem, handleAlert, updateCartItemError])
+
+  return (
+    <cartContext.Provider
+      value={{
+        isAddingCartItem,
+        handleAddCartItem,
+        isUpdatingCartItem,
+        isDeletingCartItem,
+        deleteCartItem,
+        cart,
+        cartItemsCount,
+        cartItemsTotalPrice,
+        setCart,
+      }}
+    >
+      {children}
+    </cartContext.Provider>
+  );
 };
 
 export default CartProvider;

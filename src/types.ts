@@ -158,28 +158,20 @@ export type productType = {
   reviews: reviewsType[];
 };
 
-type updateQuantityType = (value: number, productId: number, product?: productType, cartQuantity?: number, id?: number) => void;
+type updateQuantityType = (value: number, productId: number, cartQuantity?: number, id?: number) => void;
 
 export type CartItemProp = {
   item: cartType;
-  delete_Item: (cartId: number) => void;
-  updateQuantity: updateQuantityType;
-  addToWishlist: (customerId: string, productId: number) => void;
-  status: { beingUpdated: boolean; beingDeleted: boolean; beingAddedToWhishlist: boolean };
 };
 
 export type useUpdateItemDataType = {
-  isUpdating: boolean;
-  updateQuantity: updateQuantityType;
+  isUpdatingCartItem: boolean;
+  isUpdatedCartItem: boolean;
+  updateCartItem: updateQuantityType;
 };
 
 export type ProductCardProp = {
-  status: {
-    isAddingToCart: boolean;
-    isUpdatingCart: boolean;
-  };
-  index: number;
-  handleAddToCart: (index: number) => void;
+  product: productType;
 };
 
 export type itemToggleButtonProps = {
@@ -187,11 +179,6 @@ export type itemToggleButtonProps = {
   handleIncreaseItem: (event: MouseEvent<HTMLButtonElement>) => void;
   handleDecreaseItem: (event: MouseEvent<HTMLButtonElement>) => void;
   styles?: CSSProperties;
-};
-
-export type AccountDropDownProp = {
-  handleShowDropDown: (event: MouseEvent<HTMLButtonElement>) => void;
-  showDropDown: boolean;
 };
 
 type userAddressType = {
@@ -323,9 +310,6 @@ export type confirmTransferBtnProps = {
 };
 
 export type checkoutContextType = {
-  isAddedAddress: boolean;
-  addingDeliveryProfile: boolean;
-  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   setProfileIndex: Dispatch<SetStateAction<number>>;
   profileIndex: number;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -389,7 +373,10 @@ export type productTabProps = {
 export type productProps = {
   product: productType;
   children: ReactNode;
-  index?: number;
+};
+
+export type breadCrumbProps = {
+  currentLinkLabel: string;
 };
 
 export type thumbnailProps = {
@@ -426,14 +413,15 @@ export type modalCloseButtonProps = {
 };
 
 export type useModifyCartDataType = {
-  handleAddToCart: (productIndex: number) => void;
+  isLocalModification: number;
+  handleAddCartItem: (product: productType, value: number) => void;
   addedItem: string;
-  addCartError: boolean;
-  addCartSuccess: boolean;
-  isAddingToCart: boolean;
-  updateCartError: boolean;
-  updateCartSuccess: boolean;
-  isUpdatingCart: boolean;
+  addCartItemError: boolean;
+  isAddedCartItem: boolean;
+  isAddingCartItem: boolean;
+  updateCartItemError: boolean;
+  isUpatedCartItem: boolean;
+  isUpdatingCartItem: boolean;
 };
 
 export type useAddToWhishlistDataType = {
@@ -450,10 +438,8 @@ export type addToWishlistProps = {
   productId: number;
 };
 
-export type quantityExceededErrorProps = {
-  quantityExceedRef: React.RefObject<boolean>;
+export type quantityValidatorProps = {
   quantity: number;
-  validateQuantity: boolean;
   setValidateQuantity: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -488,8 +474,11 @@ export type profileSummaryProps = {
 };
 
 export type cartContextType = {
+  isAddingCartItem: boolean;
+  handleAddCartItem: (product: productType, value: number) => void;
+  isUpdatingCartItem: boolean;
   isDeletingCartItem: boolean;
-  deleteCartItem: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  deleteCartItem: (itemId?: number, itemIndex?: number) => void;
   cart: cartType[];
   cartItemsCount: number;
   setCart: Dispatch<SetStateAction<cartType[]>>;
@@ -506,6 +495,14 @@ export type useGetWishlistData = {
 };
 
 export type deliveryContextType = {
+  isDeletedAddress: boolean;
+  handleProfileDeletion: (profileId: number, profileIndex: number) => void;
+  isUpdatedAddress: boolean;
+  updatingDeliveryProfile: boolean;
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  isAddedAddress: boolean;
+  addingDeliveryProfile: boolean;
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   deliveryProfiles: deliveryDataType[];
   setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
 };
@@ -543,19 +540,44 @@ export type ConfirmationDialogProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export type useAddCartItemsDataType = {
+  cartItemsAdded: boolean;
+  addCartItems: UseMutateFunction<AxiosResponse<any, any>, Error, addedItemType[], unknown>;
+};
+
+export type useDeleteCartItemDataType = {
+  isLocalDelete: number;
+  isDeletingCartItem: boolean;
+  cartItemDeleted: boolean;
+  deleteCartItem: (itemId?: number, itemIndex?: number) => void;
+};
+
+export type useUpdateCartItemsDataType = {
+  itemsUpdated: boolean;
+  updateCartItems: UseMutateFunction<AxiosResponse<any, any>, Error, updatedItemType[], unknown>;
+};
+
+export type useGetCartItemsDataType = {
+  cartFetched: boolean;
+  cartData: AxiosResponse<any, any> | undefined;
+};
+
 export type useDeleteDeliveryProfileDataType = {
-  deleteProfile: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
-  isDeleted: boolean;
+  profileDeleted: boolean;
+  handleProfileDeletion: (profileId: number, profileIndex: number) => void;
+  profileDeletionTime: number;
 };
 
 export type useAddDeliveryProfileDataType = {
-  isAdded: boolean;
+  profileAdditionTime: number;
+  profileAdded: boolean;
   addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   addingDeliveryProfile: boolean;
 };
 
 export type useUpdateDeliveryProfileDataType = {
-  isUpdated: boolean;
+  profileUpdated: boolean;
+  profileUpdateTime: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
 };

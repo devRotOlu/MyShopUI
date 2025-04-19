@@ -5,9 +5,11 @@ import ModalCloseButton from "../ModalCloseButton";
 
 import { checkoutContext } from "./Checkout";
 import { addressFormProps, deliveryDataType } from "../../types";
+import { deliveryContext } from "../context/DeliveryProfileProvider";
 
 const AddressForm = ({ setAddAddress }: addressFormProps) => {
-  const { setShowModal, addDeliveryProfile, addingDeliveryProfile, isAddedAddress } = useContext(checkoutContext);
+  const { setShowModal } = useContext(checkoutContext);
+  const { addDeliveryProfile, addingDeliveryProfile, isAddedAddress } = useContext(deliveryContext);
 
   const handleDeliveryProfile = (deliveryProfile: deliveryDataType) => {
     addDeliveryProfile(deliveryProfile);

@@ -1,30 +1,29 @@
-import { useContext, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { deleteDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
-import { useDeleteDeliveryProfileDataType } from "../types";
-import { deliveryContext } from "../components/context/DeliveryProfileProvider";
+import { deliveryDataType, useDeleteDeliveryProfileDataType } from "../types";
 
-export const useDeleteDeliveryProfile = (profileIndex: number): useDeleteDeliveryProfileDataType => {
-  const { setDeliveryProfiles } = useContext(deliveryContext);
+export const useDeleteDeliveryProfile = (setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>): useDeleteDeliveryProfileDataType => {
+  const profileIndexRef = useRef(-1);
 
-  const { mutate, isSuccess, submittedAt } = useMutation({ mutationFn: deleteDeliveryProfile });
+  const handleProfileDeletion = (profileId: number, profileIndex: number) => {
+    profileIndexRef.current = profileIndex;
+    mutate(profileId);
+  };
 
-  const submittedAtRef = useRef(submittedAt);
-
-  useEffect(() => {
-    if (isSuccess && submittedAt !== submittedAtRef.current) {
-      submittedAtRef.current = submittedAt;
+  const { mutate, isSuccess, submittedAt } = useMutation({
+    mutationFn: deleteDeliveryProfile,
+    onSuccess: () => {
       setDeliveryProfiles((prevData) => {
-        return prevData.filter((_, index) => index !== profileIndex);
+        return prevData.filter((_, index) => index !== profileIndexRef.current);
       });
-    }
-  }, [isSuccess, profileIndex, setDeliveryProfiles, submittedAt]);
-
-  const isDeleted = isSuccess && submittedAt !== submittedAtRef.current;
+    },
+  });
 
   return {
-    deleteProfile: mutate,
-    isDeleted,
+    handleProfileDeletion,
+    profileDeletionTime: submittedAt,
+    profileDeleted: isSuccess,
   };
 };

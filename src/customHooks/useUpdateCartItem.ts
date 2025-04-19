@@ -1,23 +1,26 @@
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { updateCartItem } from "../helperFunctions/dataFetchFunctions";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
-import { cartType, productType } from "../types";
 import { useUpdateItemDataType } from "../types";
 import { userContext } from "../components/context/UserProvider";
 
-export const useUpdateCartItem = (): useUpdateItemDataType => {
+export const useUpdateCartItem = (setLocalStorageIndex: Dispatch<SetStateAction<number>>): useUpdateItemDataType => {
+  const [isLocalUpdate, setIsLocalUpdate] = useState(false);
   const {
     loginData: { id: customerId },
     isLoggedIn,
   } = useContext(userContext);
 
-  const { mutate: updateItem, isPending: isUpdating } = useMutation({
+  const {
+    mutate: updateItem,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: updateCartItem,
   });
-
-  const updateQuantity = (value: number, productId: number, product?: productType, cartQuantity?: number, id?: number) => {
+  const updateQuantity = (value: number, productId: number, cartQuantity?: number, id?: number) => {
     if (isLoggedIn) {
       updateItem({
         customerId,
@@ -30,18 +33,15 @@ export const useUpdateCartItem = (): useUpdateItemDataType => {
       let index = cartItems.findIndex(({ product: { id } }) => {
         return id === productId;
       });
-
-      if (index) {
-        cartItems[index].cartQuantity += value;
-        setLocalCart([...cartItems]);
-      } else {
-        const item: cartType = {
-          cartQuantity: cartQuantity! + value,
-          product: product!,
-        };
-        setLocalCart([...cartItems, item]);
-      }
+      cartItems[index].cartQuantity += value;
+      setLocalStorageIndex((prevIndex) => ++prevIndex);
+      setLocalCart([...cartItems]);
+      setIsLocalUpdate(true);
+      const timeout = setTimeout(() => {
+        setIsLocalUpdate(false);
+        clearTimeout(timeout);
+      }, 1000);
     }
   };
-  return { isUpdating, updateQuantity };
+  return { isUpdatingCartItem: isPending || isLocalUpdate, updateCartItem: updateQuantity, isUpdatedCartItem: isSuccess };
 };

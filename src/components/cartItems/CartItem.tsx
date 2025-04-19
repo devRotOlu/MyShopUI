@@ -1,50 +1,49 @@
-import React, { useContext, useLayoutEffect, useRef } from "react";
+import React, { useContext, useState } from "react";
 
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
+import QuantityValidator from "../quantityValidator/QuantityValidator.tsx";
 
-import { CartItemProp, productType } from "../../types.ts";
+import { CartItemProp } from "../../types.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
+import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.ts";
+import { cartContext } from "../context/CartProvider.tsx";
 
-const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: CartItemProp) => {
+const CartItem = ({ item }: CartItemProp) => {
+  const [validateQuantity, setValidateQuantity] = useState(false);
+  const { isDeletingCartItem, deleteCartItem, isUpdatingCartItem, handleAddCartItem } = useContext(cartContext);
+
+  const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
   const { id: cartId, cartQuantity, product } = item;
 
-  const { name, unitPrice, id: productId, images } = product;
-
-  const beingModifiedRef = useRef(false);
+  const { name, unitPrice, id: productId, images, quantity } = product;
 
   const {
     isLoggedIn,
     loginData: { id: customerId },
   } = useContext(userContext);
 
-  const handleQuantityUpdate = (value: number, product: productType | undefined = undefined) => {
-    if (isLoggedIn) {
-      updateQuantity(value, productId, undefined, cartQuantity, cartId);
-      beingModifiedRef.current = true;
-    } else {
-      updateQuantity(value, productId, product);
+  const handleQuantityUpdate = (value: number) => {
+    if (quantity === cartQuantity && value > 0) {
+      if (!validateQuantity) {
+        setValidateQuantity(true);
+      }
+      return;
     }
+    handleAddCartItem(product, value);
   };
 
   const handleAddToWishlist = () => {
-    if (isLoggedIn) beingModifiedRef.current = true;
-    addToWishlist(customerId, productId);
+    if (isLoggedIn) addItemToWishList(customerId, productId);
   };
 
   const handleDeleteItem = () => {
-    if (isLoggedIn) beingModifiedRef.current = true;
-    delete_Item(cartId!);
+    if (isLoggedIn) deleteCartItem(cartId!);
+    else deleteCartItem(undefined, productId);
   };
 
-  const { beingAddedToWhishlist, beingDeleted, beingUpdated } = status;
-
-  useLayoutEffect(() => {
-    if (beingModifiedRef.current && !beingAddedToWhishlist && !beingDeleted && !beingUpdated) {
-      beingModifiedRef.current = false;
-    }
-  }, [beingAddedToWhishlist, beingDeleted, beingUpdated]);
+  const beingModified = isAddingToWishList || isDeletingCartItem || isUpdatingCartItem;
 
   return (
     <tr className="cart_table_row position-relative">
@@ -62,7 +61,10 @@ const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: 
         </div>
       </td>
       <td className="border-bottom h-100 py-3">
-        <ItemToggleButton itemQuantity={cartQuantity} handleDecreaseItem={() => handleQuantityUpdate(-1)} handleIncreaseItem={() => handleQuantityUpdate(1, product)} styles={{ boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }} />
+        <div className="d-flex flex-column gap-1">
+          <ItemToggleButton itemQuantity={cartQuantity} handleDecreaseItem={() => handleQuantityUpdate(-1)} handleIncreaseItem={() => handleQuantityUpdate(1)} styles={{ boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }} />
+          {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
+        </div>
       </td>
       <td className="border-bottom h-100 py-3 text-center">
         <div>
@@ -76,7 +78,7 @@ const CartItem = ({ item, delete_Item, updateQuantity, addToWishlist, status }: 
         </div>
         <button onClick={() => handleAddToWishlist()}>Save for Later</button>
       </td>
-      {beingModifiedRef.current && <ComponentOverlay as="td" />}
+      {beingModified && <ComponentOverlay as="td" />}
     </tr>
   );
 };

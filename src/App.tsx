@@ -8,6 +8,7 @@ import UserProvider from "./components/context/UserProvider.tsx";
 import AlertProvider from "./components/context/AlertProvider.tsx";
 import CartProvider from "./components/context/CartProvider.tsx";
 import WishlistProvider from "./components/context/WishlistProvider.tsx";
+import DeliveryProfileProvider from "./components/context/DeliveryProfileProvider.tsx";
 import Routes from "./components/Routes.tsx";
 
 import "./App.css";
@@ -17,11 +18,13 @@ function App() {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <AlertProvider>
         <UserProvider>
-          <WishlistProvider>
-            <CartProvider>
-              <Routes />
-            </CartProvider>
-          </WishlistProvider>
+          <DeliveryProfileProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <Routes />
+              </CartProvider>
+            </WishlistProvider>
+          </DeliveryProfileProvider>
         </UserProvider>
       </AlertProvider>
     </SkeletonTheme>

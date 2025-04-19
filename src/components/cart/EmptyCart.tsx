@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 const EmptyCart = () => {
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100" id="empty_cart">
+    <div className="align-self-stretch d-flex justify-content-center align-items-center w-100" id="empty_cart">
       <div className="d-flex flex-column gap-4 bg-white align-items-center">
         <Icon icon="mdi:cart-remove" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
         <div className="d-flex flex-column gap-2">

@@ -20,18 +20,44 @@ button.loginTriggerBtn:hover {
   border-radius: 2px;
 }
 
-#account_dropdown > div:nth-child(2) button {
-  background-color: rgb(252, 247, 240);
-  padding: 10px 0;
+#account_dropdown {
+  z-index: 500;
 }
 
-#account_dropdown > div:nth-child(2) li,
+#account_dropdown a {
+  display: block;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  color: black;
+}
+
+/* #account_dropdown > div:nth-child(2) {
+  display: none;
+} */
+
+#account_dropdown:hover #account_dropdown > div:nth-child(2) {
+  background-color: blue;
+}
+
+#account_dropdown > div:nth-child(2) button {
+  background-color: rgb(252, 247, 240);
+  padding: 10px 15px;
+  gap: 10px;
+}
+
 #account_dropdown > div:nth-child(2) > p:first-child {
-  padding: 10px 0;
+  padding: 10px 15px;
+  display: flex;
+  gap: 10px;
 }
 
 #account_dropdown > div:nth-child(2) > p:first-child:hover,
-#account_dropdown > div:nth-child(2) li:hover,
+#account_dropdown a:hover,
 #account_dropdown > div:nth-child(2) button:hover {
   background-color: var(--Light_Grey);
+  color: var(--lighter_pink);
+  cursor: pointer;
 }

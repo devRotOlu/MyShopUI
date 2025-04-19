@@ -1,0 +1,8 @@
+#breadCrumb a {
+  color: black;
+}
+
+#breadCrumb #current_link_label {
+  color: var(--lighter_pink);
+  font-size: 15px;
+}

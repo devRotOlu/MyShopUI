@@ -1,31 +1,21 @@
-import React, { useContext, useEffect, useRef, MouseEvent } from "react";
+import React, { useContext, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ProductCardProp } from "../../types.ts";
-import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
+import { cartContext } from "../context/CartProvider.tsx";
 
-const ProductCard = ({ index, handleAddToCart, status }: ProductCardProp) => {
-  const { products, isLoggedIn } = useContext(userContext);
-  const { name, unitPrice, quantity, images, id } = products[index];
+const ProductCard = ({ product }: ProductCardProp) => {
+  const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem } = useContext(cartContext);
+  const { name, unitPrice, quantity, images, id } = product;
   const navigate = useNavigate();
 
-  const { isAddingToCart, isUpdatingCart } = status;
-
-  const beingModifiedRef = useRef(false);
-
-  const _handleAddToCart = (event: MouseEvent<HTMLButtonElement>, index: number) => {
+  const _handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    if (isLoggedIn) beingModifiedRef.current = true;
-    handleAddToCart(index);
+    handleAddCartItem(product, 1);
   };
 
-  useEffect(() => {
-    if (beingModifiedRef.current && !isAddingToCart && !isUpdatingCart) beingModifiedRef.current = false;
-  }, [isAddingToCart, isUpdatingCart]);
-
-  const isPending = (isAddingToCart || isUpdatingCart) === true && beingModifiedRef.current === true;
-  const disable = (isAddingToCart || isUpdatingCart) === true && beingModifiedRef.current === false;
+  const isPending = isAddingCartItem || isUpdatingCartItem;
 
   return (
     <div className="product_card rounded d-flex flex-column justify-content-between" onClick={() => navigate(`/product/${name}-${id}`)}>
@@ -50,9 +40,7 @@ const ProductCard = ({ index, handleAddToCart, status }: ProductCardProp) => {
               <span className="visually-hidden">Loading...</span>
             </div>
           ) : (
-            <button disabled={disable} onClick={(e) => _handleAddToCart(e, index)}>
-              Add To Cart
-            </button>
+            <button onClick={(e) => _handleAddToCart(e)}>Add To Cart</button>
           )}
         </div>
       </div>

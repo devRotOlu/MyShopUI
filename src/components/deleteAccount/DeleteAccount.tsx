@@ -6,6 +6,7 @@ import ComponentOverlay from "../ComponentOverlay.tsx";
 import Loader from "../Loader.tsx";
 
 import { userContext } from "../context/UserProvider.tsx";
+import "./style.css";
 
 const DeleteAccount = () => {
   const [signTerms, setSignTerms] = useState(false);
@@ -13,7 +14,7 @@ const DeleteAccount = () => {
 
   return (
     <PageWrapper pageId="delete_account">
-      <div className="d-flex justify-content-center gap-3">
+      <div className="d-flex justify-content-center gap-3 py-5">
         <AccountTab />
         <div className="w-50 bg-white d-flex align-items-center justify-content-center rounded" id="content_wrapper">
           <div className="d-flex flex-column gap-5">

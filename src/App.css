@@ -1,6 +1,7 @@
 :root {
   --lavender_blush: #fff8fc;
   --grayish_blue: #4f4e5a;
+  --cerebral_grey: #cccccc;
   --lightest_grey: #f6f7f8;
   --Light_Grey: #f2f2f2;
   --darker_Grey: #e6e6e6;
@@ -58,8 +59,9 @@ li {
 
 a {
   text-decoration: none;
-  font-family: Archivo_Bold;
+  /* font-family: Archivo_Bold; */
   font-size: 14px;
+  font-weight: 100;
 }
 
 p {

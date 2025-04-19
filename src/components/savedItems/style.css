@@ -1,0 +1,12 @@
+#saved_items .page_indicator {
+  font-size: 15px;
+  border-radius: 3px;
+  padding: 9px 11px;
+}
+
+#saved_items #next_btn,
+#saved_items #previous_btn {
+  font-size: 12px;
+  border-radius: 2px;
+  color: var(--cerebral_grey);
+}

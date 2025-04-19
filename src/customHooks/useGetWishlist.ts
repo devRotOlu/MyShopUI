@@ -12,8 +12,8 @@ export const useGetWishlist = (): useGetWishlistData => {
 
   const {
     data: wishlistData,
-    dataUpdatedAt: wishlistDateTime,
     isLoading,
+    isSuccess,
   } = useQuery({
     queryFn: async () => {
       return await getWishlist(loginData.email);
@@ -23,16 +23,12 @@ export const useGetWishlist = (): useGetWishlistData => {
     refetchInterval: () => (isLoggedIn ? 4000 : false),
   });
 
-  const prevWishlistUpdateTimeRef = useRef(wishlistDateTime);
-
   useEffect(() => {
-    const isNewFetch = prevWishlistUpdateTimeRef.current !== wishlistDateTime;
-    if (isNewFetch) {
+    if (isSuccess) {
       const fetchedData = wishlistData!.data as wishlistType[];
       setWishList([...fetchedData]);
-      prevWishlistUpdateTimeRef.current = wishlistDateTime;
     }
-  }, [wishlistDateTime, wishlistData, setWishList]);
+  }, [wishlistData, setWishList, isSuccess]);
 
   return {
     isLoadingWishlist: isLoading,

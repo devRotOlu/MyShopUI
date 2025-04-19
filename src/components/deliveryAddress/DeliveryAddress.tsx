@@ -1,4 +1,4 @@
-import React, { useContext, useState, MouseEvent, useEffect, useRef } from "react";
+import React, { useContext, useState, MouseEvent } from "react";
 
 import PageWrapper from "../PageWrapper";
 import AccountTab from "../dashboard/AccountTab";
@@ -9,14 +9,10 @@ import ProfileWrapper from "./ProfileWrapper";
 import AddProfile from "../AddProfile";
 import Modal from "../modal/Modal";
 import ConfirmationDialog from "./ConfirmationDialog";
-import Alert from "../alert/Alert";
 
 import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile";
 import "./style.css";
 import { useModal } from "../../customHooks/useModal";
-import { useDeleteDeliveryProfile } from "../../customHooks/useDeleteDeliveryProfile";
-import { useUpdateDeliveryProfile } from "../../customHooks/useUpdateDeliveryProfile";
-import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile";
 import { deliveryDataType } from "../../types";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
 
@@ -25,36 +21,26 @@ const DeliveryAddress = () => {
 
   const [pageIndex, setPageIndex] = useState<"0" | "1" | "2">("0");
   const [profileofInterestIndex, setProfileofInterestIndex] = useState(-1);
-  const [showAlert, setShowAlert] = useState(false);
 
-  const { deliveryProfiles } = useContext(deliveryContext);
+  const { deliveryProfiles, addDeliveryProfile, addingDeliveryProfile, isAddedAddress, updateDeliveryProfile, updatingDeliveryProfile, isUpdatedAddress, handleProfileDeletion, isDeletedAddress } = useContext(deliveryContext);
 
-  const { deleteProfile, isDeleted } = useDeleteDeliveryProfile(profileofInterestIndex);
   const { loadingDeliveryProfile } = useGetDeliveryProfile();
-  const { updateDeliveryProfile, updatingDeliveryProfile, isUpdated } = useUpdateDeliveryProfile(() => setPageIndex("0"));
-  const { addDeliveryProfile, addingDeliveryProfile, isAdded } = useAddDeliveryProfile(() => setPageIndex("0"));
 
-  const alertMessageRef = useRef("");
-
-  useEffect(() => {
-    if ((isAdded || isDeleted || isUpdated) && !showAlert) {
-      const alertMessage = isDeleted ? "Address successfully deleted!" : isUpdated ? "Delivery Address updated successfully!" : isAdded ? "New Delivery Address saved successfully!" : "";
-      alertMessageRef.current = alertMessage;
-      setShowAlert(true);
-    }
-  }, [isAdded, isDeleted, isUpdated, showAlert]);
+  if ((isAddedAddress || isUpdatedAddress || isDeletedAddress) && pageIndex !== "0") {
+    setPageIndex("0");
+  }
 
   const handleDeletion = (_: MouseEvent<HTMLButtonElement>) => {
     const profile = deliveryProfiles[profileofInterestIndex];
     const id = Number(profile.id);
-    deleteProfile(id);
+    handleProfileDeletion(id, profileofInterestIndex);
     setShowModal(false);
   };
 
   if (loadingDeliveryProfile) {
     return (
       <PageWrapper pageId="delivery_page">
-        <div className="bg-white">
+        <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
           <SkeletonPageLoader count={2} />
         </div>
       </PageWrapper>
@@ -74,7 +60,7 @@ const DeliveryAddress = () => {
   return (
     <>
       <PageWrapper pageId="delivery_page">
-        <div className="d-flex justify-content-center gap-3">
+        <div className="d-flex justify-content-center gap-3 w-100 py-5">
           <AccountTab />
           <div className="bg-white w-50 rounded">
             {pageIndex === "0" && (
@@ -102,7 +88,6 @@ const DeliveryAddress = () => {
           </div>
         </div>
       </PageWrapper>
-      {showAlert && <Alert alertMessage={alertMessageRef.current} setIsDisplayed={setShowAlert} styles={{ backgroundColor: "var(--light_Green)", height: "60px " }} />}
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <ConfirmationDialog setShowModal={setShowModal} handleDeletion={handleDeletion} />

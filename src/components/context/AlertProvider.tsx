@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 
 export type alertDataType = {
   showAlert: boolean;
@@ -23,9 +23,9 @@ const AlertProvider = ({ children }: AlertProviderProps) => {
   const [alert, setAlert] = useState<alertDataType>(initialAlert);
 
   // Show alert function
-  const handleAlert = (alert: alertDataType) => {
+  const handleAlert = useCallback((alert: alertDataType) => {
     setAlert((prevObj) => ({ ...prevObj, ...alert }));
-  };
+  },[])
 
   const { showAlert, alertDialog } = alert;
 
