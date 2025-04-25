@@ -1,4 +1,4 @@
-#orders .order_toggle_btn {
+#order_list .order_toggle_btn {
   color: var(--cerebral_grey);
   padding-bottom: 5px;
 }

@@ -1,7 +1,9 @@
 import React, { useState, MouseEvent } from "react";
-import ActiveOrders from "./ActiveOrders";
-import CancelledOrders from "./CancelledOrders";
-import { orderListProps } from "../types";
+import ActiveOrders from "../ActiveOrders";
+import CancelledOrders from "../CancelledOrders";
+
+import { orderListProps } from "../../types";
+import "./style.css";
 
 const OrderList = ({ orders, children }: orderListProps) => {
   const [showActiveOrders, setShowActiveOrders] = useState(true);
@@ -16,7 +18,7 @@ const OrderList = ({ orders, children }: orderListProps) => {
     }
   };
   return (
-    <>
+    <div id="order_list">
       <div className="pt-3 pb-2 border-bottom">
         <p>My Orders</p>
       </div>
@@ -32,7 +34,7 @@ const OrderList = ({ orders, children }: orderListProps) => {
         {showActiveOrders && <ActiveOrders>{children}</ActiveOrders>}
         {!showActiveOrders && <CancelledOrders />}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -5,13 +5,12 @@ import SkeletonPageLoader from "../SkeletonPageLoader";
 import AccountTab from "../dashboard/AccountTab";
 import PageWrapper from "../PageWrapper";
 import Order from "../order/Order";
-import OrderList from "../OrderList";
-import OrderDetails from "../OrderDetails";
+import OrderList from "../orderList/OrderList";
+import OrderDetails from "../orderDetails/OrderDetails";
 
 import { getOrders } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
 import { orderType } from "../../types";
-import "./style.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState<orderType[]>([]);
