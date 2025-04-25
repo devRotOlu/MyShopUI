@@ -1,0 +1,13 @@
+.order .view_details_btn {
+  color: var(--lighter_pink);
+  background-color: var(--pastel_pink);
+  border-radius: 5px;
+}
+
+.order p {
+  font-size: 14px;
+}
+
+.order > div:nth-child(2) > div:last-child > p:first-child {
+  color: var(--darkest_Grey);
+}

@@ -61,13 +61,13 @@ const ProductPage = () => {
     <>
       <PageWrapper pageId="productPage">
         <div>
-        <BreadCrumb currentLinkLabel="Product"/>
-        <Product product={product!}>
-          <>
-            <div onClick={() => setShowModal(true)}>{carousel}</div>
-            {thumbnailsWraps}
-          </>
-        </Product>
+          <BreadCrumb currentLinkLabel="Product" />
+          <Product product={product!}>
+            <>
+              <div onClick={() => setShowModal(true)}>{carousel}</div>
+              {thumbnailsWraps}
+            </>
+          </Product>
         </div>
       </PageWrapper>
       {showModal && (

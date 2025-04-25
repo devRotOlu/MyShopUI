@@ -9,10 +9,11 @@ import TextInput from "../../textInput/TextInput";
 import PaymentTitle from "./PaymentTitle";
 import ResetPayOptionBtn from "./ResetPayOptionBtn";
 
-import { cardType, cardRequestType } from "../../../types";
+import { cardType, cardPaymentType } from "../../../types";
 import { sendCardDetails, appendBuffer, base64ToArrayBuffer, arrayBufferToBase64 } from "../../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../../context/UserProvider";
 import { checkoutContext } from "../Checkout";
+import { deliveryContext } from "../../context/DeliveryProfileProvider";
 
 const privateKey: string = process.env.REACT_APP_Crypto_Key!;
 const iv: string = process.env.REACT_APP_Crypto_IV!;
@@ -42,7 +43,8 @@ const CardPayment = () => {
     loginData: { lastName, firstName },
   } = useContext(userContext);
 
-  const { transactionRef, sendCardDetails, isCardPaymentError } = useContext(checkoutContext);
+  const { transactionRef, sendCardDetails, isCardPaymentError, profileIndex } = useContext(checkoutContext);
+  const { deliveryProfiles } = useContext(deliveryContext);
 
   const [card, setCard] = useState<cardType>({
     number: "",
@@ -65,14 +67,18 @@ const CardPayment = () => {
     } else {
       expiryYear = `${Math.trunc(year / 100) + 1}` + `${expiryYear}`;
     }
-    const requestContent = {
-      transactionReference: transactionRef,
-      card: {
-        number: number.replaceAll(" ", ""),
-        expiryMonth,
-        expiryYear,
-        pin,
-        cvv,
+    const profileId = deliveryProfiles[profileIndex].id;
+    const requestContent: cardPaymentType = {
+      profileId: Number(profileId),
+      cardDetails: {
+        transactionReference: transactionRef,
+        card: {
+          number: number.replaceAll(" ", ""),
+          expiryMonth,
+          expiryYear,
+          pin,
+          cvv,
+        },
       },
     };
 

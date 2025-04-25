@@ -17,11 +17,11 @@ const PaymentOption = ({ setPayOption, payOption }: payOptionProps) => {
     }
   };
   return (
-    <div className="bg-white">
-      <div className="px-3 py-2 border-bottom">
-        <h2>2. Payment Options</h2>
+    <div className="bg-white" id="payment_details">
+      <div className="py-2 border-bottom">
+        <h2 className="fs-6">2. Payment Options</h2>
       </div>
-      <div className="py-4 px-3 d-flex flex-column">
+      <div className="py-4 d-flex flex-column">
         <label className="d-flex gap-2 mb-4">
           <input onChange={handlePayPalOption} name="payment_option" type="radio" />
           <span>PayPal</span>

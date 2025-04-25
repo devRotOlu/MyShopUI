@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent } from "react";
+import React, { useContext, MouseEvent, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ProductCardProp } from "../../types.ts";
@@ -6,16 +6,25 @@ import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 
 const ProductCard = ({ product }: ProductCardProp) => {
-  const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem } = useContext(cartContext);
+  const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
   const { name, unitPrice, quantity, images, id } = product;
   const navigate = useNavigate();
 
+  const isAddedItemRef = useRef(false);
+
   const _handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
+    isAddedItemRef.current = true;
     event.stopPropagation();
     handleAddCartItem(product, 1);
   };
 
-  const isPending = isAddingCartItem || isUpdatingCartItem;
+  useEffect(() => {
+    if (isAddedCartItem && isAddedItemRef.current === true) {
+      isAddedItemRef.current = false;
+    }
+  }, [isAddedCartItem]);
+
+  const isPending = (isAddingCartItem || isUpdatingCartItem) && isAddedItemRef.current;
 
   return (
     <div className="product_card rounded d-flex flex-column justify-content-between" onClick={() => navigate(`/product/${name}-${id}`)}>

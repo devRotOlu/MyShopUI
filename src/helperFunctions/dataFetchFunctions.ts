@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, cardRequestType, addWishlistType, modifyUserType, deliveryDataType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -104,9 +104,14 @@ export const getTransactionStatus = async (transactionRef: string) => {
   return await myShopAxios.get(`MonnifyCheckout/transaction_status?transactionRef=${transactionRef}`);
 };
 
-export const sendCardDetails = async (cardDetails: cardRequestType) => {
-  console.log(cardDetails, "details");
-  return await myShopAxios.post("MonnifyCheckout/card_charge", cardDetails);
+export const sendCardDetails = async (data: cardPaymentType) => {
+  const { profileId, cardDetails } = data;
+  return await myShopAxios.post(`MonnifyCheckout/card_charge?profileId=${profileId}`, cardDetails);
+};
+
+// orders controller
+export const getOrders = async (customerId: string) => {
+  return await myShopAxios.get(`Order?customerId=${customerId}`);
 };
 
 export const appendBuffer = (buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer => {

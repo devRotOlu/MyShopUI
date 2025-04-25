@@ -30,33 +30,50 @@ button.loginTriggerBtn:hover {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 15px;
+  padding: 12px 15px;
   color: black;
 }
 
-/* #account_dropdown > div:nth-child(2) {
+#account_dropdown > #profile_wrapper {
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+  width: 13rem;
+  position: absolute;
+  top: 0;
+  opacity: 0;
   display: none;
-} */
-
-#account_dropdown:hover #account_dropdown > div:nth-child(2) {
-  background-color: blue;
 }
 
-#account_dropdown > div:nth-child(2) button {
+#account_dropdown:hover > #profile_wrapper {
+  animation: move_vertically 400ms forwards;
+  display: block;
+}
+
+@keyframes move_vertically {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 100%;
+    opacity: 1;
+  }
+}
+
+#account_dropdown > #profile_wrapper button {
   background-color: rgb(252, 247, 240);
-  padding: 10px 15px;
+  padding: 12px 15px;
   gap: 10px;
 }
 
-#account_dropdown > div:nth-child(2) > p:first-child {
-  padding: 10px 15px;
+#account_dropdown > #profile_wrapper > p:first-child {
+  padding: 12px 15px;
   display: flex;
   gap: 10px;
 }
 
-#account_dropdown > div:nth-child(2) > p:first-child:hover,
+#account_dropdown > #profile_wrapper > p:first-child:hover,
 #account_dropdown a:hover,
-#account_dropdown > div:nth-child(2) button:hover {
+#account_dropdown > #profile_wrapper button:hover {
   background-color: var(--Light_Grey);
   color: var(--lighter_pink);
   cursor: pointer;

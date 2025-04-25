@@ -12,7 +12,7 @@ import AuthenticatedUserResources from "./AuthenticatedUserResources.tsx";
 import AnonymousUserResources from "./AnonymousUserResources.tsx";
 import ProductPage from "./productPage/ProductPage.tsx";
 import GroupedResources from "./GroupedResources.tsx";
-import OrderDetails from "./orderDetails/OrderDetails.tsx";
+import Orders from "./orders/Orders.tsx";
 import Profile from "./profile/Profile.tsx";
 import DeliveryAddress from "./deliveryAddress/DeliveryAddress.tsx";
 import DeleteAccount from "./deleteAccount/DeleteAccount.tsx";
@@ -37,7 +37,7 @@ const Routes = () => {
           <Route path="checkout/successful/:checkoutId" element={<SuccessfulCheckout />} />
           <Route element={<GroupedResources />}>
             <Route path="/account/favourites" element={<SavedItems />} />
-            <Route path="/account/orders" element={<OrderDetails />} />
+            <Route path="/account/orders" element={<Orders />} />
             <Route path="/account/profile" element={<Profile />} />
             <Route path="/account/delivery-addresses" element={<DeliveryAddress />} />
             <Route path="/account/deleteAccount" element={<DeleteAccount />} />

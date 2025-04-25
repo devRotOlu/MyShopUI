@@ -12,8 +12,7 @@ import { useUpdateCartItems } from "../../customHooks/useUpdateCartItems";
 import { useAddCartItems } from "../../customHooks/useAddCartItems";
 import { useDeleteCartItem } from "../../customHooks/useDeleteCartItem";
 import { useModifyCart } from "../../customHooks/useModifyCart";
-import "./style.css"
-
+import "./style.css";
 
 export const cartContext = React.createContext({} as cartContextType);
 
@@ -32,10 +31,10 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const addedItemsRef = useRef<addedItemType[]>([]);
 
   const { cartFetched, cartData } = useGetCartItems(setCart);
-  const { itemsUpdated} = useUpdateCartItems(updatedItemsRef.current);
+  const { itemsUpdated } = useUpdateCartItems(updatedItemsRef.current);
   const { cartItemsAdded } = useAddCartItems(addedItemsRef.current);
-  const { deleteCartItem, cartItemDeleted, isDeletingCartItem,isLocalDelete } = useDeleteCartItem(setLocalStorageIndex);
-  const { handleAddCartItem, isUpdatingCartItem, isUpatedCartItem, isAddedCartItem, isAddingCartItem,addedItem,isLocalModification,addCartItemError,updateCartItemError} = useModifyCart(setLocalStorageIndex, cart);
+  const { deleteCartItem, cartItemDeleted, isDeletingCartItem, isLocalDelete } = useDeleteCartItem(setLocalStorageIndex);
+  const { handleAddCartItem, isUpdatingCartItem, isUpatedCartItem, isAddedCartItem, isAddingCartItem, addedItem, isLocalModification, addCartItemError, updateCartItemError } = useModifyCart(setLocalStorageIndex, cart);
 
   const prevCartRef = useRef(cart);
 
@@ -139,28 +138,33 @@ const CartProvider = ({ children }: ProvidersProp) => {
     }
   }, [cartItemDeleted, handleAlert, isLocalDelete]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isAddedCartItem || isUpatedCartItem || isLocalModification) {
-      const alertDialog = <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`}>
-      <div id="cart_alert" className="d-flex cart_alert justify-content-between">
-        <Link className="" to="/cart/overview">View Cart</Link>
-        <Link to="/checkout/complete-order">Proceed to Checkout</Link>
-      </div>
-    </Alert>
-    handleAlert({ showAlert: true, alertDialog });
-    }
-  },[addedItem, handleAlert, isAddedCartItem, isLocalModification, isUpatedCartItem])
-
-  useEffect(()=>{
-    if (addCartItemError || updateCartItemError) {
-      const alertDialog = <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${addedItem}`} />
+      const alertDialog = (
+        <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`}>
+          <div id="cart_alert" className="d-flex cart_alert justify-content-between">
+            <Link className="" to="/cart/overview">
+              View Cart
+            </Link>
+            <Link to="/checkout/complete-order">Proceed to Checkout</Link>
+          </div>
+        </Alert>
+      );
       handleAlert({ showAlert: true, alertDialog });
     }
-  },[addCartItemError, addedItem, handleAlert, updateCartItemError])
+  }, [addedItem, handleAlert, isAddedCartItem, isLocalModification, isUpatedCartItem]);
+
+  useEffect(() => {
+    if (addCartItemError || updateCartItemError) {
+      const alertDialog = <Alert styles={{ backgroundColor: "red" }} alertMessage={`Error occured while adding ${addedItem}`} />;
+      handleAlert({ showAlert: true, alertDialog });
+    }
+  }, [addCartItemError, addedItem, handleAlert, updateCartItemError]);
 
   return (
     <cartContext.Provider
       value={{
+        isAddedCartItem,
         isAddingCartItem,
         handleAddCartItem,
         isUpdatingCartItem,

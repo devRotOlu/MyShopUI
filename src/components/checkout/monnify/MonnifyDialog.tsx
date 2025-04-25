@@ -19,13 +19,13 @@ const MonnifyDialog = () => {
   }, []);
 
   if (!paymentInitialized) {
-    return <Loader />;
+    return <Loader color="white" />;
   }
 
   const shouldDisplayError = isCardPaymentError || isBankTransferError || isPaymentError;
 
   return (
-    <div id="monnify">
+    <div id="monnify" className="bg-white">
       <DialogHeader>
         <p className="font-italic">{transactionRef}</p>
       </DialogHeader>

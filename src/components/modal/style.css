@@ -6,7 +6,7 @@
   background-color: rgb(33, 33, 33, 0.7);
   position: fixed;
   animation: fadeIn 0.3s ease-in-out;
-  z-index: 2000;
+  z-index: 30000;
 }
 
 @keyframes fadeIn {

@@ -62,7 +62,7 @@ const Checkout = () => {
   if (loadingDeliveryProfile) {
     return (
       <PageWrapper pageId="checkout">
-        <div className="bg-white">
+        <div className="align-self-stretch w-100 pt-4 bg-white px-4">
           <SkeletonPageLoader count={2} />
         </div>
       </PageWrapper>

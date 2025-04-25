@@ -6,12 +6,14 @@
   border-radius: 10px;
 }
 
-#checkout div#monnify {
-  width: 40rem;
+#monnify {
+  width: 35rem;
+  border-radius: 5px;
 }
 
-#checkout div#monnify > div:last-child {
+#monnify > div:last-child {
   background-color: var(--Light_Grey);
+  border-radius: inherit;
 }
 
 #checkout div#transfer_details table th {
@@ -37,6 +39,10 @@ div#transfer_details table tr {
 }
 
 #delivery_option > div {
+  padding: 0 2.1rem;
+}
+
+#payment_details > div {
   padding: 0 2.1rem;
 }
 
@@ -80,41 +86,44 @@ div#transfer_details table tr {
   width: 450px;
 }
 
+#address_book {
+  overflow-y: auto;
+}
+
 #address_book > div:first-child {
   box-shadow: -1px 0 10px -7px;
 }
 
-#address_book {
-  overflow-y: scroll;
+#address_book > div:last-child {
+  box-shadow: 1px 0 10px -7px;
+  position: absolute;
+  bottom: 0;
 }
 
-#address_book > div:last-child > div:first-child {
-  overflow-y: scroll;
+#address_book > div:last-child button {
+  background-color: var(--light_Green);
+  border-radius: 3px;
 }
 
-#profile_list > div:first-child > div button {
+#profile_list {
+  overflow-y: auto;
+}
+
+/* #profile_list > div:firt-child {
+  overflow-y: auto;
+} */
+
+#profile_list button {
   border: solid thin var(--lighter_pink);
   border-radius: 3px;
   color: var(--lighter_pink);
 }
 
-#profile_list > div:first-child > div p {
+#profile_list p {
   font-size: 13px;
 }
 
 .profileCard {
-  border-radius: 5px;
-}
-
-#profile_list > div:last-child {
-  position: absolute;
-  bottom: 0;
-  box-shadow: 1px 0 10px -7px;
-  width: 100%;
-}
-
-#profile_list > div:last-child button {
-  background-color: var(--light_Green);
   border-radius: 5px;
 }
 
