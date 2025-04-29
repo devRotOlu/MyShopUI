@@ -144,8 +144,13 @@ export type useMonnifyType = {
   detailsSent: boolean;
 };
 
-type reviewsType = baseUserType & {
-  profilePictureURI?: string;
+type reviewsType = {
+  reviewer: {
+    details: baseUserType;
+  };
+  review: string;
+  rating: number;
+  reviewDate: string;
 };
 
 export type productType = {
@@ -156,6 +161,7 @@ export type productType = {
   id: number;
   images: { url: string }[];
   reviews: reviewsType[];
+  averageRating: number;
 };
 
 type updateQuantityType = (value: number, productId: number, cartQuantity?: number, id?: number) => void;
@@ -232,10 +238,17 @@ export type orderListProps = {
   children: ReactNode;
 };
 
+export type productReviewProps = {
+  productId: number;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+};
+
 export type orderDetailsProp = {
+  setReviewId: Dispatch<SetStateAction<number>>;
   order: orderType;
   setDetailsIndex: Dispatch<SetStateAction<number>>;
   orderCost: number;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export type orderType = {
@@ -259,6 +272,13 @@ export type cartType = {
   id?: number;
   cartQuantity: number;
   product: productType;
+};
+
+export type addReviewType = {
+  reviewerId: string;
+  productId: number;
+  review: string;
+  rating: number;
 };
 
 export type addedItemType = {
@@ -413,11 +433,17 @@ export type skeletonProps = {
 
 export type productTabProps = {
   description: string;
+  reviews: reviewsType[];
+  averageRating: number;
 };
 
 export type productProps = {
   product: productType;
   children: ReactNode;
+};
+
+export type productRatingsProps = {
+  rating: number;
 };
 
 export type breadCrumbProps = {

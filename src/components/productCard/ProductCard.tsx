@@ -1,13 +1,15 @@
 import React, { useContext, MouseEvent, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import ProductRatings from "../ProductRatings.tsx";
+
 import { ProductCardProp } from "../../types.ts";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 
 const ProductCard = ({ product }: ProductCardProp) => {
   const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
-  const { name, unitPrice, quantity, images, id } = product;
+  const { name, unitPrice, quantity, images, id, averageRating: rating, reviews } = product;
   const navigate = useNavigate();
 
   const isAddedItemRef = useRef(false);
@@ -43,7 +45,13 @@ const ProductCard = ({ product }: ProductCardProp) => {
             In stock: {quantity}
           </p>
         </div>
-        <div className="pt-2 d-flex justify-content-center">
+        <div className="pt-2 d-flex align-items-center flex-column gap-2">
+          <div className="w-100 d-flex gap-1 align-items-center" id="reviews">
+            <div>
+              <ProductRatings rating={rating} />
+            </div>
+            <p>{reviews.length > 0 ? `${reviews.length} Reviews` : "No reviews yet"}</p>
+          </div>
           {isPending ? (
             <div className="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
               <span className="visually-hidden">Loading...</span>

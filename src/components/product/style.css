@@ -30,3 +30,28 @@
 #add_to_wishlist button:hover {
   background-color: var(--dark_orange);
 }
+
+#product_tab #rating_guage {
+  width: 300px;
+  color: var(--cerebral_grey);
+}
+
+#product_tab #rating_guage > div > div:nth-child(2) {
+  height: 8px;
+  background-color: var(--cerebral_grey);
+}
+
+#product_tab #reviewer_avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: var(--deep_pink);
+}
+
+#product > div:first-child > div:first-child {
+  width: 40%;
+}
+
+#product > div:first-child > div:last-child {
+  width: 60%;
+}

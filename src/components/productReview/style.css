@@ -1,0 +1,15 @@
+#product_review {
+  width: 450px;
+  border-radius: 5px;
+}
+
+#product_review > div:last-child {
+  width: fit-content;
+}
+
+#product_review #cancel_modal_btn {
+  color: var(--lighter_pink);
+  border: solid thin var(--lighter_pink);
+  background-color: var(--lighter_pink);
+  border-radius: 5px;
+}

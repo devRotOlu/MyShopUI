@@ -57,3 +57,8 @@
   border-radius: 2px;
   width: fit-content;
 }
+
+#order_details > table:nth-child(4) .review_btn {
+  background-color: var(--light_Green);
+  border-radius: 2px;
+}

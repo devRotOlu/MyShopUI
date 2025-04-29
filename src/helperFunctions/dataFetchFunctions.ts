@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -30,6 +30,10 @@ export const deleteCartItem = async (itemId: number) => {
 
 export const getProducts = async () => {
   return await myShopAxios.get("Product/list-products");
+};
+
+export const addReview = async (data: addReviewType) => {
+  return await myShopAxios.post("Product/add-review", data);
 };
 
 // account controller functions
@@ -79,16 +83,6 @@ export const getWishlist = async (email: string) => {
 export const addToWishlist = async (data: addWishlistType) => {
   return await myShopAxios.post("Wishlist/add_item", data);
 };
-
-// checkout controller functions
-
-// export const createOrder = async (id: string) => {
-//   return await myShopAxios.post(`Checkout/create_order?customerId=${id}`);
-// };
-
-// export const onApprove: PayPalButtonsComponentProps["onApprove"] = async (data:onApproveData) => {
-//   return await myShopAxios.post("Checkout/capture_order");
-// };
 
 // monnify controller functions
 

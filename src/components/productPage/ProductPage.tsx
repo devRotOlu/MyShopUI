@@ -60,7 +60,7 @@ const ProductPage = () => {
   return (
     <>
       <PageWrapper pageId="productPage">
-        <div>
+        <div className="w-100">
           <BreadCrumb currentLinkLabel="Product" />
           <Product product={product!}>
             <>

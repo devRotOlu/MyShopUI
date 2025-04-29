@@ -6,7 +6,8 @@ import { orderDetailsProp } from "../../types";
 import { months } from "../../data";
 import "./style.css";
 
-const OrderDetails = ({ order, setDetailsIndex, orderCost }: orderDetailsProp) => {
+const OrderDetails = ({ ...props }: orderDetailsProp) => {
+  const { order, setDetailsIndex, orderCost, setShowModal, setReviewId } = props;
   const {
     orderedItems,
     orderDate,
@@ -18,6 +19,10 @@ const OrderDetails = ({ order, setDetailsIndex, orderCost }: orderDetailsProp) =
   const date = dateArray[2];
   const month = months[Number(dateArray[1])];
   const year = dateArray[0];
+  const handleReview = (productId: number) => {
+    setShowModal(true);
+    setReviewId(productId);
+  };
   const _orderedItems = orderedItems.map((item, index) => {
     const {
       cartItem: {
@@ -42,9 +47,14 @@ const OrderDetails = ({ order, setDetailsIndex, orderCost }: orderDetailsProp) =
           </div>
         </td>
         <td className="py-2 px-3 w-25">
-          <Link to={`/product/${name}-${id}`} className="text-white px-4 py-2 buy_again_btn fw-light">
-            Buy Again
-          </Link>
+          <div className="d-flex flex-column gap-3">
+            <Link to={`/product/${name}-${id}`} className="text-white px-4 py-2 buy_again_btn fw-light">
+              Buy Again
+            </Link>
+            <button className="px-4 py-2 review_btn text-white" onClick={() => handleReview(id)}>
+              Review
+            </button>
+          </div>
         </td>
       </tr>
     );

@@ -37,6 +37,10 @@
   word-wrap: break-word;
 }
 
-div#card_spinner {
+.product_card #card_spinner {
   background-color: var(--deep_pink);
+}
+
+.product_card #reviews p {
+  font-size: 14px;
 }

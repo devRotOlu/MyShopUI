@@ -7,6 +7,8 @@ import PageWrapper from "../PageWrapper";
 import Order from "../order/Order";
 import OrderList from "../orderList/OrderList";
 import OrderDetails from "../orderDetails/OrderDetails";
+import Modal from "../modal/Modal";
+import ProductReview from "../productReview/ProductReview";
 
 import { getOrders } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
@@ -16,6 +18,8 @@ const Orders = () => {
   const [orders, setOrders] = useState<orderType[]>([]);
   const [orderCosts, setOrderCosts] = useState({});
   const [detailsIndex, setDetailsIndex] = useState(-1);
+  const [showModal, setShowModal] = useState(false);
+  const [reviewId, setReviewId] = useState(0);
   const {
     loginData: { id },
   } = useContext(userContext);
@@ -48,15 +52,22 @@ const Orders = () => {
   const key = `${detailsIndex}`;
   const orderCost = orderCosts[key as keyof typeof orderCosts];
   return (
-    <PageWrapper pageId="orders">
-      <div className="d-flex justify-content-center gap-4 py-5 w-100">
-        <AccountTab />
-        <div className="bg-white w-50 rounded px-3">
-          {!displayOrderDetails && <OrderList orders={orders}>{activeOrders}</OrderList>}
-          {displayOrderDetails && <OrderDetails order={orders[detailsIndex]} setDetailsIndex={setDetailsIndex} orderCost={orderCost} />}
+    <>
+      <PageWrapper pageId="orders">
+        <div className="d-flex justify-content-center gap-4 py-5 w-100">
+          <AccountTab />
+          <div className="bg-white w-50 rounded px-3">
+            {!displayOrderDetails && <OrderList orders={orders}>{activeOrders}</OrderList>}
+            {displayOrderDetails && <OrderDetails order={orders[detailsIndex]} setDetailsIndex={setDetailsIndex} orderCost={orderCost} setShowModal={setShowModal} setReviewId={setReviewId} />}
+          </div>
         </div>
-      </div>
-    </PageWrapper>
+      </PageWrapper>
+      {showModal && (
+        <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <ProductReview productId={reviewId} setShowModal={setShowModal} />
+        </Modal>
+      )}
+    </>
   );
 };
 

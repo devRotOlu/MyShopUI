@@ -16,7 +16,7 @@ const Product = ({ product, children }: productProps) => {
   const [showModal, setShowModal] = useState(false);
   const { handleAddCartItem } = useContext(cartContext);
 
-  const { name, description, unitPrice, quantity, id: productId } = product;
+  const { name, description, unitPrice, quantity, id: productId, reviews, averageRating } = product;
 
   const handleIncreaseItem = () => {
     if (quantity === quantityToAdd) {
@@ -51,39 +51,34 @@ const Product = ({ product, children }: productProps) => {
   }, []);
 
   return (
-    <>
-      <div id="product">
-        <div className="d-flex gap-3 px-4">
-          <div className="w-75 d-flex gap-4 px-3 pt-4 pb-5 bg-white">
-            <div className="w-50">{children}</div>
-            <div className="w-50">
-              <div className="border-bottom pb-3 d-flex flex-column gap-3">
-                <h2 className="fs-3 text-break">{name}</h2>
-                <div className="d-flex align-items-center">
-                  <p className="fw-bold fs-5 w-50">&#8358;{Math.ceil(unitPrice * 1500)}</p>
-                  <div className="d-flex gap-4 align-items-center">
-                    <span className="fs-6">Quantity:</span>
-                    <div>
-                      <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
-                      {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
-                    </div>
-                  </div>
+    <div id="product" className="w-100 d-flex gap-3 px-4">
+      <div className="w-75 d-flex gap-4 px-3 pt-4 pb-5 bg-white">
+        <div>{children}</div>
+        <div>
+          <div className="border-bottom pb-3 d-flex flex-column gap-3">
+            <h2 className="fs-3 text-break">{name}</h2>
+            <div className="d-flex align-items-center">
+              <p className="fw-bold fs-5 w-50">&#8358;{Math.ceil(unitPrice * 1500)}</p>
+              <div className="d-flex gap-4 align-items-center">
+                <span className="fs-6">Quantity:</span>
+                <div>
+                  <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
+                  {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
                 </div>
               </div>
-              <div id="save_item" className="py-3 border-bottom">
-                <button className="text-light rounded me-4" onClick={() => handleAddCartItem(product, quantityToAdd)}>
-                  Add To Cart
-                </button>
-                <AddToWishlist productId={productId} />
-              </div>
-              <ProductTab description={description} />
             </div>
           </div>
-          <div className="w-25 bg-white"></div>
+          <div id="save_item" className="py-3 border-bottom">
+            <button className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
+              Add To Cart
+            </button>
+            <AddToWishlist productId={productId} />
+          </div>
+          <ProductTab description={description} reviews={reviews} averageRating={averageRating} />
         </div>
       </div>
-      {/* {showModal && <ProductSummaryModal product={product} />} */}
-    </>
+      <div className="w-25 bg-white"></div>
+    </div>
   );
 };
 
