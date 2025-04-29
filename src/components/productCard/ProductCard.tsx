@@ -1,7 +1,7 @@
 import React, { useContext, MouseEvent, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ProductRatings from "../ProductRatings.tsx";
+import ProductRatings from "../product/ProductRatings.tsx";
 
 import { ProductCardProp } from "../../types.ts";
 import "./style.css";

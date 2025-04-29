@@ -1,10 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
 import AddToWishlist from "./AddToWishlist";
 import ProductTab from "./ProductTab";
+import ProductRatings from "./ProductRatings";
 import ProductSummaryModal from "../productSummaryModal/ProductSummaryModal";
+import ProductDescription from "./ProductDescription";
+import ProductReviews from "./ProductReviews";
 
 import { productProps } from "../../types";
 import "./style.css";
@@ -13,7 +16,9 @@ import { cartContext } from "../context/CartProvider";
 const Product = ({ product, children }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const targetRef = useRef(null);
   const { handleAddCartItem } = useContext(cartContext);
 
   const { name, description, unitPrice, quantity, id: productId, reviews, averageRating } = product;
@@ -32,53 +37,91 @@ const Product = ({ product, children }: productProps) => {
     setQuantityToAdd((prevQuantiy) => (prevQuantiy > 1 ? --prevQuantiy : prevQuantiy));
   };
 
-  useEffect(() => {
-    const onScroll = () => {
-      const scrollPosition = window.scrollY;
-      const pageHeight = document.documentElement.scrollHeight;
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (!entry.isIntersecting) {
+  //         setShowModal(true);
+  //       }
+  //     },
+  //     { threshold: 0.1 }
+  //   );
 
-      const pageFraction = pageHeight / 5;
+  //   if (targetRef.current) {
+  //     observer.observe(targetRef.current);
+  //   }
 
-      if (scrollPosition >= pageFraction && !showModal) {
-        setShowModal(true);
-      } else {
-        setShowModal(false);
-      }
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   return () => {
+  //     if (targetRef.current) {
+  //       observer.unobserve(targetRef.current);
+  //     }
+  //   };
+  // }, []);
 
   return (
-    <div id="product" className="w-100 d-flex gap-3 px-4">
-      <div className="w-75 d-flex gap-4 px-3 pt-4 pb-5 bg-white">
-        <div>{children}</div>
-        <div>
-          <div className="border-bottom pb-3 d-flex flex-column gap-3">
-            <h2 className="fs-3 text-break">{name}</h2>
-            <div className="d-flex align-items-center">
-              <p className="fw-bold fs-5 w-50">&#8358;{Math.ceil(unitPrice * 1500)}</p>
-              <div className="d-flex gap-4 align-items-center">
-                <span className="fs-6">Quantity:</span>
+    <>
+      <div id="product" className="w-100 d-flex gap-3 px-4">
+        <div className="w-75 d-flex gap-4 px-3 pt-4 pb-5 bg-white">
+          <div>{children}</div>
+          <div>
+            <div className="border-bottom pb-3 d-flex flex-column gap-3">
+              <h2 className="fs-3 text-break">{name}</h2>
+              <div className="d-flex align-items-center">
+                <p className="fw-bold fs-5 w-50">&#8358;{Math.ceil(unitPrice * 1500)}</p>
+                <div className="d-flex gap-4 align-items-center">
+                  <span className="fs-6">Quantity:</span>
+                  <div>
+                    <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
+                    {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="save_item" className="py-3 border-bottom">
+              <button ref={targetRef} className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
+                Add To Cart
+              </button>
+              <AddToWishlist productId={productId} />
+            </div>
+            <div className="py-3 d-flex flex-column gap-3 w-100" id="">
+              <ProductTab tabIndex={tabIndex} setTabIndex={setTabIndex} reviewsLength={reviews.length} />
+              {tabIndex === 0 && <ProductDescription description={description} />}
+              {tabIndex === 1 && <ProductReviews reviews={reviews} averageRating={averageRating} />}
+            </div>
+          </div>
+        </div>
+        <div className="w-25">
+          <div className="bg-white">
+            <p className="border-bottom py-2 px-3">Same Day Delivery Available in:</p>
+            <div className="py-3 px-3">
+              <span className="py-2 px-3">Lagos</span>
+              <p className="mt-4">Terms and conditions apply</p>
+            </div>
+          </div>
+
+          <div className="mt-3 bg-white">
+            <p className="border-bottom py-2 px-3">Seller Information</p>
+            <div className="px-3">
+              <div className="border-bottom py-3 d-flex gap-3" id="app_avatar_wrapper">
+                <p className="d-flex justify-content-center align-items-center text-white">M</p>
                 <div>
-                  <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
-                  {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
+                  <p className="fw-bold">MyShop</p>
+                  <p className="text-muted mt-1">2 years of service</p>
+                </div>
+              </div>
+              <div className="py-3 d-flex flex-column gap-2">
+                <p>Product Reviews ({reviews.length})</p>
+                <p className="fs-4 fw-bold">{averageRating.toFixed(1)}/5</p>
+                <div>
+                  <ProductRatings rating={averageRating} size={30} />
                 </div>
               </div>
             </div>
           </div>
-          <div id="save_item" className="py-3 border-bottom">
-            <button className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
-              Add To Cart
-            </button>
-            <AddToWishlist productId={productId} />
-          </div>
-          <ProductTab description={description} reviews={reviews} averageRating={averageRating} />
         </div>
       </div>
-      <div className="w-25 bg-white"></div>
-    </div>
+      {showModal && <ProductSummaryModal product={product} />}
+    </>
   );
 };
 

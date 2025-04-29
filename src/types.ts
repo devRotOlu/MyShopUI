@@ -1,6 +1,7 @@
 import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent } from "react";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
+import RatingStats from "./components/product/RatingStats";
 
 type baseUserType = {
   firstName: string;
@@ -146,6 +147,7 @@ export type useMonnifyType = {
 
 type reviewsType = {
   reviewer: {
+    id: string;
     details: baseUserType;
   };
   review: string;
@@ -432,9 +434,9 @@ export type skeletonProps = {
 };
 
 export type productTabProps = {
-  description: string;
-  reviews: reviewsType[];
-  averageRating: number;
+  setTabIndex: Dispatch<SetStateAction<number>>;
+  tabIndex: number;
+  reviewsLength: number;
 };
 
 export type productProps = {
@@ -442,8 +444,23 @@ export type productProps = {
   children: ReactNode;
 };
 
+export type productDescriptionProps = {
+  description: string;
+};
+
+export type productReviewsProps = {
+  reviews: reviewsType[];
+  averageRating: number;
+};
+
+export type ratingStatsProps = {
+  ratingFrequency: number[];
+  reviewsLength: number;
+};
+
 export type productRatingsProps = {
   rating: number;
+  size?: number;
 };
 
 export type breadCrumbProps = {

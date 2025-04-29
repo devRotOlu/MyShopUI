@@ -8,10 +8,10 @@
   z-index: 2000;
   opacity: 0;
   transform: translateY(-100%);
-  animation: fadeIn 0.3s ease-in-out forwards;
+  animation: fade_In 0.3s ease-in-out forwards;
 }
 
-@keyframes fadeIn {
+@keyframes fade_In {
   from {
     opacity: 0;
     transform: translateY(-100%);
