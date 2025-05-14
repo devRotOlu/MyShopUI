@@ -52,7 +52,7 @@ export type AlertProp = {
   styles: CSSProperties;
 };
 
-export type BrandProp = {
+export type brandProp = {
   styles: CSSProperties;
 };
 
@@ -121,23 +121,22 @@ export type useLoginData = {
 };
 
 export type useMonnifyType = {
+  isMonnifyInitializationError: boolean;
+  orderId?: string;
+  sendingCardDetails: boolean;
   isBankTransferError: boolean;
   isPaymentError: boolean;
   isFetchingTransferDetails: boolean;
-  setBankCode: React.Dispatch<React.SetStateAction<string>>;
-  bankCode: string;
   bankDetails: bankDetailsType;
   isSentCardDetails: boolean;
   isLoadedDetails: boolean;
   isLoadedStatus: boolean;
   isTransactionSuccessful: boolean;
   isFetchingTransactionStatus: boolean;
-  isFetchedTransactionStatus: boolean;
-  refetchTransactionStatus: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  refetchTransactionStatus: UseMutateFunction<AxiosResponse<any, any>, Error, transferStatusType, unknown>;
   sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, cardPaymentType, unknown>;
   cardDetailsSent: boolean;
   isCardPaymentError: boolean;
-  paymentInitialized: boolean;
   isInitializingPayment: boolean;
   initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
   transactionRef: string;
@@ -170,6 +169,8 @@ type updateQuantityType = (value: number, productId: number, cartQuantity?: numb
 
 export type CartItemProp = {
   item: cartType;
+  index: number;
+  itemCount: number;
 };
 
 export type useUpdateItemDataType = {
@@ -182,8 +183,17 @@ export type ProductCardProp = {
   product: productType;
 };
 
+export type navigationButtonsProps = {
+  itemCount: number;
+  maxItemPerPage: number;
+  setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
+  items: any[];
+};
+
 export type productSummaryModalProps = {
   product: productType;
+  children: ReactNode;
+  quantityToAdd: number;
 };
 
 export type itemToggleButtonProps = {
@@ -227,7 +237,7 @@ export type orderProps = {
   setOrderCosts: Dispatch<SetStateAction<{}>>;
   orderIndex: number;
   orderCosts: {};
-  setDetailsIndex: Dispatch<SetStateAction<number>>;
+  setOrderIndex: Dispatch<SetStateAction<number>>;
 };
 
 export type itemsOrderedType = {
@@ -245,10 +255,10 @@ export type productReviewProps = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
-export type orderDetailsProp = {
+export type orderHistoryProps = {
   setReviewId: Dispatch<SetStateAction<number>>;
   order: orderType;
-  setDetailsIndex: Dispatch<SetStateAction<number>>;
+  setOrderIndex: Dispatch<SetStateAction<number>>;
   orderCost: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
@@ -319,7 +329,7 @@ export type MonnifyProps = {
 
 export type payOptionType = { payMethod: string; message: string; icon: string };
 
-export type paymentOptionProp = {
+export type monnifyPaymentOptionProp = {
   payOption: payOptionType;
 };
 
@@ -362,9 +372,22 @@ type cardDetailsType = {
   card: { number: string; expiryMonth: string; expiryYear: string; pin: string; cvv: string };
 };
 
+export type transferStatusType = {
+  transactionReference: string;
+  profileId: number;
+  orderInstruction?: string;
+};
+
+export type paystackVerificationDTO = {
+  reference: string;
+  profileId: Number;
+  orderInstruction?: string;
+};
+
 export type cardPaymentType = {
   profileId: number;
   cardDetails: cardDetailsType;
+  orderInstruction?: string;
 };
 
 export type addWishlistType = {
@@ -377,11 +400,16 @@ export type confirmTransferBtnProps = {
 };
 
 export type checkoutContextType = {
+  isCardPaymentError: boolean;
+  isBankTransferError: boolean;
+  isPaymentError: boolean;
+  isMonnifyInitializationError: boolean;
+  orderInstruction: string | undefined;
+  setOrderInstruction: React.Dispatch<React.SetStateAction<string | undefined>>;
+  sendingCardDetails: boolean;
   setProfileIndex: Dispatch<SetStateAction<number>>;
   profileIndex: number;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isBankTransferError: boolean;
-  isPaymentError: boolean;
   setMonnifyOption: React.Dispatch<React.SetStateAction<"" | "card" | "transfer">>;
   monnifyOption: "" | "card" | "transfer";
   isInitializingPayment: boolean;
@@ -393,23 +421,26 @@ export type checkoutContextType = {
   setBankCode: React.Dispatch<React.SetStateAction<string>>;
   sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
   isFetchingTransferDetails: boolean;
-  isFetchedTransactionStatus: boolean;
   isLoadedStatus: boolean;
-  refetchTransactionStatus: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  refetchTransactionStatus: UseMutateFunction<AxiosResponse<any, any>, Error, transferStatusType, unknown>;
   isFetchingTransactionStatus: boolean;
   bankDetails: bankDetailsType;
   isTransactionSuccessful: boolean;
-  paymentInitialized: boolean;
-  setPayPalIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  setPayPalOrderID: React.Dispatch<React.SetStateAction<string>>;
   initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
-  payPalIsSuccess: boolean;
-  isCardPaymentError: boolean;
 };
 
-export type payPlatformType = "payPal" | "monnify" | "";
+export type monnifyDialogProps = {
+  setIsMonnifyError: React.Dispatch<React.SetStateAction<boolean>>;
+  isMonnifyError: boolean;
+};
 
-export type payOptionProps = {
+export type payPlatformType = "monnify" | "payStack" | "";
+
+export type checkoutPaymentOptionProps = {
+  children: ReactNode;
+};
+
+export type checkoutPaymentOptionsProps = {
   setPayOption: Dispatch<SetStateAction<payPlatformType>>;
   payOption: payPlatformType;
 };
@@ -610,8 +641,7 @@ export type userContextType = {
   modifyingProfile: boolean;
   profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  isLoggedIn: boolean | undefined;
   products: productType[];
   loginData: userDataType;
   setLoginData: Dispatch<SetStateAction<userDataType>>;
@@ -662,6 +692,13 @@ export type useAddDeliveryProfileDataType = {
   profileAdded: boolean;
   addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   addingDeliveryProfile: boolean;
+};
+
+export type useVerifyPayStackPaymentDataType = {
+  isPaystackPaymentSuccess: boolean;
+  isPaystackPaymentError: boolean;
+  verifyPayStackPayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  orderId?: string;
 };
 
 export type useUpdateDeliveryProfileDataType = {

@@ -1,0 +1,9 @@
+#monnify {
+  width: 35rem;
+  border-radius: 5px;
+}
+
+#monnify > div:last-child {
+  background-color: var(--Light_Grey);
+  border-radius: inherit;
+}

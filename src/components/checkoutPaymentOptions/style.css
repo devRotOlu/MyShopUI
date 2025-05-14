@@ -1,0 +1,52 @@
+#checkout_payment_options img {
+  height: 25px;
+  width: 25px;
+}
+
+#checkout_payment_options > div:first-child {
+  padding: 0 2.1rem;
+}
+
+#checkout_payment_options input[type="radio"] {
+  opacity: 0;
+  cursor: pointer;
+  width: 24px;
+}
+
+#checkout_payment_options .custom_radio {
+  padding: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: thin solid var(--cerebral_grey);
+  border-radius: 50%;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#checkout_payment_options .custom_radio > span {
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+#checkout_payment_options input[type="radio"]:checked ~ .custom_radio {
+  border-color: var(--deep_pink);
+}
+
+#checkout_payment_options input[type="radio"]:checked ~ .custom_radio > span {
+  background-color: var(--deep_pink);
+}
+
+#checkout_payment_options .checkbox_wrapper:has(input[type="radio"]:checked) .pay_option_name {
+  font-weight: bold;
+}
+
+#checkout_payment_options .pay_option_name + div > p {
+  font-size: 14px;
+}

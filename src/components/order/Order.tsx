@@ -6,7 +6,7 @@ import { orderProps } from "../../types";
 import "./style.css";
 
 const Order = ({ ...props }: orderProps) => {
-  const { order, setOrderCosts, orderIndex, orderCosts, setDetailsIndex } = props;
+  const { order, setOrderCosts, orderIndex, orderCosts, setOrderIndex } = props;
   const {
     orderedItems,
     orderDate,
@@ -55,7 +55,7 @@ const Order = ({ ...props }: orderProps) => {
         <p className="fw-bold">
           Order Date: {orderDate} | <span className="text-danger">{orderStatus}</span>
         </p>
-        <button className="py-2 px-4  fw-light view_details_btn" onClick={() => setDetailsIndex(orderIndex)}>
+        <button className="py-2 px-4  fw-light view_details_btn" onClick={() => setOrderIndex(orderIndex)}>
           View Details
         </button>
       </div>

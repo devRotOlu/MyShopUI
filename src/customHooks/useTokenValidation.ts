@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import { validateAccessToken } from "../helperFunctions/dataFetchFunctions";
 import { userDataType } from "../types";
+import { useEffect } from "react";
 
-export const useTokenValidation = (isLoggedIn: boolean, setIsLoggedIn: (value: React.SetStateAction<boolean>) => void, setLoginData: (value: React.SetStateAction<userDataType>) => void, setIsOldSession: (value: React.SetStateAction<boolean>) => void) => {
-  const { isSuccess: tokenValidated, data: userData } = useQuery({
+export const useTokenValidation = (setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void, setLoginData: (value: React.SetStateAction<userDataType>) => void, setIsOldSession: (value: React.SetStateAction<boolean>) => void) => {
+  const { isSuccess, data, isError } = useQuery({
     queryKey: ["validate_token"],
     queryFn: validateAccessToken,
     retry: false,
@@ -12,9 +13,14 @@ export const useTokenValidation = (isLoggedIn: boolean, setIsLoggedIn: (value: R
     retryOnMount: false,
     refetchOnWindowFocus: false,
   });
-  if (tokenValidated && !isLoggedIn) {
-    setIsLoggedIn(true);
-    setLoginData(userData.data);
-    setIsOldSession(true);
-  }
+  useEffect(() => {
+    if (isError) {
+      setIsLoggedIn(false);
+    } else if (isSuccess) {
+      setIsLoggedIn(true);
+      setLoginData(data.data);
+      setIsOldSession(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, isError]);
 };

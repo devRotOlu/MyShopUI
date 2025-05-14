@@ -1,32 +1,5 @@
-#checkout section#order_details {
-  width: 32%;
-}
-
-#checkout section#payment_option > div {
-  border-radius: 10px;
-}
-
-#monnify {
-  width: 35rem;
-  border-radius: 5px;
-}
-
-#monnify > div:last-child {
-  background-color: var(--Light_Grey);
-  border-radius: inherit;
-}
-
-#checkout div#transfer_details table th {
-  font-weight: 200;
-}
-
-#checkout div#transfer_details table tr {
-  font-weight: bold;
-}
-
-#checkout div#transfer_details table th,
-div#transfer_details table tr {
-  padding: 5px 0;
+#checkout_header {
+  border-bottom: solid thick var(--dark_orange);
 }
 
 #checkout #transfer_btn,
@@ -34,37 +7,11 @@ div#transfer_details table tr {
   padding: 10px 0.5rem;
 }
 
-#delivery_option {
-  font-size: 14px;
-}
-
-#delivery_option > div {
-  padding: 0 2.1rem;
-}
-
-#payment_details > div {
-  padding: 0 2.1rem;
-}
-
-#delivery_option button#change_address_btn {
-  border: solid thin var(--lighter_pink);
-  color: var(--lighter_pink);
-  border-radius: 3px;
-}
-
-#delivery_option button#add_address_btn {
-  background-color: var(--lighter_pink);
-  border-radius: 3px;
-  width: fit-content;
-}
-
-#delivery_option #delivery_details > div:nth-child(2),
-#delivery_option #delivery_details > label {
-  font-size: 13px;
-}
-
 #change_address {
   background-color: var(--lightest_grey);
+  border: solid thin var(--lightest_grey);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 #change_address > div > div:first-child {
@@ -86,32 +33,9 @@ div#transfer_details table tr {
   width: 450px;
 }
 
-#address_book {
-  overflow-y: auto;
-}
-
-#address_book > div:first-child {
-  box-shadow: -1px 0 10px -7px;
-}
-
-#address_book > div:last-child {
-  box-shadow: 1px 0 10px -7px;
-  position: absolute;
-  bottom: 0;
-}
-
-#address_book > div:last-child button {
-  background-color: var(--light_Green);
-  border-radius: 3px;
-}
-
 #profile_list {
   overflow-y: auto;
 }
-
-/* #profile_list > div:firt-child {
-  overflow-y: auto;
-} */
 
 #profile_list button {
   border: solid thin var(--lighter_pink);
@@ -127,26 +51,6 @@ div#transfer_details table tr {
   border-radius: 5px;
 }
 
-#add_address {
-  overflow-y: scroll;
-}
-
-#add_address > div:last-child {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-#add_address > div:last-child > button:last-child {
-  color: var(--lighter_pink);
-  border: solid thin var(--lighter_pink);
-  border-radius: 5px;
-}
-
-#add_address > div:last-child > button:last-child:hover {
-  background-color: var(--lighter_pink);
-  color: white;
-}
-
-#add_address > div:first-child {
-  box-shadow: -1px 0 10px -7px;
+#checkout > div > section:last-child {
+  width: 32%;
 }

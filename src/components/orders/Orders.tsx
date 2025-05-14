@@ -6,18 +6,19 @@ import AccountTab from "../dashboard/AccountTab";
 import PageWrapper from "../PageWrapper";
 import Order from "../order/Order";
 import OrderList from "../orderList/OrderList";
-import OrderDetails from "../orderDetails/OrderDetails";
+import OrderHistory from "../orderHistory/OrderHistory";
 import Modal from "../modal/Modal";
 import ProductReview from "../productReview/ProductReview";
 
 import { getOrders } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
 import { orderType } from "../../types";
+import "./style.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState<orderType[]>([]);
   const [orderCosts, setOrderCosts] = useState({});
-  const [detailsIndex, setDetailsIndex] = useState(-1);
+  const [orderIndex, setOrderIndex] = useState(-1);
   const [showModal, setShowModal] = useState(false);
   const [reviewId, setReviewId] = useState(0);
   const {
@@ -45,11 +46,11 @@ const Orders = () => {
     );
   }
   const activeOrders = orders.map((order, index) => {
-    return <Order key={index} order={order} setOrderCosts={setOrderCosts} orderIndex={index} orderCosts={orderCosts} setDetailsIndex={setDetailsIndex} />;
+    return <Order key={index} order={order} setOrderCosts={setOrderCosts} orderIndex={index} orderCosts={orderCosts} setOrderIndex={setOrderIndex} />;
   });
 
-  const displayOrderDetails = detailsIndex >= 0;
-  const key = `${detailsIndex}`;
+  const displayOrderHistory = orderIndex >= 0;
+  const key = `${orderIndex}`;
   const orderCost = orderCosts[key as keyof typeof orderCosts];
   return (
     <>
@@ -57,8 +58,8 @@ const Orders = () => {
         <div className="d-flex justify-content-center gap-4 py-5 w-100">
           <AccountTab />
           <div className="bg-white w-50 rounded px-3">
-            {!displayOrderDetails && <OrderList orders={orders}>{activeOrders}</OrderList>}
-            {displayOrderDetails && <OrderDetails order={orders[detailsIndex]} setDetailsIndex={setDetailsIndex} orderCost={orderCost} setShowModal={setShowModal} setReviewId={setReviewId} />}
+            {!displayOrderHistory && <OrderList orders={orders}>{activeOrders}</OrderList>}
+            {displayOrderHistory && <OrderHistory order={orders[orderIndex]} setOrderIndex={setOrderIndex} orderCost={orderCost} setShowModal={setShowModal} setReviewId={setReviewId} />}
           </div>
         </div>
       </PageWrapper>

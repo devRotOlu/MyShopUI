@@ -16,7 +16,7 @@ const SuccessfulCheckout = () => {
         <div className="d-flex justify-content-center">
           <Icon icon="gg:check-o" fontSize="4rem" />
         </div>
-        <h1 className="text-center">Thank you for your order</h1>
+        <h1 className="text-center fs-2">Thank you for your order</h1>
         <div className="d-flex justify-content-center">
           <div className="d-flex flex-column p-4 gap-2" style={{ width: "70%" }}>
             <div className="d-flex flex-column p-4 gap-2 border border-secondary">

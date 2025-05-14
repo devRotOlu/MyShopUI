@@ -7,14 +7,14 @@ const OrderSummary = () => {
   const { cartItemsCount, cartItemsTotalPrice } = useContext(cartContext);
 
   return (
-    <div id="order_summary" className="bg-white" style={{ width: "20%" }}>
+    <div id="order_summary" className="bg-white">
       <div className="d-flex justify-content-between px-2 py-3 border-bottom">
-        <p>Order Summary</p>
-        <p>{cartItemsCount}</p>
+        <p className="fw-bold">Order Summary</p>
+        <p className="fw-bold">{cartItemsCount} item(s)</p>
       </div>
       <div className="d-flex justify-content-between px-2 py-3 border-bottom">
         <p>Delivery charges</p>
-        <p className="text-end">
+        <p className="text-end text-muted">
           Add your Delivery <br />
           address at checkout to <br /> see delivery charges
         </p>
@@ -24,11 +24,11 @@ const OrderSummary = () => {
         <p>&#36; {cartItemsTotalPrice.toFixed(4)}</p>
       </div>
       <div className="d-flex justify-content-between px-2 py-3 border-bottom">
-        <p>Total</p>
-        <p>&#36; {cartItemsTotalPrice.toFixed(4)}</p>
+        <p className="fw-bold">Total</p>
+        <p className="fw-bold">&#36; {cartItemsTotalPrice.toFixed(4)}</p>
       </div>
-      <div className="d-flex justify-content-center px-2 py-3 border-bottom ">
-        <Link to="/checkout/complete-order" className="bg-success w-100 f-bold text-light text-center">
+      <div className="d-flex justify-content-center px-2 py-3">
+        <Link to="/checkout/complete-order" className="bg-success w-100 f-bold text-light text-center fw-bold">
           Continue to Checkout
         </Link>
       </div>

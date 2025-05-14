@@ -1,0 +1,46 @@
+#delivery_profile {
+  border: solid thin white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#delivery_profile > div:nth-child(2),
+#delivery_profile > label {
+  font-size: 13px;
+}
+
+#delivery_profile textarea {
+  border-radius: 5px;
+  height: 100px;
+  outline: none;
+  border-width: thin;
+  resize: none;
+}
+
+#delivery_profile textarea:focus {
+  border-color: var(--lighter_pink);
+}
+
+#delivery_profile #add_delivery_info {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid grey;
+  position: relative;
+}
+
+#delivery_profile #add_delivery_info:checked {
+  background-color: var(--lighter_pink);
+  border-color: var(--lighter_pink);
+}
+
+#delivery_profile #add_delivery_info:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

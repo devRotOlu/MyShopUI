@@ -9,6 +9,7 @@
   opacity: 0;
   transform: translateY(-100%);
   animation: fade_In 0.3s ease-in-out forwards;
+  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
 }
 
 @keyframes fade_In {
@@ -20,4 +21,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+#product_summary_modal > div:last-child > div:last-child button {
+  background-color: var(--light_Green);
+  padding: 0.7rem 4rem;
 }

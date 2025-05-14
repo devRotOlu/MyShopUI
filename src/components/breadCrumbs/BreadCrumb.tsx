@@ -7,7 +7,7 @@ import "./style.css";
 
 const BreadCrumb = ({ currentLinkLabel }: breadCrumbProps) => {
   return (
-    <nav className="py-4 px-5 bg-white mb-4 w-100" id="breadCrumb">
+    <nav className="px-5 bg-white mb-4 w-100" id="breadCrumb">
       <Link to="/">
         <p className="d-flex align-items-center gap-1">
           <span>Home</span>{" "}

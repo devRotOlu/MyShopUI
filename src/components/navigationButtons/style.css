@@ -1,0 +1,12 @@
+#navigation_buttons .page_indicator {
+  font-size: 15px;
+  border-radius: 3px;
+  padding: 9px 11px;
+}
+
+#navigation_buttons #next_btn,
+#navigation_buttons #previous_btn {
+  font-size: 12px;
+  border-radius: 2px;
+  color: var(--cerebral_grey);
+}

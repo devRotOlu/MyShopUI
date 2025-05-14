@@ -4,7 +4,7 @@ import { deleteAccount } from "../helperFunctions/dataFetchFunctions";
 import { Dispatch, SetStateAction } from "react";
 import { useDeleteAccountDataType } from "../types";
 
-export const useDeleteAccount = (setIsLoggedIn: Dispatch<SetStateAction<boolean>>): useDeleteAccountDataType => {
+export const useDeleteAccount = (setIsLoggedIn: Dispatch<SetStateAction<boolean | undefined>>): useDeleteAccountDataType => {
   const { mutate, isSuccess, isPending, submittedAt } = useMutation({
     mutationFn: deleteAccount,
     onSuccess: () => setIsLoggedIn(false),

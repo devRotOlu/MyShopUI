@@ -10,10 +10,6 @@ const ChangeDeliveryAddress = () => {
   const { setShowModal } = useContext(checkoutContext);
   return (
     <div id="change_address" className="pt-4 pb-5">
-      <label>
-        <input type="radio" />
-        <span className="ms-1 fw-bold">Deliver to me</span>
-      </label>
       <div className="mt-3 d-flex justify-content-between">
         <div className="p-4 d-flex flex-column gap-4 bg-white">
           <p className="fw-bold">

@@ -1,4 +1,7 @@
 :root {
+  --Black_Wash: #0c0c0c;
+  --Hex_Gray18: #2e2e2e;
+  --transparent_black: rgba(0, 0, 0, 0.5);
   --dark_moderate_violet: #644ba0;
   --pastel_pink: #fde6f2;
   --lavender_blush: #fff8fc;

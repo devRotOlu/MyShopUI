@@ -1,0 +1,18 @@
+#address_book {
+  overflow-y: auto;
+}
+
+#address_book > div:first-child {
+  box-shadow: -1px 0 10px -7px;
+}
+
+#address_book > div:last-child {
+  box-shadow: 1px 0 10px -7px;
+  position: absolute;
+  bottom: 0;
+}
+
+#address_book > div:last-child button {
+  background-color: var(--light_Green);
+  border-radius: 3px;
+}

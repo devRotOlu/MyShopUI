@@ -18,7 +18,7 @@ const Product = ({ product, children }: productProps) => {
   const [validateQuantity, setValidateQuantity] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const targetRef = useRef(null);
+  const targetRef = useRef<HTMLButtonElement>(null);
   const { handleAddCartItem } = useContext(cartContext);
 
   const { name, description, unitPrice, quantity, id: productId, reviews, averageRating } = product;
@@ -37,26 +37,32 @@ const Product = ({ product, children }: productProps) => {
     setQuantityToAdd((prevQuantiy) => (prevQuantiy > 1 ? --prevQuantiy : prevQuantiy));
   };
 
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     ([entry]) => {
-  //       if (!entry.isIntersecting) {
-  //         setShowModal(true);
-  //       }
-  //     },
-  //     { threshold: 0.1 }
-  //   );
+  useEffect(() => {
+    const handleScroll = () => {
+      if (targetRef.current) {
+        const rect = targetRef.current.getBoundingClientRect();
+        const triggerVisible = rect.top <= 0;
 
-  //   if (targetRef.current) {
-  //     observer.observe(targetRef.current);
-  //   }
+        setShowModal(triggerVisible);
+      }
+    };
 
-  //   return () => {
-  //     if (targetRef.current) {
-  //       observer.unobserve(targetRef.current);
-  //     }
-  //   };
-  // }, []);
+    window.addEventListener("scroll", handleScroll);
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const itemToggle = (
+    <div>
+      <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
+      {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
+    </div>
+  );
 
   return (
     <>
@@ -70,10 +76,7 @@ const Product = ({ product, children }: productProps) => {
                 <p className="fw-bold fs-5 w-50">&#8358;{Math.ceil(unitPrice * 1500)}</p>
                 <div className="d-flex gap-4 align-items-center">
                   <span className="fs-6">Quantity:</span>
-                  <div>
-                    <ItemToggleButton itemQuantity={quantityToAdd} handleIncreaseItem={handleIncreaseItem} handleDecreaseItem={handleDecreaseItem} />
-                    {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
-                  </div>
+                  <div>{itemToggle}</div>
                 </div>
               </div>
             </div>
@@ -120,7 +123,11 @@ const Product = ({ product, children }: productProps) => {
           </div>
         </div>
       </div>
-      {showModal && <ProductSummaryModal product={product} />}
+      {showModal && (
+        <ProductSummaryModal product={product} quantityToAdd={quantityToAdd}>
+          {itemToggle}
+        </ProductSummaryModal>
+      )}
     </>
   );
 };

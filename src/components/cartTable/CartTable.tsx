@@ -5,7 +5,7 @@ import "./style.css";
 
 const CartTable = ({ children }: CartTableProp) => {
   return (
-    <table className="w-100" id="cart_table">
+    <table className="w-100 align-self-start" id="cart_table">
       <thead>
         <tr style={{ backgroundColor: "var(--darker_Grey)" }}>
           <th className="py-3 w-50">Items Details</th>

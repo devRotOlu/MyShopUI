@@ -1,64 +1,28 @@
-#order_details > table th {
-  background-color: var(--darker_Grey);
-}
-
-#order_details > table:nth-child(2) td {
-  background-color: var(--lightest_grey);
+#order__details {
   font-size: 14px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
-#order_details > table:nth-child(3) {
-  border-left: 1px solid var(--darker_Grey);
-  border-right: 1px solid var(--darker_Grey);
+#order__details a {
+  color: var(--lighter_pink);
+  background-color: var(--lightest_grey);
+  font-size: 12px;
 }
 
-#order_details > table:nth-child(3) tr > td:last-child {
-  border-right: 1px solid var(--darker_Grey);
-}
-#order_details > table:nth-child(3) tr > td:first-child {
-  border-left: 1px solid var(--darker_Grey);
-  border-right: 2px solid var(--darker_Grey);
+#order__details .cart_item > div:last-child > p:nth-child(2) {
+  font-size: 12px;
 }
 
-#order_details > table:nth-child(3) tr:last-child > td {
-  border-bottom: 1px solid var(--darker_Grey);
+#order__details .cart_item > div:last-child > p:last-child {
+  font-size: 11px;
 }
 
-#order_details > table:nth-child(3) th,
-#order_details > table:nth-child(3) td {
-  width: 50%;
+#order__details .cart_item > div:last-child > p:nth-child(2) > span {
+  color: var(--dark_moderate_violet);
 }
 
-#order_details > table:nth-child(4) img {
-  height: 100px;
-  width: 100px;
-}
-
-#order_details > table:nth-child(4) .buy_again_btn {
-  background-color: var(--lighter_pink);
-  border-radius: 5px;
-}
-
-#order_details > table:nth-child(4) td {
-  border-bottom: 1px solid var(--darker_Grey);
-}
-
-#order_details > table:nth-child(4) tr > th:first-child,
-#order_details > table:nth-child(4) tr > td:first-child {
-  border-left: 1px solid var(--darker_Grey);
-}
-
-#order_details > table:nth-child(4) tr > th:last-child,
-#order_details > table:nth-child(4) tr > td:last-child {
-  border-right: 1px solid var(--darker_Grey);
-}
-
-#order_details > table:nth-child(4) #order_status {
-  border-radius: 2px;
-  width: fit-content;
-}
-
-#order_details > table:nth-child(4) .review_btn {
-  background-color: var(--light_Green);
-  border-radius: 2px;
+#order__details > div:first-child > div,
+#order__details > div:last-child {
+  padding: 0 1.5rem;
 }

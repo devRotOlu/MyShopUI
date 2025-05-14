@@ -1,0 +1,23 @@
+#add_address {
+  overflow-y: scroll;
+}
+
+#add_address > div:last-child {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+#add_address > div:last-child > button:last-child {
+  color: var(--lighter_pink);
+  border: solid thin var(--lighter_pink);
+  border-radius: 5px;
+}
+
+#add_address > div:last-child > button:last-child:hover {
+  background-color: var(--lighter_pink);
+  color: white;
+}
+
+#add_address > div:first-child {
+  box-shadow: -1px 0 10px -7px;
+}

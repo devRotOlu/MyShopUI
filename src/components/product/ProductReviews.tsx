@@ -44,9 +44,9 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
     const date = dateArray[2];
     const year = dateArray[0];
     const isMyReview = id === reviewerId;
-    const isListItem = index === reviews.length - 1;
+    const isLastItem = index === reviews.length - 1;
     return (
-      <div key={index} className={`d-flex flex-column gap-2 mt-3 pb-2 ${isListItem ? "" : "border-bottom"}`}>
+      <div key={index} className={`d-flex flex-column gap-2 mt-3 pb-2 ${isLastItem ? "" : "border-bottom"}`}>
         {isMyReview && (
           <p id="your_review" className="px-2 py-1 text-white fw-bold rounded">
             Your Review

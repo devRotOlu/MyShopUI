@@ -2,6 +2,9 @@
   font-size: 1rem;
 }
 #product > div:first-child {
+  border-radius: 5px;
+}
+#product > div:first-child {
   height: fit-content;
 }
 

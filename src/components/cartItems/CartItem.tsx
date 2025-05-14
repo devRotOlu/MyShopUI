@@ -10,7 +10,7 @@ import "./style.css";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.ts";
 import { cartContext } from "../context/CartProvider.tsx";
 
-const CartItem = ({ item }: CartItemProp) => {
+const CartItem = ({ item, index, itemCount }: CartItemProp) => {
   const [validateQuantity, setValidateQuantity] = useState(false);
   const { isDeletingCartItem, deleteCartItem, isUpdatingCartItem, handleAddCartItem } = useContext(cartContext);
 
@@ -47,7 +47,7 @@ const CartItem = ({ item }: CartItemProp) => {
 
   return (
     <tr className="cart_table_row position-relative">
-      <td className="border-bottom h-100  w-50 py-3">
+      <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100  w-50 py-3`}>
         <div className="d-flex gap-4">
           <div style={{ width: "5rem" }}>
             <img src={images[0].url} alt={name} style={{ width: "100%" }} />
@@ -55,24 +55,25 @@ const CartItem = ({ item }: CartItemProp) => {
           <div className="d-flex flex-column gap-2">
             <p>{name}</p>
             <p>
-              Sold by <span className="text-primary">MyShop</span>
+              <span className="text-muted">Sold by</span>
+              <span style={{ color: "var(--dark_moderate_violet)" }}> MyShop</span>
             </p>
           </div>
         </div>
       </td>
-      <td className="border-bottom h-100 py-3">
+      <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100  py-3`}>
         <div className="d-flex flex-column gap-1">
           <ItemToggleButton itemQuantity={cartQuantity} handleDecreaseItem={() => handleQuantityUpdate(-1)} handleIncreaseItem={() => handleQuantityUpdate(1)} styles={{ boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px" }} />
           {validateQuantity && <QuantityValidator quantity={quantity} setValidateQuantity={setValidateQuantity} />}
         </div>
       </td>
-      <td className="border-bottom h-100 py-3 text-center">
+      <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100 py-3 text-center`}>
         <div>
-          <p>&#36;{unitPrice}</p>
-          <p>&#36;{unitPrice} x 1 item</p>
+          <p className="fs-5 fw-bold">&#36;{unitPrice}</p>
+          <p className="text-muted">&#36;{unitPrice} x 1 item</p>
         </div>
       </td>
-      <td className="border-bottom h-100 py-3 text-end">
+      <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100 py-3 text-end`}>
         <div>
           <button onClick={() => handleDeleteItem()}>Remove item</button>
         </div>

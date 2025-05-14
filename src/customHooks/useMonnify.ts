@@ -5,11 +5,10 @@ import { getTransactionStatus, getTranserInfo, initializePayment, sendCardDetail
 import { bankDetailsType, useMonnifyType } from "../types";
 import { userContext } from "../components/context/UserProvider";
 
-export const useMonnify = (): useMonnifyType => {
+export const useMonnify = (bankCode: string): useMonnifyType => {
   const {
     loginData: { email },
   } = useContext(userContext);
-  const [bankCode, setBankCode] = useState<string>("");
 
   const queryClient = useQueryClient();
 
@@ -18,6 +17,7 @@ export const useMonnify = (): useMonnifyType => {
     isSuccess: cardDetailsSent,
     isPending: sendingCardDetails,
     isError: isCardPaymentError,
+    data: cardPaymentData,
   } = useMutation({
     mutationFn: sendCardDetails,
   });
@@ -25,8 +25,8 @@ export const useMonnify = (): useMonnifyType => {
   const {
     data: paymentData,
     isFetching: isInitializingPayment,
-    isSuccess: paymentInitialized,
     refetch: _initializePayment,
+    isError: isMonnifyInitializationError,
   } = useQuery({
     queryFn: () => initializePayment(email),
     queryKey: ["checkout", "initialize_payment"],
@@ -56,20 +56,13 @@ export const useMonnify = (): useMonnifyType => {
   });
 
   const {
-    refetch: refetchTransactionStatus,
-    isFetched: isFetchedTransactionStatus,
+    mutate: refetchTransactionStatus,
     data: transactionData,
-    isFetching: isFetchingTransactionStatus,
+    isPending: isFetchingTransactionStatus,
     isSuccess: transactionSuccessful,
     isError: isPaymentError,
-  } = useQuery({
-    queryKey: ["checkout", "transaction_status"],
-    queryFn: () => getTransactionStatus(transactionRef),
-    enabled: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    retry: false,
-    retryOnMount: false,
+  } = useMutation({
+    mutationFn: getTransactionStatus,
   });
 
   const isLoadedStatusRef = useRef(false);
@@ -102,29 +95,29 @@ export const useMonnify = (): useMonnifyType => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const orderId = cardDetailsSent ? cardPaymentData?.data?.orderId : transactionData?.data?.orderId;
 
   return {
+    isInitializingPayment,
+    isMonnifyInitializationError,
+    orderId,
+    sendingCardDetails,
     isBankTransferError,
     isPaymentError,
     isFetchingTransferDetails,
     sendCardDetails: _sendCardDetails,
     cardDetailsSent,
     isCardPaymentError,
-    isInitializingPayment,
-    paymentInitialized,
     initializePayment: _initializePayment,
     transactionRef,
     sendTransferDetails,
     detailsSent,
     refetchTransactionStatus,
-    isFetchedTransactionStatus,
     isFetchingTransactionStatus,
     isTransactionSuccessful: transactionSuccessful,
     isLoadedStatus: isLoadedStatusRef.current,
     isLoadedDetails: isLoadedDetailsRef.current,
     isSentCardDetails: isSentCardDetailsRef.current,
     bankDetails,
-    bankCode,
-    setBankCode,
   };
 };

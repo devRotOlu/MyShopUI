@@ -1,6 +1,6 @@
 tr.cart_table_row > td:nth-child(4) button {
   font-family: Archivo_Light;
-  color: var(--deep_pink);
+  color: var(--dark_wine);
   font-weight: normal;
 }
 
@@ -8,6 +8,10 @@ tr.cart_table_row > td {
   vertical-align: top;
   box-sizing: border-box;
   padding-right: 1rem;
+}
+
+tr.cart_table_row > td:first-child {
+  padding-left: 1rem;
 }
 
 tr.cart_table_row p {

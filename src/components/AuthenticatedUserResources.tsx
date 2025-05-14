@@ -9,7 +9,7 @@ const AuthenticatedUserResources = () => {
   const { isLoggedIn } = appStates;
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (isLoggedIn === false) {
       navigate("/account/login");
     }
   }, [isLoggedIn, navigate]);

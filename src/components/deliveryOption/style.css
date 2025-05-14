@@ -1,0 +1,25 @@
+#delivery_option {
+  font-size: 14px;
+}
+
+#delivery_option > div > div:first-child {
+  border: solid thin white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#delivery_option > div > div {
+  padding: 0 2.1rem;
+}
+
+#delivery_option button#change_address_btn {
+  border: solid thin var(--lighter_pink);
+  color: var(--lighter_pink);
+  border-radius: 3px;
+}
+
+#delivery_option button#add_address_btn {
+  background-color: var(--lighter_pink);
+  border-radius: 3px;
+  width: fit-content;
+}

@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType } from "../types.ts";
+import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -94,13 +94,21 @@ export const getTranserInfo = async (bankCode: string, transactionRef: string) =
   return await myShopAxios.get(`MonnifyCheckout/bank_transfer?bankCode=${bankCode}&transactionReference=${transactionRef}`);
 };
 
-export const getTransactionStatus = async (transactionRef: string) => {
-  return await myShopAxios.get(`MonnifyCheckout/transaction_status?transactionRef=${transactionRef}`);
+export const getTransactionStatus = async (data: transferStatusType) => {
+  return await myShopAxios.post("MonnifyCheckout/transaction_status", data);
 };
 
 export const sendCardDetails = async (data: cardPaymentType) => {
-  const { profileId, cardDetails } = data;
-  return await myShopAxios.post(`MonnifyCheckout/card_charge?profileId=${profileId}`, cardDetails);
+  return await myShopAxios.post("MonnifyCheckout/card_charge", data);
+};
+
+// payStack controller
+export const initializePayStackPayment = async (email: string) => {
+  return await myShopAxios.get(`PayStackCheckout/initialize?email=${email}`);
+};
+
+export const verifyPayStackPayment = async (data: paystackVerificationDTO) => {
+  return await myShopAxios.post("PayStackCheckout/verify_payment", data);
 };
 
 // orders controller

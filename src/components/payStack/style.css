@@ -1,0 +1,19 @@
+#paystack_dialog > div#payment_wrapper {
+  width: 35rem;
+  border-radius: 5px;
+}
+
+#paystack_dialog button#paystack_payment_btn {
+  background-color: var(--light_Green);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+#paystack_dialog div#payment_btn_wrapper {
+  background-color: var(--Light_Grey);
+  border-radius: inherit;
+}

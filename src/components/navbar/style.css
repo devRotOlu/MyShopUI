@@ -9,72 +9,61 @@ button.loginTriggerBtn:hover {
   color: var(--lighter_pink);
 }
 
-#navbarWrapper > nav > div:last-child > a {
+#navbarWrapper {
+  z-index: 1000;
+}
+
+#navbarWrapper nav > div:last-child > a {
   background-color: var(--light_Green);
   padding: 5px 20px;
   display: inline-block;
   border-radius: 5px;
 }
 
-#navbarWrapper > nav > div:last-child > a > span:last-child {
+#navbarWrapper nav > div:last-child > a > span:last-child {
   border-radius: 2px;
 }
 
-#account_dropdown {
-  z-index: 500;
+#navbarWrapper #category_list_wrapper {
+  top: 0;
+  background-color: var(--transparent_black);
+  box-sizing: content-box;
+  z-index: 1500;
 }
 
-#account_dropdown a {
-  display: block;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 15px;
+#navbarWrapper #category_list_wrapper button {
+  color: white;
+}
+
+#navbarWrapper #category_list_wrapper button:hover {
+  background-color: white;
   color: black;
 }
 
-#account_dropdown > #profile_wrapper {
-  box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
-  width: 13rem;
-  position: absolute;
-  top: 0;
+#navbarWrapper #category_list_toggle {
+  z-index: 1500;
+}
+
+#navbarWrapper #category_list_toggle:hover + #category_list_modal {
+  display: block;
+  opacity: 1;
+}
+
+#navbarWrapper #category_list_modal {
+  background-color: rgb(33, 33, 33, 0.7);
+  height: 100vh;
   opacity: 0;
   display: none;
 }
 
-#account_dropdown:hover > #profile_wrapper {
-  animation: move_vertically 400ms forwards;
+#navbarWrapper #category_list_toggle:hover > #category_list {
   display: block;
+  opacity: 1;
 }
 
-@keyframes move_vertically {
-  from {
-    top: 0;
-    opacity: 0;
-  }
-  to {
-    top: 100%;
-    opacity: 1;
-  }
-}
-
-#account_dropdown > #profile_wrapper button {
-  background-color: rgb(252, 247, 240);
-  padding: 12px 15px;
-  gap: 10px;
-}
-
-#account_dropdown > #profile_wrapper > p:first-child {
-  padding: 12px 15px;
-  display: flex;
-  gap: 10px;
-}
-
-#account_dropdown > #profile_wrapper > p:first-child:hover,
-#account_dropdown a:hover,
-#account_dropdown > #profile_wrapper button:hover {
-  background-color: var(--Light_Grey);
-  color: var(--lighter_pink);
-  cursor: pointer;
+#category_list {
+  background-color: white;
+  opacity: 0;
+  display: none;
+  z-index: 1000;
 }

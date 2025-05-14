@@ -4,6 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import AppProvider from "./components/context/AppProvider.tsx";
 import UserProvider from "./components/context/UserProvider.tsx";
 import AlertProvider from "./components/context/AlertProvider.tsx";
 import CartProvider from "./components/context/CartProvider.tsx";
@@ -18,13 +19,15 @@ function App() {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <AlertProvider>
         <UserProvider>
-          <DeliveryProfileProvider>
-            <WishlistProvider>
-              <CartProvider>
-                <Routes />
-              </CartProvider>
-            </WishlistProvider>
-          </DeliveryProfileProvider>
+          <AppProvider>
+            <DeliveryProfileProvider>
+              <WishlistProvider>
+                <CartProvider>
+                  <Routes />
+                </CartProvider>
+              </WishlistProvider>
+            </DeliveryProfileProvider>
+          </AppProvider>
         </UserProvider>
       </AlertProvider>
     </SkeletonTheme>

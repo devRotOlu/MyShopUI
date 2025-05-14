@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 // 10 minutes
 const tokenRefreshTime = 65 * 1000 * 60;
 
-export const useTokenRefresh = (userId: string, isLoggedIn: boolean, setIsLoggedIn: (value: React.SetStateAction<boolean>) => void) => {
+export const useTokenRefresh = (userId: string, isLoggedIn: boolean | undefined, setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void) => {
   const navigate = useNavigate();
 
   const { mutate, isError } = useMutation({

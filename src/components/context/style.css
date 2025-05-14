@@ -1,14 +1,13 @@
 div#cart_alert a {
-    border-radius: 3px;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-    color: white;
-  }
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  color: white;
+}
 div#cart_alert a:first-child {
-    border: solid thin white;
-  }
-  div#cart_alert a:last-child {
-    background-color: var(--dark_Green);
-  }
-  
+  border: solid thin white;
+}
+div#cart_alert a:last-child {
+  background-color: var(--dark_Green);
+}

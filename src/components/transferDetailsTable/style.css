@@ -1,0 +1,12 @@
+table#transfer_details_table th {
+  font-weight: 200;
+}
+
+table#transfer_details_table tr {
+  font-weight: bold;
+}
+
+table#transfer_details_table th,
+div#transfer_details table tr {
+  padding: 5px 0;
+}

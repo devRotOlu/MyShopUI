@@ -120,3 +120,28 @@ export const deliveryProfileData: deliveryProfileDataType[] = [
 export const userProfileData: userProfileDataType[] = [...baseProfile, { name: "currentPassword", label: "Current Password", placeholder: "" }, { name: "newPassword", label: "New Password", placeholder: "" }];
 
 export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+export const contacts: { contact: string; channel: string; icon: string }[] = [
+  {
+    contact: "Email Support",
+    channel: "rotimiolumide68@gmail.com",
+    icon: "mdi:email",
+  },
+  {
+    contact: "Phone Support",
+    channel: "08140836550",
+    icon: "ic:round-phone",
+  },
+  {
+    contact: "Whatsapp",
+    channel: "08140836550",
+    icon: "ic:sharp-whatsapp",
+  },
+];
+
+export const socials: { name: string; icon: string }[] = [
+  { name: "facebook", icon: "cib:facebook-f" },
+  { name: "instagram", icon: "gg:instagram" },
+  { name: "x", icon: "garden:twitter-fill-12" },
+  { name: "youtube", icon: "line-md:youtube-filled" },
+];

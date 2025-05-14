@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import { useLoginData, LoginStateType, userDataType } from "../types.ts";
 import { signinUser } from "../helperFunctions/dataFetchFunctions.ts";
 
-export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, setIsLoggedIn: Dispatch<SetStateAction<boolean>>, setLoginData: Dispatch<SetStateAction<userDataType>>): useLoginData => {
+export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, setIsLoggedIn: Dispatch<SetStateAction<boolean | undefined>>, setLoginData: Dispatch<SetStateAction<userDataType>>): useLoginData => {
   const [formValues, setFormValues] = useState<LoginStateType>({ email: "", password: "" });
 
   const prevFormValues = useRef<{ email: string; password: string }>({ email: "", password: "" });

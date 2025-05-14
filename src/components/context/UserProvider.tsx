@@ -33,7 +33,7 @@ const initialDeliveryProfile = {
 };
 
 const UserProvider = ({ children }: ProvidersProp) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
   const [loginData, setLoginData] = useState<userDataType>({
     id: "",
     phoneNumber: "",
@@ -51,7 +51,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, isLoginSuccess, loginTime } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
-  useTokenValidation(isLoggedIn, setIsLoggedIn, setLoginData, setIsOldSession);
+  useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
   useTokenRefresh(loginData.id, isLoggedIn, setIsLoggedIn);
 
   const { data: productData, isSuccess: productsFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
@@ -146,7 +146,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
         profileMutate,
         setShowModal,
         isLoggedIn,
-        setIsLoggedIn,
         products,
         loginData,
         setLoginData,
