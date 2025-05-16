@@ -141,7 +141,7 @@ export const contacts: { contact: string; channel: string; icon: string }[] = [
 
 export const socials: { name: string; icon: string }[] = [
   { name: "facebook", icon: "cib:facebook-f" },
-  { name: "instagram", icon: "gg:instagram" },
+  { name: "instagram", icon: "formkit:instagram" },
   { name: "x", icon: "garden:twitter-fill-12" },
   { name: "youtube", icon: "line-md:youtube-filled" },
 ];

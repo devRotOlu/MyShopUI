@@ -6,6 +6,7 @@ import CloseTransferBtn from "../checkout/CloseTransferBtn";
 import { transferDetailsProp } from "../../types";
 import { checkoutContext } from "../checkout/Checkout";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
+import "./style.css";
 
 const TransferDetails = ({ children }: transferDetailsProp) => {
   const { isFetchingTransactionStatus, refetchTransactionStatus, profileIndex, transactionRef, orderInstruction } = useContext(checkoutContext);
@@ -20,10 +21,10 @@ const TransferDetails = ({ children }: transferDetailsProp) => {
     });
   };
   return (
-    <div>
+    <div id="transfer_details">
       <p className="text-white bg-dark text-center py-2">TRANSFER DETAILS</p>
       <div className="pt-3 pb-5 px-3">
-        <div id="transfer_details" className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column gap-3">
           <p>Kindly transfer into the given account using the USSD code.</p>
           {children}
           {isFetchingTransactionStatus && (
@@ -33,7 +34,7 @@ const TransferDetails = ({ children }: transferDetailsProp) => {
             </div>
           )}
           {!isFetchingTransactionStatus && (
-            <button id="transfer_btn" onClick={handleTransactionStatus} className="w-100 bg-white rounded" style={{ color: "var(--lighter_pink)", border: "solid thin var(--lighter_pink)" }}>
+            <button id="confirm_transfer_btn" onClick={handleTransactionStatus} className="w-100 bg-white rounded py-2">
               I have made transfer
             </button>
           )}

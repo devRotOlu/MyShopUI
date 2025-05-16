@@ -2,11 +2,11 @@ import React, { useContext, useState } from "react";
 
 import PageWrapper from "../PageWrapper.tsx";
 import NavigationButtons from "../navigationButtons/NavigationButtons.tsx";
+import ProductCard from "../productCard/ProductCard.tsx";
+import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
 
 import "./style.css";
 import { userContext } from "../context/UserProvider.tsx";
-import ProductCard from "../productCard/ProductCard.tsx";
-import ProductCardSkeleton from "../productCard/ProductCardSkeleton.tsx";
 import { productType } from "../../types.ts";
 
 const maxProductPerPage = 20;

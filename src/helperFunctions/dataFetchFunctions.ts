@@ -36,6 +36,10 @@ export const addReview = async (data: addReviewType) => {
   return await myShopAxios.post("Product/add-review", data);
 };
 
+export const getCategoryProducts = async (categoryId: number) => {
+  return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}`);
+};
+
 // account controller functions
 
 export const signinUser = async (data: LoginStateType) => await myShopAxios.post("Account/login", data);
@@ -114,6 +118,11 @@ export const verifyPayStackPayment = async (data: paystackVerificationDTO) => {
 // orders controller
 export const getOrders = async (customerId: string) => {
   return await myShopAxios.get(`Order?customerId=${customerId}`);
+};
+
+// category controller
+export const getCategories = async () => {
+  return await myShopAxios.get("Category/categories");
 };
 
 export const appendBuffer = (buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer => {

@@ -1,0 +1,30 @@
+#category_list_wrapper > div {
+  top: 0;
+  background-color: var(--transparent_black);
+  box-sizing: content-box;
+  z-index: 1500;
+}
+
+#category_list_wrapper button {
+  color: white;
+}
+
+#category_list_wrapper button:hover {
+  background-color: white;
+  color: black;
+}
+
+#category_list_wrapper #category_list_scroll {
+  height: 18px;
+  background-color: var(--transparent_black);
+  z-index: 1500;
+}
+
+#category_list_wrapper a.category_link {
+  color: white;
+}
+
+#category_list_wrapper a.category_link:hover {
+  background-color: white;
+  color: black;
+}

@@ -5,8 +5,8 @@ import { checkoutPaymentOptionProps } from "../../types";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 
-const CheckoutPaymentOption = ({ children }: checkoutPaymentOptionProps) => {
-  const { profileIndex } = useContext(checkoutContext);
+const CheckoutPaymentOption = ({ children, payOption }: checkoutPaymentOptionProps) => {
+  const { profileIndex, setShowModal } = useContext(checkoutContext);
 
   const iconColor = profileIndex >= 0 ? "var( --light_Green)" : "var(--darker_Grey)";
 
@@ -18,7 +18,14 @@ const CheckoutPaymentOption = ({ children }: checkoutPaymentOptionProps) => {
           <span className="ms-2">2. Payment Options</span>
         </h2>
       </div>
-      <div className="bg-white">{profileIndex >= 0 && children}</div>
+      <div className="bg-white">
+        {profileIndex >= 0 && children}
+        <div className="pb-4" id="payment_btn_wrapper">
+          <button onClick={() => setShowModal(true)} disabled={payOption === ""} className="py-3 w-100 text-light" id="payment_btn" style={{ backgroundColor: payOption === "" ? "grey" : "var(--deep_pink)" }}>
+            Continue to Payment
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

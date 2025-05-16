@@ -1,12 +1,9 @@
-import React, { ChangeEvent, useContext, useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 
 import { checkoutPaymentOptionsProps } from "../../types";
-import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 
-const CheckoutPaymentOptions = ({ setPayOption, payOption }: checkoutPaymentOptionsProps) => {
-  const { setShowModal } = useContext(checkoutContext);
-
+const CheckoutPaymentOptions = ({ setPayOption }: checkoutPaymentOptionsProps) => {
   const handleMonnifyOption = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setPayOption("monnify");
@@ -24,7 +21,7 @@ const CheckoutPaymentOptions = ({ setPayOption, payOption }: checkoutPaymentOpti
 
   return (
     <div id="checkout_payment_options">
-      <div className="py-4 d-flex flex-column border-top">
+      <div className="pt-4 pb-5 d-flex flex-column border-top">
         <div className="mb-4 d-flex gap-3 w-100 checkbox_wrapper py-3">
           <label className="position-relative">
             <input onChange={handleMonnifyOption} name="payment_option" type="radio" />
@@ -42,7 +39,7 @@ const CheckoutPaymentOptions = ({ setPayOption, payOption }: checkoutPaymentOpti
             </div>
           </div>
         </div>
-        <div className="mb-5 d-flex gap-3 w-100 checkbox_wrapper py-3">
+        <div className="d-flex gap-3 w-100 checkbox_wrapper py-3">
           <label className="position-relative">
             <input onChange={handlePayStackOption} name="payment_option" type="radio" />
             <span className="custom_radio">
@@ -59,9 +56,6 @@ const CheckoutPaymentOptions = ({ setPayOption, payOption }: checkoutPaymentOpti
             </div>
           </div>
         </div>
-        <button onClick={() => setShowModal(true)} disabled={payOption === ""} className="py-3 w-100 text-light" id="payment_btn" style={{ backgroundColor: payOption === "" ? "grey" : "var(--deep_pink)" }}>
-          Continue to Payment
-        </button>
       </div>
     </div>
   );

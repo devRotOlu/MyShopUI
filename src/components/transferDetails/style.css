@@ -1,0 +1,4 @@
+#transfer_details #confirm_transfer_btn {
+  color: var(--lighter_pink);
+  border: solid thin var(--lighter_pink);
+}

@@ -18,7 +18,7 @@
 }
 
 #delivery_profile textarea:focus {
-  border-color: var(--lighter_pink);
+  border-color: var(--deep_pink);
 }
 
 #delivery_profile #add_delivery_info {

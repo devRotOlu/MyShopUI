@@ -1,7 +1,6 @@
 import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent } from "react";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
-import RatingStats from "./components/product/RatingStats";
 
 type baseUserType = {
   firstName: string;
@@ -152,6 +151,10 @@ type reviewsType = {
   review: string;
   rating: number;
   reviewDate: string;
+};
+
+export type categoryProps = {
+  productCategory: string;
 };
 
 export type productType = {
@@ -399,6 +402,11 @@ export type confirmTransferBtnProps = {
   fetchTransaction: () => void;
 };
 
+export type productCategoryType = {
+  id: number;
+  name: string;
+};
+
 export type checkoutContextType = {
   isCardPaymentError: boolean;
   isBankTransferError: boolean;
@@ -438,11 +446,11 @@ export type payPlatformType = "monnify" | "payStack" | "";
 
 export type checkoutPaymentOptionProps = {
   children: ReactNode;
+  payOption: payPlatformType;
 };
 
 export type checkoutPaymentOptionsProps = {
   setPayOption: Dispatch<SetStateAction<payPlatformType>>;
-  payOption: payPlatformType;
 };
 
 export type transactionStatusType = {

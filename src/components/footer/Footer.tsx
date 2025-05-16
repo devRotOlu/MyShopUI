@@ -22,7 +22,7 @@ const Footer = () => {
     return (
       <li>
         <span className="icon_wrapper social_icons d-flex justify-content-center align-items-center" key={index}>
-          <Icon icon={icon} fontSize={15} color="white" />
+          <Icon icon={icon} fontSize={16} color="white" />
         </span>
       </li>
     );

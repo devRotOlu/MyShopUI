@@ -1,7 +1,3 @@
-#checkout_header {
-  border-bottom: solid thick var(--dark_orange);
-}
-
 #checkout #transfer_btn,
 #checkout #closeTransferBtn {
   padding: 10px 0.5rem;

@@ -2,6 +2,7 @@ import React, { useState, CSSProperties, useRef, useEffect, useContext } from "r
 import { useSearchParams } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import CheckoutHeader from "../checkoutHeader/CheckoutHeader.tsx";
 import MonnifyDialog from "../../monnify/MonnifyDialog.tsx";
 import DeliveryOption from "../deliveryOption/DeliveryOption.tsx";
 import CheckoutPaymentOption from "../checkoutPaymentOption/CheckoutPaymentOption.tsx";
@@ -80,8 +81,11 @@ const Checkout = () => {
   if (loadingDeliveryProfile) {
     return (
       <PageWrapper pageId="checkout">
-        <div className="align-self-stretch w-100 pt-4 bg-white px-4">
-          <SkeletonPageLoader count={2} />
+        <div className="align-self-stretch w-100 bg-white">
+          <CheckoutHeader />
+          <div className="pt-4 px-4">
+            <SkeletonPageLoader count={2} />
+          </div>
         </div>
       </PageWrapper>
     );
@@ -98,17 +102,13 @@ const Checkout = () => {
   return (
     <checkoutContext.Provider value={{ ...monnifyData, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex, setOrderInstruction, orderInstruction, bankCode, setBankCode }} key={location.pathname}>
       <>
-        <header className="px-3 py-4" id="checkout_header">
-          <div className="d-flex justify-content-center w-100">
-            <h1 className="fs-2">Checkout</h1>
-          </div>
-        </header>
+        <CheckoutHeader />
         <PageWrapper pageId="checkout">
           <div className="d-flex gap-3 w-100 py-5 px-4">
             <section className="d-flex flex-column gap-3 flex-grow-1" id="payment_option">
               <DeliveryOption />
-              <CheckoutPaymentOption>
-                <CheckoutPaymentOptions setPayOption={setPayOption} payOption={payOption} />
+              <CheckoutPaymentOption payOption={payOption}>
+                <CheckoutPaymentOptions setPayOption={setPayOption} />
               </CheckoutPaymentOption>
             </section>
             <section>

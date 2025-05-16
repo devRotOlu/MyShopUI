@@ -13,3 +13,7 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+#checkout_payment_option #payment_btn_wrapper {
+  padding: 0 2.1rem;
+}
