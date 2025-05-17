@@ -18,6 +18,7 @@ import DeliveryAddress from "./deliveryAddress/DeliveryAddress.tsx";
 import DeleteAccount from "./deleteAccount/DeleteAccount.tsx";
 import SavedItems from "./savedItems/SavedItems.tsx";
 import CategoryPageWrapper from "./categoryPageWrapper/CategoryPageWrapper.tsx";
+import ProductPageWrapper from "./ProductPageWrapper.tsx";
 
 const Routes = () => {
   return (
@@ -26,7 +27,7 @@ const Routes = () => {
         <Route element={<AnonymousUserResources />}>
           <Route element={<GroupedResources />}>
             <Route path="/" element={<Home />} />
-            <Route path="/product/:productName" element={<ProductPage />} />
+            <Route path="/product/:productName" element={<ProductPageWrapper />} />
             <Route path="/cart/overview" element={<Cart />} />
             <Route path="/category/:productCategory" element={<CategoryPageWrapper />} />
           </Route>

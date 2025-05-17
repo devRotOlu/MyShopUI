@@ -1,0 +1,31 @@
+#search_display {
+  border-radius: 5px;
+}
+
+#search_display > div {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+#search_display > div > p {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  background-color: var(--cerebral_grey);
+}
+
+#search_display .product_link_list a {
+  color: black;
+}
+
+#search_display .product_link_list {
+  background-color: white;
+}
+
+#search_display .product_link_list:hover {
+  background-color: var(--Light_Grey);
+}
+
+#search_display .product_link_list img {
+  height: 35px;
+  width: 35px;
+}

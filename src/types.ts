@@ -157,6 +157,22 @@ export type categoryProps = {
   productCategory: string;
 };
 
+export type searchBarProps = {
+  setSearchResults: React.Dispatch<React.SetStateAction<productType[] | null>>;
+  setUserInput: React.Dispatch<React.SetStateAction<string>>;
+  searchTerm: string;
+  userInput: string;
+};
+
+export type searchDisplayProps = {
+  searchResults: productType[] | null;
+  searchTerm: string;
+};
+
+export type productPageProps = {
+  productName: string;
+};
+
 export type productType = {
   name: string;
   description: string;

@@ -32,12 +32,20 @@ export const getProducts = async () => {
   return await myShopAxios.get("Product/list-products");
 };
 
+export const getProduct = async (productId: number) => {
+  return await myShopAxios.get(`Product/get-product?productId=${productId}`);
+};
+
 export const addReview = async (data: addReviewType) => {
   return await myShopAxios.post("Product/add-review", data);
 };
 
 export const getCategoryProducts = async (categoryId: number) => {
   return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}`);
+};
+
+export const searchProduct = async (searchTerm: string) => {
+  return await myShopAxios.get(`Product/product_search?searchTerm=${searchTerm}`);
 };
 
 // account controller functions

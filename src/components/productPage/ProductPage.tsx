@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 
 import SkeletonPageLoader from "../SkeletonPageLoader";
 import Product from "../product/Product";
@@ -11,24 +10,30 @@ import Modal from "../modal/Modal";
 import ModalCloseButton from "../ModalCloseButton";
 import BreadCrumb from "../breadCrumbs/BreadCrumb";
 
-import { userContext } from "../context/UserProvider";
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
 import { useGetWishlist } from "../../customHooks/useGetWishlist";
+import { useQuery } from "@tanstack/react-query";
+import { getProduct } from "../../helperFunctions/dataFetchFunctions";
+import { productPageProps, productType } from "../../types";
 
-const ProductPage = () => {
-  const { products } = useContext(userContext);
+const ProductPage = ({ productName }: productPageProps) => {
   const { setShowModal, showModal } = useModal();
 
   const { isLoadingWishlist } = useGetWishlist();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { productName } = useParams();
   const splits = (productName as string).split("-");
   const id = Number(splits[splits.length - 1]);
 
-  if (!products.length || isLoadingWishlist) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["product", productName],
+    queryFn: () => getProduct(id),
+    refetchOnWindowFocus: false,
+  });
+
+  if (isLoading || isLoadingWishlist) {
     return (
       <PageWrapper pageId="productPage">
         <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
@@ -38,9 +43,7 @@ const ProductPage = () => {
     );
   }
 
-  const product = products.find((_product) => {
-    return _product.id === id;
-  });
+  const product: productType = data?.data;
 
   const { name, images } = product!;
 

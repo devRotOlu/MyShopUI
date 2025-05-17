@@ -1,0 +1,14 @@
+#search_bar {
+  width: 530px;
+}
+
+#search_bar input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+#search_bar > button:last-child {
+  background-color: var(--dark_orange);
+  border-color: var(--dark_orange);
+}
