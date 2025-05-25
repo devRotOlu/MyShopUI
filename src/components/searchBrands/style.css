@@ -1,0 +1,11 @@
+#search_brands .product_link_list a {
+  color: black;
+}
+
+#search_brands .product_link_list {
+  background-color: white;
+}
+
+#search_brands .product_link_list:hover {
+  background-color: var(--Light_Grey);
+}

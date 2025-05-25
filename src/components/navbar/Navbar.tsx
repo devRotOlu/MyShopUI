@@ -11,11 +11,11 @@ import SearchDisplay from "../searchDisplay/SearchDisplay.tsx";
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
-import { productType } from "../../types.ts";
+import { searchResultType } from "../../types.ts";
 import { useDebounce } from "use-debounce";
 
 const Navbar = () => {
-  const [searchResults, setSearchResults] = useState<productType[] | null>(null);
+  const [searchResults, setSearchResults] = useState<searchResultType | null>(null);
   const [userInput, setUserInput] = useState("");
   const [searchTerm] = useDebounce(userInput, 700);
   const { isLoggedIn, setShowModal } = useContext(userContext);

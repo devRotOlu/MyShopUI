@@ -158,19 +158,71 @@ export type categoryProps = {
 };
 
 export type searchBarProps = {
-  setSearchResults: React.Dispatch<React.SetStateAction<productType[] | null>>;
+  setSearchResults: React.Dispatch<React.SetStateAction<searchResultType | null>>;
   setUserInput: React.Dispatch<React.SetStateAction<string>>;
   searchTerm: string;
   userInput: string;
 };
 
 export type searchDisplayProps = {
-  searchResults: productType[] | null;
+  searchResults: searchResultType | null;
   searchTerm: string;
+};
+
+export type searchProductsProps = {
+  products: productType[];
+  children: ReactNode;
+};
+
+export type searchBrandsProps = {
+  brands: attributeType[];
+  children: ReactNode;
+};
+
+export type searchCategoriesProps = {
+  categories: productCategoryType[];
+  children: ReactNode;
 };
 
 export type productPageProps = {
   productName: string;
+};
+
+export type attributeType = {
+  attributeId: number;
+  value: string;
+  attribute: {
+    name: string;
+    unit: string;
+  };
+};
+
+export type searchResultType = {
+  products: productType[];
+  categories: productCategoryType[];
+  brands: attributeType[];
+};
+
+export type selectedPricesType = {
+  minPrice?: number;
+  maxPrice?: number;
+};
+
+export type filterPanelProps = {
+  filterPanelData: {
+    products: productType[];
+    setSelectedPrices: React.Dispatch<React.SetStateAction<selectedPricesType>>;
+    selectedPrices: selectedPricesType;
+    selectedRating: number | null;
+    setSelectedRating: React.Dispatch<React.SetStateAction<number | null>>;
+  };
+};
+
+export type brandPageProps = {
+  brand: string;
+  isLoading: boolean;
+  products: productType[];
+  children: ReactNode;
 };
 
 export type productType = {
@@ -182,6 +234,8 @@ export type productType = {
   images: { url: string }[];
   reviews: reviewsType[];
   averageRating: number;
+  attributes: attributeType[];
+  category: productCategoryType;
 };
 
 type updateQuantityType = (value: number, productId: number, cartQuantity?: number, id?: number) => void;
@@ -501,6 +555,7 @@ export type productProps = {
 
 export type productDescriptionProps = {
   description: string;
+  attributes: attributeType[];
 };
 
 export type productReviewsProps = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import PageWrapper from "../PageWrapper";
@@ -13,13 +13,11 @@ import "./style.css";
 
 const maxProductPerPage = 20;
 const Category = ({ productCategory }: categoryProps) => {
-  const [products, setProducts] = useState<productType[]>([]);
   const [currentProduct, setCurrentProducts] = useState<productType[]>([]);
-  const categoryRef = useRef("");
 
   const splittedStrings = productCategory.split("-");
   const id = Number(splittedStrings[splittedStrings.length - 1]);
-  const { data, isSuccess, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["category_products", productCategory],
     queryFn: () => getCategoryProducts(id),
     refetchOnWindowFocus: false,
@@ -28,14 +26,9 @@ const Category = ({ productCategory }: categoryProps) => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;
   });
-  useEffect(() => {
-    if (isSuccess) {
-      const { products, category } = data?.data;
-      categoryRef.current = category?.name;
-      setProducts(products);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
+
+  const products: productType[] = data?.data || [];
+  const category = products?.length ? products[0].category.name : "";
 
   return (
     <PageWrapper pageId="product_category">
@@ -47,7 +40,7 @@ const Category = ({ productCategory }: categoryProps) => {
         )}
         {products.length && (
           <>
-            <BreadCrumb currentLinkLabel={categoryRef.current} />
+            <BreadCrumb currentLinkLabel={category} />
             <div className="px-4">
               <div className="d-flex gap-3">{_products}</div>
               {products.length && (

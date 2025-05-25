@@ -6,7 +6,7 @@ import AddToWishlist from "./AddToWishlist";
 import ProductTab from "./ProductTab";
 import ProductRatings from "./ProductRatings";
 import ProductSummaryModal from "../productSummaryModal/ProductSummaryModal";
-import ProductDescription from "./ProductDescription";
+import ProductDescription from "../productDescription/ProductDescription";
 import ProductReviews from "./ProductReviews";
 
 import { productProps } from "../../types";
@@ -21,7 +21,7 @@ const Product = ({ product, children }: productProps) => {
   const targetRef = useRef<HTMLButtonElement>(null);
   const { handleAddCartItem } = useContext(cartContext);
 
-  const { name, description, unitPrice, quantity, id: productId, reviews, averageRating } = product;
+  const { name, description, unitPrice, quantity, id: productId, reviews, averageRating, attributes } = product;
 
   const handleIncreaseItem = () => {
     if (quantity === quantityToAdd) {
@@ -88,7 +88,7 @@ const Product = ({ product, children }: productProps) => {
             </div>
             <div className="py-3 d-flex flex-column gap-3 w-100" id="">
               <ProductTab tabIndex={tabIndex} setTabIndex={setTabIndex} reviewsLength={reviews.length} />
-              {tabIndex === 0 && <ProductDescription description={description} />}
+              {tabIndex === 0 && <ProductDescription description={description} attributes={attributes} />}
               {tabIndex === 1 && <ProductReviews reviews={reviews} averageRating={averageRating} />}
             </div>
           </div>

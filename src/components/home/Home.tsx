@@ -15,6 +15,8 @@ const Home = () => {
   const { products } = useContext(userContext);
   const [currentProducts, setCurrentProducts] = useState<productType[]>([]);
 
+  console.log(products, "products");
+
   const productCards = currentProducts.map((product) => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;
@@ -24,7 +26,7 @@ const Home = () => {
     <PageWrapper pageId="home">
       <div className="d-flex flex-wrap align-self-stretch w-100">
         <div className="w-100">
-          <div className="w-100 d-flex justify-content-between px-4">
+          <div className="w-100 d-flex justify-content-between px-4 flex-wrap gap-3">
             {!products.length && <ProductCardSkeleton count={4} />}
             {products.length !== 0 && productCards}
           </div>

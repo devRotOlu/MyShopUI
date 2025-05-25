@@ -10,7 +10,6 @@ import Checkout from "./checkout/Checkout.tsx";
 import SuccessfulCheckout from "./successfulCheckout/SuccessfulCheckout.tsx";
 import AuthenticatedUserResources from "./AuthenticatedUserResources.tsx";
 import AnonymousUserResources from "./AnonymousUserResources.tsx";
-import ProductPage from "./productPage/ProductPage.tsx";
 import GroupedResources from "./GroupedResources.tsx";
 import Orders from "./orders/Orders.tsx";
 import Profile from "./profile/Profile.tsx";
@@ -19,6 +18,8 @@ import DeleteAccount from "./deleteAccount/DeleteAccount.tsx";
 import SavedItems from "./savedItems/SavedItems.tsx";
 import CategoryPageWrapper from "./categoryPageWrapper/CategoryPageWrapper.tsx";
 import ProductPageWrapper from "./ProductPageWrapper.tsx";
+import SearchPage from "./searchPage/SearchPage.tsx";
+import BrandPageWrapper from "./BrandPageWrapper.tsx";
 
 const Routes = () => {
   return (
@@ -30,6 +31,8 @@ const Routes = () => {
             <Route path="/product/:productName" element={<ProductPageWrapper />} />
             <Route path="/cart/overview" element={<Cart />} />
             <Route path="/category/:productCategory" element={<CategoryPageWrapper />} />
+            <Route path="/brand/:brand" element={<BrandPageWrapper />} />
+            {/* <Route path="/search" element={<SearchPage />} /> */}
           </Route>
           <Route path="/account/signup" element={<SignUp />} />
           <Route path="/account/login" element={<LoginPage />} />

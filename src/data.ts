@@ -145,3 +145,35 @@ export const socials: { name: string; icon: string }[] = [
   { name: "x", icon: "garden:twitter-fill-12" },
   { name: "youtube", icon: "line-md:youtube-filled" },
 ];
+
+export const naira = "₦";
+export const prices: { label: string; minPrice?: number; maxPrice?: number }[] = [
+  {
+    label: `Under ${naira}2000`,
+    maxPrice: 2000,
+  },
+  {
+    label: `${naira}2000 - ${naira}5000`,
+    minPrice: 2000,
+    maxPrice: 5000,
+  },
+  {
+    label: `${naira}5000 - ${naira}10000`,
+    minPrice: 5000,
+    maxPrice: 10000,
+  },
+  {
+    label: `${naira}10000 - ${naira}20000`,
+    minPrice: 10000,
+    maxPrice: 20000,
+  },
+  {
+    label: `${naira}20000 - ${naira}40000`,
+    minPrice: 20000,
+    maxPrice: 40000,
+  },
+  {
+    label: `Above ${naira}40000`,
+    minPrice: 40000,
+  },
+];

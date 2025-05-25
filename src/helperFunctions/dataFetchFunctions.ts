@@ -48,6 +48,10 @@ export const searchProduct = async (searchTerm: string) => {
   return await myShopAxios.get(`Product/product_search?searchTerm=${searchTerm}`);
 };
 
+export const getBrandProducts = async (brand: string, min?: number, max?: number, rating?: number) => {
+  return await myShopAxios.get(`/Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
+};
+
 // account controller functions
 
 export const signinUser = async (data: LoginStateType) => await myShopAxios.post("Account/login", data);

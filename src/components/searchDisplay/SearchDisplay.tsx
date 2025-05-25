@@ -1,25 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
+import SearchProducts from "../searchProducts/SearchProducts";
+import SearchBrands from "../searchBrands/SearchBrands";
+import SearchCategories from "../searchCategories/SearchCategories";
 
 import "./style.css";
 import { searchDisplayProps } from "../../types";
 
 const SearchDisplay = ({ searchResults, searchTerm }: searchDisplayProps) => {
-  const _searchResults = searchResults!.map(({ id, name, images }) => {
-    const image = images[0].url;
-    const productName = `${name}-` + id;
-    return (
-      <li key={id} className="product_link_list">
-        <Link to={`/product/${productName}`} className="px-2 py-1 d-flex gap-2 align-items-center">
-          <img src={image} alt={name} />
-          <p>{name}</p>
-        </Link>
-      </li>
-    );
-  });
+  const { products, categories, brands } = searchResults!;
+  const isEmptySearch = !products.length && !categories.length && !brands.length;
   return (
     <div id="search_display" className="bg-white pb-1">
-      {!searchResults!.length && (
+      {isEmptySearch && (
         <div>
           <p className="px-2 py-1 fw-bold">
             NO RESULT FOUND <br />
@@ -27,12 +20,24 @@ const SearchDisplay = ({ searchResults, searchTerm }: searchDisplayProps) => {
           </p>
         </div>
       )}
-      {searchResults?.length !== 0 && (
-        <div>
-          <p className="px-2 py-1" id="display_title">
-            PRODUCTS
-          </p>
-          <ul className="px-1 py-0 m-0">{_searchResults}</ul>
+
+      {!isEmptySearch && (
+        <div className="d-flex flex-column gap-1">
+          {categories.length !== 0 && (
+            <SearchCategories categories={categories}>
+              <p className="px-2 py-1 display_title fw-bold">SUGGESTIONS</p>
+            </SearchCategories>
+          )}
+          {products.length !== 0 && (
+            <SearchProducts products={products}>
+              <p className="px-2 py-1 display_title fw-bold">PRODUCTS</p>
+            </SearchProducts>
+          )}
+          {brands.length !== 0 && (
+            <SearchBrands brands={brands}>
+              <p className="px-2 py-1 display_title fw-bold">MATCHING BRANDS</p>
+            </SearchBrands>
+          )}
         </div>
       )}
     </div>

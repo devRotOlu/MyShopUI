@@ -56,6 +56,8 @@ const UserProvider = ({ children }: ProvidersProp) => {
 
   const { data: productData, isSuccess: productsFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
+  console.log(productsFetched, "success");
+
   const {
     mutate: profileMutate,
     data: modifiedUserData,

@@ -1,0 +1,16 @@
+#search_products .product_link_list a {
+  color: black;
+}
+
+#search_products .product_link_list {
+  background-color: white;
+}
+
+#search_products .product_link_list:hover {
+  background-color: var(--Light_Grey);
+}
+
+#search_products .product_link_list img {
+  height: 35px;
+  width: 35px;
+}
