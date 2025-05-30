@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,25 +8,27 @@ import { searchBarProps } from "../../types";
 
 const SearchBar = ({ ...props }: searchBarProps) => {
   const { setSearchResults, setUserInput, searchTerm, userInput } = props;
-  const { isSuccess, data, refetch } = useQuery({
+  const { data, dataUpdatedAt, refetch } = useQuery({
     queryKey: ["search_results"],
     queryFn: () => searchProduct(searchTerm),
     enabled: false,
   });
+  const dataUpdatedAtRef = useRef(dataUpdatedAt);
   useEffect(() => {
     if (searchTerm) {
-      console.log(searchTerm);
       refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
+
   useEffect(() => {
-    if (isSuccess) {
+    if (dataUpdatedAt !== dataUpdatedAtRef.current) {
+      dataUpdatedAtRef.current = dataUpdatedAt;
       const products = data?.data;
       setSearchResults(products);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, data]);
+  }, [data, dataUpdatedAt]);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };

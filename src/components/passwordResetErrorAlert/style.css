@@ -1,0 +1,7 @@
+#password_reset_error {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  background-color: var(--lavender_blush);
+  border-radius: 5px;
+}

@@ -6,6 +6,7 @@ import ProductRatings from "../product/ProductRatings.tsx";
 import { ProductCardProp } from "../../types.ts";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
+import { naira } from "../../data.ts";
 
 const ProductCard = ({ product }: ProductCardProp) => {
   const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
@@ -40,7 +41,10 @@ const ProductCard = ({ product }: ProductCardProp) => {
       </div>
       <div>
         <div className="product_price border-bottom border-top d-flex justify-content-between py-2">
-          <p className="fw-bold">&#36;{unitPrice}</p>
+          <p className="fw-bold">
+            {naira}
+            {unitPrice.toLocaleString()}
+          </p>
           <p className="fw-bold" style={{ color: "var( --deep_pink)" }}>
             In stock: {quantity}
           </p>

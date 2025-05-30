@@ -1,3 +1,11 @@
 #signup {
   background-color: var(--Light_Grey);
 }
+
+#signup #policy {
+  font-size: 14px;
+}
+
+#signup #error_report {
+  font-size: 12px;
+}

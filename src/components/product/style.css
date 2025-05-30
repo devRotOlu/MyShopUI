@@ -1,11 +1,15 @@
 #product_tab button {
   font-size: 1rem;
 }
-#product > div:first-child {
+#product > div:first-child > div:first-child,
+#product > div:first-child > div:last-child > div,
+#product > div:last-child {
   border-radius: 5px;
 }
-#product > div:first-child {
-  height: fit-content;
+
+#product > div:last-child > div > div:last-child {
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 #product #save_item > button:first-child {
@@ -56,28 +60,16 @@
   font-size: 12px;
 }
 
-#product > div:first-child > div:first-child {
-  width: 40%;
-}
-
-#product > div:first-child > div:last-child {
-  width: 60%;
-}
-
-#product > div:last-child > div {
-  border-radius: 5px;
-}
-
-#product > div:last-child > div:first-child {
+#product > div:first-child > div:last-child > div:first-child {
   font-size: 14px;
 }
 
-#product > div:last-child > div:first-child > div:last-child > span {
+#product > div:first-child > div:last-child > div:first-child > div:last-child > span {
   background-color: var(--light_yellow);
   border-radius: 20px;
 }
 
-#product > div:last-child > div:first-child > div:last-child > p {
+#product > div:first-child > div:last-child > div:first-child > div:last-child > p {
   color: var(--lighter_pink);
 }
 
@@ -90,4 +82,16 @@
 
 #product #app_avatar_wrapper > div:last-child > p:first-child {
   color: var(--dark_moderate_violet);
+}
+
+#product .brand {
+  font-size: 14px;
+}
+
+#product .brand > a {
+  color: var(--dark_moderate_violet);
+}
+
+#product #product_header_wrapper .review_count {
+  font-size: 12px;
 }

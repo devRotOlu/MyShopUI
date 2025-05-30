@@ -1,30 +1,18 @@
 import React, { useState } from "react";
 
 import { textInputProps } from "../../types";
-
 import "./style.css";
 
 const TextInput = ({ name, type, placeholder, value, handleChange, children, handleFocus }: textInputProps) => {
-  const [inputType, setInputType] = useState("");
+  const [inputType, setInputType] = useState(type);
   return (
     <label className="position-relative w-100" id="text_input">
       {children}
-      {name === "password" ? (
+      {type === "password" ? (
         <>
-          <input
-            autoComplete="off"
-            className="inputs"
-            type={inputType}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            onChange={(event) => {
-              setInputType("password");
-              handleChange(event);
-            }}
-          />
-          <button type="button" onClick={() => setInputType((preValue) => (preValue === type ? "password" : type))}>
-            {inputType === type ? "Hide" : "Show"}
+          <input autoComplete="off" className="inputs" type={inputType} name={name} placeholder={placeholder} value={value} onChange={(event) => handleChange(event)} />
+          <button className="fw-light" type="button" onClick={() => setInputType((preValue) => (preValue === type ? "text" : type))}>
+            {inputType === type ? "Show" : "Hide"}
           </button>
         </>
       ) : (

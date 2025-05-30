@@ -1,3 +1,7 @@
+#text_input {
+  font-size: 14px;
+}
+
 #text_input .inputs {
   width: 100%;
   padding: 7px;
@@ -9,9 +13,10 @@
   outline: none;
 }
 
-#text_input label button {
+#text_input button {
   position: absolute;
   bottom: 7px;
   right: 10px;
   color: grey;
+  font-size: 14px;
 }

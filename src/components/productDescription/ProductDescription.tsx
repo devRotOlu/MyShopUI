@@ -2,6 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 
 import { productDescriptionProps } from "../../types";
+import "./style.css";
 
 const ProductDescription = ({ description, attributes }: productDescriptionProps) => {
   const _attributes = attributes.map((attr, index) => {
@@ -11,8 +12,8 @@ const ProductDescription = ({ description, attributes }: productDescriptionProps
     } = attr;
     return (
       <tr key={index}>
-        <th className="w-50 p-3 border">{name}</th>
-        <td className="w-50 p-3 border">
+        <th className="w-50 px-3 py-2 border text-muted">{name}</th>
+        <td className="w-50 px-3 py-2 border text-muted">
           {value}
           {unit}
         </td>
@@ -22,8 +23,9 @@ const ProductDescription = ({ description, attributes }: productDescriptionProps
   return (
     <div className="py-3" id="product_description">
       <table className="w-100 mb-4">{_attributes}</table>
-      {/* <p className="lh-lg text-wrap">{description}</p> */}
-      <ReactMarkdown>{description}</ReactMarkdown>
+      <div className="text-muted">
+        <ReactMarkdown>{description}</ReactMarkdown>
+      </div>
     </div>
   );
 };

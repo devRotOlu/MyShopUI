@@ -1,0 +1,8 @@
+#forgot_password_success button {
+  color: var(--dark_wine);
+}
+
+#forgot_password_success > div:last-child button,
+#forgot_password_success > div:last-child p {
+  font-size: 14px;
+}

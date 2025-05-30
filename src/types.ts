@@ -1,10 +1,14 @@
 import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent } from "react";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 
 type baseUserType = {
   firstName: string;
   lastName: string;
+};
+
+export type forgotPasswordInstructionType = {
+  isInvalidEmail: boolean;
 };
 
 export type userProfileDataType = {
@@ -36,8 +40,9 @@ export type formCompProp = {
   styles?: CSSProperties;
 };
 
-export type AuthPageWrapperProp = {
+export type authPageWrapperProp = {
   children: ReactNode;
+  id: string;
 };
 
 export type ProvidersProp = {
@@ -82,14 +87,21 @@ export type LoginProp = {
   children: ReactNode[];
 };
 
-export type LoginFormElementProp = {
+export type loginFormElementProp = {
   name: string;
   inputLabel: string;
   children: ReactNode;
   isError?: boolean;
 };
 
-export type LoginStateType = { email: string; password: string };
+export type loginStateType = { email: string; password: string };
+
+export type resetPasswordDataType = {
+  userId: string;
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 export type useModalDataType = {
   showModal: boolean;
@@ -110,9 +122,10 @@ export type useDeleteAccountDataType = {
 };
 
 export type useLoginData = {
+  isAuthenticating: boolean;
   loginTime: number;
-  loginInputValues: LoginStateType;
-  setLoginInputValues: Dispatch<SetStateAction<LoginStateType>>;
+  loginInputValues: loginStateType;
+  setLoginInputValues: Dispatch<SetStateAction<loginStateType>>;
   handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
   isLoginError: boolean;
   handleLoginFormSubmit: (event: FormEvent) => void;
@@ -154,7 +167,9 @@ type reviewsType = {
 };
 
 export type categoryProps = {
-  productCategory: string;
+  products: productType[];
+  isLoading: boolean;
+  children: ReactNode;
 };
 
 export type searchBarProps = {
@@ -175,7 +190,7 @@ export type searchProductsProps = {
 };
 
 export type searchBrandsProps = {
-  brands: attributeType[];
+  brands: string[];
   children: ReactNode;
 };
 
@@ -200,7 +215,7 @@ export type attributeType = {
 export type searchResultType = {
   products: productType[];
   categories: productCategoryType[];
-  brands: attributeType[];
+  brands: string[];
 };
 
 export type selectedPricesType = {
@@ -267,6 +282,7 @@ export type productSummaryModalProps = {
   product: productType;
   children: ReactNode;
   quantityToAdd: number;
+  brand: string;
 };
 
 export type itemToggleButtonProps = {
@@ -391,7 +407,6 @@ export type CartTableProp = {
 export type failedRequestType = {
   resolve: (value?: any) => void;
   reject: (error?: any) => void;
-  config: AxiosRequestConfig;
 };
 
 export type signupType = baseUserType & { email: string; phoneNumber: string; password: string };
@@ -707,6 +722,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  isAuthenticating: boolean;
   deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isDeletingAccount: boolean;
   isJustLoggedIn: boolean;
@@ -714,8 +730,8 @@ export type userContextType = {
   handleLoginFormSubmit: (event: FormEvent) => void;
   isLoginError: boolean;
   handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
-  loginInputValues: LoginStateType;
-  setLoginInputValues: Dispatch<SetStateAction<LoginStateType>>;
+  loginInputValues: loginStateType;
+  setLoginInputValues: Dispatch<SetStateAction<loginStateType>>;
   initialDeliveryProfile: deliveryDataType;
   modifyingProfile: boolean;
   profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
@@ -758,6 +774,12 @@ export type useUpdateCartItemsDataType = {
 export type useGetCartItemsDataType = {
   cartFetched: boolean;
   cartData: AxiosResponse<any, any> | undefined;
+};
+
+export type useFilterQueryParamsDataType = {
+  min?: number;
+  max?: number;
+  rating?: number;
 };
 
 export type useDeleteDeliveryProfileDataType = {
@@ -807,6 +829,19 @@ export type EditProfileProps = {
   profileToEditIndex: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
+};
+
+export type resetPasswordInstructionProps = {
+  instruction: string;
+};
+
+export type resetPasswordErrorProps = {
+  message: string;
+};
+
+export type forgotPasswordSuccessAlertProps = {
+  email: string;
+  mutate: (variables: void, options?: MutateOptions<void, Error, void, unknown> | undefined) => void;
 };
 
 export type changeDeliveryAddressProps = {};

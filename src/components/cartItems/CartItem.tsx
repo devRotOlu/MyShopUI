@@ -9,6 +9,7 @@ import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.ts";
 import { cartContext } from "../context/CartProvider.tsx";
+import { naira } from "../../data.ts";
 
 const CartItem = ({ item, index, itemCount }: CartItemProp) => {
   const [validateQuantity, setValidateQuantity] = useState(false);
@@ -69,8 +70,14 @@ const CartItem = ({ item, index, itemCount }: CartItemProp) => {
       </td>
       <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100 py-3 text-center`}>
         <div>
-          <p className="fs-5 fw-bold">&#36;{unitPrice}</p>
-          <p className="text-muted">&#36;{unitPrice} x 1 item</p>
+          <p className="fs-5 fw-bold">
+            {naira}
+            {unitPrice.toLocaleString()}
+          </p>
+          <p className="text-muted">
+            {naira}
+            {unitPrice.toLocaleString()} x 1 item
+          </p>
         </div>
       </td>
       <td className={`${index !== itemCount - 1 ? "border-bottom" : ""} h-100 py-3 text-end`}>

@@ -1,0 +1,8 @@
+#password_reset_instruction {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  background-color: var(--lightest_grey);
+  border-radius: 5px;
+  color: var(--cerebral_grey);
+}

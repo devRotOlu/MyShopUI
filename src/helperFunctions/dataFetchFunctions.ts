@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, LoginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO } from "../types.ts";
+import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType } from "../types.ts";
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -40,8 +40,8 @@ export const addReview = async (data: addReviewType) => {
   return await myShopAxios.post("Product/add-review", data);
 };
 
-export const getCategoryProducts = async (categoryId: number) => {
-  return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}`);
+export const getCategoryProducts = async (categoryId: number, min?: number, max?: number, rating?: number) => {
+  return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
 };
 
 export const searchProduct = async (searchTerm: string) => {
@@ -49,19 +49,27 @@ export const searchProduct = async (searchTerm: string) => {
 };
 
 export const getBrandProducts = async (brand: string, min?: number, max?: number, rating?: number) => {
-  return await myShopAxios.get(`/Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
+  return await myShopAxios.get(`Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
 };
 
 // account controller functions
 
-export const signinUser = async (data: LoginStateType) => await myShopAxios.post("Account/login", data);
+export const resetPassword = async (data: resetPasswordDataType) => {
+  await myShopAxios.post("Account/reset-password", data);
+};
+
+export const sendEmailForPassWordReset = async (email: string) => {
+  await myShopAxios.post(`Account/password-reset-email?email=${email}`);
+};
+
+export const signinUser = async (data: loginStateType) => await myShopAxios.post("Account/login", data);
 
 export const validateAccessToken = async () => {
   return await myShopAxios.get("Account/validate_token");
 };
 
-export const updateTokens = async (customerId: string) => {
-  return await myShopAxios.post(`Account/token_refresh?customerId=${customerId}`);
+export const updateTokens = async () => {
+  return await myShopAxios.post("Account/token_refresh");
 };
 
 export const logoutUser = async () => await myShopAxios.post("Account/logout");

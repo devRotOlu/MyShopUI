@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, MouseEvent } from "react";
 
 import ProductRatings from "../product/ProductRatings";
 
@@ -7,8 +7,14 @@ import { prices } from "../../data";
 import "./style.css";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
+  const [isExpand, setIsExpand] = useState({
+    isExpandCategory: true,
+    isExpandPriceList: true,
+    isExpandRatings: true,
+  });
   const { products, selectedPrices, setSelectedPrices, selectedRating, setSelectedRating } = filterPanelData;
   const isInitialRenderRef = useRef(true);
   const location = useLocation();
@@ -43,7 +49,7 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
   const _categories = Array.from(categories).map((category, index) => {
     return (
       <li key={index}>
-        <button>{category}</button>
+        <button className="fw-light category">{category}</button>
       </li>
     );
   });
@@ -52,7 +58,7 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
     const { label, minPrice, maxPrice } = price;
     return (
       <li key={index}>
-        <label>
+        <label className="filter_label">
           <input onChange={() => setSelectedPrices((prevPrice) => ({ ...prevPrice, minPrice, maxPrice }))} type="radio" name="price" />
           &nbsp;&nbsp; {label}
         </label>
@@ -65,7 +71,7 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
       const rating = 4 - index;
       return (
         <li key={rating}>
-          <label className="d-flex align-items-center">
+          <label className="d-flex align-items-center filter_label">
             <input onChange={() => setSelectedRating(rating)} type="radio" name="rating" />
             &nbsp;&nbsp;
             <ProductRatings size={22} rating={rating} />
@@ -74,19 +80,68 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
         </li>
       );
     });
+  const { isExpandCategory, isExpandPriceList, isExpandRatings } = isExpand;
+  const handleCategoryToggle = (_: MouseEvent<HTMLButtonElement>) => {
+    setIsExpand((prevObj) => ({ ...prevObj, isExpandCategory: !prevObj.isExpandCategory }));
+  };
+  const handlePriceListToggle = (_: MouseEvent<HTMLButtonElement>) => {
+    setIsExpand((prevObj) => ({ ...prevObj, isExpandPriceList: !prevObj.isExpandPriceList }));
+  };
+  const handleRatingsToggle = (_: MouseEvent<HTMLButtonElement>) => {
+    setIsExpand((prevObj) => ({ ...prevObj, isExpandRatings: !prevObj.isExpandRatings }));
+  };
   return (
     <div className="bg-white" id="filter_panel">
       <div className="pt-3 pb-2 px-3 border-bottom ">
-        <p className="mb-2 fw-bold">Browse Categories</p>
-        <ul className="m-0 p-0">{_categories}</ul>
+        <div className="mb-2 d-flex justify-content-between align-items-center">
+          <p className="fw-bold list_header">Browse Categories</p>
+          <div>
+            {isExpandCategory ? (
+              <button onClick={handleCategoryToggle}>
+                <Icon icon="charm:plus" fontSize={20} />
+              </button>
+            ) : (
+              <button onClick={handleCategoryToggle}>
+                <Icon icon="charm:minus" fontSize={20} />
+              </button>
+            )}
+          </div>
+        </div>
+        {isExpandCategory && <ul className="m-0 p-0">{_categories}</ul>}
       </div>
       <div className="py-2 px-3 border-bottom">
-        <p className="mb-2 fw-bold">Price</p>
-        <ul className="m-0 p-0 d-flex flex-column gap-1">{priceList}</ul>
+        <div className="mb-2 d-flex justify-content-between align-items-center">
+          <p className="fw-bold list_header">Price</p>
+          <div>
+            {isExpandPriceList ? (
+              <button onClick={handlePriceListToggle}>
+                <Icon icon="charm:plus" fontSize={20} />
+              </button>
+            ) : (
+              <button onClick={handlePriceListToggle}>
+                <Icon icon="charm:minus" fontSize={20} />
+              </button>
+            )}
+          </div>
+        </div>
+        {isExpandPriceList && <ul className="m-0 p-0 d-flex flex-column gap-1">{priceList}</ul>}
       </div>
       <div className="py-2 px-3">
-        <p className="mb-2 fw-bold">Rating</p>
-        <ul className="m-0 p-0 d-flex flex-column gap-1">{_ratings}</ul>
+        <div className="mb-2 d-flex justify-content-between align-items-center">
+          <p className="fw-bold list_header">Rating</p>
+          <div>
+            {isExpandRatings ? (
+              <button onClick={handleRatingsToggle}>
+                <Icon icon="charm:plus" fontSize={20} />
+              </button>
+            ) : (
+              <button onClick={handleRatingsToggle}>
+                <Icon icon="charm:minus" fontSize={20} />
+              </button>
+            )}
+          </div>
+        </div>
+        {isExpandRatings && <ul className="m-0 p-0 d-flex flex-column gap-1">{_ratings}</ul>}
       </div>
     </div>
   );

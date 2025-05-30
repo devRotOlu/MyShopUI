@@ -8,33 +8,34 @@ const firstPage = 1;
 
 const NavigationButtons = ({ ...props }: navigationButtonsProps) => {
   const { itemCount, maxItemPerPage, setCurrentItems, items } = props;
-  const lowestIndexRef = useRef(maxItemPerPage - 1);
-  const currentIndexRef = useRef(maxItemPerPage - 1);
-  const [currentPage, setCurrentPage] = useState(firstPage);
   const maxPage = Math.ceil(itemCount / maxItemPerPage);
+  const initialIndex = maxPage >= 1 ? maxItemPerPage - 1 : itemCount - 1;
+  const prevIndexRef = useRef(initialIndex);
+  const currentIndexRef = useRef(initialIndex);
+  const [currentPage, setCurrentPage] = useState(firstPage);
+
   const handleNextBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
     const isNextPage = currentIndexRef.current < itemCount - 1;
     if (isNextPage) {
       setCurrentPage((prevIndex) => (prevIndex !== maxPage ? ++prevIndex : prevIndex));
-      const upperBound = itemCount - (currentIndexRef.current + 1) >= maxItemPerPage ? maxItemPerPage + currentIndexRef.current : itemCount - 1;
+      prevIndexRef.current = currentIndexRef.current;
+      currentIndexRef.current = itemCount - (currentIndexRef.current + 1) >= maxItemPerPage ? maxItemPerPage + currentIndexRef.current : itemCount - 1;
       const currentItems = items.filter((_, index) => {
-        return index > currentIndexRef.current && index <= upperBound;
+        return index > prevIndexRef.current && index <= currentIndexRef.current;
       });
       setCurrentItems(currentItems);
-      currentIndexRef.current = upperBound;
     }
   };
   const handlePreviousBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
-    const isPreviousPage = lowestIndexRef.current !== currentIndexRef.current;
+    const isPreviousPage = initialIndex !== currentIndexRef.current;
     if (isPreviousPage) {
       setCurrentPage((prevIndex) => (prevIndex !== firstPage ? --prevIndex : prevIndex));
-      const upperBound = currentIndexRef.current - maxItemPerPage;
-      const lowerBound = upperBound - maxItemPerPage + 1;
+      currentIndexRef.current = prevIndexRef.current;
+      prevIndexRef.current = currentIndexRef.current - maxItemPerPage;
       const currentItems = items.filter((_, index) => {
-        return index >= lowerBound && index <= upperBound;
+        return index > prevIndexRef.current && index <= currentIndexRef.current;
       });
       setCurrentItems(currentItems);
-      currentIndexRef.current = upperBound;
     }
   };
 

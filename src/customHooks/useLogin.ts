@@ -27,10 +27,14 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
     isError,
     isSuccess,
     submittedAt: loginTime,
+    isPending,
   } = useMutation({
     mutationFn: signinUser,
     onSuccess,
+    retry: false,
   });
+
+  console.log(isPending, "pending");
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -42,6 +46,7 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
   const _isSuccess = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isSuccess;
 
   return {
+    isAuthenticating: isPending,
     loginTime,
     loginInputValues: formValues,
     setLoginInputValues: setFormValues,

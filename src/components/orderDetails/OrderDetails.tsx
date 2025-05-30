@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { cartContext } from "../context/CartProvider";
+import { naira } from "../../data";
 import "./style.css";
 
 const OrderDetails = () => {
@@ -24,7 +25,10 @@ const OrderDetails = () => {
           <p>
             Sold by <span className="fw-bold">MyShop</span>
           </p>
-          <p className="fw-bold">{unitPrice}</p>
+          <p className="fw-bold">
+            {naira}
+            {unitPrice.toLocaleString()}
+          </p>
           <p>Quantity: {cartQuantity}</p>
         </div>
       </div>

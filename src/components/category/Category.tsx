@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 
 import PageWrapper from "../PageWrapper";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
@@ -8,26 +7,16 @@ import NavigationButtons from "../navigationButtons/NavigationButtons";
 import BreadCrumb from "../breadCrumbs/BreadCrumb";
 
 import { categoryProps, productType } from "../../types";
-import { getCategoryProducts } from "../../helperFunctions/dataFetchFunctions";
 import "./style.css";
 
 const maxProductPerPage = 20;
-const Category = ({ productCategory }: categoryProps) => {
+const Category = ({ products, isLoading, children }: categoryProps) => {
   const [currentProduct, setCurrentProducts] = useState<productType[]>([]);
-
-  const splittedStrings = productCategory.split("-");
-  const id = Number(splittedStrings[splittedStrings.length - 1]);
-  const { data, isLoading } = useQuery({
-    queryKey: ["category_products", productCategory],
-    queryFn: () => getCategoryProducts(id),
-    refetchOnWindowFocus: false,
-  });
   const _products = currentProduct.map((product) => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;
   });
 
-  const products: productType[] = data?.data || [];
   const category = products?.length ? products[0].category.name : "";
 
   return (
@@ -41,13 +30,16 @@ const Category = ({ productCategory }: categoryProps) => {
         {products.length && (
           <>
             <BreadCrumb currentLinkLabel={category} />
-            <div className="px-4">
-              <div className="d-flex gap-3">{_products}</div>
-              {products.length && (
-                <div className="align-self-end d-flex justify-content-center w-100 my-4">
-                  <NavigationButtons itemCount={products.length} maxItemPerPage={maxProductPerPage} setCurrentItems={setCurrentProducts} items={products} />
-                </div>
-              )}
+            <div className="px-4 d-flex gap-4">
+              <div>{children}</div>
+              <div className="flex-grow-1">
+                <div className="d-flex gap-3">{_products}</div>
+                {products.length && (
+                  <div className="align-self-end d-flex justify-content-center w-100 my-4">
+                    <NavigationButtons itemCount={products.length} maxItemPerPage={maxProductPerPage} setCurrentItems={setCurrentProducts} items={products} />
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}

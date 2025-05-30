@@ -45,6 +45,8 @@ const ProductPage = ({ productName }: productPageProps) => {
 
   const product: productType = data?.data;
 
+  const category = product?.category.name;
+
   const { name, images } = product!;
 
   const carousel = <Carousel name={name} images={images} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />;
@@ -64,7 +66,7 @@ const ProductPage = ({ productName }: productPageProps) => {
     <>
       <PageWrapper pageId="productPage">
         <div className="w-100">
-          <BreadCrumb currentLinkLabel="Product" />
+          <BreadCrumb currentLinkLabel={category} />
           <Product product={product!}>
             <>
               <div onClick={() => setShowModal(true)}>{carousel}</div>

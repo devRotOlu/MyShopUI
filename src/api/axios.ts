@@ -1,61 +1,64 @@
 import axios from "axios";
-// import { AxiosRequestConfig } from "axios";
 
-// import { updateTokens } from "../helperFunctions/dataFetchFunctions.ts";
-// import { failedRequestType } from "../types.ts";
+import { updateTokens } from "../helperFunctions/dataFetchFunctions.ts";
+import { failedRequestType } from "../types.ts";
 
 axios.defaults.withCredentials = true;
 
-// let isRefreshing: boolean = false;
-// let failedRequests: failedRequestType[] = [];
+let isRefreshing: boolean = false;
+let failedRequests: failedRequestType[] = [];
 
 export const myShopAxios = axios.create({
   baseURL: "https://localhost:44378/api/",
   headers: {
     "Content-Type": "application/json",
+    "X-Client-Type": "web",
+    "X-Origin": window.location.origin,
   },
 });
 
-// myShopAxios.interceptors.response.use(
-//   (response) => {
-//     console.log(response, "from interceptor");
-//     return response;
-//   },
-//   async (error) => {
-//     const originalRequest: AxiosRequestConfig = error.config;
+const processQueue = (error: any) => {
+  failedRequests.forEach(({ reject }) => {
+    reject(error);
+  });
+  failedRequests = [];
+};
 
-//     if (error.response && error.response.status === 401) {
-//       if (!isRefreshing) {
-//         isRefreshing = true;
-//         try {
-//           await updateTokens();
+myShopAxios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-//           // retry all request that failed due to
-//           // unauthorization
-//           failedRequests.forEach(({ config, resolve, reject }) => {
-//             myShopAxios
-//               .request(config)
-//               .then((response) => resolve(response))
-//               .catch((error) => reject(error));
-//           });
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-//           // clear failed requests
-//           failedRequests = [];
-//           console.log("in here");
-//           return myShopAxios(originalRequest);
-//         } catch (error) {}
-//       } else {
-//         // add all failed requests during refreshing
-//         // to the failedRequest list.
-//         return new Promise((resolve, reject) => {
-//           var failedRequest: failedRequestType = {
-//             resolve,
-//             reject,
-//             config: error.config,
-//           };
-//           failedRequests.push(failedRequest);
-//         });
-//       }
-//     }
-//   }
-// );
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedRequests.push({ resolve, reject });
+        });
+      }
+
+      isRefreshing = true;
+
+      try {
+        // This sends the refresh cookie automatically
+        await updateTokens();
+
+        isRefreshing = false;
+
+        // Retry original request after token refresh
+        return myShopAxios(originalRequest);
+      } catch (err) {
+        processQueue(err);
+
+        // Optional: redirect to login or logout user
+        //window.location.href = "/login";
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);

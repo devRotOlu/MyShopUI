@@ -27,7 +27,7 @@ export const signupDetails: { name: string; type: "text" | "email" | "number" | 
   },
   {
     name: "password",
-    type: "text",
+    type: "password",
     inputLabel: "Password",
     placeholder: "Enter Password",
   },
@@ -42,7 +42,7 @@ export const loginDetails: { name: string; type: "text" | "email" | "number" | "
   },
   {
     name: "password",
-    type: "text",
+    type: "password",
     inputLabel: "Password",
     placeholder: "Enter Password",
   },

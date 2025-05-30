@@ -1,3 +1,17 @@
 #filter_panel {
   width: 250px;
 }
+
+#filter_panel .filter_label,
+#filter_panel .category {
+  font-size: 13px;
+  font-style: italic;
+}
+
+#filter_panel .filter_label {
+  cursor: pointer;
+}
+
+#filter_panel .list_header {
+  font-size: 14px;
+}

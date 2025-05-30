@@ -13,7 +13,6 @@ import { alertContext } from "./AlertProvider";
 import { useLogout } from "../../customHooks/useLogout";
 import { useDeleteAccount } from "../../customHooks/useDeleteAccount";
 import { useTokenValidation } from "../../customHooks/useTokenValidation";
-import { useTokenRefresh } from "../../customHooks/useTokenRefresh";
 
 const clientId: string = process.env.REACT_APP_RSA_Public_Key!;
 
@@ -48,15 +47,12 @@ const UserProvider = ({ children }: ProvidersProp) => {
 
   const [products, setProducts] = useState<productType[]>([]);
 
-  const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, isLoginSuccess, loginTime } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
+  const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, isLoginSuccess, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
-  useTokenRefresh(loginData.id, isLoggedIn, setIsLoggedIn);
 
   const { data: productData, isSuccess: productsFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
-
-  console.log(productsFetched, "success");
 
   const {
     mutate: profileMutate,
@@ -136,8 +132,9 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        isAuthenticating,
         deleteAccount,
-        isJustLoggedIn: loginTimeRef.current !== loginTime,
+        isJustLoggedIn: loginTimeRef.current !== loginTime && isLoggedIn === true,
         isLoginError,
         isLoginSuccess,
         handleLoginFormSubmit,

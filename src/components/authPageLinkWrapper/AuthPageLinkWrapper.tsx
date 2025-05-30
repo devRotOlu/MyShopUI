@@ -6,7 +6,7 @@ import "./style.css";
 const AuthPageLinkWrapper = ({ linkSectionTitle, children }: authFormLinkProps) => {
   return (
     <div id="authFormLink">
-      <p className="text-center">{linkSectionTitle}</p>
+      <p className="text-center text-muted mb-1">{linkSectionTitle}</p>
       {children}
     </div>
   );

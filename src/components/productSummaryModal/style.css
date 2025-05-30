@@ -27,3 +27,8 @@
   background-color: var(--light_Green);
   padding: 0.7rem 4rem;
 }
+
+#product_summary_modal #name_wrapper a {
+  color: var(--dark_moderate_violet);
+  font-size: 14px;
+}

@@ -1,7 +1,8 @@
-#errorReport {
+#login_form_element #errorReport {
   max-width: 364px;
+  font-size: 12px;
 }
 
-#password_label_wrapper a {
+#login_form_element #password_label_wrapper a {
   color: var(--dark_wine);
 }

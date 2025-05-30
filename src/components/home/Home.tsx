@@ -9,7 +9,7 @@ import "./style.css";
 import { userContext } from "../context/UserProvider.tsx";
 import { productType } from "../../types.ts";
 
-const maxProductPerPage = 20;
+const maxProductPerPage = 10;
 
 const Home = () => {
   const { products } = useContext(userContext);
