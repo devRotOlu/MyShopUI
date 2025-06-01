@@ -146,7 +146,7 @@ export type useMonnifyType = {
   isTransactionSuccessful: boolean;
   isFetchingTransactionStatus: boolean;
   refetchTransactionStatus: UseMutateFunction<AxiosResponse<any, any>, Error, transferStatusType, unknown>;
-  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, cardPaymentType, unknown>;
+  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, sendCardDetailsType, unknown>;
   cardDetailsSent: boolean;
   isCardPaymentError: boolean;
   isInitializingPayment: boolean;
@@ -460,6 +460,12 @@ type cardDetailsType = {
   card: { number: string; expiryMonth: string; expiryYear: string; pin: string; cvv: string };
 };
 
+export type sendCardDetailsType = {
+  card: ArrayBuffer;
+  key: ArrayBuffer;
+  iv: ArrayBuffer;
+};
+
 export type transferStatusType = {
   transactionReference: string;
   profileId: number;
@@ -509,7 +515,7 @@ export type checkoutContextType = {
   detailsSent: boolean;
   isLoadedDetails: boolean;
   transactionRef: string;
-  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, cardPaymentType, unknown>;
+  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, sendCardDetailsType, unknown>;
   bankCode: string;
   setBankCode: React.Dispatch<React.SetStateAction<string>>;
   sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;

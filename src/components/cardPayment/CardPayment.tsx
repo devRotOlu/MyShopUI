@@ -1,7 +1,6 @@
 import React, { useState, FormEvent, useContext, FocusEvent } from "react";
-import * as crypto from "crypto-js";
+import { useQuery } from "@tanstack/react-query";
 import Cards, { Focused } from "react-credit-cards-2";
-import * as nodeForge from "node-forge";
 
 import FormComp from "../formComp/FormComp.tsx";
 import FormButton from "../formButton/FormButton.tsx";
@@ -12,15 +11,12 @@ import Loader from "../Loader.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 
 import { cardType, cardPaymentType } from "../../types.ts";
-import { sendCardDetails, appendBuffer, base64ToArrayBuffer, arrayBufferToBase64 } from "../../helperFunctions/dataFetchFunctions.ts";
+import { getPublicKey } from "../../helperFunctions/dataFetchFunctions.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import { checkoutContext } from "../checkout/Checkout.tsx";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";
-
-const privateKey: string = process.env.REACT_APP_Crypto_Key!;
-const iv: string = process.env.REACT_APP_Crypto_IV!;
-const RSAPublicKey: string = process.env.REACT_APP_RSA_Public_Key!;
+import { getCryptoKey } from "../../helperFunctions/utilityFunctions.ts";
 
 const cardMaxChar = {
   max_pin: 4,
@@ -42,11 +38,18 @@ const splitString = (value: string, separator: string, divisor: number): string 
 };
 
 const CardPayment = () => {
+  const { data } = useQuery({
+    queryFn: getPublicKey,
+    queryKey: ["public_key"],
+    refetchOnWindowFocus: false,
+  });
+  const publicKeyPem = data?.data;
+
   const {
     loginData: { lastName, firstName },
   } = useContext(userContext);
 
-  const { transactionRef, sendCardDetails, isCardPaymentError, profileIndex, sendingCardDetails, orderInstruction } = useContext(checkoutContext);
+  const { transactionRef, sendCardDetails, profileIndex, sendingCardDetails, orderInstruction } = useContext(checkoutContext);
   const { deliveryProfiles } = useContext(deliveryContext);
 
   const [card, setCard] = useState<cardType>({
@@ -58,7 +61,7 @@ const CardPayment = () => {
 
   const [focus, setFocus] = useState<Focused>("");
 
-  const handleCardRequest = (event: FormEvent<HTMLFormElement>) => {
+  const handleCardRequest = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { cvv, number, expiry, pin } = card;
     const expiryMonth = expiry[0] + expiry[1];
@@ -66,9 +69,9 @@ const CardPayment = () => {
     const year = new Date().getFullYear();
     var yearCount = year % 100;
     if (Number(expiryYear) >= yearCount) {
-      expiryYear = `${Math.trunc(year / 100)}` + `${expiryYear}`;
+      expiryYear = `${Math.trunc(year / 100)}${expiryYear}`;
     } else {
-      expiryYear = `${Math.trunc(year / 100) + 1}` + `${expiryYear}`;
+      expiryYear = `${Math.trunc(year / 100) + 1}${expiryYear}`;
     }
     const profileId = deliveryProfiles[profileIndex].id;
     const requestContent: cardPaymentType = {
@@ -86,44 +89,35 @@ const CardPayment = () => {
       orderInstruction,
     };
 
-    console.log(requestContent, "request");
+    const publicKey = await getCryptoKey(publicKeyPem);
 
-    const publicKey = `-----BEGIN PUBLIC KEY-----
-MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnMfLT0MRPNqBotD7Q3hr
-0By37Yb9uUgXXPtOWkxamajB1HL6i1fphFD/X1BroMJW5QHqPT4yE6MoPgk/346d
-eS/4Zp7byYiRQz2Gpaec0BlvHuZiOJ/fhJm1XsU1vvDNMuFPoYVwYr8rYchZJHGJ
-vWy6Nr8Di/8m36lIDeuUrkyu0M/LOqa11GGiGe8nmD4DNhCBW5AqwvlBaVkzUBxu
-1PUuhVGb32DbZALP22ciKAxE2OrqrtkkWcT5A1k6FaqpSewYczno6XItHMvJqIEg
-xn/3dnobZS33e7USzrmYqZ93or0DAoGvXEQEy2pTHHNYMk1UjKIHK9C7W5Te1fH9
-mFBUuFaxFf/cNYrc5bxy3EmDZ45U8mjdfVKpLHr7dqHFtQsHbc+xaoA4opr8TUNH
-E4FixNzk3pbMHXD4/ATf/gISszW8/5n/Sj7dwRuZjvin6U5GnsYWQHLQCJm7f8ip
-w3X0E/JhULMCVAyBz9ADazj5xp9FN7T2UU/6wdruDVEbcS6xh0NOvXZRXjFVwN1v
-6fnwQ2yf+GpLP1iQGH+4OV3E53Q4w9ByGISbkn/BGhsbo0lQQVE/mPu6FCO0SCsX
-Fx5+MD53iPO0eNwA9Ylm0HByDGR4RWkiyBlrsSHmHks48LNk+mHj7gxHgAxTqPu6
-CIkO9pKOBD9DZ25tVr1PWscCAwEAAQ==
------END PUBLIC KEY-----
-`;
-    // console.log(publicKey, "key");
-    // var rsa = nodeForge.pki.publicKeyFromPem(publicKey);
-    // var encrytedData = window.btoa(rsa.encrypt("Olumide"));
-    // mutate(encrytedData);
+    // 2. Generate AES key and IV
+    const aesKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);
+    const aesIV = crypto.getRandomValues(new Uint8Array(12));
 
-    // const jsonData = JSON.stringify(requestContent);
-    // const encryptedData = crypto.AES.encrypt("Olumide", privateKey);
+    // 3. Encrypt the payload using AES
+    const encoder = new TextEncoder();
+    const encryptedBody = await crypto.subtle.encrypt(
+      {
+        name: "AES-GCM",
+        iv: aesIV,
+      },
+      aesKey,
+      encoder.encode(JSON.stringify(requestContent))
+    );
+    // 4. Export AES key as raw for encryption
+    const rawKey = await crypto.subtle.exportKey("raw", aesKey);
 
-    // var encryptedBuffer = base64ToArrayBuffer(encryptedData.toString());
-    // var ivBuffer = base64ToArrayBuffer(encryptedData.iv.toString(crypto.enc.Base64));
-    // var finalBuffer = appendBuffer(ivBuffer, encryptedBuffer);
+    // 5. Encrypt AES key and IV using RSA public key
+    const encryptedKey = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, rawKey);
 
-    // var data = crypto.AES.decrypt(encryptedData, crypto.enc.Utf8.parse(privateKey), {
-    //   iv: crypto.enc.Utf8.parse(iv),
-    //   mode: crypto.mode.CBC,
-    //   padding: crypto.pad.Pkcs7,
-    // });
-    //console.log(data.toString(crypto.enc.Utf8), "data");
-    //console.log(encryptedData.blockSize, "data");
+    const encryptedIV = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, aesIV);
 
-    sendCardDetails(requestContent);
+    sendCardDetails({
+      card: encryptedBody,
+      key: encryptedKey,
+      iv: encryptedIV,
+    });
   };
 
   const handleCardChange = (event: FormEvent<HTMLInputElement>) => {

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useDebounce } from "use-debounce";
 
 import Brand from "../brand/Brand.tsx";
 import AccountDropDown from "../accountDropdown/AccountDropDown.tsx";
@@ -12,7 +13,6 @@ import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 import { searchResultType } from "../../types.ts";
-import { useDebounce } from "use-debounce";
 
 const Navbar = () => {
   const [searchResults, setSearchResults] = useState<searchResultType | null>(null);

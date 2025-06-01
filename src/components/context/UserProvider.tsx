@@ -14,8 +14,6 @@ import { useLogout } from "../../customHooks/useLogout";
 import { useDeleteAccount } from "../../customHooks/useDeleteAccount";
 import { useTokenValidation } from "../../customHooks/useTokenValidation";
 
-const clientId: string = process.env.REACT_APP_RSA_Public_Key!;
-
 export const userContext = React.createContext({} as userContextType);
 
 const initialDeliveryProfile = {

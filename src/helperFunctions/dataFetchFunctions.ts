@@ -1,5 +1,11 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType } from "../types.ts";
+import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType, sendCardDetailsType } from "../types.ts";
+import { toBase64 } from "./utilityFunctions.ts";
+
+// cryprto controller functions
+export const getPublicKey = async () => {
+  return await myShopAxios.get("Crypto/public-key");
+};
 
 // cart controller functions
 export const addItemToCart = async (data: addedItemType) => {
@@ -122,8 +128,15 @@ export const getTransactionStatus = async (data: transferStatusType) => {
   return await myShopAxios.post("MonnifyCheckout/transaction_status", data);
 };
 
-export const sendCardDetails = async (data: cardPaymentType) => {
-  return await myShopAxios.post("MonnifyCheckout/card_charge", data);
+export const sendCardDetails = async (data: sendCardDetailsType) => {
+  const { card, key, iv } = data;
+  return await myShopAxios.post("MonnifyCheckout/card_charge", toBase64(card), {
+    headers: {
+      "Content-Type": "text/plain",
+      "X-Encrypted-Key": toBase64(key),
+      "X-Encrypted-IV": toBase64(iv),
+    },
+  });
 };
 
 // payStack controller
@@ -143,29 +156,4 @@ export const getOrders = async (customerId: string) => {
 // category controller
 export const getCategories = async () => {
   return await myShopAxios.get("Category/categories");
-};
-
-export const appendBuffer = (buffer1: ArrayBuffer, buffer2: ArrayBuffer): ArrayBuffer => {
-  var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
-  tmp.set(new Uint8Array(buffer1), 0);
-  tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-  return tmp.buffer;
-};
-
-export const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
-  var binary_string = atob(base64);
-  var len = binary_string.length;
-  var bytes = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-    bytes[i] = binary_string.charCodeAt(i);
-  }
-  return bytes.buffer;
-};
-
-export const arrayBufferToBase64 = (arrayBuffer: ArrayBuffer): string => {
-  return btoa(
-    new Uint8Array(arrayBuffer).reduce(function (data, byte) {
-      return data + String.fromCharCode(byte);
-    }, "")
-  );
 };

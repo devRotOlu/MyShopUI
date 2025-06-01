@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getTransactionStatus, getTranserInfo, initializePayment, sendCardDetails } from "../helperFunctions/dataFetchFunctions";

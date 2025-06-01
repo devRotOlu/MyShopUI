@@ -2,11 +2,11 @@ import { useState, useRef, ChangeEvent, FormEvent, SetStateAction, Dispatch } fr
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-import { useLoginData, LoginStateType, userDataType } from "../types.ts";
+import { useLoginData, loginStateType, userDataType } from "../types.ts";
 import { signinUser } from "../helperFunctions/dataFetchFunctions.ts";
 
 export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, setIsLoggedIn: Dispatch<SetStateAction<boolean | undefined>>, setLoginData: Dispatch<SetStateAction<userDataType>>): useLoginData => {
-  const [formValues, setFormValues] = useState<LoginStateType>({ email: "", password: "" });
+  const [formValues, setFormValues] = useState<loginStateType>({ email: "", password: "" });
 
   const prevFormValues = useRef<{ email: string; password: string }>({ email: "", password: "" });
 
@@ -33,8 +33,6 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
     onSuccess,
     retry: false,
   });
-
-  console.log(isPending, "pending");
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();

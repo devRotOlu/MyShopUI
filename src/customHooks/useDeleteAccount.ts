@@ -1,7 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { deleteAccount } from "../helperFunctions/dataFetchFunctions";
-import { Dispatch, SetStateAction } from "react";
 import { useDeleteAccountDataType } from "../types";
 
 export const useDeleteAccount = (setIsLoggedIn: Dispatch<SetStateAction<boolean | undefined>>): useDeleteAccountDataType => {
