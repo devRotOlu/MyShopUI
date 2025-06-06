@@ -9,7 +9,9 @@ const GroupedResources = () => {
     <>
       <Navbar />
       <Outlet />
-      <Footer />
+      <div className="d-md-block d-none">
+        <Footer />
+      </div>
     </>
   );
 };

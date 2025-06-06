@@ -1,3 +1,7 @@
 #checkout_header {
   border-bottom: solid thick var(--dark_orange);
 }
+
+#checkout_header #brand {
+  width: 120px;
+}

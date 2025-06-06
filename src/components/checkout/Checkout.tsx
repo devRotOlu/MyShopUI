@@ -1,6 +1,5 @@
 import React, { useState, CSSProperties, useRef, useEffect, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 import CheckoutHeader from "../checkoutHeader/CheckoutHeader.tsx";
 import MonnifyDialog from "../../monnify/MonnifyDialog.tsx";
@@ -13,6 +12,7 @@ import AddressDialog from "../AddressDialog.tsx";
 import PayStackDialog from "../payStack/PayStackDialog.tsx";
 import CheckoutPaymentOptions from "../checkoutPaymentOptions/CheckoutPaymentOptions.tsx";
 import CheckoutError from "../checkoutError/CheckoutError.tsx";
+import Sidebar from "../sidebar/Sidebar.tsx";
 
 import { checkoutContextType, payPlatformType } from "../../types.ts";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
@@ -100,7 +100,7 @@ const Checkout = () => {
   const styles: CSSProperties = payOption === "" ? { display: "flex", justifyContent: "end" } : { display: "flex", justifyContent: "center", alignItems: "center" };
 
   return (
-    <checkoutContext.Provider value={{ ...monnifyData, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex, setOrderInstruction, orderInstruction, bankCode, setBankCode }} key={location.pathname}>
+    <checkoutContext.Provider value={{ ...monnifyData, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex, setOrderInstruction, orderInstruction, bankCode, setBankCode, setIsMonnifyError }} key={location.pathname}>
       <>
         <CheckoutHeader />
         <PageWrapper pageId="checkout">
@@ -121,6 +121,7 @@ const Checkout = () => {
         <Modal styles={styles}>
           {payOption === "monnify" && <MonnifyDialog isMonnifyError={isMonnifyError} setIsMonnifyError={setIsMonnifyError} />}
           {!displayedPayStackError && payOption === "" && <AddressDialog />}
+          {/* {!displayedPayStackError && payOption === "" && <Sidebar/>} */}
           {payOption === "payStack" && <PayStackDialog />}
           {displayedPayStackError && (
             <div onClick={() => (isPayStackErrorDisplayedRef.current = true)}>

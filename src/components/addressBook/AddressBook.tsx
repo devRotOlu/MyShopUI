@@ -25,8 +25,6 @@ const AddressBook = ({ setAddAddress }: addressBookProps) => {
     setPaddingBottom(height + 10);
   }, []);
 
-  console.log(paddingBottom, "padding");
-
   const profileIndexRef = useRef(-1);
 
   const handleCardClick = (profileIndex: number) => {

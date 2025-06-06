@@ -1,0 +1,47 @@
+#searchbar_brand_wrapper #search_bar_wrapper {
+  width: fit-content;
+  height: fit-content;
+}
+
+#searchbar_brand_wrapper #search_bar_wrapper > div#search_display_wrapper {
+  position: absolute;
+  min-height: 100%;
+  top: 107%;
+  z-index: 3000;
+}
+
+#searchbar_brand_wrapper #search_bar_wrapper > div#search_display_wrapper {
+  display: none;
+}
+
+#searchbar_brand_wrapper #search_bar_wrapper:focus-within > div:last-child {
+  display: block;
+}
+
+#searchbar_brand_wrapper div#main_search_bar_wrapper {
+  width: 530px;
+}
+
+@media screen and (max-width: 1199px) {
+  #searchbar_brand_wrapper #search_bar_wrapper {
+    width: 70%;
+  }
+  #searchbar_brand_wrapper div#main_search_bar_wrapper {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 785px) {
+  #searchbar_brand_wrapper #search_bar_wrapper {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #searchbar_brand_wrapper {
+    box-shadow: 0px 1px 10px -7px;
+  }
+  #searchbar_brand_wrapper #search_bar_wrapper {
+    width: 100%;
+  }
+}

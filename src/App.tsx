@@ -19,15 +19,15 @@ function App() {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <AlertProvider>
         <UserProvider>
-          <AppProvider>
-            <DeliveryProfileProvider>
-              <WishlistProvider>
-                <CartProvider>
+          <DeliveryProfileProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <AppProvider>
                   <Routes />
-                </CartProvider>
-              </WishlistProvider>
-            </DeliveryProfileProvider>
-          </AppProvider>
+                </AppProvider>
+              </CartProvider>
+            </WishlistProvider>
+          </DeliveryProfileProvider>
         </UserProvider>
       </AlertProvider>
     </SkeletonTheme>

@@ -1,3 +1,8 @@
+#navbarWrapper {
+  background-color: var(--lighter_pink);
+  z-index: 1000;
+}
+
 #navbarWrapper button.loginTriggerBtn {
   height: 100%;
   color: white;
@@ -7,10 +12,6 @@
 #navbarWrapper button.loginTriggerBtn:hover {
   background-color: white;
   color: var(--lighter_pink);
-}
-
-#navbarWrapper {
-  z-index: 1000;
 }
 
 #navbarWrapper nav > div:last-child > a {
@@ -24,22 +25,8 @@
   border-radius: 2px;
 }
 
-#navbarWrapper #search_bar_wrapper {
-  width: fit-content;
-  height: fit-content;
-}
-
-#navbarWrapper #search_bar_wrapper > div:last-child {
-  position: absolute;
-  min-height: 100%;
-  top: 107%;
-  z-index: 3000;
-}
-
-#navbarWrapper #search_bar_wrapper > div:last-child {
-  display: none;
-}
-
-#navbarWrapper #search_bar_wrapper:focus-within > div:last-child {
-  display: block;
+@media screen and (max-width: 767px) {
+  #navbarWrapper {
+    background-color: white;
+  }
 }

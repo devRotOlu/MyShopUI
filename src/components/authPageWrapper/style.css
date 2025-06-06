@@ -1,3 +1,7 @@
 #auth_wrapper {
   width: 400px;
 }
+
+#auth_wrapper #brand {
+  width: 200px;
+}

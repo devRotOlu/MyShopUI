@@ -1,5 +1,4 @@
 import React, { useState, FormEvent, useContext, FocusEvent } from "react";
-import { useQuery } from "@tanstack/react-query";
 import Cards, { Focused } from "react-credit-cards-2";
 
 import FormComp from "../formComp/FormComp.tsx";
@@ -11,12 +10,12 @@ import Loader from "../Loader.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 
 import { cardType, cardPaymentType } from "../../types.ts";
-import { getPublicKey } from "../../helperFunctions/dataFetchFunctions.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import { checkoutContext } from "../checkout/Checkout.tsx";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";
-import { getCryptoKey } from "../../helperFunctions/utilityFunctions.ts";
+import { encryptData } from "../../helperFunctions/utilityFunctions.ts";
+import { appContext } from "../context/AppProvider.tsx";
 
 const cardMaxChar = {
   max_pin: 4,
@@ -38,18 +37,13 @@ const splitString = (value: string, separator: string, divisor: number): string 
 };
 
 const CardPayment = () => {
-  const { data } = useQuery({
-    queryFn: getPublicKey,
-    queryKey: ["public_key"],
-    refetchOnWindowFocus: false,
-  });
-  const publicKeyPem = data?.data;
-
   const {
     loginData: { lastName, firstName },
   } = useContext(userContext);
 
-  const { transactionRef, sendCardDetails, profileIndex, sendingCardDetails, orderInstruction } = useContext(checkoutContext);
+  const { publicKeyPem } = useContext(appContext);
+
+  const { transactionRef, sendCardDetails, profileIndex, sendingCardDetails, orderInstruction, setIsMonnifyError } = useContext(checkoutContext);
   const { deliveryProfiles } = useContext(deliveryContext);
 
   const [card, setCard] = useState<cardType>({
@@ -89,35 +83,17 @@ const CardPayment = () => {
       orderInstruction,
     };
 
-    const publicKey = await getCryptoKey(publicKeyPem);
+    if (publicKeyPem) {
+      const { encryptedBody, encryptedIV, encryptedKey } = await encryptData(requestContent, publicKeyPem);
 
-    // 2. Generate AES key and IV
-    const aesKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);
-    const aesIV = crypto.getRandomValues(new Uint8Array(12));
-
-    // 3. Encrypt the payload using AES
-    const encoder = new TextEncoder();
-    const encryptedBody = await crypto.subtle.encrypt(
-      {
-        name: "AES-GCM",
-        iv: aesIV,
-      },
-      aesKey,
-      encoder.encode(JSON.stringify(requestContent))
-    );
-    // 4. Export AES key as raw for encryption
-    const rawKey = await crypto.subtle.exportKey("raw", aesKey);
-
-    // 5. Encrypt AES key and IV using RSA public key
-    const encryptedKey = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, rawKey);
-
-    const encryptedIV = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, aesIV);
-
-    sendCardDetails({
-      card: encryptedBody,
-      key: encryptedKey,
-      iv: encryptedIV,
-    });
+      sendCardDetails({
+        card: encryptedBody,
+        key: encryptedKey,
+        iv: encryptedIV,
+      });
+      return;
+    }
+    setIsMonnifyError(true);
   };
 
   const handleCardChange = (event: FormEvent<HTMLInputElement>) => {

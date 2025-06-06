@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getCartItems } from "../helperFunctions/dataFetchFunctions";
@@ -11,16 +11,15 @@ export const useGetCartItems = (setCart: (value: React.SetStateAction<cartType[]
     isLoggedIn,
   } = useContext(userContext);
 
-  const {
-    data,
-    isSuccess,
-    isError: cartFetchError,
-  } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ["cart"],
     enabled: () => (isLoggedIn ? true : false),
     queryFn: async () => {
       return await getCartItems(email);
     },
+    refetchInterval: 3000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
   });
 
   useEffect(() => {

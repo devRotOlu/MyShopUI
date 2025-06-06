@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, cardPaymentType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType, sendCardDetailsType } from "../types.ts";
+import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType, sendCardDetailsType } from "../types.ts";
 import { toBase64 } from "./utilityFunctions.ts";
 
 // cryprto controller functions

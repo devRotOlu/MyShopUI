@@ -1,0 +1,24 @@
+#side_bar #toggle_wrapper {
+  box-shadow: 0px 1px 10px -7px;
+  z-index: 40000;
+}
+
+#side_bar #auth_links_wrapper a {
+  border: solid thin var(--lighter_pink);
+  border-radius: 5px;
+  color: var(--lighter_pink);
+}
+
+#side_bar #user_info > span:first-child {
+  background-color: var(--dark_wine);
+  border-radius: 5px;
+}
+
+#side_bar #user_info > div:last-child {
+  font-size: 14px;
+}
+
+#side_bar #user_info > div:last-child a {
+  font-size: 12px;
+  color: var(--dark_wine);
+}

@@ -1,5 +1,9 @@
-#search_bar {
-  width: 530px;
+#search_bar input {
+  font-size: 14px;
+}
+
+#search_bar #search_icon {
+  color: white;
 }
 
 #search_bar input:focus {
@@ -11,4 +15,14 @@
 #search_bar > button:last-child {
   background-color: var(--dark_orange);
   border-color: var(--dark_orange);
+}
+
+@media screen and (max-width: 767px) {
+  #search_bar input {
+    background-color: var(--Light_Grey);
+  }
+  #search_bar #search_icon {
+    color: var(--deep_pink);
+    font-size: 25px;
+  }
 }

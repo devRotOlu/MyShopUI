@@ -86,10 +86,6 @@ button {
   font-weight: bold;
 }
 
-#navbarWrapper {
-  background-color: var(--lighter_pink);
-}
-
 main {
   background-color: var(--Light_Grey);
 }

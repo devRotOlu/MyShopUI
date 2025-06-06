@@ -1,0 +1,24 @@
+.brand_wrapper {
+  width: fit-content;
+}
+.brand_wrapper div.brand {
+  width: 120px;
+}
+
+.brand_wrapper span.item_count {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--light_Green);
+  right: -5px;
+  font-size: 12px;
+}
+
+@media screen and (max-width: 767px) {
+  .brand_wrapper div.brand {
+    width: 90px;
+  }
+  .brand_wrapper {
+    width: 100%;
+  }
+}

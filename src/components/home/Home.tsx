@@ -15,8 +15,6 @@ const Home = () => {
   const { products } = useContext(userContext);
   const [currentProducts, setCurrentProducts] = useState<productType[]>([]);
 
-  console.log(products, "products");
-
   const productCards = currentProducts.map((product) => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;

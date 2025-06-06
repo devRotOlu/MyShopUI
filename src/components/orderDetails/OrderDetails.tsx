@@ -46,8 +46,14 @@ const OrderDetails = () => {
         <div>{cartItems}</div>
       </div>
       <div className="bg-white mt-1 py-4">
-        <p>Sub total : {cartItemsTotalPrice}</p>
-        <p className="fw-bold mt-3">Total: {cartItemsTotalPrice}</p>
+        <p>
+          Sub total :{naira}
+          {cartItemsTotalPrice.toLocaleString()}
+        </p>
+        <p className="fw-bold mt-3">
+          Total: {naira}
+          {cartItemsTotalPrice.toLocaleString()}
+        </p>
       </div>
     </div>
   );

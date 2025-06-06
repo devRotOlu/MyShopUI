@@ -56,10 +56,6 @@ export type AlertProp = {
   styles: CSSProperties;
 };
 
-export type brandProp = {
-  styles: CSSProperties;
-};
-
 export type ReactPortalProp = {
   wrapperId: string;
   children: ReactNode;
@@ -375,6 +371,12 @@ export type cartType = {
   product: productType;
 };
 
+export type encryptDataType = {
+  encryptedBody: ArrayBuffer;
+  encryptedKey: ArrayBuffer;
+  encryptedIV: ArrayBuffer;
+};
+
 export type addReviewType = {
   reviewerId: string;
   productId: number;
@@ -499,6 +501,7 @@ export type productCategoryType = {
 };
 
 export type checkoutContextType = {
+  setIsMonnifyError: (value: React.SetStateAction<boolean>) => void;
   isCardPaymentError: boolean;
   isBankTransferError: boolean;
   isPaymentError: boolean;

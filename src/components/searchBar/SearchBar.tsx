@@ -37,10 +37,10 @@ const SearchBar = ({ ...props }: searchBarProps) => {
     setUserInput(value);
   };
   return (
-    <form onSubmit={handleSubmit} className="input-group" id="search_bar">
+    <form onSubmit={handleSubmit} className="input-group w-100" id="search_bar">
       <input value={userInput} onChange={handleSearch} type="text" className="form-control" placeholder="Search for products, brands, and categories..." aria-label="search bar" aria-describedby="basic-addon2" />
       <button type="submit" className="input-group-text" id="basic-addon2">
-        <Icon icon="ic:baseline-search" color="white" />
+        <Icon id="search_icon" icon="ic:baseline-search" />
       </button>
     </form>
   );

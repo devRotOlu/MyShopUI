@@ -7,20 +7,20 @@ import "./style.css";
 const Footer = () => {
   const _contacts = contacts.map(({ contact, channel, icon }, index) => {
     return (
-      <li key={index} className="d-flex align-items-center gap-3">
+      <li key={index} className="d-flex align-items-center gap-3 contact">
         <span className="icon_wrapper bg-white d-flex justify-content-center align-items-center">
           <Icon icon={icon} fontSize={20} />
         </span>
         <div>
-          <p className="text-white">{contact}</p>
-          <p className="mt-2 text-white">{channel}</p>
+          <p>{contact}</p>
+          <p className="mt-2">{channel}</p>
         </div>
       </li>
     );
   });
   const _socials = socials.map(({ icon }, index) => {
     return (
-      <li>
+      <li key={index}>
         <span className="icon_wrapper social_icons d-flex justify-content-center align-items-center" key={index}>
           <Icon icon={icon} fontSize={16} color="white" />
         </span>
@@ -29,15 +29,17 @@ const Footer = () => {
   });
   return (
     <div id="footer">
-      <ul className="d-flex justify-content-between px-5 py-2">{_contacts}</ul>
-      <div className="py-4 px-5">
+      <ul className="d-flex flex-md-row flex-column justify-content-between px-0 px-md-5 py-2 gap-md-0 gap-3">{_contacts}</ul>
+      <div className="py-4 px-md-5 px-0" id="socials_wrapper">
         <div>
-          <p className="text-white fw-bold">CONNECT WITH US</p>
+          <p className="fw-bold">CONNECT WITH US SOCIAL MEDIA</p>
           <ul className="d-flex gap-4 mt-3 p-0">{_socials}</ul>
         </div>
       </div>
-      <div className="border-top position-relative d-flex justify-content-center">
-        <span className="postion-absolute top-0 px-2">Copyright &copy; 2025 MyShop.com. All rights reserved</span>
+      <div className="position-relative d-flex justify-content-md-center" id="copy_right_wrapper">
+        <span className="postion-absolute top-0 px-2" id="copy_right">
+          Copyright &copy; 2025 MyShop.com. All rights reserved
+        </span>
       </div>
     </div>
   );

@@ -8,7 +8,11 @@ const ProductRatings = ({ rating, size }: productRatingsProps) => {
     .fill(0)
     .map((_, index) => {
       const isMarked = rating >= index + 1;
-      return <span style={{ color: !isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)", fontSize: _size }}>&#9733;</span>;
+      return (
+        <span key={index} style={{ color: !isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)", fontSize: _size }}>
+          &#9733;
+        </span>
+      );
     });
   return <>{ratings}</>;
 };

@@ -29,8 +29,8 @@ const CategoryList = () => {
     let link = name.replace(regex, "-");
     link = link.replace(/-+/g, "-").toLowerCase() + "-" + id;
     return (
-      <li key={id} className="h-100">
-        <Link className="w-100 h-100 d-flex align-items-center justify-content-center px-4 category_link" to={`/category/${link}`}>
+      <li key={id} className="w-md-auto w-sm-100 h-md-100 flex-shrink-0">
+        <Link className="h-100 border-top-md-0 py-md-0 py-3 d-flex align-items-md-center justify-content-md-center px-md-4 category_link" to={`/category/${link}`}>
           {name}
         </Link>
       </li>
@@ -38,10 +38,10 @@ const CategoryList = () => {
   });
 
   return (
-    <div className="position-relative py-4" id="category_list_wrapper">
-      <div className="position-absolute w-100 left-0 right-0 h-100">
-        <ul className="d-flex  align-items-center h-100 p-0 m-0">{_categoryLinks}</ul>
-        <div className="position-relative" id="category_list_scroll"></div>
+    <div className="position-relative py-4 d-block" id="category_list_wrapper">
+      <div className="w-100 left-0 right-0">
+        <ul className="d-md-flex align-items-center p-0 m-0 overflow-auto">{_categoryLinks}</ul>
+        <div className="position-relative d-md-block d-none" id="category_list_scroll"></div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ type modalProps = {
 
 const Modal = ({ children, styles }: modalProps) => {
   return (
-    <div id="modal">
+    <div id="app_modal">
       <div id="modalContainer" style={styles}>
         {children}
       </div>

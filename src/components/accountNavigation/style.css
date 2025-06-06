@@ -1,0 +1,11 @@
+#account_navigation a {
+  color: black;
+}
+
+#account_navigation .link_details p {
+  font-size: 14px;
+}
+
+#account_navigation .link_details span {
+  font-size: 12px;
+}
