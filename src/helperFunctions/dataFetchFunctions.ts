@@ -114,6 +114,11 @@ export const addToWishlist = async (data: addWishlistType) => {
   return await myShopAxios.post("Wishlist/add_item", data);
 };
 
+export const removeFromWishlist = async (data: addWishlistType) => {
+  const { customerId, productId } = data;
+  return await myShopAxios.delete(`Wishlist/delete_item?customerId=${customerId}&productId=${productId}`);
+};
+
 // monnify controller functions
 
 export const initializePayment = async (customerEmail: string) => {

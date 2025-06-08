@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import { Icon } from "@iconify/react";
 
-import ProductRatings from "./ProductRatings";
+import ProductRatings from "../productRating/ProductRatings";
 import RatingStats from "./RatingStats";
 
 import { productReviewsProps } from "../../types";
@@ -66,7 +66,7 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
           </div>
           <div>
             <div>
-              <ProductRatings rating={rating} />
+              <ProductRatings styles="fs-5" rating={rating} />
             </div>
             <p className="text-muted mt-2">{review}</p>
           </div>

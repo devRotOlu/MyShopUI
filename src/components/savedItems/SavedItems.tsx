@@ -2,41 +2,26 @@ import React, { useContext, useState } from "react";
 
 import BreadCrumb from "../breadCrumbs/BreadCrumb";
 import ProductCard from "../productCard/ProductCard";
-import SkeletonPageLoader from "../SkeletonPageLoader";
 import PageWrapper from "../PageWrapper";
 import NavigationButtons from "../navigationButtons/NavigationButtons";
+import PageLayout from "../pageLayout/PageLayout";
+import EmptyView from "../emptyView/EmptyView";
 
 import { useGetWishlist } from "../../customHooks/useGetWishlist";
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
 import { wishlistType } from "../../types";
+import { Icon } from "@iconify/react";
 
 const maxProductPerPage = 20;
 
 const SavedItems = () => {
-  const { isLoadingWishlist } = useGetWishlist();
+  const { isLoadingWishlist, isFetchedWishlist } = useGetWishlist();
   const { wishList } = useContext(wishlistContext);
   const [currentProducts, setCurrentProducts] = useState<wishlistType[]>([]);
 
-  if (isLoadingWishlist) {
-    return (
-      <PageWrapper pageId="saved_items">
-        <div className="align-self-stretch w-100 bg-white mt-3">
-          <SkeletonPageLoader count={2} />
-        </div>
-      </PageWrapper>
-    );
-  }
+  const isEmptyView = isFetchedWishlist && !wishList.length;
 
-  if (!wishList.length) {
-    return (
-      <PageWrapper pageId="saved_items">
-        <div className="align-self-stretch w-100 text-white">
-          <div></div>
-        </div>
-      </PageWrapper>
-    );
-  }
   const products = currentProducts.map(({ product }) => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;
@@ -44,15 +29,28 @@ const SavedItems = () => {
 
   return (
     <PageWrapper pageId="saved_items">
-      <div className="align-self-stretch w-100">
-        <div className="w-100">
-          <BreadCrumb currentLinkLabel="Saved Items" />
-        </div>
-        <div className="d-flex gap-3">{products}</div>
-        <div className="align-self-end d-flex justify-content-center w-100 my-4">
-          <NavigationButtons itemCount={wishList.length} maxItemPerPage={maxProductPerPage} setCurrentItems={setCurrentProducts} items={wishList} />
-        </div>
-      </div>
+      {isEmptyView && (
+        <EmptyView>
+          <div className="d-flex flex-column gap-3 align-items-center">
+            <Icon icon="mdi:favourite" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
+            <p className="fw-bold text-center">You haven't added any items yet.</p>
+          </div>
+        </EmptyView>
+      )}
+      {!isEmptyView && (
+        <>
+          <div className="align-self-stretch w-100">
+            <BreadCrumb currentLinkLabel="Saved Items" />
+          </div>
+          <PageLayout productCards={products} isLoading={isLoadingWishlist}>
+            {wishList.length !== 0 && (
+              <div className="align-self-end d-flex justify-content-center w-100 my-4">
+                <NavigationButtons itemCount={wishList.length} maxItemPerPage={maxProductPerPage} setCurrentItems={setCurrentProducts} items={wishList} />
+              </div>
+            )}
+          </PageLayout>
+        </>
+      )}
     </PageWrapper>
   );
 };

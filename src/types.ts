@@ -162,6 +162,10 @@ type reviewsType = {
   reviewDate: string;
 };
 
+export type productCardWrapperProps = {
+  children: ReactNode;
+};
+
 export type categoryProps = {
   products: productType[];
   isLoading: boolean;
@@ -234,6 +238,12 @@ export type brandPageProps = {
   isLoading: boolean;
   products: productType[];
   children: ReactNode;
+};
+
+export type pageLayoutProps = {
+  isLoading: boolean;
+  children: ReactNode;
+  productCards: ReactNode;
 };
 
 export type productType = {
@@ -594,7 +604,7 @@ export type ratingStatsProps = {
 
 export type productRatingsProps = {
   rating: number;
-  size?: number;
+  styles: string;
 };
 
 export type breadCrumbProps = {
@@ -656,8 +666,11 @@ export type loaderProps = {
   color?: string;
 };
 
-export type addToWishlistProps = {
+export type savedItemButtonProps = {
   productId: number;
+  styles: CSSProperties;
+  icon: ReactNode;
+  showMessage?: boolean;
 };
 
 export type quantityValidatorProps = {
@@ -709,12 +722,20 @@ export type cartContextType = {
 };
 
 export type wishlistContextType = {
+  isDeletedWishlistItem: boolean;
   wishList: wishlistType[];
   setWishList: Dispatch<SetStateAction<wishlistType[]>>;
+  deleteFromWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, addWishlistType, unknown>;
+  isDeletingWishlistItem: boolean;
 };
 
 export type useGetWishlistData = {
   isLoadingWishlist: boolean;
+  isFetchedWishlist: boolean;
+};
+
+export type emptyViewProps = {
+  children: ReactNode;
 };
 
 export type deliveryContextType = {
@@ -731,6 +752,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  isLoadingProducts: boolean;
   isAuthenticating: boolean;
   deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isDeletingAccount: boolean;

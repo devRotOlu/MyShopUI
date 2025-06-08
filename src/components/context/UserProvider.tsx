@@ -50,7 +50,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
 
-  const { data: productData, isSuccess: productsFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
+  const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
   const {
     mutate: profileMutate,
@@ -130,6 +130,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        isLoadingProducts,
         isAuthenticating,
         deleteAccount,
         isJustLoggedIn: loginTimeRef.current !== loginTime && isLoggedIn === true,

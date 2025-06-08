@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { userContext } from "../components/context/UserProvider";
@@ -20,7 +20,9 @@ export const useGetWishlist = (): useGetWishlistData => {
     },
     queryKey: ["wishlist"],
     enabled: () => (isLoggedIn ? true : false),
-    refetchInterval: () => (isLoggedIn ? 4000 : false),
+    refetchInterval: 3000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
   });
 
   useEffect(() => {
@@ -32,5 +34,6 @@ export const useGetWishlist = (): useGetWishlistData => {
 
   return {
     isLoadingWishlist: isLoading,
+    isFetchedWishlist: isSuccess,
   };
 };

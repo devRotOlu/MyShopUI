@@ -25,7 +25,9 @@ const Sidebar = () => {
   useEffect(() => {
     const elements = [...divRefs.current];
     const handleClick = () => {
-      setShowSidebar(false);
+      setTimeout(() => {
+        setShowSidebar(false);
+      }, 100);
     };
     elements.forEach((element) => {
       element?.addEventListener("click", handleClick);

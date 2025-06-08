@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
-import AddToWishlist from "./AddToWishlist";
+import SavedItemButton from "../savedItemButton/SavedItemButton";
 import ProductTab from "./ProductTab";
-import ProductRatings from "./ProductRatings";
+import ProductRatings from "../productRating/ProductRatings";
 import ProductSummaryModal from "../productSummaryModal/ProductSummaryModal";
 import ProductDescription from "../productDescription/ProductDescription";
 import ProductReviews from "./ProductReviews";
@@ -14,6 +14,7 @@ import { productProps } from "../../types";
 import "./style.css";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";
+import { Icon } from "@iconify/react";
 
 const Product = ({ product, children }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
@@ -91,7 +92,7 @@ const Product = ({ product, children }: productProps) => {
                     </p>
                   )}
                   <div className="mt-1">
-                    <ProductRatings rating={Math.floor(averageRating)} size={17} /> <span className="review_count">{reviews.length} Review(s)</span>
+                    <ProductRatings rating={Math.floor(averageRating)} styles="fs-6" /> <span className="review_count">{reviews.length} Review(s)</span>
                   </div>
                 </div>
                 <div className="d-flex align-items-center">
@@ -109,7 +110,7 @@ const Product = ({ product, children }: productProps) => {
                 <button ref={targetRef} className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
                   Add To Cart
                 </button>
-                <AddToWishlist productId={productId} />
+                <SavedItemButton styles={{ height: "2.5rem", width: "2.5rem" }} productId={productId} icon={<Icon icon="fluent-mdl2:heart-fill" fontSize="1.2rem" color="white" />}></SavedItemButton>
               </div>
             </div>
           </div>
@@ -136,7 +137,7 @@ const Product = ({ product, children }: productProps) => {
                   <p>Product Reviews ({reviews.length})</p>
                   <p className="fs-4 fw-bold">{averageRating.toFixed(1)}/5</p>
                   <div>
-                    <ProductRatings rating={averageRating} size={30} />
+                    <ProductRatings rating={averageRating} styles="fs-5" />
                   </div>
                 </div>
               </div>

@@ -1,12 +1,14 @@
 import React, { useContext, MouseEvent, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ProductRatings from "../product/ProductRatings.tsx";
+import ProductRatings from "../productRating/ProductRatings.tsx";
+import SavedItemButton from "../savedItemButton/SavedItemButton.tsx";
 
 import { ProductCardProp } from "../../types.ts";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 import { naira } from "../../data.ts";
+import { Icon } from "@iconify/react";
 
 const ProductCard = ({ product }: ProductCardProp) => {
   const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
@@ -29,11 +31,18 @@ const ProductCard = ({ product }: ProductCardProp) => {
 
   const isPending = (isAddingCartItem || isUpdatingCartItem) && isAddedItemRef.current;
 
+  const handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="product_card rounded d-flex flex-column justify-content-between" onClick={() => navigate(`/product/${name}-${id}`)}>
+    <div className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigate(`/product/${name}-${id}`)}>
       <div className="w-100 d-flex flex-column gap-2 pb-1">
-        <div className="product_image w-100">
-          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%", height: "200px" }} />
+        <div className="product_image w-100 position-relative">
+          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%" }} />
+          <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={handleClick}>
+            <SavedItemButton productId={id} styles={{ height: "1.5rem", width: "1.5rem" }} icon={<Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />} />
+          </div>
         </div>
         <div className="product_title">
           <p>{name}</p>
@@ -51,8 +60,8 @@ const ProductCard = ({ product }: ProductCardProp) => {
         </div>
         <div className="pt-2 d-flex align-items-center flex-column gap-2">
           <div className="w-100 d-flex gap-1 align-items-center" id="reviews">
-            <div>
-              <ProductRatings rating={rating} />
+            <div className="d-flex align-items-center">
+              <ProductRatings rating={rating} styles="fs-5" />
             </div>
             <p>{reviews.length > 0 ? `${reviews.length} Reviews` : "No reviews yet"}</p>
           </div>
@@ -61,7 +70,9 @@ const ProductCard = ({ product }: ProductCardProp) => {
               <span className="visually-hidden">Loading...</span>
             </div>
           ) : (
-            <button onClick={(e) => _handleAddToCart(e)}>Add To Cart</button>
+            <button id="add_cart_btn" onClick={(e) => _handleAddToCart(e)}>
+              Add To Cart
+            </button>
           )}
         </div>
       </div>

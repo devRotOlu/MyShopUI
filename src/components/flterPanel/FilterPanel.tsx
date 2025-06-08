@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState, MouseEvent } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
-import ProductRatings from "../product/ProductRatings";
+import ProductRatings from "../productRating/ProductRatings";
 
 import { filterPanelProps } from "../../types";
 import { prices } from "../../data";
 import "./style.css";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
 
 const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
   const [isExpand, setIsExpand] = useState({
@@ -74,7 +73,7 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
           <label className="d-flex align-items-center filter_label">
             <input onChange={() => setSelectedRating(rating)} type="radio" name="rating" />
             &nbsp;&nbsp;
-            <ProductRatings size={22} rating={rating} />
+            <ProductRatings styles="fs-5" rating={rating} />
             &nbsp;&nbsp; & up
           </label>
         </li>

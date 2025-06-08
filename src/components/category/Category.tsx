@@ -5,6 +5,7 @@ import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
 import ProductCard from "../productCard/ProductCard";
 import NavigationButtons from "../navigationButtons/NavigationButtons";
 import BreadCrumb from "../breadCrumbs/BreadCrumb";
+import ProductCardWrapper from "../productCardWrapper/ProductCardWrapper";
 
 import { categoryProps, productType } from "../../types";
 import "./style.css";
@@ -30,10 +31,10 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
         {products.length && (
           <>
             <BreadCrumb currentLinkLabel={category} />
-            <div className="px-4 d-flex gap-4">
+            <div className="px-2 d-flex gap-3">
               <div>{children}</div>
               <div className="flex-grow-1">
-                <div className="d-flex gap-3">{_products}</div>
+                <ProductCardWrapper>{_products}</ProductCardWrapper>
                 {products.length && (
                   <div className="align-self-end d-flex justify-content-center w-100 my-4">
                     <NavigationButtons itemCount={products.length} maxItemPerPage={maxProductPerPage} setCurrentItems={setCurrentProducts} items={products} />

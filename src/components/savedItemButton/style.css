@@ -1,0 +1,18 @@
+#saved_item_btn_wrapper button {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#saved_item_btn_wrapper button#remove_item_btn {
+  background-color: var(--dark_orange);
+}
+
+#saved_item_btn_wrapper button#add_item_btn {
+  background-color: grey;
+}
+
+#saved_item_btn_wrapper button#add_item_btn:hover {
+  background-color: var(--dark_orange);
+}

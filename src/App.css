@@ -89,3 +89,16 @@ button {
 main {
   background-color: var(--Light_Grey);
 }
+
+@media screen and (max-width: 400px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  a,
+  button {
+    font-size: 12px;
+  }
+}

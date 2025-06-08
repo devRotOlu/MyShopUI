@@ -2,14 +2,13 @@ import React from "react";
 
 import { productRatingsProps } from "../../types";
 
-const ProductRatings = ({ rating, size }: productRatingsProps) => {
-  const _size = size || 25;
+const ProductRatings = ({ rating, styles }: productRatingsProps) => {
   const ratings = Array(5)
     .fill(0)
     .map((_, index) => {
       const isMarked = rating >= index + 1;
       return (
-        <span key={index} style={{ color: !isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)", fontSize: _size }}>
+        <span className={styles} key={index} style={{ color: !isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)" }}>
           &#9733;
         </span>
       );

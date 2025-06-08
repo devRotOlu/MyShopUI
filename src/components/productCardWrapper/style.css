@@ -1,0 +1,24 @@
+#product_card_wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 24%);
+  justify-content: space-around;
+  row-gap: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  #product_card_wrapper {
+    grid-template-columns: repeat(3, 30%);
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  #product_card_wrapper {
+    grid-template-columns: repeat(3, 32%);
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  #product_card_wrapper {
+    grid-template-columns: repeat(3, 30%);
+  }
+}

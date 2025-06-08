@@ -1,0 +1,64 @@
+#page_layout .product_card_container {
+  max-width: 300px;
+}
+
+#page_layout div#product_card_wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 18.5%);
+  justify-content: space-around;
+  row-gap: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(4, 23%);
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(3, 30%);
+  }
+}
+
+@media screen and (max-width: 730px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(2, 40%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(2, 44%);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(2, 47%);
+  }
+}
+
+@media screen and (max-width: 465px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(2, 48.5%);
+  }
+}
+
+@media screen and (max-width: 460px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(1, 70%);
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(1, 80%);
+  }
+}
+
+@media screen and (max-width: 280px) {
+  #page_layout div#product_card_wrapper {
+    grid-template-columns: repeat(1, 90%);
+  }
+}
