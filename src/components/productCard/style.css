@@ -26,7 +26,7 @@
   width: 100%;
 }
 
-.product_card button:hover {
+.product_card button#add_cart_btn:hover {
   background-color: var(--deep_pink);
   color: white;
 }

@@ -1,17 +1,31 @@
-import React, { useContext, MouseEvent, useRef, useEffect } from "react";
+import React, { useContext, MouseEvent, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 import ProductRatings from "../productRating/ProductRatings.tsx";
 import SavedItemButton from "../savedItemButton/SavedItemButton.tsx";
 
-import { ProductCardProp } from "../../types.ts";
+import { productCardProp } from "../../types.ts";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 import { naira } from "../../data.ts";
-import { Icon } from "@iconify/react";
+import { wishlistContext } from "../context/WishlistProvider.tsx";
+import { userContext } from "../context/UserProvider.tsx";
+import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
+import { alertContext } from "../context/AlertProvider.tsx";
 
-const ProductCard = ({ product }: ProductCardProp) => {
+const ProductCard = ({ product }: productCardProp) => {
+  const [targetProduct, setTargetProduct] = useState(-1);
+
   const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
+  const {
+    isLoggedIn,
+    loginData: { id: customerId },
+    setShowModal,
+  } = useContext(userContext);
+  const { handleAlert } = useContext(alertContext);
+  const { addItemToWishList, isAddingToWishList, deleteFromWishlist, isDeletedWishlistItem, wishList, isAddedToWishlist } = useContext(wishlistContext);
+
   const { name, unitPrice, quantity, images, id, averageRating: rating, reviews } = product;
   const navigate = useNavigate();
 
@@ -29,11 +43,48 @@ const ProductCard = ({ product }: ProductCardProp) => {
     }
   }, [isAddedCartItem]);
 
-  const isPending = (isAddingCartItem || isUpdatingCartItem) && isAddedItemRef.current;
+  const isBeingAddedToCart = (isAddingCartItem || isUpdatingCartItem) && isAddedItemRef.current;
 
   const handleClick = (event: MouseEvent) => {
     event.stopPropagation();
   };
+
+  const handleAddToWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+    if (isLoggedIn) {
+      setTargetProduct(id);
+      addItemToWishList(customerId, id);
+    } else {
+      const alertDialog = promptWishlistLoginAlert("You need to be logged in to Save an Item", () => setShowModal(true));
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  };
+
+  const handleRemoveFromWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+    if (isLoggedIn) {
+      setTargetProduct(id);
+      deleteFromWishlist({ customerId, productId: id });
+    } else {
+      const alertDialog = promptWishlistLoginAlert("You need to be logged in to Delete an Item", () => setShowModal(true));
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  };
+
+  if ((isDeletedWishlistItem || isAddedToWishlist) && targetProduct !== -1) {
+    setTargetProduct(-1);
+  }
+
+  const isBeingAddedToWishlist = isAddingToWishList && targetProduct === id;
+  const isBeingRemovedFromWishlist = isDeletedWishlistItem && targetProduct === id;
+
+  const isSaved = wishList.some((item) => {
+    return item.product.id === id;
+  });
 
   return (
     <div className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigate(`/product/${name}-${id}`)}>
@@ -41,7 +92,9 @@ const ProductCard = ({ product }: ProductCardProp) => {
         <div className="product_image w-100 position-relative">
           <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%" }} />
           <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={handleClick}>
-            <SavedItemButton productId={id} styles={{ height: "1.5rem", width: "1.5rem" }} icon={<Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />} />
+            <SavedItemButton
+              data={{ styles: { height: "1.5rem", width: "1.5rem" }, icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />, handleAddToWishlist, handleRemoveFromWishlist, isBeingAdded: isBeingAddedToWishlist, isBeingRemoved: isBeingRemovedFromWishlist, isSaved }}
+            />
           </div>
         </div>
         <div className="product_title">
@@ -65,7 +118,7 @@ const ProductCard = ({ product }: ProductCardProp) => {
             </div>
             <p>{reviews.length > 0 ? `${reviews.length} Reviews` : "No reviews yet"}</p>
           </div>
-          {isPending ? (
+          {isBeingAddedToCart ? (
             <div className="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
               <span className="visually-hidden">Loading...</span>
             </div>

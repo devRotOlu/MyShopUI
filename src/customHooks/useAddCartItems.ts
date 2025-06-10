@@ -11,6 +11,8 @@ export const useAddCartItems = (addedItems: addedItemType[]): useAddCartItemsDat
     mutationFn: addItemsToCart,
   });
 
+  console.log(addedItems, "addedItems");
+
   useEffect(() => {
     if (isLoggedIn && addedItems.length && !isSuccess) {
       mutate(addedItems);

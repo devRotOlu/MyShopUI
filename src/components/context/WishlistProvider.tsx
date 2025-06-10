@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 import Alert from "../alert/Alert";
+import AlertLinks from "../alertLinks/AlertLinks";
 
 import { ProvidersProp, wishlistContextType, wishlistType } from "../../types";
-import { removeFromWishlist } from "../../helperFunctions/dataFetchFunctions";
 import { alertContext } from "./AlertProvider";
+import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
+import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
+import { useGetWishlist } from "../../customHooks/useGetWishlist";
 
 export const wishlistContext = React.createContext({} as wishlistContextType);
 
@@ -13,13 +16,22 @@ const WishlistProvider = ({ children }: ProvidersProp) => {
   const { handleAlert } = useContext(alertContext);
   const [wishList, setWishList] = useState<wishlistType[]>([]);
 
-  const {
-    mutate: deleteFromWishlist,
-    isPending: isDeletingWishlistItem,
-    isSuccess: isDeletedWishlistItem,
-  } = useMutation({
-    mutationFn: removeFromWishlist,
-  });
+  const { isLoadingWishlist, isFetchedWishlist } = useGetWishlist(setWishList);
+  const { deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem } = useDeleteWishlist();
+  const { addItemToWishList, isAddingToWishList, isAddedToWishlist } = useAddToWhishlist();
+
+  useEffect(() => {
+    if (isAddedToWishlist) {
+      const alertDialog = (
+        <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage="Product added to saved items.">
+          <AlertLinks>
+            <Link to="/account/favourites">View Saved Items</Link>
+          </AlertLinks>
+        </Alert>
+      );
+      handleAlert({ showAlert: true, alertDialog });
+    }
+  }, [handleAlert, isAddedToWishlist]);
 
   useEffect(() => {
     if (isDeletedWishlistItem) {
@@ -29,7 +41,7 @@ const WishlistProvider = ({ children }: ProvidersProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeletedWishlistItem]);
 
-  return <wishlistContext.Provider value={{ wishList, setWishList, deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem }}>{children}</wishlistContext.Provider>;
+  return <wishlistContext.Provider value={{ wishList, setWishList, deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem, addItemToWishList, isAddingToWishList, isAddedToWishlist, isLoadingWishlist, isFetchedWishlist }}>{children}</wishlistContext.Provider>;
 };
 
 export default WishlistProvider;

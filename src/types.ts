@@ -261,7 +261,7 @@ export type productType = {
 
 type updateQuantityType = (value: number, productId: number, cartQuantity?: number, id?: number) => void;
 
-export type CartItemProp = {
+export type cartItemProp = {
   item: cartType;
   index: number;
   itemCount: number;
@@ -273,8 +273,15 @@ export type useUpdateItemDataType = {
   updateCartItem: updateQuantityType;
 };
 
-export type ProductCardProp = {
+export type productCardProp = {
   product: productType;
+};
+
+export type useMoveToWishlistDataType = {
+  moveItemToWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  isMovedToWishlist: boolean;
+  isMovingToWishlist: boolean;
+  isItemExistErrorIndex: number;
 };
 
 export type navigationButtonsProps = {
@@ -398,6 +405,27 @@ export type addedItemType = {
   customerId: string;
   productId: number;
   quantity: number;
+};
+
+export type alertLinksType = {
+  children: ReactNode;
+};
+
+export type processLocalCartItemsParamType = {
+  params: {
+    isLoggedIn: boolean | undefined;
+    localStorageIndex: number;
+    setCart: (value: React.SetStateAction<cartType[]>) => void;
+    customerId: string;
+    cartFetched: boolean;
+    cartData: any;
+    cartItemsAdded: boolean;
+    itemsUpdated: boolean;
+    setLocalAddedItems: React.Dispatch<React.SetStateAction<addedItemType[]>>;
+    setLocalUpdatedItems: React.Dispatch<React.SetStateAction<updatedItemType[]>>;
+    localAddedItems: addedItemType[];
+    localUpdatedItems: updatedItemType[];
+  };
 };
 
 export type updatedItemType = {
@@ -585,6 +613,7 @@ export type productTabProps = {
 export type productProps = {
   product: productType;
   children: ReactNode;
+  data: any;
 };
 
 export type productDescriptionProps = {
@@ -659,6 +688,7 @@ export type useModifyCartDataType = {
 export type useAddToWhishlistDataType = {
   isAddingToWishList: boolean;
   addItemToWishList: (customerId: string, productId: number) => void;
+  isAddedToWishlist: boolean;
 };
 
 export type loaderProps = {
@@ -667,10 +697,16 @@ export type loaderProps = {
 };
 
 export type savedItemButtonProps = {
-  productId: number;
-  styles: CSSProperties;
-  icon: ReactNode;
-  showMessage?: boolean;
+  data: {
+    styles: CSSProperties;
+    icon: ReactNode;
+    showAlert?: boolean;
+    handleAddToWishlist: (_: MouseEvent<HTMLButtonElement>) => void;
+    handleRemoveFromWishlist: (_: MouseEvent<HTMLButtonElement>) => void;
+    isBeingAdded: boolean;
+    isBeingRemoved: boolean;
+    isSaved: boolean;
+  };
 };
 
 export type quantityValidatorProps = {
@@ -709,6 +745,9 @@ export type profileSummaryProps = {
 };
 
 export type cartContextType = {
+  setLocalStorageIndex: React.Dispatch<React.SetStateAction<number>>;
+  moveItemToWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  isMovingToWishlist: boolean;
   isAddedCartItem: boolean;
   isAddingCartItem: boolean;
   handleAddCartItem: (product: productType, value: number) => void;
@@ -721,13 +760,14 @@ export type cartContextType = {
   cartItemsTotalPrice: number;
 };
 
-export type wishlistContextType = {
-  isDeletedWishlistItem: boolean;
-  wishList: wishlistType[];
-  setWishList: Dispatch<SetStateAction<wishlistType[]>>;
-  deleteFromWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, addWishlistType, unknown>;
-  isDeletingWishlistItem: boolean;
-};
+export type useDeleteWishlistDataType = { deleteFromWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, addWishlistType, unknown>; isDeletingWishlistItem: boolean; isDeletedWishlistItem: boolean };
+
+export type wishlistContextType = useGetWishlistData &
+  useDeleteWishlistDataType &
+  useAddToWhishlistDataType & {
+    wishList: wishlistType[];
+    setWishList: Dispatch<SetStateAction<wishlistType[]>>;
+  };
 
 export type useGetWishlistData = {
   isLoadingWishlist: boolean;

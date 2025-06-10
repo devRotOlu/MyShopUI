@@ -2,17 +2,18 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Alert from "../alert/Alert";
+import AlertLinks from "../alertLinks/AlertLinks";
 
 import { addedItemType, cartContextType, cartType, ProvidersProp, updatedItemType } from "../../types";
 import { userContext } from "./UserProvider";
-import { emptyLocalCart, getLocalCartItems } from "../../helperFunctions/utilityFunctions";
 import { alertContext } from "./AlertProvider";
 import { useGetCartItems } from "../../customHooks/useGetCartItems";
 import { useUpdateCartItems } from "../../customHooks/useUpdateCartItems";
 import { useAddCartItems } from "../../customHooks/useAddCartItems";
 import { useDeleteCartItem } from "../../customHooks/useDeleteCartItem";
 import { useModifyCart } from "../../customHooks/useModifyCart";
-import "./style.css";
+import { useMoveToWishlist } from "../../customHooks/useMoveToWishlist";
+import { useProcessLocalCartItems } from "../../customHooks/useProcessLocalCartItems";
 
 export const cartContext = React.createContext({} as cartContextType);
 
@@ -20,21 +21,23 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const [localStorageIndex, setLocalStorageIndex] = useState(1);
   const [cart, setCart] = useState<cartType[]>([]);
 
-  const { loginData, isLoggedIn } = useContext(userContext);
-  const { handleAlert } = useContext(alertContext);
-
   // to separate cartItems in the localstorage
   // into those that already exits in the database
   // and just needs updating and those that are to be
   // newly added.
-  const updatedItemsRef = useRef<updatedItemType[]>([]);
-  const addedItemsRef = useRef<addedItemType[]>([]);
+  const [localAddedItems, setLocalAddedItems] = useState<addedItemType[]>([]);
+  const [localUpdatedItems, setLocalUpdatedItems] = useState<updatedItemType[]>([]);
+
+  const { loginData, isLoggedIn } = useContext(userContext);
+  const { handleAlert } = useContext(alertContext);
 
   const { cartFetched, cartData } = useGetCartItems(setCart);
-  const { itemsUpdated } = useUpdateCartItems(updatedItemsRef.current);
-  const { cartItemsAdded } = useAddCartItems(addedItemsRef.current);
+  const { itemsUpdated } = useUpdateCartItems(localUpdatedItems);
+  const { cartItemsAdded } = useAddCartItems(localAddedItems);
   const { deleteCartItem, cartItemDeleted, isDeletingCartItem, isLocalDelete } = useDeleteCartItem(setLocalStorageIndex);
   const { handleAddCartItem, isUpdatingCartItem, isUpatedCartItem, isAddedCartItem, isAddingCartItem, addedItem, isLocalModification, addCartItemError, updateCartItemError } = useModifyCart(setLocalStorageIndex, cart);
+  const { moveItemToWishlist, isMovingToWishlist, isMovedToWishlist, isItemExistErrorIndex } = useMoveToWishlist();
+  useProcessLocalCartItems({ params: { isLoggedIn, localStorageIndex, setCart, customerId: loginData.id, cartFetched, cartData, cartItemsAdded, itemsUpdated, setLocalAddedItems, setLocalUpdatedItems, localAddedItems, localUpdatedItems } });
 
   const prevCartRef = useRef(cart);
 
@@ -57,79 +60,24 @@ const CartProvider = ({ children }: ProvidersProp) => {
     };
   }, [isLoggedIn, cart]);
 
-  // set cart items that are added to local storage
-  // as items of "state" cart.
-  useEffect(() => {
-    var cartItems = getLocalCartItems();
-    if (!isLoggedIn && cartItems.length && localStorageIndex) {
-      setCart([...cartItems]);
-    }
-  }, [isLoggedIn, localStorageIndex]);
-
   useEffect(() => {
     if (cart !== prevCartRef.current) {
       prevCartRef.current = cart;
     }
   }, [cart]);
 
-  // separates items in the local cart i.e.,
-  // local storage into those that are to be
-  // added newly into cart and those that
-  // their quantity in the cart are to be
-  // updated.
   useEffect(() => {
-    const localCartItems = getLocalCartItems();
-    if (localCartItems.length && cartFetched) {
-      var cart_data = cartData?.data as cartType[];
-      for (let i = 0; i < localCartItems.length; i++) {
-        const {
-          cartQuantity: quantity,
-          product: { id: localProductId },
-        } = localCartItems[i];
-        var isUpdate: boolean = false;
-        for (let j = 0; j < cart_data.length; j++) {
-          const {
-            cartQuantity,
-            product: { id: productId },
-            id,
-          } = cart_data[j];
-          if (localProductId === productId) {
-            updatedItemsRef.current.push({
-              customerId: loginData.id,
-              productId,
-              quantity: quantity + cartQuantity,
-              id: id!,
-            });
-            isUpdate = true;
-            break;
-          }
-        }
-
-        if (!isUpdate) {
-          addedItemsRef.current.push({
-            customerId: loginData.id,
-            productId: localProductId,
-            quantity,
-          });
-        }
+    if (isItemExistErrorIndex || isMovedToWishlist) {
+      let alertDialog: React.JSX.Element = <></>;
+      if (isItemExistErrorIndex) {
+        alertDialog = <Alert alertTitle="Cart Error" alertMessage="Unable to add duplicate item, this item was added already." styles={{ backgroundColor: `var(--light_red)` }} />;
+      } else {
+        alertDialog = <Alert alertMessage="Product successfully moved to Saved Items" styles={{ backgroundColor: `var(--light_Green)` }} />;
       }
+      handleAlert({ showAlert: true, alertDialog });
     }
-  }, [cartData?.data, cartFetched, loginData.id]);
-
-  // empties the local storage of cart items stored
-  // after updating the database.
-  useEffect(() => {
-    const localCartItems = getLocalCartItems();
-    const shouldDeleteCart =
-      (updatedItemsRef.current.length && addedItemsRef.current.length && cartItemsAdded && itemsUpdated) ||
-      (updatedItemsRef.current.length && !addedItemsRef.current.length && !cartItemsAdded && itemsUpdated) ||
-      (!updatedItemsRef.current.length && addedItemsRef.current.length && cartItemsAdded && !itemsUpdated);
-    if (shouldDeleteCart && localCartItems.length) {
-      emptyLocalCart();
-      updatedItemsRef.current = [];
-      addedItemsRef.current = [];
-    }
-  }, [cartItemsAdded, itemsUpdated]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isItemExistErrorIndex, isMovedToWishlist]);
 
   useEffect(() => {
     if (cartItemDeleted || isLocalDelete) {
@@ -142,12 +90,10 @@ const CartProvider = ({ children }: ProvidersProp) => {
     if (isAddedCartItem || isUpatedCartItem || isLocalModification) {
       const alertDialog = (
         <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertMessage={`${addedItem} has been added to cart`}>
-          <div id="cart_alert" className="d-flex cart_alert justify-content-between">
-            <Link className="" to="/cart/overview">
-              View Cart
-            </Link>
+          <AlertLinks>
+            <Link to="/cart/overview">View Cart</Link>
             <Link to="/checkout/complete-order">Proceed to Checkout</Link>
-          </div>
+          </AlertLinks>
         </Alert>
       );
       handleAlert({ showAlert: true, alertDialog });
@@ -164,6 +110,9 @@ const CartProvider = ({ children }: ProvidersProp) => {
   return (
     <cartContext.Provider
       value={{
+        setLocalStorageIndex,
+        moveItemToWishlist,
+        isMovingToWishlist,
         isAddedCartItem,
         isAddingCartItem,
         handleAddCartItem,

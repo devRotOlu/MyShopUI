@@ -13,7 +13,7 @@
 }
 
 #alert > div:first-child {
-  padding: 5px 0;
+  padding: 20px 0;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }

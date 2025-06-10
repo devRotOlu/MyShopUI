@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Icon } from "@iconify/react";
 
 import BreadCrumb from "../breadCrumbs/BreadCrumb";
 import ProductCard from "../productCard/ProductCard";
@@ -7,17 +8,14 @@ import NavigationButtons from "../navigationButtons/NavigationButtons";
 import PageLayout from "../pageLayout/PageLayout";
 import EmptyView from "../emptyView/EmptyView";
 
-import { useGetWishlist } from "../../customHooks/useGetWishlist";
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
 import { wishlistType } from "../../types";
-import { Icon } from "@iconify/react";
 
 const maxProductPerPage = 20;
 
 const SavedItems = () => {
-  const { isLoadingWishlist, isFetchedWishlist } = useGetWishlist();
-  const { wishList } = useContext(wishlistContext);
+  const { wishList, isFetchedWishlist, isLoadingWishlist } = useContext(wishlistContext);
   const [currentProducts, setCurrentProducts] = useState<wishlistType[]>([]);
 
   const isEmptyView = isFetchedWishlist && !wishList.length;

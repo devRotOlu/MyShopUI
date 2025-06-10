@@ -4,7 +4,11 @@ import { addToWishlist } from "../helperFunctions/dataFetchFunctions";
 import { useAddToWhishlistDataType } from "../types";
 
 export const useAddToWhishlist = (): useAddToWhishlistDataType => {
-  const { mutate: saveForLater, isPending: isAddingToWishList } = useMutation({
+  const {
+    mutate: saveForLater,
+    isPending: isAddingToWishList,
+    isSuccess,
+  } = useMutation({
     mutationFn: addToWishlist,
   });
 
@@ -19,5 +23,6 @@ export const useAddToWhishlist = (): useAddToWhishlistDataType => {
   return {
     addItemToWishList,
     isAddingToWishList,
+    isAddedToWishlist: isSuccess,
   };
 };

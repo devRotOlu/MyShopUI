@@ -41,7 +41,7 @@ const Cart = () => {
               <div className="flex-grow-1 bg-white align-self-start">
                 <CartTable>{cartItems}</CartTable>
               </div>
-              <div className="align-self-start" style={{ width: "20%" }}>
+              <div className="align-self-start bg-dark" style={{ width: "25%" }}>
                 <OrderSummary />
               </div>
             </div>

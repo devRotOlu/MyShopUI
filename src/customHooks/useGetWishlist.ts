@@ -4,11 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { userContext } from "../components/context/UserProvider";
 import { getWishlist } from "../helperFunctions/dataFetchFunctions";
 import { useGetWishlistData, wishlistType } from "../types";
-import { wishlistContext } from "../components/context/WishlistProvider";
 
-export const useGetWishlist = (): useGetWishlistData => {
+export const useGetWishlist = (setWishList: React.Dispatch<React.SetStateAction<wishlistType[]>>): useGetWishlistData => {
   const { loginData, isLoggedIn } = useContext(userContext);
-  const { setWishList } = useContext(wishlistContext);
 
   const {
     data: wishlistData,
@@ -20,7 +18,7 @@ export const useGetWishlist = (): useGetWishlistData => {
     },
     queryKey: ["wishlist"],
     enabled: () => (isLoggedIn ? true : false),
-    refetchInterval: 3000,
+    refetchInterval: isLoggedIn ? 3000 : false,
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
   });

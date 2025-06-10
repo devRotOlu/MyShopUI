@@ -32,6 +32,10 @@ export const deleteCartItem = async (itemId: number) => {
   return await myShopAxios.delete(`Cart?id=${itemId}`);
 };
 
+export const moveToWishlist = async (cartId: number) => {
+  return await myShopAxios.post(`Cart/move_to_wishlist?cartId=${cartId}`);
+};
+
 // product controller functions
 
 export const getProducts = async () => {
@@ -117,6 +121,10 @@ export const addToWishlist = async (data: addWishlistType) => {
 export const removeFromWishlist = async (data: addWishlistType) => {
   const { customerId, productId } = data;
   return await myShopAxios.delete(`Wishlist/delete_item?customerId=${customerId}&productId=${productId}`);
+};
+
+export const checkProductInWishlist = async (productId: number, customerId: string) => {
+  return await myShopAxios.get(`Wishlist/isWishlist_item?customerId=${customerId}&productId=${productId}`);
 };
 
 // monnify controller functions

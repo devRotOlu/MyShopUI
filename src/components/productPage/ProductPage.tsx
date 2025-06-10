@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useQueries } from "@tanstack/react-query";
 
 import SkeletonPageLoader from "../SkeletonPageLoader";
 import Product from "../product/Product";
@@ -12,28 +13,37 @@ import BreadCrumb from "../breadCrumbs/BreadCrumb";
 
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
-import { useGetWishlist } from "../../customHooks/useGetWishlist";
-import { useQuery } from "@tanstack/react-query";
-import { getProduct } from "../../helperFunctions/dataFetchFunctions";
+import { checkProductInWishlist, getProduct } from "../../helperFunctions/dataFetchFunctions";
 import { productPageProps, productType } from "../../types";
+import { userContext } from "../context/UserProvider";
 
 const ProductPage = ({ productName }: productPageProps) => {
+  const {
+    loginData: { id: customerId },
+    isLoggedIn,
+  } = useContext(userContext);
   const { setShowModal, showModal } = useModal();
-
-  const { isLoadingWishlist } = useGetWishlist();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   const splits = (productName as string).split("-");
   const id = Number(splits[splits.length - 1]);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["product", productName],
-    queryFn: () => getProduct(id),
-    refetchOnWindowFocus: false,
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["product", productName],
+        queryFn: () => getProduct(id),
+        refetchIntervalInBackground: false,
+        refetchOnWindowFocus: true,
+      },
+      { queryKey: ["check_wishlist"], queryFn: () => checkProductInWishlist(id, customerId), refetchInterval: isLoggedIn ? 3000 : false, enabled: isLoggedIn ? true : false, refetchIntervalInBackground: false, refetchOnWindowFocus: true, retry: false },
+    ],
   });
 
-  if (isLoading || isLoadingWishlist) {
+  const [productQuery, wishlistQuery] = results;
+
+  if (results.some((query) => query.isLoading)) {
     return (
       <PageWrapper pageId="productPage">
         <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
@@ -43,7 +53,7 @@ const ProductPage = ({ productName }: productPageProps) => {
     );
   }
 
-  const product: productType = data?.data;
+  const product: productType = productQuery.data?.data;
 
   const category = product?.category.name;
 
@@ -67,7 +77,7 @@ const ProductPage = ({ productName }: productPageProps) => {
       <PageWrapper pageId="productPage">
         <div className="w-100">
           <BreadCrumb currentLinkLabel={category} />
-          <Product product={product!}>
+          <Product product={product!} data={wishlistQuery.data?.data}>
             <>
               <div onClick={() => setShowModal(true)}>{carousel}</div>
               {thumbnailsWraps}

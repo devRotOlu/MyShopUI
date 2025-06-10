@@ -4,26 +4,24 @@ import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
 import QuantityValidator from "../quantityValidator/QuantityValidator.tsx";
 
-import { CartItemProp } from "../../types.ts";
+import { cartItemProp } from "../../types.ts";
 import { userContext } from "../context/UserProvider.tsx";
-import "./style.css";
-import { useAddToWhishlist } from "../../customHooks/useAddToWishlist.ts";
 import { cartContext } from "../context/CartProvider.tsx";
 import { naira } from "../../data.ts";
+import { useModifyCart } from "../../customHooks/useModifyCart.ts";
+import "./style.css";
 
-const CartItem = ({ item, index, itemCount }: CartItemProp) => {
+const CartItem = ({ item, index, itemCount }: cartItemProp) => {
   const [validateQuantity, setValidateQuantity] = useState(false);
-  const { isDeletingCartItem, deleteCartItem, isUpdatingCartItem, handleAddCartItem } = useContext(cartContext);
+  const { isDeletingCartItem, deleteCartItem, moveItemToWishlist, isMovingToWishlist, cart, setLocalStorageIndex } = useContext(cartContext);
+  const { isLoggedIn } = useContext(userContext);
 
-  const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
+  const { handleAddCartItem, isUpdatingCartItem } = useModifyCart(setLocalStorageIndex, cart);
+
+  // const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
   const { id: cartId, cartQuantity, product } = item;
 
   const { name, unitPrice, id: productId, images, quantity } = product;
-
-  const {
-    isLoggedIn,
-    loginData: { id: customerId },
-  } = useContext(userContext);
 
   const handleQuantityUpdate = (value: number) => {
     if (quantity === cartQuantity && value > 0) {
@@ -36,7 +34,7 @@ const CartItem = ({ item, index, itemCount }: CartItemProp) => {
   };
 
   const handleAddToWishlist = () => {
-    if (isLoggedIn) addItemToWishList(customerId, productId);
+    if (isLoggedIn) moveItemToWishlist(cartId!);
   };
 
   const handleDeleteItem = () => {
@@ -44,7 +42,7 @@ const CartItem = ({ item, index, itemCount }: CartItemProp) => {
     else deleteCartItem(undefined, productId);
   };
 
-  const beingModified = isAddingToWishList || isDeletingCartItem || isUpdatingCartItem;
+  const beingModified = isMovingToWishlist || isDeletingCartItem || isUpdatingCartItem;
 
   return (
     <tr className="cart_table_row position-relative">

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
@@ -15,14 +15,29 @@ import "./style.css";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";
 import { Icon } from "@iconify/react";
+import { alertContext } from "../context/AlertProvider";
+import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
+import { userContext } from "../context/UserProvider";
+import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
+import { promptWishlistLoginAlert } from "../uiHelpers/utilities";
 
-const Product = ({ product, children }: productProps) => {
+const Product = ({ product, children, data }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const targetRef = useRef<HTMLButtonElement>(null);
   const { handleAddCartItem } = useContext(cartContext);
+  const { handleAlert } = useContext(alertContext);
+  const {
+    isLoggedIn,
+    loginData: { id: customerId },
+    setShowModal: setLoginModal,
+  } = useContext(userContext);
+  const { deleteFromWishlist, isDeletingWishlistItem } = useDeleteWishlist();
+  const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
+
+  const isSaved: boolean = data?.isWishlistItem || false;
 
   const { name, description, unitPrice, quantity, id: productId, reviews, averageRating, attributes } = product;
 
@@ -31,6 +46,30 @@ const Product = ({ product, children }: productProps) => {
   });
 
   const brand = brandIndex > -1 ? attributes[brandIndex].value : "";
+
+  const handleAddToWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+    if (isLoggedIn) {
+      addItemToWishList(customerId, productId);
+    } else {
+      const alertDialog = promptWishlistLoginAlert("You need to be logged in to Save an Item", () => setLoginModal(true));
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  };
+
+  const handleRemoveFromWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+    if (isLoggedIn) {
+      deleteFromWishlist({ customerId, productId });
+    } else {
+      const alertDialog = promptWishlistLoginAlert("You need to be logged in to Delete an Item", () => setLoginModal(true));
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  };
 
   const handleIncreaseItem = () => {
     if (quantity === quantityToAdd) {
@@ -110,7 +149,18 @@ const Product = ({ product, children }: productProps) => {
                 <button ref={targetRef} className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
                   Add To Cart
                 </button>
-                <SavedItemButton styles={{ height: "2.5rem", width: "2.5rem" }} productId={productId} icon={<Icon icon="fluent-mdl2:heart-fill" fontSize="1.2rem" color="white" />}></SavedItemButton>
+                <SavedItemButton
+                  data={{
+                    styles: { height: "2.5rem", width: "2.5rem" },
+                    icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="1.2rem" color="white" />,
+                    showAlert: true,
+                    handleAddToWishlist,
+                    handleRemoveFromWishlist,
+                    isBeingAdded: isAddingToWishList,
+                    isBeingRemoved: isDeletingWishlistItem,
+                    isSaved,
+                  }}
+                ></SavedItemButton>
               </div>
             </div>
           </div>

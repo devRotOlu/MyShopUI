@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 import AuthPageWrapper from "../authPageWrapper/AuthPageWrapper.tsx";
 import FormComp from "../formComp/FormComp.tsx";
@@ -17,7 +18,6 @@ import PasswordResetErrorAlert from "../passwordResetErrorAlert/PasswordResetErr
 
 import "./style.css";
 import { sendEmailForPassWordReset } from "../../helperFunctions/dataFetchFunctions.ts";
-import axios from "axios";
 
 const ForgotPassword = () => {
   const [isFirstResetEmail, setIsFirstResetEmail] = useState(false);

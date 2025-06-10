@@ -1,13 +1,14 @@
-div#cart_alert a {
+div#alert_links a {
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
   padding: 5px 10px;
   color: white;
 }
-div#cart_alert a:first-child {
+
+div#alert_links a:nth-child(1) {
   border: solid thin white;
 }
-div#cart_alert a:last-child {
+div#cart_alert a:nth-child(2) {
   background-color: var(--dark_Green);
 }
