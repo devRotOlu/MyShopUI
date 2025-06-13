@@ -49,6 +49,7 @@
 
 body {
   font-family: Archivo_Light;
+  background-color: var(--Light_Grey);
 }
 
 h1,

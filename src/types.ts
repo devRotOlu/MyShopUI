@@ -173,6 +173,7 @@ export type categoryProps = {
 };
 
 export type searchBarProps = {
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   setSearchResults: React.Dispatch<React.SetStateAction<searchResultType | null>>;
   setUserInput: React.Dispatch<React.SetStateAction<string>>;
   searchTerm: string;
@@ -212,9 +213,14 @@ export type attributeType = {
   };
 };
 
+export type sortPanelProps = {
+  currentPage: number;
+  productPerPage: number;
+  totalProducts: number;
+};
+
 export type searchResultType = {
   products: productType[];
-  categories: productCategoryType[];
   brands: string[];
 };
 
@@ -224,13 +230,7 @@ export type selectedPricesType = {
 };
 
 export type filterPanelProps = {
-  filterPanelData: {
-    products: productType[];
-    setSelectedPrices: React.Dispatch<React.SetStateAction<selectedPricesType>>;
-    selectedPrices: selectedPricesType;
-    selectedRating: number | null;
-    setSelectedRating: React.Dispatch<React.SetStateAction<number | null>>;
-  };
+  products: productType[];
 };
 
 export type brandPageProps = {
@@ -240,10 +240,15 @@ export type brandPageProps = {
   children: ReactNode;
 };
 
-export type pageLayoutProps = {
-  isLoading: boolean;
+export type homeProductLayoutProps = {
   children: ReactNode;
   productCards: ReactNode;
+};
+
+export type categoryPageLayoutProps = {
+  filterWrapper: ReactNode;
+  children: ReactNode;
+  products: ReactNode;
 };
 
 export type productType = {
@@ -285,10 +290,15 @@ export type useMoveToWishlistDataType = {
 };
 
 export type navigationButtonsProps = {
-  itemCount: number;
-  maxItemPerPage: number;
-  setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
-  items: any[];
+  params: {
+    firstPage: number;
+    currentPage: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    itemCount: number;
+    maxItemPerPage: number;
+    setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
+    items: any[];
+  };
 };
 
 export type productSummaryModalProps = {
@@ -638,6 +648,8 @@ export type productRatingsProps = {
 
 export type breadCrumbProps = {
   currentLinkLabel: string;
+  handleFilterModal?: () => void;
+  children?: ReactNode;
 };
 
 export type thumbnailProps = {
@@ -792,6 +804,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  productsFetched: boolean;
   isLoadingProducts: boolean;
   isAuthenticating: boolean;
   deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
@@ -847,10 +860,11 @@ export type useGetCartItemsDataType = {
   cartData: AxiosResponse<any, any> | undefined;
 };
 
-export type useFilterQueryParamsDataType = {
+export type useGetQueryParamsDataType = {
   min?: number;
   max?: number;
   rating?: number;
+  sortOrder?: "desc" | "asc";
 };
 
 export type useDeleteDeliveryProfileDataType = {

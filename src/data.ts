@@ -151,6 +151,7 @@ export const prices: { label: string; minPrice?: number; maxPrice?: number }[] =
   {
     label: `Under ${naira}2000`,
     maxPrice: 2000,
+    minPrice: undefined,
   },
   {
     label: `${naira}2000 - ${naira}5000`,
@@ -175,5 +176,6 @@ export const prices: { label: string; minPrice?: number; maxPrice?: number }[] =
   {
     label: `Above ${naira}40000`,
     minPrice: 40000,
+    maxPrice: undefined,
   },
 ];

@@ -1,28 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import Category from "../category/Category";
 import FilterPanel from "../flterPanel/FilterPanel";
 
-import { productType, selectedPricesType } from "../../types";
+import { productType } from "../../types";
 import { getCategoryProducts } from "../../helperFunctions/dataFetchFunctions";
-import { useFilterQueryParams } from "../../customHooks/useFilterQueryParams";
+import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
 
 const CategoryPageWrapper = () => {
-  const [selectedPrices, setSelectedPrices] = useState<selectedPricesType>({});
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
-
   const { productCategory } = useParams();
 
-  const { min, max, rating } = useFilterQueryParams();
+  const { min, max, rating, sortOrder } = useGetQueryParams();
 
   const splittedStrings = productCategory.split("-");
   const id = Number(splittedStrings[splittedStrings.length - 1]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["category_products", productCategory],
-    queryFn: () => getCategoryProducts(id, min, max, rating),
+    queryKey: ["category_products", productCategory, `min-${min}`, `max-${max}`, `rating-${rating}`, `sortOrder-${sortOrder}`],
+    queryFn: () => getCategoryProducts(id, min, max, rating, sortOrder),
     refetchOnWindowFocus: false,
   });
 
@@ -30,7 +27,7 @@ const CategoryPageWrapper = () => {
 
   return (
     <Category products={products} key={productCategory} isLoading={isLoading}>
-      <FilterPanel filterPanelData={{ setSelectedPrices, setSelectedRating, selectedPrices, selectedRating, products }} />
+      <FilterPanel products={products} />
     </Category>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Brand from "../brand/Brand";
 
@@ -9,20 +9,34 @@ import { cartContext } from "../context/CartProvider";
 import "./style.css";
 
 const BrandWrapper = () => {
-  const { setShowSidebar, showSidebar } = useContext(appContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHomePage = location.pathname === "/";
+  const { setModalIndex, modalIndex } = useContext(appContext);
   const { cartItemsCount } = useContext(cartContext);
   return (
     <div className="d-flex justify-content-between brand_wrapper">
       <div className="d-flex align-items-center gap-2">
         <div className="d-md-none">
-          {!showSidebar ? (
-            <button onClick={() => setShowSidebar(true)}>
-              <Icon icon="formkit:open" fontSize={22} />
+          {!isHomePage && (
+            <button onClick={() => navigate(-1)}>
+              <Icon icon="ic:baseline-arrow-back" fontSize={22} />
             </button>
-          ) : (
-            <button onClick={() => setShowSidebar(false)}>
-              <Icon icon="formkit:close" fontSize={22} />
-            </button>
+          )}
+          {isHomePage && (
+            <>
+              {modalIndex === 0 && (
+                <button onClick={() => setModalIndex(1)}>
+                  <Icon icon="formkit:open" fontSize={22} />
+                </button>
+              )}
+              {modalIndex === 1 && (
+                <button onClick={() => setModalIndex(0)}>
+                  <Icon icon="formkit:close" fontSize={22} />
+                </button>
+              )}
+            </>
           )}
         </div>
         <Link to="/">

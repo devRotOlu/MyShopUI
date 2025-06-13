@@ -17,7 +17,7 @@ const Sidebar = () => {
     isLoggedIn,
     handLogout,
   } = useContext(userContext);
-  const { setShowSidebar } = useContext(appContext);
+  const { setModalIndex } = useContext(appContext);
   const divRefs = useRef<(HTMLElement | null)[]>([]);
   const setRef = (el: HTMLElement | null, index: number) => {
     divRefs.current[index] = el;
@@ -26,7 +26,7 @@ const Sidebar = () => {
     const elements = [...divRefs.current];
     const handleClick = () => {
       setTimeout(() => {
-        setShowSidebar(false);
+        setModalIndex(0);
       }, 100);
     };
     elements.forEach((element) => {

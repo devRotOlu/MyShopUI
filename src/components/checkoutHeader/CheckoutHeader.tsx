@@ -7,7 +7,7 @@ import "./style.css";
 
 const CheckoutHeader = () => {
   return (
-    <header className="px-3 py-4" id="checkout_header">
+    <header className="px-3 py-4 bg-white" id="checkout_header">
       <div className="w-100 position-relative">
         <Link to="/" className="position-absolute left-0">
           <div id="brand">

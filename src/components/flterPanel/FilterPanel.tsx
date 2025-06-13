@@ -4,19 +4,23 @@ import { Icon } from "@iconify/react";
 
 import ProductRatings from "../productRating/ProductRatings";
 
-import { filterPanelProps } from "../../types";
+import { filterPanelProps, selectedPricesType } from "../../types";
 import { prices } from "../../data";
 import "./style.css";
+import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
 
-const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
+const FilterPanel = ({ products }: filterPanelProps) => {
+  const { search, pathname } = useLocation();
+  let queryParam = Object.fromEntries(new URLSearchParams(search));
+  const { min, max, rating } = useGetQueryParams();
+  const [selectedPrices, setSelectedPrices] = useState<selectedPricesType>({ minPrice: min, maxPrice: max });
+  const [selectedRating, setSelectedRating] = useState<number | undefined>(rating);
   const [isExpand, setIsExpand] = useState({
     isExpandCategory: true,
     isExpandPriceList: true,
     isExpandRatings: true,
   });
-  const { products, selectedPrices, setSelectedPrices, selectedRating, setSelectedRating } = filterPanelData;
   const isInitialRenderRef = useRef(true);
-  const location = useLocation();
   const navigate = useNavigate();
   const categories = new Set<string>();
   const ratings = new Set<number>();
@@ -36,11 +40,14 @@ const FilterPanel = ({ filterPanelData }: filterPanelProps) => {
       isInitialRenderRef.current = false;
       return;
     }
-    let queryParam = "";
-    if (minPrice) queryParam += `min=${minPrice}`;
-    if (maxPrice) queryParam += `${queryParam.length ? "&" : ""}max=${maxPrice}`;
-    if (selectedRating !== null) queryParam += `${queryParam.length ? "&" : ""}rating=${selectedRating}`;
-    let url = queryParam ? location.pathname + "?" + queryParam : location.pathname;
+    if (minPrice || maxPrice) {
+      delete queryParam["min"];
+      delete queryParam["max"];
+      minPrice && (queryParam["min"] = minPrice.toString());
+      maxPrice && (queryParam["max"] = maxPrice.toString());
+    }
+    selectedRating && (queryParam["rating"] = selectedRating.toString());
+    let url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minPrice, maxPrice, selectedRating]);

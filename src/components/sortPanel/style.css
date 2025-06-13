@@ -1,0 +1,23 @@
+#sort_panel {
+  font-size: 13px;
+}
+
+#sort_panel button.sort_btn {
+  font-size: 13px;
+  font-weight: 100;
+  border: solid thin;
+  position: relative;
+}
+
+/* #sort_panel button.sort_btn:first-child {
+  border-left: solid thin;
+} */
+
+#sort_panel button.sort_btn.active_btn {
+  margin: -1px;
+  z-index: 1;
+}
+
+#sort_panel button.sort_btn.adjacent_btn_active {
+  z-index: 0;
+}

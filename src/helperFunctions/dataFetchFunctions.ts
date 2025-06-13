@@ -50,16 +50,16 @@ export const addReview = async (data: addReviewType) => {
   return await myShopAxios.post("Product/add-review", data);
 };
 
-export const getCategoryProducts = async (categoryId: number, min?: number, max?: number, rating?: number) => {
-  return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
+export const getCategoryProducts = async (categoryId: number, min?: number, max?: number, rating?: number, sortOrder?: string) => {
+  return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}${sortOrder ? `&sortOrder=${sortOrder}` : ""}${sortOrder ? "&sortBy=UnitPrice" : ""}`);
 };
 
 export const searchProduct = async (searchTerm: string) => {
   return await myShopAxios.get(`Product/product_search?searchTerm=${searchTerm}`);
 };
 
-export const getBrandProducts = async (brand: string, min?: number, max?: number, rating?: number) => {
-  return await myShopAxios.get(`Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}`);
+export const getBrandProducts = async (brand: string, min?: number, max?: number, rating?: number, sortOrder?: string) => {
+  return await myShopAxios.get(`Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}${sortOrder ? "&sortBy=UnitPrice" : ""}${sortOrder ? `&sortOrder=${sortOrder}` : ""}`);
 };
 
 // account controller functions

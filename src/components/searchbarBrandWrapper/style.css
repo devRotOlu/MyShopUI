@@ -10,10 +10,6 @@
   z-index: 3000;
 }
 
-#searchbar_brand_wrapper #search_bar_wrapper > div#search_display_wrapper {
-  display: none;
-}
-
 #searchbar_brand_wrapper #search_bar_wrapper:focus-within > div:last-child {
   display: block;
 }

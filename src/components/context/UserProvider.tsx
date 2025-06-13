@@ -130,6 +130,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        productsFetched,
         isLoadingProducts,
         isAuthenticating,
         deleteAccount,

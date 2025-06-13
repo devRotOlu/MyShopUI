@@ -2,37 +2,40 @@ import React, { useContext, useState } from "react";
 
 import PageWrapper from "../PageWrapper.tsx";
 import NavigationButtons from "../navigationButtons/NavigationButtons.tsx";
-import PageLayout from "../pageLayout/PageLayout.tsx";
+import HomeProductLayout from "../homeProductLayout/HomeProductLayout.tsx";
 import ProductCard from "../productCard/ProductCard.tsx";
+import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
 
 import "./style.css";
 import { userContext } from "../context/UserProvider.tsx";
 import { productType } from "../../types.ts";
 
 const maxProductPerPage = 10;
-
+const firstPage = 1;
 const Home = () => {
-  const { products, isLoadingProducts } = useContext(userContext);
+  const { products, isLoadingProducts, productsFetched } = useContext(userContext);
+  const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<productType[]>([]);
 
   const productCards = currentProducts.map((product) => {
     const { id } = product;
-    return (
-      <div key={id} className="product_card_container">
-        <ProductCard product={product} />
-      </div>
-    );
+    return <ProductCard key={id} product={product} />;
   });
 
   return (
     <PageWrapper pageId="home">
-      <PageLayout productCards={productCards} isLoading={isLoadingProducts}>
-        {products.length !== 0 && (
+      {isLoadingProducts && (
+        <div className="align-self-stretch w-100 d-flex justify-content-between px-4 flex-wrap gap-3">
+          <ProductCardSkeleton count={4} />
+        </div>
+      )}
+      {productsFetched && (
+        <HomeProductLayout productCards={productCards}>
           <div className="align-self-end d-flex justify-content-center w-100 my-4">
-            <NavigationButtons itemCount={products.length} maxItemPerPage={maxProductPerPage} items={products} setCurrentItems={setCurrentProducts} />
+            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
           </div>
-        )}
-      </PageLayout>
+        </HomeProductLayout>
+      )}
     </PageWrapper>
   );
 };

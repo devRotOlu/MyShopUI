@@ -1,6 +1,7 @@
 #breadCrumb {
-  padding-top: 200px;
-  padding-bottom: 20px;
+  position: sticky;
+  top: calc(-1 * (var(--bread--crumb-nav--area) - var(--navbar-height)));
+  z-index: 700;
 }
 
 #breadCrumb a {
@@ -10,4 +11,9 @@
 #breadCrumb #current_link_label {
   color: var(--lighter_pink);
   font-size: 15px;
+  overflow: visible;
+}
+
+#breadCrumb #filter_sort_toggle_wrapper button {
+  color: var(--dark_wine);
 }

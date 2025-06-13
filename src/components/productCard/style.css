@@ -5,17 +5,14 @@
   cursor: pointer;
   width: 100%;
   height: 100%;
-}
-
-.product_card img {
-  height: 200px;
+  max-width: 320px;
 }
 
 .product_card:hover {
   box-shadow: 1px 1px 20px -13px, -1px -1px 20px -13px;
 }
 
-.product_card button#add_cart_btn {
+.product_card button.add_cart_btn {
   color: var(--deep_pink);
   padding: 5px;
   display: block;
@@ -26,7 +23,7 @@
   width: 100%;
 }
 
-.product_card button#add_cart_btn:hover {
+.product_card button.add_cart_btn:hover {
   background-color: var(--deep_pink);
   color: white;
 }
@@ -36,23 +33,28 @@
   word-wrap: break-word;
 }
 
-.product_card #card_spinner {
+.product_card .card_spinner {
   background-color: var(--deep_pink);
 }
 
-.product_card #reviews p {
+.product_card .reviews {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.product_card .reviews > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.product_card .reviews span {
   font-size: 14px;
 }
 
-@media screen and (max-width: 767px) {
-  .product_card img {
-    height: 150px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .product_card #reviews p {
-    font-size: 12px;
+@media screen and (max-width: 450px) {
+  .product_card .reviews span {
+    font-size: 13px;
   }
 
   .product_card p {
@@ -60,8 +62,23 @@
   }
 }
 
-@media screen and (max-width: 300px) {
-  .product_card img {
-    height: 100px;
+@media screen and (max-width: 576px) {
+  .product_card {
+    box-shadow: none;
+    padding: 10px 5px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .product_card .reviews {
+    flex-direction: column;
+  }
+
+  .product_card .reviews > div:first-child {
+    width: 100%;
+  }
+
+  .product_card .reviews > span {
+    width: 100%;
   }
 }

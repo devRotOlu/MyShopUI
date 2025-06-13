@@ -14,6 +14,8 @@ import { userContext } from "../context/UserProvider.tsx";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
 import { alertContext } from "../context/AlertProvider.tsx";
 
+const truncateName = (name: string) => (name.length > 30 ? name.substring(0, 100) + "..." : name);
+
 const ProductCard = ({ product }: productCardProp) => {
   const [targetProduct, setTargetProduct] = useState(-1);
 
@@ -98,7 +100,7 @@ const ProductCard = ({ product }: productCardProp) => {
           </div>
         </div>
         <div className="product_title">
-          <p>{name}</p>
+          <p>{truncateName(name)}</p>
         </div>
       </div>
       <div>
@@ -112,18 +114,18 @@ const ProductCard = ({ product }: productCardProp) => {
           </p>
         </div>
         <div className="pt-2 d-flex align-items-center flex-column gap-2">
-          <div className="w-100 d-flex gap-1 align-items-center" id="reviews">
-            <div className="d-flex align-items-center">
+          <div className="w-100 reviews">
+            <div>
               <ProductRatings rating={rating} styles="fs-5" />
             </div>
-            <p>{reviews.length > 0 ? `${reviews.length} Reviews` : "No reviews yet"}</p>
+            <span>{reviews.length > 0 ? `${reviews.length} Reviews` : "No reviews yet"}</span>
           </div>
           {isBeingAddedToCart ? (
-            <div className="spinner-grow" role="status" id="card_spinner" style={{ width: "0.8rem", height: "0.8rem" }}>
+            <div className="spinner-grow card_spinner" role="status" style={{ width: "0.8rem", height: "0.8rem" }}>
               <span className="visually-hidden">Loading...</span>
             </div>
           ) : (
-            <button id="add_cart_btn" onClick={(e) => _handleAddToCart(e)}>
+            <button className="add_cart_btn" onClick={(e) => _handleAddToCart(e)}>
               Add To Cart
             </button>
           )}

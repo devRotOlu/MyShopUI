@@ -1,18 +1,15 @@
-import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import React, { MouseEvent, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 
 import { navigationButtonsProps } from "../../types";
 import "./style.css";
 
-const firstPage = 1;
-
-const NavigationButtons = ({ ...props }: navigationButtonsProps) => {
-  const { itemCount, maxItemPerPage, setCurrentItems, items } = props;
+const NavigationButtons = ({ params }: navigationButtonsProps) => {
+  const { itemCount, maxItemPerPage, setCurrentItems, items, setCurrentPage, currentPage, firstPage } = params;
   const maxPage = Math.ceil(itemCount / maxItemPerPage);
   const initialIndex = maxPage >= 1 ? maxItemPerPage - 1 : itemCount - 1;
   const prevIndexRef = useRef(initialIndex);
   const currentIndexRef = useRef(initialIndex);
-  const [currentPage, setCurrentPage] = useState(firstPage);
 
   const handleNextBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
     const isNextPage = currentIndexRef.current < itemCount - 1;
