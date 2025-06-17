@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { sortPanelProps } from "../../types";
 import "./style.css";
 import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { appContext } from "../context/AppProvider";
 
 const sortButtons: { label: string; value?: "desc" | "asc" }[] = [
   {
-    label: "Default",
+    label: "Relevance",
     value: undefined,
   },
   {
@@ -22,13 +22,13 @@ const sortButtons: { label: string; value?: "desc" | "asc" }[] = [
 ];
 
 const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProps) => {
+  const { sortIndex, setSortIndex } = useContext(appContext);
   const navigate = useNavigate();
   const isInitialRenderRef = useRef(true);
   const { search, pathname } = useLocation();
   let queryParam = Object.fromEntries(new URLSearchParams(search));
   const { sortOrder: _sortOrder } = useGetQueryParams();
   const [sortOrder, setSortOrder] = useState<"desc" | "asc" | undefined>(_sortOrder);
-  const [sortIndex, setSortIndex] = useState(0);
   const oldProducts = totalProducts * (currentPage - 1);
   const newProducts = totalProducts - oldProducts;
   const countStart = oldProducts + 1;
@@ -42,11 +42,14 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
       isInitialRenderRef.current = false;
       return;
     }
-    sortOrder && (queryParam["sortOrder"] = sortOrder);
+    if (sortOrder) queryParam["sortOrder"] = sortOrder;
+    else delete queryParam["sortOrder"];
+
     let url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortOrder]);
+
   const _sortButtons = sortButtons.map(({ label, value }, index) => {
     const isActiveBtn = sortIndex === index;
     return (
@@ -57,10 +60,10 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
   });
   return (
     <div id="sort_panel" className="d-flex flex-column align-items-end gap-3">
-      <p className="text-end">
+      <p className="text-md-end text-center w-100">
         {countStart} - {countEnd} of {totalProducts} results
       </p>
-      <div className="d-flex gap-2 align-items-center">
+      <div className="d-none d-md-flex gap-2 align-items-center">
         <span>Sort By:</span>
         <div>{_sortButtons}</div>
       </div>

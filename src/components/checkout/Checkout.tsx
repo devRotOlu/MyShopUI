@@ -12,7 +12,6 @@ import AddressDialog from "../AddressDialog.tsx";
 import PayStackDialog from "../payStack/PayStackDialog.tsx";
 import CheckoutPaymentOptions from "../checkoutPaymentOptions/CheckoutPaymentOptions.tsx";
 import CheckoutError from "../checkoutError/CheckoutError.tsx";
-import Sidebar from "../sidebar/Sidebar.tsx";
 
 import { checkoutContextType, payPlatformType } from "../../types.ts";
 import { useMonnify } from "../../customHooks/useMonnify.ts";

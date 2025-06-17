@@ -8,7 +8,7 @@ const CartTable = ({ children }: CartTableProp) => {
     <table className="w-100 align-self-start" id="cart_table">
       <thead>
         <tr style={{ backgroundColor: "var(--darker_Grey)" }}>
-          <th className="py-3 w-50">Items Details</th>
+          <th className="py-3">Items Details</th>
           <th className="py-3">Quantity</th>
           <th className="py-3 text-center">Item Price</th>
           <th className="py-3 text-end">Action</th>

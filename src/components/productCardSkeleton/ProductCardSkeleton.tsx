@@ -9,7 +9,7 @@ const ProductCardSkeleton = ({ count }: skeletonProps) => {
     .fill(0)
     .map((_, index) => {
       return (
-        <div className="product_card_skeleton rounded d-flex flex-column justify-content-between" key={index}>
+        <div className="product_card_skeleton rounded d-flex flex-column justify-content-between h-100" key={index}>
           <div className="w-100 d-flex flex-column gap-2 pb-1">
             <div className="w-100">
               <Skeleton height={200} />

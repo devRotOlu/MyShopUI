@@ -1,9 +1,10 @@
 import React from "react";
 
 import { productTabProps } from "../../types";
+import { productTabLabels } from "../../data";
 
 const ProductTab = ({ setTabIndex, tabIndex, reviewsLength }: productTabProps) => {
-  const tabs = ["Description", "Reviews"].map((name, index) => {
+  const tabs = productTabLabels.map((name, index) => {
     const color = tabIndex === index ? "var(--deep_pink)" : "";
     const borderBottom = tabIndex === index ? "solid 2px var(--deep_pink)" : "";
 
@@ -22,7 +23,7 @@ const ProductTab = ({ setTabIndex, tabIndex, reviewsLength }: productTabProps) =
   });
 
   return (
-    <div className="d-flex gap-5" id="product_tab">
+    <div className="d-flex flex-column flex-md-row gap-5" id="product_tab">
       {tabs}
     </div>
   );

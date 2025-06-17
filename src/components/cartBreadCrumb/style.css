@@ -1,0 +1,15 @@
+#cart_bread_crumb a {
+  color: black;
+}
+
+#cart_bread_crumb #current_link_label {
+  color: var(--lighter_pink);
+  font-size: 15px;
+  overflow: visible;
+}
+
+@media screen and (max-width: 991px) {
+  #cart_bread_crumb nav {
+    background-color: var(--Light_Grey);
+  }
+}

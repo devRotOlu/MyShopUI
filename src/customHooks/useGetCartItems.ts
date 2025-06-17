@@ -11,7 +11,7 @@ export const useGetCartItems = (setCart: (value: React.SetStateAction<cartType[]
     isLoggedIn,
   } = useContext(userContext);
 
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isLoading, isFetched } = useQuery({
     queryKey: ["cart"],
     enabled: () => (isLoggedIn ? true : false),
     queryFn: async () => {
@@ -32,5 +32,7 @@ export const useGetCartItems = (setCart: (value: React.SetStateAction<cartType[]
   return {
     cartFetched: isSuccess,
     cartData: data,
+    isFetchingCart: isLoading,
+    getCartQueryFinished: isFetched,
   };
 };

@@ -219,6 +219,10 @@ export type sortPanelProps = {
   totalProducts: number;
 };
 
+export type searchbarBrandWrapperProps = {
+  hideSearcbar: boolean;
+};
+
 export type searchResultType = {
   products: productType[];
   brands: string[];
@@ -268,8 +272,8 @@ type updateQuantityType = (value: number, productId: number, cartQuantity?: numb
 
 export type cartItemProp = {
   item: cartType;
-  index: number;
-  itemCount: number;
+  index?: number;
+  itemCount?: number;
 };
 
 export type useUpdateItemDataType = {
@@ -391,6 +395,15 @@ export type deliveryDataType = baseUserType &
     directions?: string;
     additionalInformation?: string;
   };
+
+export type useCartItemDataType = {
+  setValidateQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+  validateQuantity: boolean;
+  handleQuantityUpdate: (value: number) => void;
+  handleAddToWishlist: () => void;
+  handleDeleteItem: () => void;
+  beingModified: boolean;
+};
 
 export type cartType = {
   id?: number;
@@ -614,6 +627,11 @@ export type skeletonProps = {
   count: number;
 };
 
+export type productAccordionProps = {
+  productDescription: ReactNode;
+  productReviews: ReactNode;
+};
+
 export type productTabProps = {
   setTabIndex: Dispatch<SetStateAction<number>>;
   tabIndex: number;
@@ -757,6 +775,9 @@ export type profileSummaryProps = {
 };
 
 export type cartContextType = {
+  getCartQueryFinished: boolean;
+  cartFetched: boolean;
+  isFetchingCart: boolean;
   setLocalStorageIndex: React.Dispatch<React.SetStateAction<number>>;
   moveItemToWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
   isMovingToWishlist: boolean;
@@ -858,6 +879,8 @@ export type useUpdateCartItemsDataType = {
 export type useGetCartItemsDataType = {
   cartFetched: boolean;
   cartData: AxiosResponse<any, any> | undefined;
+  isFetchingCart: boolean;
+  getCartQueryFinished: boolean;
 };
 
 export type useGetQueryParamsDataType = {

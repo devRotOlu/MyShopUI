@@ -25,13 +25,13 @@ const Home = () => {
   return (
     <PageWrapper pageId="home">
       {isLoadingProducts && (
-        <div className="align-self-stretch w-100 d-flex justify-content-between px-4 flex-wrap gap-3">
+        <div className="w-100 d-flex justify-content-between px-4 flex-wrap gap-3 mb-5">
           <ProductCardSkeleton count={4} />
         </div>
       )}
       {productsFetched && (
         <HomeProductLayout productCards={productCards}>
-          <div className="align-self-end d-flex justify-content-center w-100 my-4">
+          <div className="d-flex justify-content-center w-100 mt-5">
             <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
           </div>
         </HomeProductLayout>

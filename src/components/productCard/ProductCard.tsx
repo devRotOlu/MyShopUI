@@ -13,8 +13,7 @@ import { wishlistContext } from "../context/WishlistProvider.tsx";
 import { userContext } from "../context/UserProvider.tsx";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
 import { alertContext } from "../context/AlertProvider.tsx";
-
-const truncateName = (name: string) => (name.length > 30 ? name.substring(0, 100) + "..." : name);
+import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
 
 const ProductCard = ({ product }: productCardProp) => {
   const [targetProduct, setTargetProduct] = useState(-1);

@@ -1,8 +1,10 @@
 #cart_table th {
   box-sizing: border-box;
   padding-right: 1rem;
+  font-size: 14px;
 }
 
 #cart_table th:first-child {
   padding-left: 1rem;
+  width: 45%;
 }

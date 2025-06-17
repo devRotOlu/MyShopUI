@@ -54,7 +54,7 @@ const NavigationButtons = ({ params }: navigationButtonsProps) => {
       );
     });
   return (
-    <div className="my-3 d-flex justify-content-center w-100 align-items-center gap-3" id="navigation_buttons">
+    <div className="d-flex justify-content-center w-100 align-items-center gap-3" id="navigation_buttons">
       <button disabled={currentPage === firstPage} onClick={handlePreviousBtnClick} className="d-flex align-items-center gap-1 py-1 px-2" id="previous_btn" style={{ color: currentPage !== firstPage ? "black" : "", backgroundColor: currentPage !== firstPage ? "var(--cerebral_grey)" : "" }}>
         <Icon icon="grommet-icons:form-previous" fontSize={15} />
         Previous

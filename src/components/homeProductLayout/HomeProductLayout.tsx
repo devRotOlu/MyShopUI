@@ -5,7 +5,7 @@ import "./style.css";
 
 const HomeProductLayout = ({ children, productCards }: homeProductLayoutProps) => {
   return (
-    <div className="d-flex flex-wrap align-self-stretch w-100" id="page_layout">
+    <div className="d-flex flex-wrap align-self-stretch w-100 mb-5" id="page_layout">
       <div id="product_card_wrapper" className="w-100">
         {productCards}
       </div>

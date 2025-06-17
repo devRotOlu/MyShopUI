@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import PageWrapper from "../PageWrapper";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
 import ProductCard from "../productCard/ProductCard";
-import BreadCrumb from "../breadCrumbs/BreadCrumb";
+import BreadCrumb from "../breadCrumb/BreadCrumb";
 import NavigationButtons from "../navigationButtons/NavigationButtons";
 import CategoryPageLayout from "../categoryPageLayout/CategoryPageLayout";
 import SortPanel from "../sortPanel/SortPanel";

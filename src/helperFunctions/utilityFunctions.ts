@@ -79,3 +79,5 @@ export const encryptData = async (data: any, publicKeyPem: any): Promise<encrypt
 
   return { encryptedBody, encryptedIV, encryptedKey };
 };
+
+export const truncateName = (name: string, possibleLength: number = 100) => (name.length > 30 ? name.substring(0, possibleLength) + "..." : name);

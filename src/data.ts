@@ -179,3 +179,5 @@ export const prices: { label: string; minPrice?: number; maxPrice?: number }[] =
     maxPrice: undefined,
   },
 ];
+
+export const productTabLabels = ["Description", "Reviews"];

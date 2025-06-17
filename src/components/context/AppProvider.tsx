@@ -7,12 +7,15 @@ import Modal from "../modal/Modal";
 
 import { ProvidersProp } from "../../types";
 import { getPublicKey } from "../../helperFunctions/dataFetchFunctions";
+import { useLocation } from "react-router-dom";
 
-export type appContextType = { publicKeyPem: any; setModalIndex: React.Dispatch<React.SetStateAction<number>>; modalIndex: number; handleFilter: (modalIndex: number, filterInstance: ReactNode) => void };
+export type appContextType = { publicKeyPem: any; setModalIndex: React.Dispatch<React.SetStateAction<number>>; modalIndex: number; handleFilter: (modalIndex: number, filterInstance: ReactNode) => void; setSortIndex: React.Dispatch<React.SetStateAction<number>>; sortIndex: number };
 
 export const appContext = createContext({} as appContextType);
 
 const AppProvider = ({ children }: ProvidersProp) => {
+  const { pathname } = useLocation();
+  const [sortIndex, setSortIndex] = useState(0);
   const [modalIndex, setModalIndex] = useState(0);
   const modalIndexRef = useRef(0);
   const [filterInstance, setFilterInstance] = useState<ReactNode>(null);
@@ -27,6 +30,10 @@ const AppProvider = ({ children }: ProvidersProp) => {
     setModalIndex(modalIndex);
     setFilterInstance(filterInstance);
   };
+
+  useEffect(() => {
+    setSortIndex(0);
+  }, [pathname]);
 
   useEffect(() => {
     if (modalIndex && modalIndex !== modalIndexRef.current) {
@@ -52,7 +59,7 @@ const AppProvider = ({ children }: ProvidersProp) => {
     };
   }, [modalIndex]);
   return (
-    <appContext.Provider value={{ publicKeyPem, modalIndex, setModalIndex, handleFilter }}>
+    <appContext.Provider value={{ publicKeyPem, modalIndex, setModalIndex, handleFilter, setSortIndex, sortIndex }}>
       {children}
       {modalIndex !== 0 && (
         <Modal styles={{ height: "100%", width: "100%" }}>

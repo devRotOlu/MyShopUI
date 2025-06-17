@@ -1,3 +1,11 @@
+tr.cart_table_row {
+  font-size: 14px;
+}
+
+tr.cart_table_row > td:first-child {
+  width: 45%;
+}
+
 tr.cart_table_row > td:nth-child(4) button {
   font-family: Archivo_Light;
   color: var(--dark_wine);

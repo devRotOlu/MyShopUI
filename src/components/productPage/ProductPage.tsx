@@ -9,7 +9,7 @@ import Thumbnail from "../thumbnail/Thumbnail";
 import ThumbnailWrap from "./ThumbnailWrap";
 import Modal from "../modal/Modal";
 import ModalCloseButton from "../ModalCloseButton";
-import BreadCrumb from "../breadCrumbs/BreadCrumb";
+import BreadCrumb from "../breadCrumb/BreadCrumb";
 
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
@@ -46,7 +46,7 @@ const ProductPage = ({ productName }: productPageProps) => {
   if (results.some((query) => query.isLoading)) {
     return (
       <PageWrapper pageId="productPage">
-        <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
+        <div className="flex-grow-1 w-100 h-100 pt-3 px-5 bg-white">
           <SkeletonPageLoader count={2} />
         </div>
       </PageWrapper>
@@ -79,7 +79,9 @@ const ProductPage = ({ productName }: productPageProps) => {
           <BreadCrumb currentLinkLabel={category} />
           <Product product={product!} data={wishlistQuery.data?.data}>
             <>
-              <div onClick={() => setShowModal(true)}>{carousel}</div>
+              <div id="carousel_holder" onClick={() => setShowModal(true)}>
+                {carousel}
+              </div>
               {thumbnailsWraps}
             </>
           </Product>

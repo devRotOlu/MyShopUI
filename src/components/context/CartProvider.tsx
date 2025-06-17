@@ -31,7 +31,7 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const { loginData, isLoggedIn } = useContext(userContext);
   const { handleAlert } = useContext(alertContext);
 
-  const { cartFetched, cartData } = useGetCartItems(setCart);
+  const { cartFetched, cartData, isFetchingCart, getCartQueryFinished } = useGetCartItems(setCart);
   const { itemsUpdated } = useUpdateCartItems(localUpdatedItems);
   const { cartItemsAdded } = useAddCartItems(localAddedItems);
   const { deleteCartItem, cartItemDeleted, isDeletingCartItem, isLocalDelete } = useDeleteCartItem(setLocalStorageIndex);
@@ -110,6 +110,9 @@ const CartProvider = ({ children }: ProvidersProp) => {
   return (
     <cartContext.Provider
       value={{
+        getCartQueryFinished,
+        cartFetched,
+        isFetchingCart,
         setLocalStorageIndex,
         moveItemToWishlist,
         isMovingToWishlist,

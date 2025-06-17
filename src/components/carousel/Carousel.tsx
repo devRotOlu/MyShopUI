@@ -33,7 +33,7 @@ const Carousel = ({ images, name, activeIndex, setActiveIndex }: carouselProps) 
   }
   return (
     <div id="carousel" className="d-flex justify-content-center">
-      <div id="carousel" className="position-relative w-75 " onMouseEnter={() => setHideControls(false)} onMouseLeave={() => setHideControls(true)}>
+      <div id="carousel" className="position-relative " onMouseEnter={() => setHideControls(false)} onMouseLeave={() => setHideControls(true)}>
         {carouselItems}
         {!hideControls && <CarouselControls handleOnClickNext={handleOnClickNext} handleOnClickPrevious={handleOnClickPrevious} />}
       </div>

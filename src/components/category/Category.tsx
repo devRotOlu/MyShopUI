@@ -4,7 +4,7 @@ import PageWrapper from "../PageWrapper";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
 import ProductCard from "../productCard/ProductCard";
 import NavigationButtons from "../navigationButtons/NavigationButtons";
-import BreadCrumb from "../breadCrumbs/BreadCrumb";
+import BreadCrumb from "../breadCrumb/BreadCrumb";
 import CategoryPageLayout from "../categoryPageLayout/CategoryPageLayout";
 import SortPanel from "../sortPanel/SortPanel";
 
@@ -33,7 +33,7 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
     <PageWrapper pageId="product_category">
       <div className="align-self-stretch w-100">
         {isLoading && (
-          <div className="d-flex justify-content-between" id="page_loader_wrapper">
+          <div className="d-flex justify-content-between px-1 px-sm-2 mb-5" id="page_loader_wrapper">
             <ProductCardSkeleton count={4} />
           </div>
         )}
@@ -44,7 +44,7 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
             </BreadCrumb>
             <CategoryPageLayout products={_products} filterWrapper={<div>{children}</div>}>
               {products.length && (
-                <div className="align-self-end d-flex justify-content-center w-100 my-4">
+                <div className="align-self-end d-flex justify-content-center w-100 mt-5">
                   <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
                 </div>
               )}

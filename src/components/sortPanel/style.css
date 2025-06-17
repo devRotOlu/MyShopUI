@@ -21,3 +21,9 @@
 #sort_panel button.sort_btn.adjacent_btn_active {
   z-index: 0;
 }
+
+@media screen and (max-width: 767px) {
+  #sort_panel {
+    width: 100%;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Icon } from "@iconify/react";
 
-import BreadCrumb from "../breadCrumbs/BreadCrumb";
+import BreadCrumb from "../breadCrumb/BreadCrumb";
 import PageWrapper from "../PageWrapper";
 import NavigationButtons from "../navigationButtons/NavigationButtons";
 import HomeProductLayout from "../homeProductLayout/HomeProductLayout";

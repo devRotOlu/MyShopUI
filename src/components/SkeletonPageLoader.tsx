@@ -5,7 +5,7 @@ import { skeletonProps } from "../types";
 
 const SkeletonPageLoader = ({ count }: skeletonProps) => {
   return (
-    <div className="d-flex flex-column gap-5">
+    <div className="d-flex flex-column gap-5 py-5">
       {Array(count)
         .fill(0)
         .map((_, index) => {

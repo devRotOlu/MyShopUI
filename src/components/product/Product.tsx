@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
+import throttle from "lodash.throttle";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
@@ -9,6 +10,7 @@ import ProductRatings from "../productRating/ProductRatings";
 import ProductSummaryModal from "../productSummaryModal/ProductSummaryModal";
 import ProductDescription from "../productDescription/ProductDescription";
 import ProductReviews from "./ProductReviews";
+import ProductAccordion from "../productAccordion/ProductAccordion";
 
 import { productProps } from "../../types";
 import "./style.css";
@@ -86,6 +88,22 @@ const Product = ({ product, children, data }: productProps) => {
   };
 
   useEffect(() => {
+    const setProperty = () => {
+      const height = targetRef.current?.parentElement?.offsetHeight;
+      document.documentElement.style.setProperty("--product_add_cart_btn", `${height}px`);
+    };
+    setProperty();
+    const handleResize = throttle(() => {
+      setProperty();
+    }, 100);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      handleResize.cancel();
+    };
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (targetRef.current) {
         const rect = targetRef.current.getBoundingClientRect();
@@ -114,11 +132,11 @@ const Product = ({ product, children, data }: productProps) => {
 
   return (
     <>
-      <div id="product" className="px-4">
-        <div className="w-100 d-flex gap-3">
-          <div className="w-75 d-flex gap-4 px-3 py-5 bg-white">
-            <div className="w-50">{children}</div>
-            <div className="w-50">
+      <div id="product" className="px-4 mb-md-5">
+        <div className="w-100 d-flex flex-md-row flex-column gap-md-3 gap-0">
+          <div className="d-flex flex-lg-row flex-column gap-4 px-3 pt-md-5 pb-md-5 pt-3 pb-0 bg-white" id="carousel_wrapper">
+            <div>{children}</div>
+            <div>
               <div className="border-bottom pb-3 d-flex flex-column gap-3">
                 <div className="border-bottom pb-3" id="product_header_wrapper">
                   <h2 className="fs-3 text-break">{name}</h2>
@@ -134,8 +152,8 @@ const Product = ({ product, children, data }: productProps) => {
                     <ProductRatings rating={Math.floor(averageRating)} styles="fs-6" /> <span className="review_count">{reviews.length} Review(s)</span>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <p className="fw-bold fs-5 w-50">
+                <div className="d-flex align-items-center justify-content-lg-between justify-content-start gap-5">
+                  <p className="fw-bold fs-5">
                     {naira}
                     {unitPrice.toLocaleString()}
                   </p>
@@ -145,10 +163,12 @@ const Product = ({ product, children, data }: productProps) => {
                   </div>
                 </div>
               </div>
-              <div id="save_item" className="pt-3">
-                <button ref={targetRef} className="text-light rounded me-4 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
-                  Add To Cart
-                </button>
+              <div id="save_item" className="pb-md-0 pb-3 pt-3 d-flex gap-xl-5 gap-lg-3">
+                <div className="py-md-0 py-3">
+                  <button ref={targetRef} className="text-light rounded me-md-4 py-3 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
+                    Add To Cart
+                  </button>
+                </div>
                 <SavedItemButton
                   data={{
                     styles: { height: "2.5rem", width: "2.5rem" },
@@ -164,7 +184,7 @@ const Product = ({ product, children, data }: productProps) => {
               </div>
             </div>
           </div>
-          <div className="w-25">
+          <div>
             <div className="bg-white">
               <p className="border-bottom py-2 px-3">Same Day Delivery Available in:</p>
               <div className="py-3 px-3">
@@ -194,13 +214,16 @@ const Product = ({ product, children, data }: productProps) => {
             </div>
           </div>
         </div>
-        <div className="p-4 mt-5 bg-white">
-          <div className="d-flex flex-column gap-3 w-100">
+        <div className="p-md-4 p-0 mt-5 bg-white">
+          <div className="d-md-flex d-none flex-column gap-3 w-100">
             <ProductTab tabIndex={tabIndex} setTabIndex={setTabIndex} reviewsLength={reviews.length} />
             <div>
               {tabIndex === 0 && <ProductDescription description={description} attributes={attributes} />}
               {tabIndex === 1 && <ProductReviews reviews={reviews} averageRating={averageRating} />}
             </div>
+          </div>
+          <div className="d-md-none d-block">
+            <ProductAccordion productDescription={<ProductDescription description={description} attributes={attributes} />} productReviews={<ProductReviews reviews={reviews} averageRating={averageRating} />} />
           </div>
         </div>
       </div>
