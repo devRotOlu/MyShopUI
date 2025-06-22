@@ -50,6 +50,6 @@
   }
 
   #cart #cart_main_content {
-    margin-bottom: calc(var(--checkout_link_height) + 70px);
+    margin-bottom: calc(var(--checkout_link_height) + 48px);
   }
 }

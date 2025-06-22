@@ -9,7 +9,7 @@ export const useAddDeliveryProfile = (setDeliveryProfiles: Dispatch<SetStateActi
     mutationFn: addDeliveryProfile,
     onSuccess: (data) => {
       const _data = data?.data;
-      setDeliveryProfiles((prevProfiles) => [...prevProfiles, _data]);
+      setDeliveryProfiles((prevProfiles) => [...prevProfiles.map((profile) => ({ ...profile, isDefaultProfile: false })), _data]);
     },
   });
 

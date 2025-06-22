@@ -1,0 +1,22 @@
+#product_modal_content #modal_carousel {
+  width: 85%;
+}
+
+@media screen and (max-width: 767px) {
+  #product_modal_content #modal_carousel {
+    width: 95%;
+  }
+
+  #product_modal_content {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #product_modal_content #modal_carousel {
+    width: 97%;
+  }
+  #product_modal_content {
+    width: 100%;
+  }
+}

@@ -1,3 +1,7 @@
+#product {
+  word-wrap: break-word;
+}
+
 #product_tab button {
   font-size: 1rem;
 }
@@ -16,8 +20,15 @@
   border-radius: 5px;
 }
 
-#product #carousel_wrapper > div {
-  width: 50%;
+#product #carousel_wrapper > div:first-child {
+  width: 430px;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#product #carousel_wrapper > div:last-child {
+  flex-grow: 1;
 }
 
 #product > div:last-child > div > div:last-child {
@@ -63,7 +74,7 @@
   font-size: 12px;
 }
 
-#product > div:first-child > div:last-child > div:first-child {
+#product > div:first-child > div:last-child {
   font-size: 14px;
 }
 
@@ -99,9 +110,15 @@
   font-size: 12px;
 }
 
+@media screen and (max-width: 1200px) {
+  #product #carousel_wrapper > div:first-child {
+    width: 380px;
+  }
+}
+
 @media screen and (max-width: 991px) {
-  #product #carousel_wrapper > div {
-    width: 100%;
+  #product #carousel_wrapper > div:first-child {
+    width: 400px;
   }
 
   #product #save_item > div:first-child {
@@ -130,6 +147,9 @@
 }
 
 @media screen and (max-width: 767px) {
+  #product #carousel_wrapper > div:first-child {
+    width: 350px;
+  }
   #product > div:first-child > div:first-child {
     width: 100%;
   }
@@ -149,6 +169,19 @@
   }
 
   #product #save_item > div:first-child button {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #product #carousel_wrapper > div:first-child {
+    width: 90%;
+    flex-shrink: 1;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #product #carousel_wrapper > div:first-child {
     width: 95%;
   }
 }

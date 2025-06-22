@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { validateAccessToken } from "../helperFunctions/dataFetchFunctions";
-import { userDataType } from "../types";
+import { userDataType, useTokenValidationDataType } from "../types";
 import { useEffect } from "react";
 
-export const useTokenValidation = (setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void, setLoginData: (value: React.SetStateAction<userDataType>) => void, setIsOldSession: (value: React.SetStateAction<boolean>) => void) => {
-  const { isSuccess, data, isError } = useQuery({
+export const useTokenValidation = (setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void, setLoginData: (value: React.SetStateAction<userDataType>) => void, setIsOldSession: (value: React.SetStateAction<boolean>) => void): useTokenValidationDataType => {
+  const { isSuccess, data, isError, isPending } = useQuery({
     queryKey: ["validate_token"],
     queryFn: validateAccessToken,
     retry: false,
@@ -23,4 +23,7 @@ export const useTokenValidation = (setIsLoggedIn: (value: React.SetStateAction<b
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
+  return {
+    isValidatingToken: isPending,
+  };
 };

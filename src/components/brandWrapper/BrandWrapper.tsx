@@ -45,10 +45,10 @@ const BrandWrapper = () => {
           </div>
         </Link>
       </div>
-      <div className="d-md-none position-relative">
+      <Link className="d-md-none position-relative text-dark" to="/cart/overview">
         <Icon icon="mi-shopping-cart" fontSize={22} />
         <span className="position-absolute top-0 d-flex align-items-center justify-content-center text-white item_count">{cartItemsCount}</span>
-      </div>
+      </Link>
     </div>
   );
 };

@@ -96,11 +96,9 @@ main {
   body {
     font-size: 14px;
   }
-}
 
-@media screen and (max-width: 400px) {
-  a,
+  /* a,
   button {
     font-size: 12px;
-  }
+  } */
 }

@@ -22,6 +22,8 @@ const Order = ({ ...props }: orderProps) => {
   //   },
   // }
 
+  console.log(orderedItems, "orderedItems");
+
   const itemThumbnails = orderedItems.map((item, index) => {
     const {
       cartItem: {

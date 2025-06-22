@@ -4,3 +4,17 @@
   cursor: pointer;
   overflow: hidden;
 }
+
+@media screen and (max-width: 767px) {
+  .thumbnails {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .thumbnails {
+    width: 30px;
+    height: 30px;
+  }
+}

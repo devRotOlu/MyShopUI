@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 
-import TextInput from "../textInput/TextInput";
-import ProfileForm from "../ProfileForm.tsx";
+import TextInput from "../textInput/TextInput.tsx";
+import ProfileForm from "../profileForm/ProfileForm.tsx";
 
-import { deliveryProfileData } from "../../data";
+import { deliveryProfileData } from "../../data.ts";
 import { deliveryDataType, EditProfileProps } from "../../types.ts";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
+import "./style.css";
 
 const EditProfile = ({ ...props }: EditProfileProps) => {
-  const { profileToEditIndex, updateDeliveryProfile, updatingDeliveryProfile } = props;
+  const { profileToEditIndex, updateDeliveryProfile, updatingDeliveryProfile, setPageIndex } = props;
 
   const { deliveryProfiles } = useContext(deliveryContext);
 
@@ -28,13 +29,17 @@ const EditProfile = ({ ...props }: EditProfileProps) => {
     updateDeliveryProfile(_deliveryProfile);
   };
 
+  const handlePageIndex = () => {
+    setPageIndex("0");
+  };
+
   const profileInputs = deliveryProfileData.map((data, index) => {
     const { name, label, placeholder } = data;
     let value = deliveryProfile[name as keyof typeof deliveryProfile];
     value = !value ? "" : `${value}`;
     if (name === "firstName" || name === "lastName") {
       return (
-        <div key={index} style={{ width: "47%" }}>
+        <div className="name_input" key={index}>
           <TextInput name={name} type="text" value={value} handleChange={handleInputChange} placeholder={placeholder}>
             <p className="mb-2">{label}</p>
           </TextInput>
@@ -42,7 +47,7 @@ const EditProfile = ({ ...props }: EditProfileProps) => {
       );
     }
     return (
-      <div className="w-100 mt-2">
+      <div className="w-100">
         <TextInput key={index} name={name} type="text" value={value} handleChange={handleInputChange} placeholder={placeholder}>
           <p className="mb-2">{label}</p>
         </TextInput>
@@ -51,8 +56,8 @@ const EditProfile = ({ ...props }: EditProfileProps) => {
   });
 
   return (
-    <div className="px-5 pt-3">
-      <ProfileForm handleDeliveryProfile={handleDeliveryProfile} isPending={updatingDeliveryProfile}>
+    <div id="edit_profile">
+      <ProfileForm handleDeliveryProfile={handleDeliveryProfile} isPending={updatingDeliveryProfile} legend="Edit Address" handlePageIndex={handlePageIndex}>
         {profileInputs}
       </ProfileForm>
     </div>

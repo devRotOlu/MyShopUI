@@ -12,15 +12,17 @@ import ProductCard from "../productCard/ProductCard";
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
 import { wishlistType } from "../../types";
+import { userContext } from "../context/UserProvider";
 
 const maxProductPerPage = 20;
 const firstPage = 1;
 const SavedItems = () => {
-  const { wishList, isFetchedWishlist, isLoadingWishlist } = useContext(wishlistContext);
+  const { wishList, isFetchedWishlist, isLoadingWishlist, getWishlistQueryFinished } = useContext(wishlistContext);
+  const { isLoggedIn } = useContext(userContext);
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<wishlistType[]>([]);
 
-  const isEmptyView = isFetchedWishlist && !wishList.length;
+  const isEmptyView = !wishList.length && (getWishlistQueryFinished || !isLoggedIn);
 
   const products = currentProducts.map(({ product }) => {
     const { id } = product;
@@ -50,7 +52,7 @@ const SavedItems = () => {
       {isFetchedWishlist && !isEmptyView && (
         <HomeProductLayout productCards={products}>
           <div className="align-self-end d-flex justify-content-center w-100 my-4">
-            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
+            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage }} />
           </div>
         </HomeProductLayout>
       )}

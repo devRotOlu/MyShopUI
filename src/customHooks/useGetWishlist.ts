@@ -12,6 +12,7 @@ export const useGetWishlist = (setWishList: React.Dispatch<React.SetStateAction<
     data: wishlistData,
     isLoading,
     isSuccess,
+    isFetched,
   } = useQuery({
     queryFn: async () => {
       return await getWishlist(loginData.email);
@@ -33,5 +34,6 @@ export const useGetWishlist = (setWishList: React.Dispatch<React.SetStateAction<
   return {
     isLoadingWishlist: isLoading,
     isFetchedWishlist: isSuccess,
+    getWishlistQueryFinished: isFetched,
   };
 };

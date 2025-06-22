@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
-import throttle from "lodash.throttle";
+import { useNavigate, Link } from "react-router-dom";
 
 import CartItem from "../cartItems/CartItem.tsx";
 import CartTable from "../cartTable/CartTable.tsx";
@@ -14,11 +13,13 @@ import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
 
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
-import { Link } from "react-router-dom";
+import { userContext } from "../context/UserProvider.tsx";
+import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { cart, isFetchingCart, getCartQueryFinished } = useContext(cartContext);
+  const { isLoggedIn } = useContext(userContext);
 
   const checkoutLinkRef = useRef<HTMLDivElement>(null!);
 
@@ -30,24 +31,10 @@ const Cart = () => {
     return <CartCard key={index} item={item} />;
   });
 
-  const isEmptyView = cart.length === 0 && getCartQueryFinished;
+  const isEmptyView = !cart.length && (getCartQueryFinished || !isLoggedIn);
   const showContent = !isFetchingCart && getCartQueryFinished;
 
-  useEffect(() => {
-    const setSize = () => {
-      const height = checkoutLinkRef.current.offsetHeight;
-      document.documentElement.style.setProperty("--checkout_link_height", `${height}px`);
-    };
-    setSize();
-    const handleResize = throttle(() => {
-      setSize();
-    }, 100);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      handleResize.cancel();
-    };
-  }, []);
+  useCalHeightOnResize(checkoutLinkRef.current, "--checkout_link_height");
 
   return (
     <>

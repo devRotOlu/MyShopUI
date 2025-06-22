@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import AddProfile from "../AddProfile";
+import AddProfile from "../addProfile/AddProfile";
 import ModalCloseButton from "../ModalCloseButton";
 
 import { checkoutContext } from "../checkout/Checkout";

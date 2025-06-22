@@ -10,6 +10,7 @@ import SearchbarBrandWrapper from "../searchbarBrandWrapper/SearchbarBrandWrappe
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
+import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -17,6 +18,8 @@ const Navbar = () => {
   const { isLoggedIn, setShowModal } = useContext(userContext);
   const { cartItemsCount } = useContext(cartContext);
   const headerRef = useRef<HTMLHeadElement>(null!);
+
+  useCalHeightOnResize(headerRef.current, "--navbar-height");
 
   useEffect(() => {
     const handlehideSearchbar = () => {
@@ -37,23 +40,6 @@ const Navbar = () => {
       handleResize.cancel();
     };
   }, [hideSearcbar, pathname]);
-
-  useEffect(() => {
-    const updateNavbarHeight = () => {
-      if (headerRef.current) {
-        const height = headerRef.current.offsetHeight;
-        // Set CSS variable on the root element
-        document.documentElement.style.setProperty("--navbar-height", `${height}px`);
-      }
-    };
-    updateNavbarHeight();
-    const handleResize = throttle(() => updateNavbarHeight(), 100);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      handleResize.cancel();
-    };
-  }, []);
 
   return (
     <header className="position-fixed vw-100 top-0" id="navbarWrapper" ref={headerRef}>

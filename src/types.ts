@@ -255,6 +255,11 @@ export type categoryPageLayoutProps = {
   products: ReactNode;
 };
 
+export type productCarouselModalProps = {
+  modalCloseButton: ReactNode;
+  carouselContent: ReactNode;
+};
+
 export type productType = {
   name: string;
   description: string;
@@ -323,6 +328,10 @@ type userAddressType = {
   streetAddress: string;
   city: string;
   state: string;
+};
+
+export type useTokenValidationDataType = {
+  isValidatingToken: boolean;
 };
 
 export type userDataType = baseUserType &
@@ -394,6 +403,7 @@ export type deliveryDataType = baseUserType &
     lga: string;
     directions?: string;
     additionalInformation?: string;
+    isDefaultProfile?: boolean;
   };
 
 export type useCartItemDataType = {
@@ -456,6 +466,12 @@ export type updatedItemType = {
   productId: number;
   quantity: number;
   id: number;
+};
+
+export type profileLayoutProps = {
+  children: ReactNode;
+  heading: string;
+  formBtnWrapRef: React.RefObject<HTMLDivElement>;
 };
 
 export type wishlistType = {
@@ -664,8 +680,11 @@ export type productRatingsProps = {
   styles: string;
 };
 
-export type breadCrumbProps = {
+export type accountBreadCrumbProps = {
   currentLinkLabel: string;
+};
+
+export type breadCrumbProps = accountBreadCrumbProps & {
   handleFilterModal?: () => void;
   children?: ReactNode;
 };
@@ -675,7 +694,7 @@ export type thumbnailProps = {
   name: string;
 };
 
-export type thumbnailWrapProps = {
+export type thumbnailWrapperProps = {
   children: ReactNode;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   index: number;
@@ -805,6 +824,7 @@ export type wishlistContextType = useGetWishlistData &
 export type useGetWishlistData = {
   isLoadingWishlist: boolean;
   isFetchedWishlist: boolean;
+  getWishlistQueryFinished: boolean;
 };
 
 export type emptyViewProps = {
@@ -825,6 +845,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  isValidatingToken: boolean;
   productsFetched: boolean;
   isLoadingProducts: boolean;
   isAuthenticating: boolean;
@@ -918,22 +939,28 @@ export type useUpdateDeliveryProfileDataType = {
 };
 
 export type ProfileFormProps = {
+  handlePageIndex: () => void;
   children: React.ReactNode;
   handleDeliveryProfile: () => void;
   isPending: boolean;
+  legend: string;
 };
 
 export type ProfileWrapperProps = {
   children: ReactNode;
   setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
+  profileHeader: ReactNode;
+  headerText: string;
 };
 
 export type AddProfileProps = {
   addingDeliveryProfile: boolean;
   addDeliveryProfile: (deliveryProfile: deliveryDataType) => void;
+  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
 };
 
 export type EditProfileProps = {
+  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
   profileToEditIndex: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;

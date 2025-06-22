@@ -1,3 +1,7 @@
 #saved_items #skeleton_wrapper {
   padding-top: 50px;
 }
+
+#saved_items {
+  min-height: 100vh;
+}

@@ -1,0 +1,23 @@
+.profile_summary {
+  width: 60%;
+}
+
+.profile_summary .contact_card > div:first-child > p {
+  font-size: 12px;
+}
+
+.profile_summary .edit_delete_btn_wrapper button {
+  background-color: var(--lightest_grey);
+}
+
+@media screen and (max-width: 1000px) {
+  .profile_summary {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile_summary {
+    width: 100%;
+  }
+}

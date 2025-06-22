@@ -4,7 +4,10 @@ import { Link, useLocation, matchPath } from "react-router-dom";
 import throttle from "lodash.throttle";
 
 import { breadCrumbProps } from "../../types";
+import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
 import "./style.css";
+
+const nonFilterUrls = ["/account/delivery-addresses", "/product/:productName"];
 
 const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrumbProps) => {
   const [isWrapped, setIsWrapped] = useState(false);
@@ -12,7 +15,11 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
 
   const { pathname } = useLocation();
 
-  const isProductPage = matchPath("/product/:productName", pathname);
+  const removeFilter = nonFilterUrls.some((url) => {
+    return Boolean(matchPath(url, pathname)) === true;
+  });
+
+  useCalHeightOnResize(divRef.current, "--bread--crumb-nav--area");
 
   useEffect(() => {
     const checkWrapping = () => {
@@ -21,16 +28,8 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
       const isWrapped = items.some((item) => item.offsetTop !== firstItemTop);
       setIsWrapped(isWrapped);
     };
-    const updateNavbarHeight = () => {
-      if (divRef.current) {
-        const height = divRef.current.offsetHeight;
-        document.documentElement.style.setProperty("--bread--crumb-nav--area", `${height}px`);
-      }
-    };
     checkWrapping();
-    updateNavbarHeight();
     const handleResize = throttle(() => {
-      updateNavbarHeight();
       checkWrapping();
     }, 100);
 
@@ -38,7 +37,7 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <div id="breadCrumb" className="bg-white w-100 mb-4">
+    <div id="breadCrumb" className="bg-white w-100 mb-5">
       <div className={`px-lg-5 py-md-5 px-3 py-3 d-flex justify-content-${isWrapped ? "center" : "start"} flex-wrap flex-md-row flex-column`} ref={divRef}>
         <nav className={`flex-grow-1 d-flex gap-2 flex-column align-items-${isWrapped ? "center" : "start"}`}>
           <Link to="/" className="d-md-flex d-none">
@@ -54,7 +53,7 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
         </nav>
         <div className="d-flex justify-content-start">{children}</div>
       </div>
-      {!isProductPage && (
+      {!removeFilter && (
         <div className="w-100 bg-white d-md-none d-block pb-3" id="filter_sort_toggle_wrapper">
           <div className="w-100 mx-3" style={{ height: "5px", backgroundColor: "var(--Light_Grey)" }}></div>
           <div className="d-flex px-5 w-100 py-3">

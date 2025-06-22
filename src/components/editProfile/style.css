@@ -1,0 +1,9 @@
+#edit_profile .name_input {
+  width: 47%;
+}
+
+@media screen and (max-width: 250px) {
+  #edit_profile .name_input {
+    width: 100%;
+  }
+}

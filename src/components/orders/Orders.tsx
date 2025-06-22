@@ -45,6 +45,7 @@ const Orders = () => {
       </PageWrapper>
     );
   }
+  console.log(orders, "orders");
   const activeOrders = orders.map((order, index) => {
     return <Order key={index} order={order} setOrderCosts={setOrderCosts} orderIndex={index} orderCosts={orderCosts} setOrderIndex={setOrderIndex} />;
   });

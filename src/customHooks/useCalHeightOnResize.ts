@@ -1,16 +1,22 @@
 import { useEffect } from "react";
+import throttle from "lodash.throttle";
 
 export const useCalHeightOnResize = (element: HTMLElement, property: string) => {
   useEffect(() => {
+    if (!element) return;
     const updateHeight = () => {
-      if (element) {
-        const height = element.offsetHeight;
-        document.documentElement.style.setProperty(property, `${height}px`);
-      }
+      const height = element.offsetHeight;
+      document.documentElement.style.setProperty(property, `${height}px`);
     };
     updateHeight();
-    window.addEventListener("resize", updateHeight);
-    return () => window.removeEventListener("resize", updateHeight);
+    const handleResize = throttle(() => {
+      updateHeight();
+    }, 100);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      handleResize.cancel();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [element, property]);
 };

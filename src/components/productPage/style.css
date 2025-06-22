@@ -1,15 +1,15 @@
-#productPage #thumbnailWrap {
-  padding: 1px;
-  cursor: pointer;
-  box-sizing: content-box;
-}
-
 #productPage #carousel_holder {
   width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#productPage {
+  min-height: 100vh;
 }
 
 @media screen and (max-width: 767px) {
   #productPage > div {
-    margin-bottom: calc(var(--product_add_cart_btn) + 70px);
+    margin-bottom: calc(var(--product_add_cart_btn) + 48px);
   }
 }

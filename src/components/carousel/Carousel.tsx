@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, MouseEvent } from "react";
 
-import CarouselControls from "./CarouselControls";
+import CarouselControls from "../carouselControls/CarouselControls";
 
 import { carouselProps } from "../../types";
 import "./style.css";
@@ -32,8 +32,8 @@ const Carousel = ({ images, name, activeIndex, setActiveIndex }: carouselProps) 
     }
   }
   return (
-    <div id="carousel" className="d-flex justify-content-center">
-      <div id="carousel" className="position-relative " onMouseEnter={() => setHideControls(false)} onMouseLeave={() => setHideControls(true)}>
+    <div id="carousel" className="d-flex justify-content-center w-100">
+      <div id="carousel" className="position-relative w-100" onMouseEnter={() => setHideControls(false)} onMouseLeave={() => setHideControls(true)}>
         {carouselItems}
         {!hideControls && <CarouselControls handleOnClickNext={handleOnClickNext} handleOnClickPrevious={handleOnClickPrevious} />}
       </div>

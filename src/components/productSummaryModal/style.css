@@ -32,3 +32,9 @@
   color: var(--dark_moderate_violet);
   font-size: 14px;
 }
+
+@media screen and (max-width: 1000px) {
+  #product_summary_modal > div:last-child > div:last-child button {
+    padding: 0.7rem 2rem;
+  }
+}

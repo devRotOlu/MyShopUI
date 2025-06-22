@@ -1,0 +1,9 @@
+#account_bread_crumb a {
+  color: black;
+}
+
+#account_bread_crumb #current_link_label {
+  color: var(--lighter_pink);
+  font-size: 15px;
+  overflow: visible;
+}

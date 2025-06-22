@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import throttle from "lodash.throttle";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
@@ -88,22 +87,6 @@ const Product = ({ product, children, data }: productProps) => {
   };
 
   useEffect(() => {
-    const setProperty = () => {
-      const height = targetRef.current?.parentElement?.offsetHeight;
-      document.documentElement.style.setProperty("--product_add_cart_btn", `${height}px`);
-    };
-    setProperty();
-    const handleResize = throttle(() => {
-      setProperty();
-    }, 100);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      handleResize.cancel();
-    };
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => {
       if (targetRef.current) {
         const rect = targetRef.current.getBoundingClientRect();
@@ -132,14 +115,14 @@ const Product = ({ product, children, data }: productProps) => {
 
   return (
     <>
-      <div id="product" className="px-4 mb-md-5">
+      <div id="product" className="px-sm-4 px-sm-3 px-2 mb-md-5">
         <div className="w-100 d-flex flex-md-row flex-column gap-md-3 gap-0">
-          <div className="d-flex flex-lg-row flex-column gap-4 px-3 pt-md-5 pb-md-5 pt-3 pb-0 bg-white" id="carousel_wrapper">
-            <div>{children}</div>
+          <div className="d-flex flex-lg-row flex-column  px-sm-3 px-2 pt-md-5 pb-md-5 pt-3 pb-0 bg-white gap-4" id="carousel_wrapper">
+            <div className="d-flex align-items-center flex-column">{children}</div>
             <div>
               <div className="border-bottom pb-3 d-flex flex-column gap-3">
                 <div className="border-bottom pb-3" id="product_header_wrapper">
-                  <h2 className="fs-3 text-break">{name}</h2>
+                  <h2 className="fs-md-3 text-break fs-5">{name}</h2>
                   {brand && (
                     <p className="mt-1 text-muted brand">
                       Brand:{" "}
@@ -152,18 +135,18 @@ const Product = ({ product, children, data }: productProps) => {
                     <ProductRatings rating={Math.floor(averageRating)} styles="fs-6" /> <span className="review_count">{reviews.length} Review(s)</span>
                   </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-lg-between justify-content-start gap-5">
+                <div className="d-flex align-items-center justify-content-lg-between justify-content-start gap-xl-5 gap-3 flex-wrap">
                   <p className="fw-bold fs-5">
                     {naira}
                     {unitPrice.toLocaleString()}
                   </p>
                   <div className="d-flex gap-4 align-items-center">
-                    <span className="fs-6">Quantity:</span>
+                    <span>Quantity:</span>
                     <div>{itemToggle}</div>
                   </div>
                 </div>
               </div>
-              <div id="save_item" className="pb-md-0 pb-3 pt-3 d-flex gap-xl-5 gap-lg-3">
+              <div id="save_item" className="pb-md-0 pb-3 pt-3 d-flex gap-xl-5 gap-2 flex-wrap">
                 <div className="py-md-0 py-3">
                   <button ref={targetRef} className="text-light rounded me-md-4 py-3 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
                     Add To Cart
@@ -197,7 +180,7 @@ const Product = ({ product, children, data }: productProps) => {
               <p className="border-bottom py-2 px-3">Seller Information</p>
               <div className="px-3">
                 <div className="border-bottom py-3 d-flex gap-3" id="app_avatar_wrapper">
-                  <p className="d-flex justify-content-center align-items-center text-white">M</p>
+                  <p className="d-flex justify-content-center align-items-center text-white fs-6 fw-bold">M</p>
                   <div>
                     <p className="fw-bold">MyShop</p>
                     <p className="text-muted mt-1">2 years of service</p>

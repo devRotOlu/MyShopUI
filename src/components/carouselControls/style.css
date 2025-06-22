@@ -1,0 +1,23 @@
+#carousel_controls {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#carousel_controls button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--Light_Grey);
+  border: dashed thin grey;
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  #carousel_controls button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}

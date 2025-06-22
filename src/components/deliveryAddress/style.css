@@ -1,9 +1,9 @@
-.profile_summary .contact_card {
-  width: 60%;
+#delivery_page {
+  min-height: 100vh;
 }
 
-.profile_summary .contact_card > div:first-child > p {
-  font-size: 12px;
+#delivery_page #page_content {
+  width: 50%;
 }
 
 #delete_confirmation_dialog {
@@ -21,4 +21,22 @@
 
 #delete_confirmation_dialog > div:last-child > button:last-child {
   background-color: var(--grayish_blue);
+}
+
+@media screen and (max-width: 1200px) {
+  #delivery_page #page_content {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #delivery_page #page_content {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #delivery_page #page_content {
+    width: 100%;
+  }
 }

@@ -48,7 +48,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, isLoginSuccess, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
-  useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
+  const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
 
   const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
@@ -130,6 +130,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        isValidatingToken,
         productsFetched,
         isLoadingProducts,
         isAuthenticating,

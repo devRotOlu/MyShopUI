@@ -16,7 +16,7 @@ const WishlistProvider = ({ children }: ProvidersProp) => {
   const { handleAlert } = useContext(alertContext);
   const [wishList, setWishList] = useState<wishlistType[]>([]);
 
-  const { isLoadingWishlist, isFetchedWishlist } = useGetWishlist(setWishList);
+  const { isLoadingWishlist, isFetchedWishlist, getWishlistQueryFinished } = useGetWishlist(setWishList);
   const { deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem } = useDeleteWishlist();
   const { addItemToWishList, isAddingToWishList, isAddedToWishlist } = useAddToWhishlist();
 
@@ -41,7 +41,7 @@ const WishlistProvider = ({ children }: ProvidersProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeletedWishlistItem]);
 
-  return <wishlistContext.Provider value={{ wishList, setWishList, deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem, addItemToWishList, isAddingToWishList, isAddedToWishlist, isLoadingWishlist, isFetchedWishlist }}>{children}</wishlistContext.Provider>;
+  return <wishlistContext.Provider value={{ getWishlistQueryFinished, wishList, setWishList, deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem, addItemToWishList, isAddingToWishList, isAddedToWishlist, isLoadingWishlist, isFetchedWishlist }}>{children}</wishlistContext.Provider>;
 };
 
 export default WishlistProvider;
