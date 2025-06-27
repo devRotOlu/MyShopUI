@@ -1,0 +1,20 @@
+#product_reviews {
+  font-size: 14px;
+}
+
+#product_reviews .rating_sup {
+  font-size: 4rem;
+}
+
+#product_reviews #reviewer_avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: var(--deep_pink);
+}
+
+#product_reviews #your_review {
+  background-color: var(--dark_moderate_violet);
+  width: fit-content;
+  font-size: 12px;
+}

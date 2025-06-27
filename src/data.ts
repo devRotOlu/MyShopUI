@@ -119,8 +119,6 @@ export const deliveryProfileData: deliveryProfileDataType[] = [
 
 export const userProfileData: userProfileDataType[] = [...baseProfile, { name: "currentPassword", label: "Current Password", placeholder: "" }, { name: "newPassword", label: "New Password", placeholder: "" }];
 
-export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
 export const contacts: { contact: string; channel: string; icon: string }[] = [
   {
     contact: "Email Support",
@@ -181,3 +179,5 @@ export const prices: { label: string; minPrice?: number; maxPrice?: number }[] =
 ];
 
 export const productTabLabels = ["Description", "Reviews"];
+
+export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

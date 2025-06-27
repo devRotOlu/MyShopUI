@@ -8,7 +8,7 @@ import ProductTab from "./ProductTab";
 import ProductRatings from "../productRating/ProductRatings";
 import ProductSummaryModal from "../productSummaryModal/ProductSummaryModal";
 import ProductDescription from "../productDescription/ProductDescription";
-import ProductReviews from "./ProductReviews";
+import ProductReviews from "../productReviews/ProductReviews";
 import ProductAccordion from "../productAccordion/ProductAccordion";
 
 import { productProps } from "../../types";
@@ -21,13 +21,14 @@ import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
 import { userContext } from "../context/UserProvider";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities";
+import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
 
 const Product = ({ product, children, data }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const targetRef = useRef<HTMLButtonElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null!);
   const { handleAddCartItem } = useContext(cartContext);
   const { handleAlert } = useContext(alertContext);
   const {
@@ -89,7 +90,7 @@ const Product = ({ product, children, data }: productProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (targetRef.current) {
-        const rect = targetRef.current.getBoundingClientRect();
+        const rect = targetRef.current.firstElementChild!.getBoundingClientRect();
         const triggerVisible = rect.top <= 0;
 
         setShowModal(triggerVisible);
@@ -105,6 +106,8 @@ const Product = ({ product, children, data }: productProps) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useCalHeightOnResize(targetRef.current, "--product_add_cart_btn");
 
   const itemToggle = (
     <div>
@@ -147,8 +150,8 @@ const Product = ({ product, children, data }: productProps) => {
                 </div>
               </div>
               <div id="save_item" className="pb-md-0 pb-3 pt-3 d-flex gap-xl-5 gap-2 flex-wrap">
-                <div className="py-md-0 py-3">
-                  <button ref={targetRef} className="text-light rounded me-md-4 py-3 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
+                <div className="py-md-0 py-3" ref={targetRef}>
+                  <button className="text-light rounded me-md-4 py-3 " onClick={() => handleAddCartItem(product, quantityToAdd)}>
                     Add To Cart
                   </button>
                 </div>

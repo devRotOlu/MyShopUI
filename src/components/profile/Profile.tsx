@@ -85,7 +85,7 @@ const Profile = () => {
             <AccountTab />
             <div className="bg-white pt-3 pb-5 rounded" id="page_content">
               <div className="pb-sm-2 pb-3 px-md-4 px-3 ">
-                <h2 className="fs-6 text-muted">Account Information</h2>
+                <h3 className="fs-6 text-muted">Account Information</h3>
               </div>
               <p className="d-sm-none d-block fw-bold">Edit Profile</p>
               <div className="px-md-4 pt-3 px-sm-3 px-4">

@@ -378,17 +378,23 @@ export type orderListProps = {
 export type productReviewProps = {
   productId: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  orderId: number;
+  reviewedProducts: number[];
 };
 
 export type orderHistoryProps = {
-  setReviewId: Dispatch<SetStateAction<number>>;
-  order: orderType;
-  setOrderIndex: Dispatch<SetStateAction<number>>;
-  orderCost: number;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  props: {
+    reviewedProducts: number[];
+    setReviewId: Dispatch<SetStateAction<number>>;
+    order: orderType;
+    setOrderIndex: Dispatch<SetStateAction<number>>;
+    orderCost: number;
+    setShowModal: Dispatch<SetStateAction<boolean>>;
+  };
 };
 
 export type orderType = {
+  id: number;
   orderId: string;
   orderDate: string;
   deliveryProfile: deliveryDataType;
@@ -428,6 +434,7 @@ export type encryptDataType = {
 };
 
 export type addReviewType = {
+  orderId: number;
   reviewerId: string;
   productId: number;
   review: string;

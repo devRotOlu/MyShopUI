@@ -9,16 +9,27 @@ import Loader from "../Loader.tsx";
 import { productReviewProps } from "../../types";
 import "./style.css";
 import { userContext } from "../context/UserProvider";
-import { addReview } from "../../helperFunctions/dataFetchFunctions";
+import { addReview, editReview } from "../../helperFunctions/dataFetchFunctions";
 
-const ProductReview = ({ productId, setShowModal }: productReviewProps) => {
+const ProductReview = ({ productId, setShowModal, orderId, reviewedProducts }: productReviewProps) => {
   const {
     loginData: { id: reviewerId },
   } = useContext(userContext);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { mutate, isPending, isSuccess, isError } = useMutation({
+  const {
+    mutate: addProductReview,
+    isPending: isAddingReview,
+    isSuccess: isAddedReview,
+  } = useMutation({
     mutationFn: addReview,
+  });
+  const {
+    mutate: editProductReview,
+    isPending: isEditingReview,
+    isSuccess: isEditedReview,
+  } = useMutation({
+    mutationFn: editReview,
   });
   const ratings = Array(5)
     .fill(0)
@@ -32,21 +43,29 @@ const ProductReview = ({ productId, setShowModal }: productReviewProps) => {
     });
   const handleProductReview = (event: FormEvent) => {
     event.preventDefault();
-    mutate({
+    const reviewDTO = {
       reviewerId,
       productId,
       rating,
       review,
-    });
+      orderId,
+    };
+    if (isReviewed) {
+      editProductReview(reviewDTO);
+    } else {
+      addProductReview(reviewDTO);
+    }
   };
 
   const handleWriteReview = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(event.currentTarget.value);
   };
 
-  if (isSuccess) {
+  if (isAddedReview || isEditedReview) {
     setShowModal(false);
   }
+
+  const isReviewed = reviewedProducts.some((_id) => productId === _id);
   return (
     <div className="bg-white py-4 px-5" id="product_review">
       <h2 className="text-center fs-5">Write a review</h2>
@@ -60,8 +79,8 @@ const ProductReview = ({ productId, setShowModal }: productReviewProps) => {
               <textarea value={review} rows={5} cols={30} className="p-2" placeholder="Share your thoughts about this product." onChange={handleWriteReview}></textarea>
             </label>
             <div className="position-relative w-100">
-              <FormButton value="Submit Review" styles={{ backgroundColor: "var( --dark_Green)" }} />
-              {isPending && (
+              <FormButton value={isReviewed ? "Edit Review" : "Submit Review"} styles={{ backgroundColor: "var( --dark_Green)" }} />
+              {(isAddingReview || isEditingReview) && (
                 <ComponentOverlay>
                   <div className="d-flex h-100 justify-content-center align-items-center">
                     <Loader size="spinner-border-sm" color="white" />

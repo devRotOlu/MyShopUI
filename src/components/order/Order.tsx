@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import Thumbnail from "../thumbnail/Thumbnail";
 
 import { orderProps } from "../../types";
+import { naira, months } from "../../data";
 import "./style.css";
 
 const Order = ({ ...props }: orderProps) => {
@@ -50,32 +51,41 @@ const Order = ({ ...props }: orderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const totalCost = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
+  const dateArray = orderDate.split("-");
+  const month = months[Number(dateArray[1])];
+  const day = dateArray[2];
+  const year = dateArray[0];
+  const totalCost: number = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
   return (
-    <div className="py-3 order border-bottom">
-      <div className="d-flex justify-content-between pb-2">
-        <p className="fw-bold">
-          Order Date: {orderDate} | <span className="text-danger">{orderStatus}</span>
-        </p>
-        <button className="py-2 px-4  fw-light view_details_btn" onClick={() => setOrderIndex(orderIndex)}>
-          View Details
-        </button>
-      </div>
-      <div className="d-flex justify-content-between">
-        <div>
-          <p className="text-muted">
-            Total: {totalCost} <br />
-            Order No: {orderId}
+    <div className="order bg-white px-sm-0 px-3">
+      <div className="py-3">
+        <div className="d-flex justify-content-between pb-2 align-items-center gap-2">
+          <p className="fw-bold">
+            Order Date: {day} {month} {year} | <span className="text-danger">{orderStatus}</span>
           </p>
+          <button className="py-sm-2 px-sm-3 px-2 py-1  fw-light view_details_btn flex-shrink-0 align-self-start" onClick={() => setOrderIndex(orderIndex)}>
+            View Details
+          </button>
         </div>
-        <div>
-          <p className="text-end fw-bold">Delivery Address:</p>
-          <p className="text-muted">
-            {streetAddress}, {city}
-          </p>
+        <div className="d-flex justify-content-between gap-4 pt-sm-0 pt-2 pb-sm-0 pb-2">
+          <div>
+            <p className="text-muted">
+              <span className="fw-bold">Total</span>: {naira}
+              {totalCost?.toLocaleString()}
+            </p>
+            <p className="text-muted">
+              <span className="fw-bold">Order No</span>: {orderId}
+            </p>
+          </div>
+          <div className="d-sm-block d-none ">
+            <p className="text-end fw-bold">Delivery Address:</p>
+            <p className="text-muted text-end">
+              {streetAddress}, {city}
+            </p>
+          </div>
         </div>
+        <div className="d-flex gap-2 mt-3">{itemThumbnails}</div>
       </div>
-      <div className="d-flex gap-2 mt-3">{itemThumbnails}</div>
     </div>
   );
 };

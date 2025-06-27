@@ -50,30 +50,6 @@
   color: grey;
 }
 
-#rating_stats {
-  width: 300px;
-  color: var(--cerebral_grey);
-  font-size: 13px;
-}
-
-#rating_stats > div > div:nth-child(2) {
-  height: 8px;
-  background-color: var(--cerebral_grey);
-}
-
-#product_reviews #reviewer_avatar {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-color: var(--deep_pink);
-}
-
-#product_reviews #your_review {
-  background-color: var(--dark_moderate_violet);
-  width: fit-content;
-  font-size: 12px;
-}
-
 #product > div:first-child > div:last-child {
   font-size: 14px;
 }

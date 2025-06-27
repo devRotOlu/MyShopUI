@@ -46,10 +46,6 @@ export const getProduct = async (productId: number) => {
   return await myShopAxios.get(`Product/get-product?productId=${productId}`);
 };
 
-export const addReview = async (data: addReviewType) => {
-  return await myShopAxios.post("Product/add-review", data);
-};
-
 export const getCategoryProducts = async (categoryId: number, min?: number, max?: number, rating?: number, sortOrder?: string) => {
   return await myShopAxios.get(`Product/category_products?categoryId=${categoryId}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}${sortOrder ? `&sortOrder=${sortOrder}` : ""}${sortOrder ? "&sortBy=UnitPrice" : ""}`);
 };
@@ -60,6 +56,20 @@ export const searchProduct = async (searchTerm: string) => {
 
 export const getBrandProducts = async (brand: string, min?: number, max?: number, rating?: number, sortOrder?: string) => {
   return await myShopAxios.get(`Product/brand_products?brand=${brand}${rating ? `&rating=${rating}` : ""}${min ? `&min=${min}` : ""}${max ? `&max=${max}` : ""}${sortOrder ? "&sortBy=UnitPrice" : ""}${sortOrder ? `&sortOrder=${sortOrder}` : ""}`);
+};
+
+// review controller functions
+
+export const addReview = async (data: addReviewType) => {
+  return await myShopAxios.post("Review/add-review", data);
+};
+
+export const editReview = async (data: addReviewType) => {
+  return await myShopAxios.post("Review/edit-review", data);
+};
+
+export const getProductsReviewed = async (orderId: number) => {
+  return await myShopAxios.get(`Review/list-reviewed-products?orderId=${orderId}`);
 };
 
 // account controller functions

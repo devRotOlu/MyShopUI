@@ -1,3 +1,21 @@
-#orders > div {
-  margin-top: 130px;
+#orders #page_content {
+  width: 50%;
+}
+
+@media screen and (max-width: 1000px) {
+  #orders #page_content {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #orders #page_content {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #orders #page_content {
+    width: 100%;
+  }
 }
