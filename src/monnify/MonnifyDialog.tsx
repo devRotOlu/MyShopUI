@@ -2,18 +2,21 @@ import React, { useContext, useEffect } from "react";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 
 import Loader from "../components/Loader.tsx";
-import CardPayment from "../components/cardPayment/CardPayment.tsx";
+import MonnifyCardPaymentOption from "../components/monnifyCardPaymentOption/MonnifyCardPaymentOption.tsx";
 import DialogHeader from "../components/dialogHeader/DialogHeader.tsx";
 import CheckoutError from "../components/checkoutError/CheckoutError.tsx";
-import BankTransfer from "./BankTransfer.tsx";
-import PaymentOptions from "../components/MonnifyPaymentOptions.tsx";
+import MonnifyBankTransferOption from "../components/MonnifyBankTransferOption.tsx";
+import MonnifyPaymentOptions from "../components/MonnifyPaymentOptions.tsx";
 
 import { checkoutContext } from "../components/checkout/Checkout.tsx";
 import "./style.css";
 import { monnifyDialogProps } from "../types.ts";
+import { cartContext } from "../components/context/CartProvider.tsx";
+import { naira } from "../data.ts";
 
 const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps) => {
   const { initializePayment, transactionRef, monnifyOption, setMonnifyOption, isInitializingPayment } = useContext(checkoutContext);
+  const { cartItemsTotalPrice } = useContext(cartContext);
 
   useEffect(() => {
     initializePayment();
@@ -29,14 +32,20 @@ const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps
   }
 
   return (
-    <div id="monnify" className="bg-white">
+    <div id="monnify" className="bg-white d-flex flex-column">
       <DialogHeader>
-        <p className="font-italic">{transactionRef}</p>
+        <div className="d-flex justify-content-between">
+          <p className="font-italic flex-grow-1 text-sm-start text-center">{transactionRef}</p>
+          <p className="fw-bold d-sm-block d-none">
+            {naira}
+            {Math.ceil(cartItemsTotalPrice).toLocaleString()}
+          </p>
+        </div>
       </DialogHeader>
-      <div>
-        {!isMonnifyError && monnifyOption === "card" && <CardPayment />}
-        {!isMonnifyError && monnifyOption === "" && <PaymentOptions />}
-        {!isMonnifyError && monnifyOption === "transfer" && <BankTransfer />}
+      <div className="flex-grow-1">
+        {!isMonnifyError && monnifyOption === "card" && <MonnifyCardPaymentOption />}
+        {!isMonnifyError && monnifyOption === "" && <MonnifyPaymentOptions />}
+        {!isMonnifyError && monnifyOption === "transfer" && <MonnifyBankTransferOption />}
         {isMonnifyError && <CheckoutError />}
       </div>
     </div>

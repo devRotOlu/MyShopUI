@@ -1,8 +1,9 @@
 import React, { useContext, MouseEvent } from "react";
+import { Icon } from "@iconify/react";
 
 import { profileCardProps } from "../../types";
-import { Icon } from "@iconify/react";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
+import "./style.css";
 
 const ProfileCard = ({ ...props }: profileCardProps) => {
   const { profileIndex, handleCardClick, selectedIndex, setSelectedIndex } = props;

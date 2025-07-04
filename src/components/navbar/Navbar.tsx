@@ -19,7 +19,7 @@ const Navbar = () => {
   const { cartItemsCount } = useContext(cartContext);
   const headerRef = useRef<HTMLHeadElement>(null!);
 
-  useCalHeightOnResize(headerRef.current, "--navbar-height");
+  useCalHeightOnResize(headerRef, "--navbar-height");
 
   useEffect(() => {
     const handlehideSearchbar = () => {

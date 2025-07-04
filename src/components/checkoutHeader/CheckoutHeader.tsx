@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Brand from "../brand/Brand";
-
 import "./style.css";
+import logo from "../../assests/logo_new_2.png";
 
 const CheckoutHeader = () => {
   return (
@@ -11,10 +10,10 @@ const CheckoutHeader = () => {
       <div className="w-100 position-relative">
         <Link to="/" className="position-absolute left-0">
           <div id="brand">
-            <Brand />
+            <img src={logo} alt="App Brand" style={{ width: "100%" }} />
           </div>
         </Link>
-        <h1 className="fs-2 text-center">Checkout</h1>
+        <h1 className="text-center">Checkout</h1>
       </div>
     </header>
   );

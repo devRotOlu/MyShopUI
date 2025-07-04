@@ -4,7 +4,7 @@ import Cards, { Focused } from "react-credit-cards-2";
 import FormComp from "../formComp/FormComp.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import TextInput from "../textInput/TextInput.tsx";
-import PaymentTitle from "../../monnify/PaymentTitle.tsx";
+import MonnifyPaymentOptionTitle from "../MonnifyPaymentOptionTitle.tsx";
 import ResetPayOptionBtn from "../../monnify/ResetPayOptionBtn.tsx";
 import Loader from "../Loader.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
@@ -122,10 +122,10 @@ const CardPayment = () => {
   const { number, cvv, pin, expiry } = card;
   return (
     <>
-      <PaymentTitle title="Card">
+      <MonnifyPaymentOptionTitle title="Card">
         <ResetPayOptionBtn />
-      </PaymentTitle>
-      <div className="d-flex gap-2 pt-3 pb-5 px-3" id="card_payment">
+      </MonnifyPaymentOptionTitle>
+      <div className="d-flex flex-sm-row flex-column pt-3 pb-5 px-3" id="card_payment">
         <Cards number={number} cvc={cvv} name={`${firstName} ${lastName}`} expiry={expiry} focused={focus} />
         <FormComp handleFormSubmit={handleCardRequest} styles={{ width: "100%" }}>
           <TextInput placeholder="Card Number" name="number" type="text" value={number} handleChange={handleCardChange} handleFocus={handleInputFocus} />

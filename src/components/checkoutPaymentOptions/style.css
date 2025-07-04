@@ -3,14 +3,10 @@
   width: 50px;
 }
 
-#checkout_payment_options > div:first-child {
-  padding: 0 2.1rem;
-}
-
 #checkout_payment_options input[type="radio"] {
   opacity: 0;
   cursor: pointer;
-  width: 24px;
+  width: 19px;
 }
 
 #checkout_payment_options .custom_radio {
@@ -28,8 +24,8 @@
 }
 
 #checkout_payment_options .custom_radio > span {
-  height: 20px;
-  width: 20px;
+  height: 17px;
+  width: 17px;
   background-color: white;
   border-radius: 50%;
   transition: 0.2s;
@@ -49,4 +45,11 @@
 
 #checkout_payment_options .pay_option_name + div > p {
   font-size: 14px;
+}
+
+@media screen and (max-width: 400px) {
+  #checkout_payment_options img {
+    height: 30px;
+    width: 30px;
+  }
 }

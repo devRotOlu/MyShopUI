@@ -3,6 +3,10 @@
   border-radius: 5px;
 }
 
+#product_review .star_icon {
+  font-size: 35px;
+}
+
 #product_review > div:last-child {
   width: fit-content;
 }
@@ -12,4 +16,19 @@
   border: solid thin var(--lighter_pink);
   background-color: var(--lighter_pink);
   border-radius: 5px;
+}
+
+@media screen and (max-width: 450px) {
+  #product_review {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #product_review {
+    font-size: 14px;
+  }
+  #product_review .star_icon {
+    font-size: 30px;
+  }
 }

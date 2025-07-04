@@ -19,7 +19,7 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
     return Boolean(matchPath(url, pathname)) === true;
   });
 
-  useCalHeightOnResize(divRef.current, "--bread--crumb-nav--area");
+  useCalHeightOnResize(divRef, "--bread--crumb-nav--area");
 
   useEffect(() => {
     const checkWrapping = () => {

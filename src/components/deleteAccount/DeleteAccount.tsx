@@ -14,18 +14,18 @@ const DeleteAccount = () => {
 
   return (
     <PageWrapper pageId="delete_account">
-      <div className="d-flex justify-content-center gap-3 py-5">
+      <div className="d-flex justify-content-center gap-3 py-sm-5 w-100">
         <AccountTab />
-        <div className="w-50 bg-white d-flex align-items-center justify-content-center rounded" id="content_wrapper">
-          <div className="d-flex flex-column gap-5">
+        <div className="bg-white d-flex align-items-sm-center justify-content-center rounded pb-sm-0 pb-5" id="content_wrapper">
+          <div className="d-flex flex-column gap-5 pt-sm-0 pt-3">
             <div>
-              <h2 className="fs-6 mb-0">Delete Account</h2>
-              <p className="fw-bold">Please Read Carefully</p>
-              <p>You are about to request that we permanently delete your data and close your myShop account. All goods and services that you have access to through your account will stop being offered as soon as it is deleted.</p>
+              <h2 className="fs-5">Delete Account</h2>
+              <p className="fw-bold mt-sm-3 mt-5 mb-3 fs-5 ps-sm-0 ps-2">Please Read Carefully</p>
+              <p className="ps-sm-0 ps-2">You are about to request that we permanently delete your data and close your myShop account. All goods and services that you have access to through your account will stop being offered as soon as it is deleted.</p>
             </div>
-            <div className="d-flex flex-column gap-5">
-              <label className="d-flex gap-1 align-items-start">
-                <input id="signTerms" type="checkbox" onChange={() => setSignTerms((prevTerm) => !prevTerm)} />
+            <div className="d-flex flex-column gap-5 ps-sm-0 ps-2">
+              <label className="d-flex gap-1 align-items-start flex-shrink">
+                <input className="flex-shrink-0" id="signTerms" type="checkbox" onChange={() => setSignTerms((prevTerm) => !prevTerm)} />
                 <p>Yes, please erase my myShop account and all of my personal data permanently.</p>
               </label>
               <div className="position-relative">

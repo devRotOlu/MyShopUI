@@ -8,6 +8,11 @@
   background-color: white;
 }
 
+/* #order_list #orders_wrapper > div {
+  min-height: 600px;
+  box-sizing: border-box;
+} */
+
 @media screen and (max-width: 575px) {
   #order_list #orders_wrapper {
     background-color: var(--Light_Grey);

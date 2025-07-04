@@ -2,7 +2,7 @@ import React from "react";
 
 import { paymentTitleProp } from "../types";
 
-const PaymentTitle = ({ title, children }: paymentTitleProp) => {
+const MonnifyPaymentOptionTitle = ({ title, children }: paymentTitleProp) => {
   return (
     <div className="bg-dark position-relative px-2 d-flex flex-column justify-content-center" style={{ height: "35px" }}>
       {children && <div className="d-flex flex-column justify-content-center align-items-start">{children}</div>}
@@ -15,4 +15,4 @@ const PaymentTitle = ({ title, children }: paymentTitleProp) => {
   );
 };
 
-export default PaymentTitle;
+export default MonnifyPaymentOptionTitle;

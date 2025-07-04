@@ -1,18 +1,18 @@
 import React, { useContext, ChangeEvent, FormEvent, useEffect } from "react";
 
-import FormComp from "../components/formComp/FormComp.tsx";
-import TextInput from "../components/textInput/TextInput.tsx";
-import FormButton from "../components/formButton/FormButton.tsx";
-import ComponentOverlay from "../components/ComponentOverlay.tsx.tsx";
-import TransferDetails from "../components/transferDetails/TransferDetails.tsx";
-import TransferDetailsTable from "../components/transferDetailsTable/TransferDetailsTable.tsx";
-import PaymentTitle from "./PaymentTitle.tsx";
-import ResetPayOptionBtn from "./ResetPayOptionBtn.tsx";
+import FormComp from "./formComp/FormComp.tsx";
+import TextInput from "./textInput/TextInput.tsx";
+import FormButton from "./formButton/FormButton.tsx";
+import ComponentOverlay from "./ComponentOverlay.tsx.tsx";
+import TransferDetails from "./transferDetails/TransferDetails.tsx";
+import TransferDetailsTable from "./transferDetailsTable/TransferDetailsTable.tsx";
+import MonnifyPaymentOptionTitle from "./MonnifyPaymentOptionTitle.tsx";
+import ResetPayOptionBtn from "../monnify/ResetPayOptionBtn.tsx";
+import Loader from "./Loader.tsx";
 
-import { checkoutContext } from "../components/checkout/Checkout.tsx";
-import Loader from "../components/Loader.tsx";
+import { checkoutContext } from "./checkout/Checkout.tsx";
 
-const BankTransfer = () => {
+const MonnifyBankTransferOption = () => {
   const { bankCode, setBankCode, sendTransferDetails, isFetchingTransferDetails, detailsSent, isTransactionSuccessful } = useContext(checkoutContext);
 
   useEffect(() => {
@@ -39,9 +39,9 @@ const BankTransfer = () => {
 
   return (
     <>
-      <PaymentTitle title="TRANSFER">
+      <MonnifyPaymentOptionTitle title="TRANSFER">
         <ResetPayOptionBtn />
-      </PaymentTitle>
+      </MonnifyPaymentOptionTitle>
       <div className="pt-3 pb-5 px-3">
         <FormComp handleFormSubmit={handleDetailsSubmit} styles={{ backgroundColor: "inherit" }}>
           <>
@@ -53,7 +53,7 @@ const BankTransfer = () => {
               {isFetchingTransferDetails && (
                 <ComponentOverlay>
                   <div className="d-flex align-items-center justify-content-center h-100">
-                    <Loader color="white" size="small" />
+                    <Loader color="white" size="spinner-border-sm" />
                   </div>
                 </ComponentOverlay>
               )}
@@ -65,4 +65,4 @@ const BankTransfer = () => {
   );
 };
 
-export default BankTransfer;
+export default MonnifyBankTransferOption;

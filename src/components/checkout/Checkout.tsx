@@ -8,7 +8,7 @@ import CheckoutPaymentOption from "../checkoutPaymentOption/CheckoutPaymentOptio
 import PageWrapper from "../PageWrapper.tsx";
 import Modal from "../modal/Modal.tsx";
 import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
-import AddressDialog from "../AddressDialog.tsx";
+import AddressDialog from "../addressDialog/AddressDialog.tsx";
 import PayStackDialog from "../payStack/PayStackDialog.tsx";
 import CheckoutPaymentOptions from "../checkoutPaymentOptions/CheckoutPaymentOptions.tsx";
 import CheckoutError from "../checkoutError/CheckoutError.tsx";
@@ -21,6 +21,7 @@ import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile.t
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import OrderDetails from "../orderDetails/OrderDetails.tsx";
 import { useVerifyPayStackPayment } from "../../customHooks/useVerifyPayStackPayment.ts";
+import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
 
 export const checkoutContext = React.createContext({} as checkoutContextType);
 
@@ -49,6 +50,8 @@ const Checkout = () => {
 
   const isInitialProfileRef = useRef(false);
   const isPayStackErrorDisplayedRef = useRef(false);
+  const checkoutBtnWrapperRef = useRef<HTMLDivElement>(null!);
+  useCalHeightOnResize(checkoutBtnWrapperRef, "--checkout_btn_wrap");
 
   useEffect(() => {
     const isError = isCardPaymentError || isBankTransferError || isPaymentError || isMonnifyInitializationError;
@@ -66,7 +69,11 @@ const Checkout = () => {
 
   useEffect(() => {
     if (deliveryProfiles.length && !isInitialProfileRef.current) {
-      setProfileIndex(0);
+      const profileIndex = deliveryProfiles.findIndex((profile) => {
+        const { isDefaultProfile } = profile;
+        return isDefaultProfile;
+      });
+      setProfileIndex(profileIndex);
       isInitialProfileRef.current = true;
     }
   }, [deliveryProfiles, deliveryProfiles.length]);
@@ -80,9 +87,9 @@ const Checkout = () => {
   if (loadingDeliveryProfile) {
     return (
       <PageWrapper pageId="checkout">
-        <div className="align-self-stretch w-100 bg-white">
+        <div className="align-self-stretch w-100 bg-white h-100 flex-grow-1">
           <CheckoutHeader />
-          <div className="pt-4 px-4">
+          <div className="pt-4 px-4 h-100">
             <SkeletonPageLoader count={2} />
           </div>
         </div>
@@ -103,10 +110,10 @@ const Checkout = () => {
       <>
         <CheckoutHeader />
         <PageWrapper pageId="checkout">
-          <div className="d-flex gap-3 w-100 py-5 px-4">
-            <section className="d-flex flex-column gap-3 flex-grow-1" id="payment_option">
+          <div className="d-flex flex-md-row flex-column gap-md-3 w-100 py-5 px-sm-4 ">
+            <section className="d-flex flex-column gap-3 flex-grow-1 " id="payment_option">
               <DeliveryOption />
-              <CheckoutPaymentOption payOption={payOption}>
+              <CheckoutPaymentOption ref={checkoutBtnWrapperRef} payOption={payOption}>
                 <CheckoutPaymentOptions setPayOption={setPayOption} />
               </CheckoutPaymentOption>
             </section>
@@ -120,7 +127,6 @@ const Checkout = () => {
         <Modal styles={styles}>
           {payOption === "monnify" && <MonnifyDialog isMonnifyError={isMonnifyError} setIsMonnifyError={setIsMonnifyError} />}
           {!displayedPayStackError && payOption === "" && <AddressDialog />}
-          {/* {!displayedPayStackError && payOption === "" && <Sidebar/>} */}
           {payOption === "payStack" && <PayStackDialog />}
           {displayedPayStackError && (
             <div onClick={() => (isPayStackErrorDisplayedRef.current = true)}>

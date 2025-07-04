@@ -6,7 +6,8 @@ table#transfer_details_table tr {
   font-weight: bold;
 }
 
-table#transfer_details_table th,
-div#transfer_details table tr {
-  padding: 5px 0;
+@media screen and (max-width: 320px) {
+  table#transfer_details_table {
+    word-break: break-all;
+  }
 }

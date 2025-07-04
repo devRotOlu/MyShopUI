@@ -5,17 +5,17 @@ import FormButton from "../formButton/FormButton.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
 
-import { ProfileFormProps } from "../../types.ts";
+import { profileFormProps } from "../../types.ts";
 import "./style.css";
 
-const ProfileForm = ({ handleDeliveryProfile, isPending, children, legend, handlePageIndex }: ProfileFormProps) => {
+const ProfileForm = ({ handleDeliveryProfile, isPending, children, legend, handlePageIndex }: profileFormProps) => {
   const handleProfile = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleDeliveryProfile();
   };
 
   return (
-    <div className="px-md-5 px-3  pt-3" id="profile_form">
+    <div className="px-md-5 px-3 pt-3" id="profile_form">
       <FormComp handleFormSubmit={handleProfile}>
         <fieldset>
           <legend className="d-sm-none d-block fw-bold border-bottom pb-2 text-center mb-3 px-5" style={{ fontSize: "14px" }}>

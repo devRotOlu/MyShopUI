@@ -36,10 +36,12 @@ const OrderDetails = () => {
   });
   return (
     <div id="order__details">
-      <div className="bg-white">
-        <div className="d-flex pt-2 border-bottom justify-content-between align-items-center">
-          <h2 className="fs-6">ORDER DETAILS</h2>
-          <Link className="py-2 px-3 d-flex align-items-center justify-content-center" to="/cart/overview">
+      <div className="bg-white ps-md-0 ps-2">
+        <div className="d-flex pt-2 border-bottom justify-content-between align-items-center gap-2">
+          <p className="fs-6" id="order_details_header">
+            ORDER DETAILS
+          </p>
+          <Link className="py-2 px-3 d-flex align-items-center align-self-start justify-content-center flex-shrink-0" to="/cart/overview">
             Modify Cart
           </Link>
         </div>

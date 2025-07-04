@@ -1,7 +1,7 @@
 import React from "react";
 
 const CancelledOrders = () => {
-  return <div>CancelledOrders</div>;
+  return <div className="h-100 bg-white">CancelledOrders</div>;
 };
 
 export default CancelledOrders;

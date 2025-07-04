@@ -6,15 +6,18 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../Loader";
 import CheckoutError from "../checkoutError/CheckoutError";
 import DialogHeader from "../dialogHeader/DialogHeader";
-import PaymentTitle from "../../monnify/PaymentTitle";
+import PaymentTitle from "../MonnifyPaymentOptionTitle";
 
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 import { userContext } from "../context/UserProvider";
 import { initializePayStackPayment } from "../../helperFunctions/dataFetchFunctions";
+import { cartContext } from "../context/CartProvider";
+import { naira } from "../../data";
 
 const PayStackDialog = () => {
   const { profileIndex, orderInstruction } = useContext(checkoutContext);
+  const { cartItemsTotalPrice } = useContext(cartContext);
 
   const {
     loginData: { email },
@@ -49,12 +52,18 @@ const PayStackDialog = () => {
   }, []);
 
   return (
-    <div className="w-100 h-10 d-flex justify-content-center align-items-center" id="paystack_dialog">
+    <div className="w-100 h-100  d-flex justify-content-center align-items-center" id="paystack_dialog">
       {isFetching && <Loader color="white" />}
       {!isFetching && (
         <div id="payment_wrapper" className="bg-white">
           <DialogHeader>
-            <p className="font-italic">{reference}</p>
+            <div className="d-flex justify-content-between">
+              <p className="font-italic flex-grow-1">{reference}</p>
+              <p className="fw-bold">
+                {naira}
+                {Math.ceil(cartItemsTotalPrice).toLocaleString()}
+              </p>
+            </div>
           </DialogHeader>
           {isError && <CheckoutError />}
           {!isError && (

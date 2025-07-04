@@ -1,8 +1,8 @@
-#checkout_payment_option > div:first-child {
+#checkout_payment_option > div {
   padding: 0 2.1rem;
 }
 
-#checkout_payment_option > div:first-child {
+#checkout_payment_option > div {
   border: solid thin white;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -16,4 +16,27 @@
 
 #checkout_payment_option #payment_btn_wrapper {
   padding: 0 2.1rem;
+}
+
+@media screen and (max-width: 576px) {
+  #checkout_payment_option > div {
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #checkout_payment_option #payment_btn_wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+    background-color: white;
+    padding: 12px 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #checkout_payment_option > div {
+    padding: 0 0.7rem;
+  }
 }

@@ -7,7 +7,7 @@ import { months, naira } from "../../data";
 import "./style.css";
 
 const OrderHistory = ({ props }: orderHistoryProps) => {
-  const { order, setOrderIndex, orderCost, setShowModal, setReviewId, reviewedProducts } = props;
+  const { order, setOrderIndex, orderCost, setShowModal, setReviewId, orderReviews } = props;
   const {
     orderDate,
     orderId,
@@ -15,18 +15,6 @@ const OrderHistory = ({ props }: orderHistoryProps) => {
     deliveryProfile: { streetAddress, city, lastName, firstName, phoneNumber },
     orderedItems,
   } = order;
-
-  // if (isLoading && !isFetched && !isLoadingReviewedProducts) {
-  //   setIsLoadingReviewedProducts(true);
-  // } else if (!isLoading && isLoadingReviewedProducts) {
-  //   setIsLoadingReviewedProducts(false);
-  // }
-
-  // useEffect(() => {
-  //   const reviewedProducts = data?.data;
-  //   setReviewedProducts(reviewedProducts);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [data?.data, isSuccess]);
 
   const dateArray = orderDate.split("-");
   const date = dateArray[2];
@@ -45,7 +33,7 @@ const OrderHistory = ({ props }: orderHistoryProps) => {
     } = item;
     const image = images[0];
     const itemCost = orderedQuantity * unitPrice;
-    const isReviewed = reviewedProducts?.some((_id) => id === _id);
+    const isReviewed = orderReviews?.some(({ productId }) => id === productId);
     return (
       <tr key={index} className="order_item">
         <td className="py-2 px-sm-3 px-2 w-100">

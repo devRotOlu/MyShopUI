@@ -15,15 +15,6 @@ const Order = ({ ...props }: orderProps) => {
     orderStatus,
     deliveryProfile: { streetAddress, city },
   } = order;
-  // {
-  //   orderedQuantity,
-  //   cartItem: {
-  //     id,
-  //     product: { name, images },
-  //   },
-  // }
-
-  console.log(orderedItems, "orderedItems");
 
   const itemThumbnails = orderedItems.map((item, index) => {
     const {

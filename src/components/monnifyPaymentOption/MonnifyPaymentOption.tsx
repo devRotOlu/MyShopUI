@@ -19,12 +19,12 @@ const MonnifyPaymentOption = ({ payOption }: monnifyPaymentOptionProp) => {
   };
   return (
     <li className="rounded monnify_payment_option">
-      <button onClick={handlePaymentOption} className="d-flex justify-content-between align-items-center bg-white py-3 px-3 w-100 rounded">
+      <button onClick={handlePaymentOption} className="d-flex justify-content-between align-items-center bg-white py-3 px-3 w-100 rounded gap-3">
         <span className="d-flex flex-column align-items-start">
           <span className="fw-bold">{payMethod}</span>
-          <span>{message}</span>
+          <span className="text-start fw-light">{message}</span>
         </span>
-        <span>
+        <span className="flex-shrink-0">
           <Icon icon={icon} style={{ fontSize: "2.5rem" }} />
         </span>
       </button>

@@ -4,11 +4,11 @@ import TextInput from "../textInput/TextInput.tsx";
 import ProfileForm from "../profileForm/ProfileForm.tsx";
 
 import { deliveryProfileData } from "../../data.ts";
-import { deliveryDataType, EditProfileProps } from "../../types.ts";
+import { deliveryDataType, editProfileProps } from "../../types.ts";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";
 
-const EditProfile = ({ ...props }: EditProfileProps) => {
+const EditProfile = ({ ...props }: editProfileProps) => {
   const { profileToEditIndex, updateDeliveryProfile, updatingDeliveryProfile, setPageIndex } = props;
 
   const { deliveryProfiles } = useContext(deliveryContext);

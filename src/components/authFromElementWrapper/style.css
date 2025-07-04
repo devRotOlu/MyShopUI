@@ -1,3 +1,9 @@
 #authFormElementsWrap {
   padding: 20px 30px;
 }
+
+@media screen and (max-width: 400px) {
+  #authFormElementsWrap {
+    padding: 20px 20px;
+  }
+}

@@ -379,18 +379,24 @@ export type productReviewProps = {
   productId: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   orderId: number;
-  reviewedProducts: number[];
+  orderReviews: orderReviewType[];
 };
 
 export type orderHistoryProps = {
   props: {
-    reviewedProducts: number[];
+    orderReviews: orderReviewType[];
     setReviewId: Dispatch<SetStateAction<number>>;
     order: orderType;
     setOrderIndex: Dispatch<SetStateAction<number>>;
     orderCost: number;
     setShowModal: Dispatch<SetStateAction<boolean>>;
   };
+};
+
+export type orderReviewType = {
+  productId: number;
+  rating: number;
+  review: string;
 };
 
 export type orderType = {
@@ -400,6 +406,10 @@ export type orderType = {
   deliveryProfile: deliveryDataType;
   orderStatus: string;
   orderedItems: itemsOrderedType[];
+};
+
+export type addProfileFormElementProps = {
+  setDeliveryProfile: (value: React.SetStateAction<deliveryDataType>) => void;
 };
 
 export type deliveryDataType = baseUserType &
@@ -643,7 +653,7 @@ type componentOverlayOwnProps<E extends React.ElementType> = {
 export type componentOverlayProps<E extends React.ElementType> = componentOverlayOwnProps<E> & Omit<React.ComponentProps<E>, keyof componentOverlayOwnProps<E>>;
 
 export type dialogHeaderProps = {
-  children?: React.ReactNode;
+  children: ReactNode;
 };
 
 export type skeletonProps = {
@@ -945,7 +955,7 @@ export type useUpdateDeliveryProfileDataType = {
   updatingDeliveryProfile: boolean;
 };
 
-export type ProfileFormProps = {
+export type profileFormProps = {
   handlePageIndex: () => void;
   children: React.ReactNode;
   handleDeliveryProfile: () => void;
@@ -960,13 +970,13 @@ export type ProfileWrapperProps = {
   headerText: string;
 };
 
-export type AddProfileProps = {
+export type addProfileProps = {
+  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
   addingDeliveryProfile: boolean;
   addDeliveryProfile: (deliveryProfile: deliveryDataType) => void;
-  setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
 };
 
-export type EditProfileProps = {
+export type editProfileProps = {
   setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
   profileToEditIndex: number;
   updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;

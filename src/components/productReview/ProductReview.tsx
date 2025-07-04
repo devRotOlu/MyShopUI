@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
+import React, { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useMutation } from "@tanstack/react-query";
 
@@ -11,12 +11,19 @@ import "./style.css";
 import { userContext } from "../context/UserProvider";
 import { addReview, editReview } from "../../helperFunctions/dataFetchFunctions";
 
-const ProductReview = ({ productId, setShowModal, orderId, reviewedProducts }: productReviewProps) => {
+const ProductReview = ({ productId, setShowModal, orderId, orderReviews }: productReviewProps) => {
+  const reviewIndex = useMemo(() => {
+    return orderReviews.findIndex(({ productId: _productId }) => productId === _productId);
+  }, [orderReviews, productId]);
   const {
     loginData: { id: reviewerId },
   } = useContext(userContext);
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(() => {
+    return reviewIndex > -1 ? orderReviews[reviewIndex].rating : 0;
+  });
+  const [review, setReview] = useState(() => {
+    return reviewIndex > -1 ? orderReviews[reviewIndex].review : "";
+  });
   const {
     mutate: addProductReview,
     isPending: isAddingReview,
@@ -36,8 +43,8 @@ const ProductReview = ({ productId, setShowModal, orderId, reviewedProducts }: p
     .map((_, index) => {
       const isMarked = rating >= index + 1;
       return (
-        <button key={index} onClick={() => setRating(index + 1)}>
-          <Icon color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} icon="material-symbols-light:star" fontSize={35} />
+        <button className="star_icon" key={index} onClick={() => setRating(index + 1)}>
+          <Icon color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} icon="material-symbols-light:star" />
         </button>
       );
     });
@@ -50,7 +57,7 @@ const ProductReview = ({ productId, setShowModal, orderId, reviewedProducts }: p
       review,
       orderId,
     };
-    if (isReviewed) {
+    if (reviewIndex > -1) {
       editProductReview(reviewDTO);
     } else {
       addProductReview(reviewDTO);
@@ -65,21 +72,20 @@ const ProductReview = ({ productId, setShowModal, orderId, reviewedProducts }: p
     setShowModal(false);
   }
 
-  const isReviewed = reviewedProducts.some((_id) => productId === _id);
   return (
-    <div className="bg-white py-4 px-5" id="product_review">
+    <div className="bg-white py-4 px-md-5 px-3" id="product_review">
       <h2 className="text-center fs-5">Write a review</h2>
-      <p className="text-center">How would you rate this product?</p>
+      <p className="text-center mt-2">How would you rate this product?</p>
       <div className="d-flex gap-1 justify-content-center">{ratings}</div>
       <div className="d-flex justify-content-center gap-2 w-100">
-        <div>
-          <form className="d-flex flex-column align-items-center gap-2" onSubmit={handleProductReview}>
-            <label>
+        <div className="w-100">
+          <form className="d-flex flex-column align-items-center gap-3 mt-2 w-100" onSubmit={handleProductReview}>
+            <label className="w-100">
               <p className="text-center mb-1"> Add a review</p>
-              <textarea value={review} rows={5} cols={30} className="p-2" placeholder="Share your thoughts about this product." onChange={handleWriteReview}></textarea>
+              <textarea value={review} className="p-2 w-100" placeholder="Share your thoughts about this product." onChange={handleWriteReview} style={{ resize: "none", height: "150px" }}></textarea>
             </label>
-            <div className="position-relative w-100">
-              <FormButton value={isReviewed ? "Edit Review" : "Submit Review"} styles={{ backgroundColor: "var( --dark_Green)" }} />
+            <div className="position-relative w-100  mb-1">
+              <FormButton value="Submit Review" styles={{ backgroundColor: "var( --dark_Green)" }} />
               {(isAddingReview || isEditingReview) && (
                 <ComponentOverlay>
                   <div className="d-flex h-100 justify-content-center align-items-center">

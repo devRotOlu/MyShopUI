@@ -1,8 +1,13 @@
-div#modal_login_link a {
+#login_modal {
+  width: 450px;
+  min-height: 100vh;
+}
+
+#login_modal div#modal_login_link a {
   color: var(--deep_pink);
 }
 
-div#modal_login_link {
+#login_modal div#modal_login_link {
   position: absolute;
   bottom: 0;
   padding: 10px;
@@ -10,19 +15,25 @@ div#modal_login_link {
   width: 100%;
 }
 
-div#modal_login {
+/* #login_modal div#modal_login {
   width: fit-content;
   padding: 0 20px;
   min-height: 100vh;
-}
+} */
 
-button#modal_cancel_btn {
+#login_modal button#modal_cancel_btn {
   height: fit-content;
   border: solid thin var(--Light_Grey);
   border-radius: 5px;
 }
 
-div#modal_login_header {
+#login_modal div#modal_login_header {
   box-shadow: -1px 0 10px -7px;
   padding: 0 30px;
+}
+
+@media screen and (max-width: 575px) {
+  #login_modal {
+    width: 100%;
+  }
 }

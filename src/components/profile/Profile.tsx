@@ -21,7 +21,7 @@ const Profile = () => {
 
   const formBtnRef = useRef<HTMLDivElement>(null!);
 
-  useCalHeightOnResize(formBtnRef.current, "--profile-btn-wrap");
+  useCalHeightOnResize(formBtnRef, "--profile-btn-wrap");
 
   const [profile, setProfile] = useState<profileDataType>({
     firstName: "",

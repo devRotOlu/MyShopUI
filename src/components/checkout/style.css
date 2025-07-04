@@ -3,32 +3,6 @@
   padding: 10px 0.5rem;
 }
 
-#change_address {
-  background-color: var(--lightest_grey);
-  border: solid thin var(--lightest_grey);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-#change_address > div > div:first-child {
-  width: 55%;
-}
-
-#change_address > div {
-  font-size: 12px;
-}
-
-#change_address > div > div:last-child {
-  width: 42%;
-  background-color: var(--lavender_blush);
-  height: fit-content;
-  color: var(--lighter_pink);
-}
-
-#address_dialog {
-  width: 450px;
-}
-
 #profile_list {
   overflow-y: auto;
 }
@@ -43,10 +17,22 @@
   font-size: 13px;
 }
 
-.profileCard {
-  border-radius: 5px;
-}
-
 #checkout > div > section:last-child {
   width: 32%;
+}
+
+@media screen and (max-width: 1000px) {
+  #checkout > div > section:last-child {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #checkout > div > section:last-child {
+    width: 100%;
+  }
+
+  #checkout {
+    padding-bottom: calc(var(--checkout_btn_wrap) + 40px);
+  }
 }

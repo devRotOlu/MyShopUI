@@ -1,0 +1,9 @@
+.name_input {
+  width: 47%;
+}
+
+@media screen and (max-width: 250px) {
+  .name_input {
+    width: 100%;
+  }
+}

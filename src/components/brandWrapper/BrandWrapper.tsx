@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import Brand from "../brand/Brand";
-
 import { appContext } from "../context/AppProvider";
 import { cartContext } from "../context/CartProvider";
+import logo from "../../assests/logo_new.png";
 import "./style.css";
 
 const BrandWrapper = () => {
@@ -41,7 +40,7 @@ const BrandWrapper = () => {
         </div>
         <Link to="/">
           <div className="brand">
-            <Brand />
+            <img src={logo} alt="App Brand" style={{ width: "100%" }} />
           </div>
         </Link>
       </div>

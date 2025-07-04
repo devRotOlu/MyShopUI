@@ -39,28 +39,30 @@ const LoginOnModal = () => {
   }, [location.pathname]);
 
   return (
-    <FormComp handleFormSubmit={handleLoginFormSubmit} styles={{ minHeight: "100vh", position: "relative", width: "400px", backgroundColor: "white" }}>
-      <div className="d-flex justify-content-between py-2 " id="modal_login_header">
-        <h2>Login</h2>
-        <ModalCloseButton setShowModal={setShowModal} />
-      </div>
-      <AuthFormElementWrapper>
-        {formElements}
-        <div className="position-relative">
-          <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
-          {isAuthenticating && (
-            <ComponentOverlay>
-              <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                <Loader color="white" size="spinner-border-sm" />
-              </div>
-            </ComponentOverlay>
-          )}
+    <div id="login_modal">
+      <FormComp handleFormSubmit={handleLoginFormSubmit} styles={{ height: "100%", position: "relative", width: "100%", backgroundColor: "white" }}>
+        <div className="d-flex justify-content-between py-2 align-items-center " id="modal_login_header">
+          <h2>Login</h2>
+          <ModalCloseButton setShowModal={setShowModal} />
         </div>
-      </AuthFormElementWrapper>
-      <div className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
-        <Link to="/account/signup">Don’t have an account? Sign Up</Link>
-      </div>
-    </FormComp>
+        <AuthFormElementWrapper>
+          {formElements}
+          <div className="position-relative">
+            <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
+            {isAuthenticating && (
+              <ComponentOverlay>
+                <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                  <Loader color="white" size="spinner-border-sm" />
+                </div>
+              </ComponentOverlay>
+            )}
+          </div>
+        </AuthFormElementWrapper>
+        <div className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
+          <Link to="/account/signup">Don’t have an account? Sign Up</Link>
+        </div>
+      </FormComp>
+    </div>
   );
 };
 

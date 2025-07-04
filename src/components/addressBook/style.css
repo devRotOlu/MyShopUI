@@ -1,5 +1,7 @@
 #address_book {
   overflow-y: auto;
+  padding-bottom: calc(var(--useAddress_btn_wrapper) + 40px);
+  padding-top: var(--address_book_header);
 }
 
 #address_book > div:first-child {
@@ -8,8 +10,6 @@
 
 #address_book > div:last-child {
   box-shadow: 1px 0 10px -7px;
-  position: absolute;
-  bottom: 0;
 }
 
 #address_book > div:last-child button {

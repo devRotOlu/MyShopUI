@@ -1,33 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, forwardRef } from "react";
 import { Icon } from "@iconify/react";
 
 import { checkoutPaymentOptionProps } from "../../types";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 
-const CheckoutPaymentOption = ({ children, payOption }: checkoutPaymentOptionProps) => {
+const CheckoutPaymentOption = forwardRef<HTMLDivElement, checkoutPaymentOptionProps>(({ children, payOption }, ref) => {
   const { profileIndex, setShowModal } = useContext(checkoutContext);
 
   const iconColor = profileIndex >= 0 ? "var( --light_Green)" : "var(--darker_Grey)";
 
   return (
-    <div id="checkout_payment_option">
-      <div className="py-2 bg-white">
-        <h2 className="fs-6">
+    <div id="checkout_payment_option" className="">
+      <div className="py-2 bg-white border-bottom">
+        <h2 className="fs-6 m-0 p-0 d-flex align-items-center">
           <Icon icon="pixel:check-circle-solid" className="fs-4" color={iconColor} />
           <span className="ms-2">2. Payment Options</span>
         </h2>
       </div>
-      <div className="bg-white">
-        {profileIndex >= 0 && children}
-        <div className="pb-4" id="payment_btn_wrapper">
-          <button onClick={() => setShowModal(true)} disabled={payOption === ""} className="py-3 w-100 text-light" id="payment_btn" style={{ backgroundColor: payOption === "" ? "grey" : "var(--deep_pink)" }}>
-            Continue to Payment
-          </button>
+      {profileIndex >= 0 && (
+        <div className="bg-white">
+          {children}
+          <div className="pb-md-4" ref={ref} id="payment_btn_wrapper">
+            <button onClick={() => setShowModal(true)} disabled={payOption === ""} className="py-3 w-100 text-light" id="payment_btn" style={{ backgroundColor: payOption === "" ? "grey" : "var(--deep_pink)" }}>
+              Continue to Payment
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
-};
+});
 
 export default CheckoutPaymentOption;

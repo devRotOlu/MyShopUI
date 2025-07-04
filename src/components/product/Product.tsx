@@ -107,7 +107,7 @@ const Product = ({ product, children, data }: productProps) => {
     };
   }, []);
 
-  useCalHeightOnResize(targetRef.current, "--product_add_cart_btn");
+  useCalHeightOnResize(targetRef, "--product_add_cart_btn");
 
   const itemToggle = (
     <div>

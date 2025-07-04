@@ -4,6 +4,10 @@
   word-break: break-all;
 }
 
+#order__details #order_details_header {
+  font-weight: bold;
+}
+
 #order__details a {
   color: var(--lighter_pink);
   background-color: var(--lightest_grey);
@@ -25,4 +29,24 @@
 #order__details > div:first-child > div,
 #order__details > div:last-child {
   padding: 0 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  #order__details #order_details_header {
+    font-weight: 100;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #order__details > div:first-child > div,
+  #order__details > div:last-child {
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  #order__details > div:first-child > div,
+  #order__details > div:last-child {
+    padding: 0 0.7rem;
+  }
 }

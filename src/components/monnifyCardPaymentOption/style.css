@@ -1,0 +1,12 @@
+#card_payment {
+  gap: 20px;
+}
+
+@media screen and (max-width: 400px) {
+  #card_payment .rccs {
+    width: 100% !important;
+  }
+  #card_payment .rccs__card {
+    width: 100% !important;
+  }
+}

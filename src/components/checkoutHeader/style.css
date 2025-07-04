@@ -5,3 +5,16 @@
 #checkout_header #brand {
   width: 120px;
 }
+
+#checkout_header h1 {
+  font-size: 28px;
+}
+
+@media screen and (max-width: 576px) {
+  #checkout_header #brand {
+    width: 70px;
+  }
+  #checkout_header h1 {
+    font-size: 16px;
+  }
+}

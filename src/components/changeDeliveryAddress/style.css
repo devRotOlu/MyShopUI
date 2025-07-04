@@ -1,0 +1,27 @@
+#change_address {
+  background-color: var(--lightest_grey);
+  border: solid thin var(--lightest_grey);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#change_address > div > div:first-child {
+  width: 55%;
+}
+
+#change_address > div {
+  font-size: 12px;
+}
+
+#change_address > div > div:last-child {
+  width: 42%;
+  background-color: var(--lavender_blush);
+  height: fit-content;
+  color: var(--lighter_pink);
+}
+
+@media screen and (max-width: 576px) {
+  #change_address > div > div:last-child {
+    width: 70%;
+  }
+}

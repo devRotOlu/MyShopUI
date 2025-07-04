@@ -2,6 +2,16 @@
   width: 400px;
 }
 
-#auth_wrapper #brand {
+.auth_page #brand {
   width: 200px;
+}
+
+@media screen and (max-width: 450px) {
+  #auth_wrapper {
+    width: 100%;
+  }
+
+  .auth_page #brand {
+    width: 140px;
+  }
 }

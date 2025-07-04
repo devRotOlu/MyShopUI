@@ -1,14 +1,14 @@
-#delete_account p {
+/* #delete_account p {
   font-size: 15px;
-}
+} */
 
-#delete_account #content_wrapper {
+/* #delete_account #content_wrapper {
   padding: 0 7rem;
-}
+} */
 
 #delete_account #signTerms {
   appearance: none;
-  width: 25px;
+  width: 20px;
   height: 20px;
   border: 1px solid grey;
   border-radius: 4px;
@@ -29,4 +29,51 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#delete_account #content_wrapper {
+  width: 50%;
+}
+
+#delete_account #content_wrapper > div {
+  width: 500px;
+}
+
+@media screen and (max-width: 1100px) {
+  #delete_account #content_wrapper {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #delete_account #content_wrapper > div {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #delete_account #content_wrapper > div {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #delete_account #content_wrapper > div {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #delete_account #content_wrapper > div {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #delete_account > div:last-child {
+    height: 100vh;
+  }
+  #delete_account #content_wrapper {
+    width: 100%;
+  }
 }

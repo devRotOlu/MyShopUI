@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent } from "react";
 
-import ActiveOrders from "../ActiveOrders";
 import CancelledOrders from "../CancelledOrders";
 
 import { orderListProps } from "../../types";
@@ -24,7 +23,7 @@ const OrderList = ({ orders, children }: orderListProps) => {
         <h3 className="fs-6 text-muted mx-3 mb-0 pt-3 pb-2 border-bottom">My Orders</h3>
       </div>
       <div className="bg-white pb-sm-0 pb-3">
-        <div className="border-bottom pt-3 pb-2 d-flex gap-3 mx-3 mb-sm-0 justify-content-between">
+        <div className="border-bottom pt-3 pb-2 d-flex gap-3 mx-3 mb-sm-0 justify-content-md-start justify-content-between">
           <button onClick={handleActiveOrders} className="order_toggle_btn px-1" style={{ borderBottom: showActiveOrders ? "solid thin var(--lighter_pink)" : "", color: showActiveOrders ? "var(--lighter_pink)" : "" }}>
             ONGOING/ DELIVERED ({orders.length})
           </button>
@@ -33,9 +32,13 @@ const OrderList = ({ orders, children }: orderListProps) => {
           </button>
         </div>
       </div>
-      <div className="pt-sm-3 pt-0  pb-5" id="orders_wrapper">
+      <div className="pt-sm-3 pt-0 pb-5" id="orders_wrapper">
         {showActiveOrders && <div className="d-flex flex-column gap-sm-0 gap-2">{children}</div>}
-        {!showActiveOrders && <CancelledOrders />}
+        {!showActiveOrders && (
+          <div>
+            <CancelledOrders />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,9 +11,9 @@ import Modal from "../modal/Modal";
 import ProductReview from "../productReview/ProductReview";
 import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
 
-import { getOrders, getProductsReviewed } from "../../helperFunctions/dataFetchFunctions";
+import { getOrders, getOrderReviews } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
-import { orderType } from "../../types";
+import { orderType, orderReviewType } from "../../types";
 import "./style.css";
 
 const Orders = () => {
@@ -22,8 +22,7 @@ const Orders = () => {
   const [orderIndex, setOrderIndex] = useState(-1);
   const [showModal, setShowModal] = useState(false);
   const [reviewId, setReviewId] = useState(0);
-  // const [reviewedProducts, setReviewedProducts] = useState<number[]>([]);
-  // const [isLoadingReviewedProducts, setIsLoadingReviewedProducts] = useState(false);
+
   const {
     loginData: { id },
   } = useContext(userContext);
@@ -38,13 +37,13 @@ const Orders = () => {
   });
   const orderId = orders?.[orderIndex]?.id;
   const {
-    isLoading: isLoadingReviewedProducts,
+    isLoading: isLoadingorderReviews,
     data: productReviewedData,
     isSuccess: getProductReviewQueryIsSuccess,
   } = useQuery({
-    queryKey: ["reviewed-products", orderId],
+    queryKey: ["order-reviews", orderId],
     queryFn: () => {
-      return getProductsReviewed(orderId);
+      return getOrderReviews(orderId);
     },
     refetchOnWindowFocus: false,
     enabled: !!orderId,
@@ -55,7 +54,7 @@ const Orders = () => {
       setOrders([..._data]);
     }
   }, [_orders?.data, getOrderQueryIsSuccess]);
-  if (isLoadingOrders || isLoadingReviewedProducts) {
+  if (isLoadingOrders || isLoadingorderReviews) {
     return (
       <PageWrapper pageId="orders">
         <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
@@ -71,7 +70,7 @@ const Orders = () => {
   const displayOrderHistory = orderIndex >= 0;
   const key = `${orderIndex}`;
   const orderCost = orderCosts[key as keyof typeof orderCosts];
-  const reviewedProducts = getProductReviewQueryIsSuccess ? productReviewedData.data : [];
+  const orderReviews: orderReviewType[] = getProductReviewQueryIsSuccess ? productReviewedData.data : [];
   return (
     <>
       <PageWrapper pageId="orders">
@@ -82,13 +81,13 @@ const Orders = () => {
           <AccountTab />
           <div id="page_content">
             {!displayOrderHistory && <OrderList orders={orders}>{activeOrders}</OrderList>}
-            {displayOrderHistory && <OrderHistory props={{ order: orders[orderIndex], setOrderIndex, orderCost, setShowModal, setReviewId, reviewedProducts }} />}
+            {displayOrderHistory && <OrderHistory props={{ order: orders[orderIndex], setOrderIndex, orderCost, setShowModal, setReviewId, orderReviews }} />}
           </div>
         </div>
       </PageWrapper>
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <ProductReview productId={reviewId} setShowModal={setShowModal} orderId={orders[orderIndex].id} reviewedProducts={reviewedProducts} />
+          <ProductReview productId={reviewId} setShowModal={setShowModal} orderId={orders[orderIndex].id} orderReviews={orderReviews} />
         </Modal>
       )}
     </>
