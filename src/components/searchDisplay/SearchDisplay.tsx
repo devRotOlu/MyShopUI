@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import SearchProducts from "../searchProducts/SearchProducts";
 import SearchBrands from "../searchBrands/SearchBrands";
-import SearchCategories from "../searchCategories/SearchCategories";
 
 import "./style.css";
 import { searchDisplayProps } from "../../types";

@@ -44,8 +44,6 @@ const ProductPage = ({ productName }: productPageProps) => {
 
   const [productQuery, wishlistQuery] = results;
 
-  const isPageLoading = results.every((query) => query.isLoading);
-
   if (results.some((query) => query.isLoading)) {
     return (
       <PageWrapper pageId="productPage">

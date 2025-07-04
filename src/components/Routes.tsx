@@ -18,7 +18,7 @@ import DeleteAccount from "./deleteAccount/DeleteAccount.tsx";
 import SavedItems from "./savedItems/SavedItems.tsx";
 import CategoryPageWrapper from "./categoryPageWrapper/CategoryPageWrapper.tsx";
 import ProductPageWrapper from "./ProductPageWrapper.tsx";
-import SearchPage from "./searchPage/SearchPage.tsx";
+//import SearchPage from "./searchPage/SearchPage.tsx";
 import BrandPageWrapper from "./BrandPageWrapper.tsx";
 import ResetPassword from "./resetPassword/ResetPassword.tsx";
 
