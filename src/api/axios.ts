@@ -9,7 +9,7 @@ let isRefreshing: boolean = false;
 let failedRequests: failedRequestType[] = [];
 
 export const myShopAxios = axios.create({
-  baseURL: "https://myshopapi-ggcb.onrender.com",
+  baseURL: "https://myshopapi-ggcb.onrender.com/",
   headers: {
     "Content-Type": "application/json",
     "X-Client-Type": "web",
