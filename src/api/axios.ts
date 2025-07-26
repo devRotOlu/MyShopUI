@@ -8,9 +8,10 @@ axios.defaults.withCredentials = true;
 let isRefreshing: boolean = false;
 let failedRequests: failedRequestType[] = [];
 
+console.log(process.env.NODE_ENV, "env");
+
 export const myShopAxios = axios.create({
-  
-  baseURL: "https://myshopapi-ggcb.onrender.com/api/",
+  baseURL: process.env.NODE_ENV === "development" ? "https://localhost:44378/api/" : "https://myshopapi-ggcb.onrender.com/api/",
   headers: {
     "Content-Type": "application/json",
     "X-Client-Type": "web",

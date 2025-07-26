@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import AuthPageWrapper from "../authPageWrapper/AuthPageWrapper.tsx";
 import AuthFormTitle from "../AuthFormTitle.tsx";
@@ -18,13 +18,26 @@ import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
 
 const LoginPage = () => {
-  const { isLoginError, loginInputValues, handleLoginInputChange, handleLoginFormSubmit, isJustLoggedIn, isAuthenticating } = useContext(userContext);
+  const { isLoginError, loginInputValues, handleLoginInputChange, handleLoginFormSubmit, isJustLoggedIn, isAuthenticating, confirmEmail } = useContext(userContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   if (isJustLoggedIn) {
     navigate("/");
   }
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const userId = query.get("id");
+    const token = query.get("token");
+    if (userId && token) {
+      confirmEmail({ userId, token });
+      setTimeout(() => {
+        navigate("/account/login", { replace: true });
+      }, 1000);
+    }
+  }, [confirmEmail, location.search, navigate]);
 
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }, index) => {
     return (

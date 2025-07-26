@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 import LoginOnModal from "../loginOnModal/LoginOnModal";
 import Alert from "../alert/Alert";
@@ -13,6 +14,7 @@ import { alertContext } from "./AlertProvider";
 import { useLogout } from "../../customHooks/useLogout";
 import { useDeleteAccount } from "../../customHooks/useDeleteAccount";
 import { useTokenValidation } from "../../customHooks/useTokenValidation";
+import { useConfirmEmail } from "../../customHooks/useConfirmEmail";
 
 export const userContext = React.createContext({} as userContextType);
 
@@ -30,6 +32,7 @@ const initialDeliveryProfile = {
 };
 
 const UserProvider = ({ children }: ProvidersProp) => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
   const [loginData, setLoginData] = useState<userDataType>({
     id: "",
@@ -49,6 +52,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
+  const { isEmailConfirmed, confirmEmail, isEmailConfirmedFailed } = useConfirmEmail();
 
   const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
@@ -127,9 +131,31 @@ const UserProvider = ({ children }: ProvidersProp) => {
     }
   }, [handleAlert, isLoggedIn, isOldSession, loginTime]);
 
+  useEffect(() => {
+    if (isEmailConfirmed) {
+      const alertDialog = <Alert styles={{ backgroundColor: `var(--light_Green)` }} alertTitle="Email confirmation" alertMessage="Email confirmation Successful. Login to proceed." />;
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  }, [handleAlert, isEmailConfirmed]);
+
+  useEffect(() => {
+    if (isEmailConfirmedFailed) {
+      navigate("/", { replace: true });
+      const alertDialog = <Alert alertTitle="Cart Error" alertMessage="Error occured. Email verification failed." styles={{ backgroundColor: `var(--light_red)` }} />;
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  }, [handleAlert, isEmailConfirmedFailed, navigate]);
+
   return (
     <userContext.Provider
       value={{
+        confirmEmail,
         isValidatingToken,
         productsFetched,
         isLoadingProducts,

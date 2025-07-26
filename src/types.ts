@@ -334,6 +334,12 @@ export type useTokenValidationDataType = {
   isValidatingToken: boolean;
 };
 
+export type useConfirmEmailDataType = {
+  confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
+  isEmailConfirmed: boolean;
+  isEmailConfirmedFailed: boolean;
+};
+
 export type userDataType = baseUserType &
   userAddressType & {
     id: string;
@@ -554,6 +560,11 @@ export type cardType = {
 type cardDetailsType = {
   transactionReference: string;
   card: { number: string; expiryMonth: string; expiryYear: string; pin: string; cvv: string };
+};
+
+export type confirmEmailDTO = {
+  userId: string;
+  token: string;
 };
 
 export type sendCardDetailsType = {
@@ -862,6 +873,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
   isValidatingToken: boolean;
   productsFetched: boolean;
   isLoadingProducts: boolean;

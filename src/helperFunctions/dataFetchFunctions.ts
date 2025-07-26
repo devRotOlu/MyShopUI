@@ -1,5 +1,5 @@
 import { myShopAxios } from "../api/axios.ts";
-import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType, sendCardDetailsType } from "../types.ts";
+import { addedItemType, updatedItemType, loginStateType, addWishlistType, modifyUserType, deliveryDataType, addReviewType, transferStatusType, paystackVerificationDTO, resetPasswordDataType, sendCardDetailsType, confirmEmailDTO } from "../types.ts";
 import { toBase64 } from "./utilityFunctions.ts";
 
 // cryprto controller functions
@@ -116,6 +116,11 @@ export const deleteDeliveryProfile = async (profileId: number) => {
 
 export const deleteAccount = async () => {
   return await myShopAxios.delete("Account/delete_account");
+};
+
+export const confirmEmail = async (dto: confirmEmailDTO) => {
+  const { userId, token } = dto;
+  return await myShopAxios.post(`Account/confirm-email?uid=${userId}&token=${token}`);
 };
 
 // wishlist controller functions
