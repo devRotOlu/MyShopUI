@@ -29,7 +29,7 @@ const CategoryList = () => {
     let link = name.replace(regex, "-");
     link = link.replace(/-+/g, "-").toLowerCase() + "-" + id;
     return (
-      <li key={id} className="w-md-auto w-sm-100 h-md-100 flex-shrink-0">
+      <li key={id} className="w-md-auto w-sm-100 h-100 flex-shrink-0">
         <Link className="h-100 border-top-md-0 py-md-0 py-3 d-flex align-items-md-center justify-content-md-center px-md-4 category_link" to={`/category/${link}`}>
           {name}
         </Link>

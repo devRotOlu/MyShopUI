@@ -41,6 +41,12 @@ const CartProvider = ({ children }: ProvidersProp) => {
 
   const prevCartRef = useRef(cart);
 
+  useEffect(() => {
+    if (isLoggedIn === false && cart.length) {
+      setCart([]);
+    }
+  }, [cart, isLoggedIn]);
+
   const { count: cartItemsCount, totalPrice: cartItemsTotalPrice } = useMemo(() => {
     var count = 0;
     var totalPrice = 0;

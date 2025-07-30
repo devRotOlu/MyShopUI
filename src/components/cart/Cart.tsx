@@ -13,13 +13,11 @@ import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
 
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
-import { userContext } from "../context/UserProvider.tsx";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { cart, isFetchingCart, getCartQueryFinished } = useContext(cartContext);
-  const { isLoggedIn } = useContext(userContext);
 
   const checkoutLinkRef = useRef<HTMLDivElement>(null!);
 
@@ -31,8 +29,10 @@ const Cart = () => {
     return <CartCard key={index} item={item} />;
   });
 
-  const isEmptyView = !cart.length && (getCartQueryFinished || !isLoggedIn);
-  const showContent = !isFetchingCart && getCartQueryFinished;
+  const isEmptyView = !cart.length && getCartQueryFinished && !isFetchingCart;
+  const showContent = !isFetchingCart && getCartQueryFinished && cart.length;
+
+  console.log(cart);
 
   useCalHeightOnResize(checkoutLinkRef, "--checkout_link_height");
 
@@ -55,7 +55,7 @@ const Cart = () => {
             </div>
           </EmptyView>
         )}
-        {!isEmptyView && showContent && (
+        {showContent && (
           <div className="w-100 mb-md-5" id="cart_main_content">
             <CartBreadCrumb />
             <div className="px-sm-3 px-2 ">

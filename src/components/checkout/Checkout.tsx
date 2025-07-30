@@ -64,8 +64,7 @@ const Checkout = () => {
     if (payStackReference && deliveryProfiles.length) {
       verifyPayStackPayment();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payStackReference, deliveryProfiles.length]);
+  }, [payStackReference, deliveryProfiles, verifyPayStackPayment]);
 
   useEffect(() => {
     if (deliveryProfiles.length && !isInitialProfileRef.current) {
@@ -79,9 +78,8 @@ const Checkout = () => {
   }, [deliveryProfiles, deliveryProfiles.length]);
 
   if ((isSentCardDetails && cardDetailsSent) || (isLoadedStatus && isTransactionSuccessful) || isPaystackPaymentSuccess) {
-    const orderId = payStackOrderId || monnifyOrderId;
-    const data = { checkoutId: orderId };
-    navigate(`/checkout/successful/${orderId}`, { state: data, replace: true });
+    const checkoutId = payStackOrderId || monnifyOrderId;
+    navigate(`/checkout/successful/${checkoutId}`, { state: { checkoutId }, replace: true });
   }
 
   if (loadingDeliveryProfile) {

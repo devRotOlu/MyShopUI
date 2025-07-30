@@ -12,17 +12,16 @@ import ProductCard from "../productCard/ProductCard";
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
 import { wishlistType } from "../../types";
-import { userContext } from "../context/UserProvider";
 
 const maxProductPerPage = 20;
 const firstPage = 1;
 const SavedItems = () => {
   const { wishList, isFetchedWishlist, isLoadingWishlist, getWishlistQueryFinished } = useContext(wishlistContext);
-  const { isLoggedIn } = useContext(userContext);
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<wishlistType[]>([]);
 
-  const isEmptyView = !wishList.length && (getWishlistQueryFinished || !isLoggedIn);
+  const isEmptyView = !wishList.length && getWishlistQueryFinished && !isLoadingWishlist;
+  const showContent = !isLoadingWishlist && getWishlistQueryFinished && wishList.length;
 
   const products = currentProducts.map(({ product }) => {
     const { id } = product;
@@ -39,7 +38,7 @@ const SavedItems = () => {
           </div>
         </EmptyView>
       )}
-      {!isEmptyView && isFetchedWishlist && (
+      {showContent && (
         <div className="align-self-stretch w-100" id="bread_crumb_wrapper">
           <BreadCrumb currentLinkLabel="Saved Items" />
         </div>
@@ -49,7 +48,7 @@ const SavedItems = () => {
           <ProductCardSkeleton count={4} />
         </div>
       )}
-      {isFetchedWishlist && !isEmptyView && (
+      {showContent && (
         <HomeProductLayout productCards={products}>
           <div className="align-self-end d-flex justify-content-center w-100 my-4">
             <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage }} />

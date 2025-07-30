@@ -125,7 +125,6 @@ export type useLoginData = {
   handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
   isLoginError: boolean;
   handleLoginFormSubmit: (event: FormEvent) => void;
-  isLoginSuccess: boolean;
 };
 
 export type useMonnifyType = {
@@ -881,7 +880,6 @@ export type userContextType = {
   deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isDeletingAccount: boolean;
   isJustLoggedIn: boolean;
-  isLoginSuccess: boolean;
   handleLoginFormSubmit: (event: FormEvent) => void;
   isLoginError: boolean;
   handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;

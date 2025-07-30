@@ -48,7 +48,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
 
   const [products, setProducts] = useState<productType[]>([]);
 
-  const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, isLoginSuccess, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
+  const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
@@ -163,7 +163,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
         deleteAccount,
         isJustLoggedIn: loginTimeRef.current !== loginTime && isLoggedIn === true,
         isLoginError,
-        isLoginSuccess,
         handleLoginFormSubmit,
         handleLoginInputChange,
         loginInputValues,

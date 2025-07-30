@@ -9,16 +9,24 @@ import { alertContext } from "./AlertProvider";
 import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
 import { useGetWishlist } from "../../customHooks/useGetWishlist";
+import { userContext } from "./UserProvider";
 
 export const wishlistContext = React.createContext({} as wishlistContextType);
 
 const WishlistProvider = ({ children }: ProvidersProp) => {
   const { handleAlert } = useContext(alertContext);
+  const { isLoggedIn } = useContext(userContext);
   const [wishList, setWishList] = useState<wishlistType[]>([]);
 
   const { isLoadingWishlist, isFetchedWishlist, getWishlistQueryFinished } = useGetWishlist(setWishList);
   const { deleteFromWishlist, isDeletingWishlistItem, isDeletedWishlistItem } = useDeleteWishlist();
   const { addItemToWishList, isAddingToWishList, isAddedToWishlist } = useAddToWhishlist();
+
+  useEffect(() => {
+    if (isLoggedIn === false && wishList.length) {
+      setWishList([]);
+    }
+  }, [isLoggedIn, wishList.length]);
 
   useEffect(() => {
     if (isAddedToWishlist) {

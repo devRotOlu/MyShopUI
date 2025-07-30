@@ -17,7 +17,7 @@ import "./style.css";
 const LoginOnModal = () => {
   const location = useLocation();
   const pathnameRef = useRef(location.pathname);
-  const { setShowModal, isLoginError, isLoginSuccess, handleLoginFormSubmit, loginInputValues, handleLoginInputChange, isAuthenticating } = useContext(userContext);
+  const { setShowModal, isLoginError, handleLoginFormSubmit, loginInputValues, handleLoginInputChange, isAuthenticating, isJustLoggedIn } = useContext(userContext);
 
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
@@ -27,7 +27,7 @@ const LoginOnModal = () => {
     );
   });
 
-  if (isLoginSuccess) {
+  if (isJustLoggedIn) {
     setShowModal(false);
   }
 

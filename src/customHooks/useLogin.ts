@@ -25,7 +25,6 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
   const {
     mutate,
     isError,
-    isSuccess,
     submittedAt: loginTime,
     isPending,
   } = useMutation({
@@ -41,7 +40,7 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
   };
 
   const _isError = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isError;
-  const _isSuccess = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isSuccess;
+  // const _isSuccess = prevFormValues.current.email === formValues.email && prevFormValues.current.password === formValues.password && isSuccess;
 
   return {
     isAuthenticating: isPending,
@@ -51,6 +50,5 @@ export const useLogin = (setIsOldSession: Dispatch<SetStateAction<boolean>>, set
     handleLoginInputChange: handleChange,
     isLoginError: _isError,
     handleLoginFormSubmit: handleSubmit,
-    isLoginSuccess: _isSuccess,
   };
 };
