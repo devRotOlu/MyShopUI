@@ -4,6 +4,7 @@ import PageWrapper from "../PageWrapper.tsx";
 import NavigationButtons from "../navigationButtons/NavigationButtons.tsx";
 import HomeProductLayout from "../homeProductLayout/HomeProductLayout.tsx";
 import ProductCard from "../productCard/ProductCard.tsx";
+import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper.tsx";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
 
 import "./style.css";
@@ -25,12 +26,13 @@ const Home = () => {
   return (
     <PageWrapper pageId="home">
       {isLoadingProducts && (
-        <div className="w-100 d-flex justify-content-between px-4 flex-wrap gap-3 mb-5">
-          <ProductCardSkeleton count={4} />
-        </div>
+        <HomeCardsWrapper>
+          <ProductCardSkeleton count={5} />
+        </HomeCardsWrapper>
       )}
       {productsFetched && (
-        <HomeProductLayout productCards={productCards}>
+        <HomeProductLayout>
+          <HomeCardsWrapper>{productCards}</HomeCardsWrapper>
           <div className="d-flex justify-content-center w-100 mt-5">
             <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
           </div>

@@ -3,12 +3,9 @@ import React from "react";
 import { homeProductLayoutProps } from "../../types";
 import "./style.css";
 
-const HomeProductLayout = ({ children, productCards }: homeProductLayoutProps) => {
+const HomeProductLayout = ({ children }: homeProductLayoutProps) => {
   return (
-    <div className="d-flex flex-wrap align-self-stretch w-100 mb-5" id="page_layout">
-      <div id="product_card_wrapper" className="w-100">
-        {productCards}
-      </div>
+    <div className="d-flex flex-wrap align-self-stretch w-100 mb-5 px-sm-2 px-1" id="page_layout">
       {children}
     </div>
   );

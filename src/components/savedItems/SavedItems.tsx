@@ -8,6 +8,7 @@ import HomeProductLayout from "../homeProductLayout/HomeProductLayout";
 import EmptyView from "../emptyView/EmptyView";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
 import ProductCard from "../productCard/ProductCard";
+import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
@@ -16,7 +17,7 @@ import { wishlistType } from "../../types";
 const maxProductPerPage = 20;
 const firstPage = 1;
 const SavedItems = () => {
-  const { wishList, isFetchedWishlist, isLoadingWishlist, getWishlistQueryFinished } = useContext(wishlistContext);
+  const { wishList, isLoadingWishlist, getWishlistQueryFinished } = useContext(wishlistContext);
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<wishlistType[]>([]);
 
@@ -44,12 +45,13 @@ const SavedItems = () => {
         </div>
       )}
       {isLoadingWishlist && (
-        <div className="align-self-stretch w-100 d-flex justify-content-between px-4 flex-wrap gap-3" id="skeleton_wrapper">
-          <ProductCardSkeleton count={4} />
-        </div>
+        <HomeCardsWrapper>
+          <ProductCardSkeleton count={5} />
+        </HomeCardsWrapper>
       )}
       {showContent && (
-        <HomeProductLayout productCards={products}>
+        <HomeProductLayout>
+          <HomeCardsWrapper>{products}</HomeCardsWrapper>
           <div className="align-self-end d-flex justify-content-center w-100 my-4">
             <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage }} />
           </div>

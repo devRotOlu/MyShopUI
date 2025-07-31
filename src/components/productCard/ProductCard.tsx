@@ -103,7 +103,7 @@ const ProductCard = ({ product }: productCardProp) => {
         </div>
       </div>
       <div>
-        <div className="product_price border-bottom border-top d-flex justify-content-between py-2">
+        <div className="product_price border-bottom border-top d-flex justify-content-between flex-wrap py-2">
           <p className="fw-bold">
             {naira}
             {unitPrice.toLocaleString()}

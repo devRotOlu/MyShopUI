@@ -32,8 +32,6 @@ const Cart = () => {
   const isEmptyView = !cart.length && getCartQueryFinished && !isFetchingCart;
   const showContent = !isFetchingCart && getCartQueryFinished && cart.length;
 
-  console.log(cart);
-
   useCalHeightOnResize(checkoutLinkRef, "--checkout_link_height");
 
   return (
@@ -44,7 +42,7 @@ const Cart = () => {
             <SkeletonPageLoader count={3} />
           </div>
         )}
-        {isEmptyView && (
+        {/* {isEmptyView && (
           <EmptyView>
             <div className="d-flex flex-column gap-4 align-items-center" id="empty_view_content">
               <Icon icon="mdi:cart-remove" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
@@ -54,7 +52,7 @@ const Cart = () => {
               </div>
             </div>
           </EmptyView>
-        )}
+        )} */}
         {showContent && (
           <div className="w-100 mb-md-5" id="cart_main_content">
             <CartBreadCrumb />

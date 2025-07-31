@@ -1,5 +1,11 @@
 .product_card_skeleton {
-  width: 19%;
+  /* width: 19%; */
   padding: 10px;
   box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
+}
+
+@media screen and (max-width: 576px) {
+  .product_card_skeleton {
+    box-shadow: none;
+  }
 }

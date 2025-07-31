@@ -7,10 +7,12 @@ import NavigationButtons from "../navigationButtons/NavigationButtons";
 import BreadCrumb from "../breadCrumb/BreadCrumb";
 import CategoryPageLayout from "../categoryPageLayout/CategoryPageLayout";
 import SortPanel from "../sortPanel/SortPanel";
+import HomeCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 
 import { categoryProps, productType } from "../../types";
 import "./style.css";
 import { appContext } from "../context/AppProvider";
+import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 
 const maxProductPerPage = 20;
 const firstPage = 1;
@@ -33,16 +35,17 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
     <PageWrapper pageId="product_category">
       <div className="align-self-stretch w-100">
         {isLoading && (
-          <div className="d-flex justify-content-between px-1 px-sm-2 mb-5" id="page_loader_wrapper">
-            <ProductCardSkeleton count={4} />
-          </div>
+          <HomeCardWrapper>
+            <ProductCardSkeleton count={5} />
+          </HomeCardWrapper>
         )}
         {products.length && (
           <>
             <BreadCrumb handleFilterModal={handleFilterModal} currentLinkLabel={category}>
               <SortPanel currentPage={currentPage} productPerPage={maxProductPerPage} totalProducts={products.length} />
             </BreadCrumb>
-            <CategoryPageLayout products={_products} filterWrapper={<div>{children}</div>}>
+            <CategoryPageLayout filterWrapper={<div>{children}</div>}>
+              <CategoryCardsWrapper>{_products}</CategoryCardsWrapper>
               {products.length && (
                 <div className="align-self-end d-flex justify-content-center w-100 mt-5">
                   <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />

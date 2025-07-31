@@ -245,13 +245,19 @@ export type brandPageProps = {
 
 export type homeProductLayoutProps = {
   children: ReactNode;
-  productCards: ReactNode;
+};
+
+export type homeCardsWrapperProps = {
+  children: ReactNode;
 };
 
 export type categoryPageLayoutProps = {
   filterWrapper: ReactNode;
   children: ReactNode;
-  products: ReactNode;
+};
+
+export type categoryCardsWrapperProps = {
+  children: ReactNode;
 };
 
 export type productCarouselModalProps = {
