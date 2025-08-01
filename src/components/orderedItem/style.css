@@ -1,0 +1,33 @@
+.order_item .order_details {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 1000px) {
+  .order_item > td:first-child,
+  .order_item > th:first-child {
+    width: 60%;
+  }
+
+  .order_item > td:last-child,
+  .order_item > th:last-child {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .order_item > td:first-child,
+  .order_item > th:first-child {
+    width: 57%;
+  }
+
+  .order_item > td:last-child,
+  .order_item > th:last-child {
+    width: 32%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .order_item .order_details {
+    font-size: 14px;
+  }
+}

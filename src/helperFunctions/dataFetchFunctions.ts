@@ -68,8 +68,8 @@ export const editReview = async (data: addReviewType) => {
   return await myShopAxios.post("Review/edit-review", data);
 };
 
-export const getOrderReviews = async (orderId: number) => {
-  return await myShopAxios.get(`Review/order-reviews?orderId=${orderId}`);
+export const getUserReviews = async (reviewerId: string) => {
+  return await myShopAxios.get(`Review/user-reviews?reviewerId=${reviewerId}`);
 };
 
 // account controller functions

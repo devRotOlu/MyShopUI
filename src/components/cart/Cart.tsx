@@ -14,10 +14,12 @@ import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
+import { userContext } from "../context/UserProvider.tsx";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cart, isFetchingCart, getCartQueryFinished } = useContext(cartContext);
+  const { cart, isFetchingCart, getCartQueryFinished, isFetchingLocalCart } = useContext(cartContext);
+  const { isLoggedIn } = useContext(userContext);
 
   const checkoutLinkRef = useRef<HTMLDivElement>(null!);
 
@@ -29,15 +31,16 @@ const Cart = () => {
     return <CartCard key={index} item={item} />;
   });
 
-  const isEmptyView = !cart.length && getCartQueryFinished && !isFetchingCart;
-  const showContent = !isFetchingCart && getCartQueryFinished && cart.length;
+  const isLoadingContent = isFetchingCart || isFetchingLocalCart;
+  const isEmptyView = (getCartQueryFinished || isLoggedIn === false) && !cart.length && !isLoadingContent;
+  const showContent = !isLoadingContent && (getCartQueryFinished || isLoggedIn === false) && cart.length;
 
   useCalHeightOnResize(checkoutLinkRef, "--checkout_link_height");
 
   return (
     <>
       <PageWrapper pageId="cart">
-        {isFetchingCart && (
+        {isLoadingContent && (
           <div className="pt-3 px-5 h-100 w-100 bg-white flex-grow-1 ">
             <SkeletonPageLoader count={3} />
           </div>

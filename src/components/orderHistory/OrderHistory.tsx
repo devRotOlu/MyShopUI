@@ -1,13 +1,14 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+
+import OrderedItem from "../orderedItem/OrderedItem";
 
 import { orderHistoryProps } from "../../types";
 import { months, naira } from "../../data";
 import "./style.css";
 
 const OrderHistory = ({ props }: orderHistoryProps) => {
-  const { order, setOrderIndex, orderCost, setShowModal, setReviewId, orderReviews } = props;
+  const { order, setOrderIndex, orderCost, setShowModal, setReviewId, userReviews } = props;
   const {
     orderDate,
     orderId,
@@ -27,45 +28,13 @@ const OrderHistory = ({ props }: orderHistoryProps) => {
   const _orderedItems = orderedItems.map((item, index) => {
     const {
       cartItem: {
-        product: { name, images, id, unitPrice },
+        product: { id },
       },
-      orderedQuantity,
     } = item;
-    const image = images[0];
-    const itemCost = orderedQuantity * unitPrice;
-    const isReviewed = orderReviews?.some(({ productId }) => id === productId);
-    return (
-      <tr key={index} className="order_item">
-        <td className="py-2 px-sm-3 px-2 w-100">
-          <div className="d-flex gap-2 w-100 flex-wrap">
-            <div>
-              <img src={image.url} alt={name} />
-            </div>
-            <div className="order_details">
-              <p className="text-muted">
-                {name} <br />
-              </p>
-              <p className="fw-bold pt-1">
-                {naira}
-                {itemCost.toLocaleString()}
-              </p>
-              <p className="text-muted pt-1">Quantity: {orderedQuantity}</p>
-            </div>
-          </div>
-        </td>
-        <td className="py-2 px-sm-3 px-2" style={{ whiteSpace: "nowrap" }}>
-          <Link to={`/product/${name}-${id}`} className="d-block text-white py-2 buy_again_link fw-light text-center" style={{ width: "100px" }}>
-            Buy Again
-          </Link>
-          <div>
-            <button className="py-2 review_btn text-white " onClick={() => handleReview(id)} style={{ width: "100px" }}>
-              {isReviewed ? "Edit Review" : "Review"}
-            </button>
-          </div>
-        </td>
-      </tr>
-    );
+    const isReviewed = userReviews?.some(({ productId }) => id === productId);
+    return <OrderedItem key={index} item={item} isReviewed={isReviewed} handleReview={handleReview} />;
   });
+
   return (
     <div id="order_details" className="pb-5 bg-white rounded">
       <div className="pt-3 pb-2 d-flex gap-2 align-items-center p-sm-x-3 px-2">

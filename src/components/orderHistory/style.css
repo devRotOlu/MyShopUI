@@ -7,10 +7,6 @@
   margin-top: 12px;
 }
 
-#order_details .order_item .order_details {
-  font-size: 16px;
-}
-
 #order_details #table_wrapper > table th {
   background-color: var(--darker_Grey);
 }
@@ -78,18 +74,6 @@
   vertical-align: top;
 }
 
-@media screen and (max-width: 1000px) {
-  #order_details .order_item > td:first-child,
-  #order_details .order_item > th:first-child {
-    width: 60%;
-  }
-
-  #order_details .order_item > td:last-child,
-  #order_details .order_item > th:last-child {
-    width: 30%;
-  }
-}
-
 @media screen and (max-width: 767px) {
   #order_details #table_wrapper > table:nth-child(2) tr > td:last-child,
   #order_details #table_wrapper > table:nth-child(2) tr > td:first-child,
@@ -98,22 +82,7 @@
   }
 }
 
-@media screen and (max-width: 680px) {
-  #order_details .order_item > td:first-child,
-  #order_details .order_item > th:first-child {
-    width: 57%;
-  }
-
-  #order_details .order_item > td:last-child,
-  #order_details .order_item > th:last-child {
-    width: 32%;
-  }
-}
-
 @media screen and (max-width: 575px) {
-  #order_details .order_item .order_details {
-    font-size: 14px;
-  }
   #order_details > div:first-child {
     border-bottom: none;
   }

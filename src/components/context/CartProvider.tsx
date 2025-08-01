@@ -14,12 +14,15 @@ import { useDeleteCartItem } from "../../customHooks/useDeleteCartItem";
 import { useModifyCart } from "../../customHooks/useModifyCart";
 import { useMoveToWishlist } from "../../customHooks/useMoveToWishlist";
 import { useProcessLocalCartItems } from "../../customHooks/useProcessLocalCartItems";
+import { getLocalCartItems } from "../../helperFunctions/utilityFunctions";
 
 export const cartContext = React.createContext({} as cartContextType);
 
 const CartProvider = ({ children }: ProvidersProp) => {
   const [localStorageIndex, setLocalStorageIndex] = useState(1);
   const [cart, setCart] = useState<cartType[]>([]);
+
+  const isFetchingLocalCart = getLocalCartItems().length > 0 && cart.length === 0;
 
   // to separate cartItems in the localstorage
   // into those that already exits in the database
@@ -28,7 +31,7 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const [localAddedItems, setLocalAddedItems] = useState<addedItemType[]>([]);
   const [localUpdatedItems, setLocalUpdatedItems] = useState<updatedItemType[]>([]);
 
-  const { loginData, isLoggedIn } = useContext(userContext);
+  const { loginData, isLoggedIn, isLoggedOut } = useContext(userContext);
   const { handleAlert } = useContext(alertContext);
 
   const { cartFetched, cartData, isFetchingCart, getCartQueryFinished } = useGetCartItems(setCart);
@@ -42,10 +45,10 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const prevCartRef = useRef(cart);
 
   useEffect(() => {
-    if (isLoggedIn === false && cart.length) {
+    if (isLoggedOut) {
       setCart([]);
     }
-  }, [cart, isLoggedIn]);
+  }, [isLoggedOut]);
 
   const { count: cartItemsCount, totalPrice: cartItemsTotalPrice } = useMemo(() => {
     var count = 0;
@@ -116,6 +119,7 @@ const CartProvider = ({ children }: ProvidersProp) => {
   return (
     <cartContext.Provider
       value={{
+        isFetchingLocalCart,
         getCartQueryFinished,
         cartFetched,
         isFetchingCart,

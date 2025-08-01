@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 
 import SkeletonPageLoader from "../SkeletonPageLoader";
 import AccountTab from "../dashboard/AccountTab";
@@ -11,9 +11,9 @@ import Modal from "../modal/Modal";
 import ProductReview from "../productReview/ProductReview";
 import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
 
-import { getOrders, getOrderReviews } from "../../helperFunctions/dataFetchFunctions";
+import { getOrders, getUserReviews } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
-import { orderType, orderReviewType } from "../../types";
+import { orderType, userReviewType } from "../../types";
 import "./style.css";
 
 const Orders = () => {
@@ -26,35 +26,34 @@ const Orders = () => {
   const {
     loginData: { id },
   } = useContext(userContext);
-  const {
-    isLoading: isLoadingOrders,
-    data: _orders,
-    isSuccess: getOrderQueryIsSuccess,
-  } = useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => await getOrders(id),
-    refetchOnWindowFocus: false,
+
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["orders"],
+        queryFn: async () => await getOrders(id),
+        refetchOnWindowFocus: false,
+      },
+      {
+        queryKey: ["user-reviews"],
+        queryFn: () => {
+          return getUserReviews(id);
+        },
+        refetchOnWindowFocus: false,
+      },
+    ],
   });
-  const orderId = orders?.[orderIndex]?.id;
-  const {
-    isLoading: isLoadingorderReviews,
-    data: productReviewedData,
-    isSuccess: getProductReviewQueryIsSuccess,
-  } = useQuery({
-    queryKey: ["order-reviews", orderId],
-    queryFn: () => {
-      return getOrderReviews(orderId);
-    },
-    refetchOnWindowFocus: false,
-    enabled: !!orderId,
-  });
+
+  const [orderQuery, userReviewsQuery] = results;
+
   useEffect(() => {
-    if (getOrderQueryIsSuccess) {
-      const _data = _orders?.data as orderType[];
+    if (orderQuery.isSuccess) {
+      const _data = orderQuery.data?.data as orderType[];
       setOrders([..._data]);
     }
-  }, [_orders?.data, getOrderQueryIsSuccess]);
-  if (isLoadingOrders || isLoadingorderReviews) {
+  }, [orderQuery.data?.data, orderQuery.isSuccess]);
+
+  if (results.some((query) => query.isLoading)) {
     return (
       <PageWrapper pageId="orders">
         <div className="align-self-stretch w-100 pt-3 px-5 bg-white">
@@ -70,7 +69,7 @@ const Orders = () => {
   const displayOrderHistory = orderIndex >= 0;
   const key = `${orderIndex}`;
   const orderCost = orderCosts[key as keyof typeof orderCosts];
-  const orderReviews: orderReviewType[] = getProductReviewQueryIsSuccess ? productReviewedData.data : [];
+  const userReviews: userReviewType[] = userReviewsQuery.data?.data ?? [];
   return (
     <>
       <PageWrapper pageId="orders">
@@ -81,13 +80,13 @@ const Orders = () => {
           <AccountTab />
           <div id="page_content" className="bg-white">
             {!displayOrderHistory && <OrderList orders={orders}>{activeOrders}</OrderList>}
-            {displayOrderHistory && <OrderHistory props={{ order: orders[orderIndex], setOrderIndex, orderCost, setShowModal, setReviewId, orderReviews }} />}
+            {displayOrderHistory && <OrderHistory props={{ order: orders[orderIndex], setOrderIndex, orderCost, setShowModal, setReviewId, userReviews }} />}
           </div>
         </div>
       </PageWrapper>
       {showModal && (
         <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <ProductReview productId={reviewId} setShowModal={setShowModal} orderId={orders[orderIndex].id} orderReviews={orderReviews} />
+          <ProductReview productId={reviewId} setShowModal={setShowModal} userReviews={userReviews} />
         </Modal>
       )}
     </>

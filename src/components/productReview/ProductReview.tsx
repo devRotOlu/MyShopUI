@@ -11,18 +11,18 @@ import "./style.css";
 import { userContext } from "../context/UserProvider";
 import { addReview, editReview } from "../../helperFunctions/dataFetchFunctions";
 
-const ProductReview = ({ productId, setShowModal, orderId, orderReviews }: productReviewProps) => {
+const ProductReview = ({ productId, setShowModal, userReviews }: productReviewProps) => {
   const reviewIndex = useMemo(() => {
-    return orderReviews.findIndex(({ productId: _productId }) => productId === _productId);
-  }, [orderReviews, productId]);
+    return userReviews.findIndex(({ productId: _productId }) => productId === _productId);
+  }, [userReviews, productId]);
   const {
     loginData: { id: reviewerId },
   } = useContext(userContext);
   const [rating, setRating] = useState(() => {
-    return reviewIndex > -1 ? orderReviews[reviewIndex].rating : 0;
+    return reviewIndex > -1 ? userReviews[reviewIndex].rating : 0;
   });
   const [review, setReview] = useState(() => {
-    return reviewIndex > -1 ? orderReviews[reviewIndex].review : "";
+    return reviewIndex > -1 ? userReviews[reviewIndex].review : "";
   });
   const {
     mutate: addProductReview,
@@ -55,7 +55,6 @@ const ProductReview = ({ productId, setShowModal, orderId, orderReviews }: produ
       productId,
       rating,
       review,
-      orderId,
     };
     if (reviewIndex > -1) {
       editProductReview(reviewDTO);

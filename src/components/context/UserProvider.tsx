@@ -155,6 +155,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        isLoggedOut,
         confirmEmail,
         isValidatingToken,
         productsFetched,

@@ -389,13 +389,18 @@ export type orderListProps = {
 export type productReviewProps = {
   productId: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  orderId: number;
-  orderReviews: orderReviewType[];
+  userReviews: userReviewType[];
+};
+
+export type orderedItemProps = {
+  item: itemsOrderedType;
+  isReviewed: boolean;
+  handleReview: (productId: number) => void;
 };
 
 export type orderHistoryProps = {
   props: {
-    orderReviews: orderReviewType[];
+    userReviews: userReviewType[];
     setReviewId: Dispatch<SetStateAction<number>>;
     order: orderType;
     setOrderIndex: Dispatch<SetStateAction<number>>;
@@ -404,7 +409,7 @@ export type orderHistoryProps = {
   };
 };
 
-export type orderReviewType = {
+export type userReviewType = {
   productId: number;
   rating: number;
   review: string;
@@ -455,7 +460,6 @@ export type encryptDataType = {
 };
 
 export type addReviewType = {
-  orderId: number;
   reviewerId: string;
   productId: number;
   review: string;
@@ -827,6 +831,7 @@ export type profileSummaryProps = {
 };
 
 export type cartContextType = {
+  isFetchingLocalCart: boolean;
   getCartQueryFinished: boolean;
   cartFetched: boolean;
   isFetchingCart: boolean;
@@ -878,6 +883,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = {
+  isLoggedOut: boolean;
   confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
   isValidatingToken: boolean;
   productsFetched: boolean;
