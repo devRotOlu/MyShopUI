@@ -35,6 +35,14 @@ const AppProvider = ({ children }: ProvidersProp) => {
     setSortIndex(0);
   }, [pathname]);
 
+  // scrolls current route to
+  // the top
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 0);
+  }, [pathname]);
+
   useEffect(() => {
     if (modalIndex && modalIndex !== modalIndexRef.current) {
       modalIndexRef.current = modalIndex;

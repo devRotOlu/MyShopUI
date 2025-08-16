@@ -27,6 +27,7 @@ export type textInputProps = {
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   children?: ReactNode;
   handleFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  handleBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 };
 
 export type formButtonProp = {
@@ -333,6 +334,17 @@ type userAddressType = {
   streetAddress: string;
   city: string;
   state: string;
+};
+
+type userProviderSignUpType = {
+  signup: UseMutateFunction<AxiosResponse<any, any>, Error, signupType, unknown>;
+  isSigningUp: boolean;
+  isSignupError: boolean;
+};
+
+export type useSignupDataType = userProviderSignUpType & {
+  isSignupSuccess: boolean;
+  signUpTime: number;
 };
 
 export type useTokenValidationDataType = {
@@ -882,7 +894,7 @@ export type deliveryContextType = {
   setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
 };
 
-export type userContextType = {
+export type userContextType = userProviderSignUpType & {
   isLoggedOut: boolean;
   confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
   isValidatingToken: boolean;

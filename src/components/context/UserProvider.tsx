@@ -15,6 +15,7 @@ import { useLogout } from "../../customHooks/useLogout";
 import { useDeleteAccount } from "../../customHooks/useDeleteAccount";
 import { useTokenValidation } from "../../customHooks/useTokenValidation";
 import { useConfirmEmail } from "../../customHooks/useConfirmEmail";
+import { useSignup } from "../../customHooks/useSignup";
 
 export const userContext = React.createContext({} as userContextType);
 
@@ -53,6 +54,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
   const { isEmailConfirmed, confirmEmail, isEmailConfirmedFailed } = useConfirmEmail();
+  const { isSigningUp, isSignupError, isSignupSuccess, signUpTime, signup } = useSignup();
 
   const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
@@ -152,9 +154,24 @@ const UserProvider = ({ children }: ProvidersProp) => {
     }
   }, [handleAlert, isEmailConfirmedFailed, navigate]);
 
+  useEffect(() => {
+    // const isSubmitted = submittedAtRef.current !== submittedAt;
+    if (isSignupSuccess) {
+      const alertDialog = <Alert alertTitle="Registration Successful!" styles={{ backgroundColor: "var(--light_Green)", height: "50px" }} alertMessage="Check email for your validation" />;
+      // submittedAtRef.current = submittedAt;
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  }, [handleAlert, isSignupSuccess]);
+
   return (
     <userContext.Provider
       value={{
+        signup,
+        isSigningUp,
+        isSignupError,
         isLoggedOut,
         confirmEmail,
         isValidatingToken,
