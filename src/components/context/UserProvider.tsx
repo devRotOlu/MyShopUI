@@ -54,7 +54,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
   const { isEmailConfirmed, confirmEmail, isEmailConfirmedFailed } = useConfirmEmail();
-  const { isSigningUp, isSignupError, isSignupSuccess, signUpTime, signup } = useSignup();
+  const { isSigningUp, isSignupError, isSignupSuccess, signup } = useSignup();
 
   const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 

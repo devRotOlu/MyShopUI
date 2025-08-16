@@ -344,7 +344,6 @@ type userProviderSignUpType = {
 
 export type useSignupDataType = userProviderSignUpType & {
   isSignupSuccess: boolean;
-  signUpTime: number;
 };
 
 export type useTokenValidationDataType = {
