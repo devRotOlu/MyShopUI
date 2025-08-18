@@ -13,7 +13,6 @@ import { useCartItem } from "../../customHooks/useCartItem.ts";
 const CartItem = ({ item, index, itemCount }: cartItemProp) => {
   const { handleAddToWishlist, handleDeleteItem, handleQuantityUpdate, beingModified, validateQuantity, setValidateQuantity } = useCartItem(item);
 
-  // const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
   const { cartQuantity, product } = item;
 
   const { name, unitPrice, images, quantity } = product;

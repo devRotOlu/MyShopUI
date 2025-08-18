@@ -53,7 +53,7 @@ const SavedItems = () => {
         <HomeProductLayout>
           <HomeCardsWrapper>{products}</HomeCardsWrapper>
           <div className="align-self-end d-flex justify-content-center w-100 my-4">
-            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage }} />
+            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
           </div>
         </HomeProductLayout>
       )}

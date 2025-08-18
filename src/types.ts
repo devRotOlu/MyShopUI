@@ -312,6 +312,7 @@ export type navigationButtonsProps = {
     itemCount: number;
     maxItemPerPage: number;
     setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
+    currentItems: any[];
     items: any[];
   };
 };
@@ -522,7 +523,7 @@ export type wishlistType = {
   product: productType;
 };
 
-export type CartTableProp = {
+export type cartTableProps = {
   children: ReactNode;
 };
 

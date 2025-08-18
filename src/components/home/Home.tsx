@@ -34,7 +34,7 @@ const Home = () => {
         <HomeProductLayout>
           <HomeCardsWrapper>{productCards}</HomeCardsWrapper>
           <div className="d-flex justify-content-center w-100 mt-5">
-            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
+            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
           </div>
         </HomeProductLayout>
       )}

@@ -78,7 +78,7 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
 
   return (
     <div id="product_reviews">
-      {reviews.length !== 0 && (
+      {reviews.length > 0 && (
         <div className="w-100">
           <div className="w-100 d-flex gap-md-5 gap-3 flex-md-row flex-column  flex-wrap pb-5 pt-3 border-bottom">
             <div className="d-flex flex-md-column flex-row gap-md-0 gap-2  align-items-center flex-wrap">
@@ -95,7 +95,7 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
           <div className="pt-2">{_reviews}</div>
         </div>
       )}
-      {!reviews.length && <p>No product review yet. Be the first to review this product.</p>}
+      {reviews.length > 0 && <p>No product review yet. Be the first to review this product.</p>}
     </div>
   );
 };

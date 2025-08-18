@@ -1,9 +1,9 @@
 import React from "react";
 
-import { CartTableProp } from "../../types.ts";
+import { cartTableProps } from "../../types.ts";
 import "./style.css";
 
-const CartTable = ({ children }: CartTableProp) => {
+const CartTable = ({ children }: cartTableProps) => {
   return (
     <table className="w-100 align-self-start" id="cart_table">
       <thead>

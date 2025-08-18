@@ -23,12 +23,12 @@ const SearchDisplay = ({ searchResults, searchTerm }: searchDisplayProps) => {
 
       {!isEmptySearch && (
         <div className="d-flex flex-column gap-1">
-          {products.length !== 0 && (
+          {products.length > 0 && (
             <SearchProducts products={products}>
               <p className="px-2 py-1 display_title fw-bold">PRODUCTS</p>
             </SearchProducts>
           )}
-          {brands.length !== 0 && (
+          {brands.length > 0 && (
             <SearchBrands brands={brands}>
               <p className="px-2 py-1 display_title fw-bold">MATCHING BRANDS</p>
             </SearchBrands>

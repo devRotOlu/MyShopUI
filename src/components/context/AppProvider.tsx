@@ -1,19 +1,22 @@
-import React, { createContext, ReactNode, useEffect, useRef, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import throttle from "lodash.throttle";
+import { useLocation } from "react-router-dom";
 
 import Sidebar from "../sidebar/Sidebar";
 import Modal from "../modal/Modal";
 
 import { ProvidersProp } from "../../types";
 import { getPublicKey } from "../../helperFunctions/dataFetchFunctions";
-import { useLocation } from "react-router-dom";
+import { userContext } from "./UserProvider";
 
 export type appContextType = { publicKeyPem: any; setModalIndex: React.Dispatch<React.SetStateAction<number>>; modalIndex: number; handleFilter: (modalIndex: number, filterInstance: ReactNode) => void; setSortIndex: React.Dispatch<React.SetStateAction<number>>; sortIndex: number };
 
 export const appContext = createContext({} as appContextType);
 
 const AppProvider = ({ children }: ProvidersProp) => {
+  const { isLoggedIn } = useContext(userContext);
+
   const { pathname } = useLocation();
   const [sortIndex, setSortIndex] = useState(0);
   const [modalIndex, setModalIndex] = useState(0);
@@ -24,7 +27,9 @@ const AppProvider = ({ children }: ProvidersProp) => {
     queryFn: getPublicKey,
     queryKey: ["public_key"],
     refetchOnWindowFocus: false,
+    enabled: isLoggedIn ? true : false,
   });
+
   const publicKeyPem = data?.data;
   const handleFilter = (modalIndex: number, filterInstance: ReactNode) => {
     setModalIndex(modalIndex);

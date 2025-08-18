@@ -45,9 +45,9 @@ const BrandPage = ({ ...props }: brandPageProps) => {
             </BreadCrumb>
             <CategoryPageLayout filterWrapper={<div>{children}</div>}>
               <CategoryCardsWrapper>{_products}</CategoryCardsWrapper>
-              {products.length && (
+              {products.length > 0 && (
                 <div className="align-self-end d-flex justify-content-center w-100 my-4">
-                  <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage }} />
+                  <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage, currentItems: currentProduct }} />
                 </div>
               )}
             </CategoryPageLayout>

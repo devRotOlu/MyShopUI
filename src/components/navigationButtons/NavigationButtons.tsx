@@ -5,7 +5,7 @@ import { navigationButtonsProps } from "../../types";
 import "./style.css";
 
 const NavigationButtons = ({ params }: navigationButtonsProps) => {
-  const { itemCount, maxItemPerPage, setCurrentItems, items, setCurrentPage, currentPage, firstPage } = params;
+  const { itemCount, maxItemPerPage, setCurrentItems, items, setCurrentPage, currentPage, firstPage, currentItems } = params;
   const maxPage = Math.ceil(itemCount / maxItemPerPage);
   const initialIndex = maxPage >= 1 ? maxItemPerPage - 1 : itemCount - 1;
   const prevIndexRef = useRef(initialIndex);
@@ -53,6 +53,10 @@ const NavigationButtons = ({ params }: navigationButtonsProps) => {
         </span>
       );
     });
+
+  if (!currentItems.length) {
+    return null;
+  }
   return (
     <div className="d-flex justify-content-center w-100 align-items-center gap-3" id="navigation_buttons">
       <button disabled={currentPage === firstPage} onClick={handlePreviousBtnClick} className="d-flex align-items-center gap-1 py-1 px-2" id="previous_btn" style={{ color: currentPage !== firstPage ? "black" : "", backgroundColor: currentPage !== firstPage ? "var(--cerebral_grey)" : "" }}>
