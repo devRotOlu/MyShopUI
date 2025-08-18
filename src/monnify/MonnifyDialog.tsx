@@ -47,6 +47,11 @@ const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps
         {!isMonnifyError && monnifyOption === "" && <MonnifyPaymentOptions />}
         {!isMonnifyError && monnifyOption === "transfer" && <MonnifyBankTransferOption />}
         {isMonnifyError && <CheckoutError />}
+        {!isMonnifyError && monnifyOption === "" && (
+          <p className="text-center" style={{ color: "var(--dark_wine)" }}>
+            For successful checkout use card.
+          </p>
+        )}
       </div>
     </div>
   );

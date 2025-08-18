@@ -146,6 +146,9 @@ const CardPayment = () => {
           </div>
         </FormComp>
       </div>
+      <p className="text-center px-3" style={{ color: "var(--dark_wine)" }}>
+        For successful checkout; card number - <span className="fw-bold">4000000000000002</span> , cvv - <span className="fw-bold">123</span>, pin - <span className="fw-bold">1234</span>, expiry- next month onwards
+      </p>
     </>
   );
 };
