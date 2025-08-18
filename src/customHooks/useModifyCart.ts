@@ -7,13 +7,13 @@ import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunct
 import { userContext } from "../components/context/UserProvider";
 
 export const useModifyCart = (setLocalStorageIndex: Dispatch<SetStateAction<number>>, cart: cartType[]): useModifyCartDataType => {
-  const [localAdditionIndex,setLocalAdditionIndex] = useState(0);
+  const [localAdditionIndex, setLocalAdditionIndex] = useState(0);
   const {
     isLoggedIn,
     loginData: { id },
   } = useContext(userContext);
 
-  const newCartItemRef = useRef<cartType>(null);
+  const newCartItemRef = useRef<cartType | null>(null);
 
   const { mutate: addCartMutate, isError: addCartItemError, isSuccess: isAddedCartItem, isPending: isAddingCartItem } = useMutation({ mutationFn: addItemToCart });
 
@@ -51,7 +51,7 @@ export const useModifyCart = (setLocalStorageIndex: Dispatch<SetStateAction<numb
         setLocalCart([...cartItems, newCartItem]);
       }
       setLocalStorageIndex((prevIndex) => ++prevIndex);
-      setLocalAdditionIndex((prevIndex)=>++prevIndex);
+      setLocalAdditionIndex((prevIndex) => ++prevIndex);
     } else {
       if (cartItem) {
         // If item already exists, we increase the
@@ -72,5 +72,5 @@ export const useModifyCart = (setLocalStorageIndex: Dispatch<SetStateAction<numb
     }
     newCartItemRef.current = newCartItem;
   };
-  return { handleAddCartItem, addedItem: `${newCartItemRef.current ? newCartItemRef.current.product.name : ""}`, addCartItemError, isAddedCartItem, isAddingCartItem, updateCartItemError, isUpatedCartItem, isUpdatingCartItem,isLocalModification:localAdditionIndex };
+  return { handleAddCartItem, addedItem: `${newCartItemRef.current ? newCartItemRef.current.product.name : ""}`, addCartItemError, isAddedCartItem, isAddingCartItem, updateCartItemError, isUpatedCartItem, isUpdatingCartItem, isLocalModification: localAdditionIndex };
 };

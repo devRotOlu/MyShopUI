@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent, useContext } from "react";
 
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
@@ -9,13 +9,30 @@ import { cartItemProp } from "../../types.ts";
 import { naira } from "../../data.ts";
 import "./style.css";
 import { useCartItem } from "../../customHooks/useCartItem.ts";
+import { userContext } from "../context/UserProvider.tsx";
+import { alertContext } from "../context/AlertProvider.tsx";
+import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
 
 const CartItem = ({ item, index, itemCount }: cartItemProp) => {
+  const { isLoggedIn, setShowModal } = useContext(userContext);
   const { handleAddToWishlist, handleDeleteItem, handleQuantityUpdate, beingModified, validateQuantity, setValidateQuantity } = useCartItem(item);
+  const { handleAlert } = useContext(alertContext);
 
   const { cartQuantity, product } = item;
 
   const { name, unitPrice, images, quantity } = product;
+
+  const _handleAddToWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+    if (isLoggedIn) {
+      handleAddToWishlist();
+    } else {
+      const alertDialog = promptWishlistLoginAlert("You need to be logged in to Save an Item", () => setShowModal(true));
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  };
 
   return (
     <tr className="cart_table_row position-relative">
@@ -55,7 +72,7 @@ const CartItem = ({ item, index, itemCount }: cartItemProp) => {
         <div>
           <button onClick={() => handleDeleteItem()}>Remove item</button>
         </div>
-        <button onClick={() => handleAddToWishlist()}>Save for Later</button>
+        <button onClick={_handleAddToWishlist}>Save for Later</button>
       </td>
       {beingModified && <ComponentOverlay as="td" />}
     </tr>

@@ -12,7 +12,7 @@ export const useProcessLocalCartItems = (paremeters: processLocalCartItemsParamT
   // as items of "state" cart.
   useEffect(() => {
     var cartItems = getLocalCartItems();
-    if (!isLoggedIn && cartItems.length && localStorageIndex) {
+    if (!isLoggedIn && localStorageIndex) {
       setCart([...cartItems]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
