@@ -35,9 +35,11 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
     <PageWrapper pageId="product_category">
       <div className="align-self-stretch w-100">
         {isLoading && (
-          <HomeCardWrapper>
-            <ProductCardSkeleton count={5} />
-          </HomeCardWrapper>
+          <div id="home_wrapper_container">
+            <HomeCardWrapper>
+              <ProductCardSkeleton count={5} />
+            </HomeCardWrapper>
+          </div>
         )}
         {products.length > 0 && (
           <>

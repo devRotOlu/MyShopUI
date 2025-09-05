@@ -41,7 +41,7 @@ const CategoryList = () => {
     <div className="position-relative py-4 d-block" id="category_list_wrapper">
       <div className="w-100 left-0 right-0">
         <ul className="d-md-flex align-items-center p-0 m-0 overflow-auto">{_categoryLinks}</ul>
-        <div className="position-relative d-md-block d-none" id="category_list_scroll"></div>
+        <div className="position-relative d-md-block d-none" id="category_list_scroll" />
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   const [products, setProducts] = useState<productType[]>([]);
 
   const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
-  const { logoutUser, isLoggedOut, logoutTime } = useLogout(setIsLoggedIn);
+  const { logoutUser, isLoggedOut, logoutTime, isLoggingOut } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
   const { isEmailConfirmed, confirmEmail, isEmailConfirmedFailed } = useConfirmEmail();
@@ -110,6 +110,16 @@ const UserProvider = ({ children }: ProvidersProp) => {
       });
     }
   }, [accountDeletionTime, handleAlert, isAccountDeleted]);
+
+  useEffect(() => {
+    if (isLoggingOut) {
+      const alertDialog = <Alert alertMessage="Logging you out ..." styles={{ backgroundColor: "var(--darkest_Grey)" }} />;
+      handleAlert({
+        showAlert: true,
+        alertDialog,
+      });
+    }
+  }, [handleAlert, isLoggingOut]);
 
   useEffect(() => {
     if (isLoggedOut && logoutTimeRef.current !== logoutTime) {

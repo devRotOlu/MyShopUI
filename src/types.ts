@@ -109,6 +109,7 @@ export type useLogoutDataType = {
   logoutUser: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isLoggedOut: boolean;
   logoutTime: number;
+  isLoggingOut:boolean
 };
 
 export type useDeleteAccountDataType = {

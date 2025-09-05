@@ -25,9 +25,9 @@ const CartProvider = ({ children }: ProvidersProp) => {
   const isFetchingLocalCart = getLocalCartItems().length > 0 && cart.length === 0;
 
   // to separate cartItems in the localstorage
-  // into those that already exits in the database
-  // and just needs updating and those that are to be
-  // newly added.
+  // into those that exits in the database
+  // but needs updating and those that are to be
+  // added newly.
   const [localAddedItems, setLocalAddedItems] = useState<addedItemType[]>([]);
   const [localUpdatedItems, setLocalUpdatedItems] = useState<updatedItemType[]>([]);
 

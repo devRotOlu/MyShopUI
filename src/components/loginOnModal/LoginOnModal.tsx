@@ -9,6 +9,7 @@ import FormButton from "../formButton/FormButton.tsx";
 import ModalCloseButton from "../ModalCloseButton.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
+import LoginDetails from "../loginDetails/LoginDetails.tsx";
 
 import { userContext } from "../context/UserProvider.tsx";
 import { loginDetails } from "../../data.ts";
@@ -57,6 +58,7 @@ const LoginOnModal = () => {
               </ComponentOverlay>
             )}
           </div>
+          <LoginDetails />
         </AuthFormElementWrapper>
         <div className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
           <Link to="/account/signup">Don’t have an account? Sign Up</Link>

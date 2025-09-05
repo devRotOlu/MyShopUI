@@ -34,9 +34,11 @@ const BrandPage = ({ ...props }: brandPageProps) => {
     <PageWrapper pageId="brands">
       <div className="align-self-stretch w-100">
         {isLoading && (
-          <HomeProductCardWrapper>
-            <ProductCardSkeleton count={4} />
-          </HomeProductCardWrapper>
+          <div id="home_wrapper_container">
+            <HomeProductCardWrapper>
+              <ProductCardSkeleton count={4} />
+            </HomeProductCardWrapper>
+          </div>
         )}
         {products?.length && (
           <>

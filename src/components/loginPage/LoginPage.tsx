@@ -12,6 +12,7 @@ import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
+import LoginDetails from "../loginDetails/LoginDetails.tsx";
 
 import { loginDetails } from "../../data.ts";
 import { userContext } from "../context/UserProvider.tsx";
@@ -63,6 +64,7 @@ const LoginPage = () => {
               </ComponentOverlay>
             )}
           </div>
+          <LoginDetails />
         </AuthFormElementWrapper>
         <AuthPageLinkWrapper linkSectionTitle="Don't have an Account?">
           <PageLink link="/account/signup" linkLabel="Create an Account" />

@@ -13,10 +13,9 @@ import DeliveryProfileProvider from "./components/context/DeliveryProfileProvide
 import Routes from "./components/Routes.tsx";
 
 import "./App.css";
-
 function App() {
   return (
-    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+    <SkeletonTheme baseColor="#696969" highlightColor="#525252">
       <AlertProvider>
         <UserProvider>
           <DeliveryProfileProvider>

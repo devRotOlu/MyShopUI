@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction } from "react";
 import { useLogoutDataType } from "../types";
 
 export const useLogout = (setIsLoggedIn: Dispatch<SetStateAction<boolean | undefined>>): useLogoutDataType => {
-  const { mutate, isSuccess, submittedAt } = useMutation({
+  const { mutate, isSuccess, submittedAt, isPending } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => setIsLoggedIn(false),
   });
-  return { logoutUser: mutate, isLoggedOut: isSuccess, logoutTime: submittedAt };
+  return { logoutUser: mutate, isLoggedOut: isSuccess, logoutTime: submittedAt, isLoggingOut: isPending };
 };

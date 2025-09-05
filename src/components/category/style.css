@@ -1,3 +1,10 @@
+#product_category {
+  min-height: 100vh;
+}
 #product_category #page_loader_wrapper {
+  padding-top: 50px;
+}
+
+#product_category #home_wrapper_container {
   padding-top: 50px;
 }
