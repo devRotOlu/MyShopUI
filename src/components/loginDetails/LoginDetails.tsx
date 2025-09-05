@@ -4,7 +4,7 @@ import "./style.css";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const LoginDetails = () => {
-  //   if (isDevelopment) return null;
+  if (isDevelopment) return null;
   return (
     <div className="fst-italic" id="login_details">
       <p>
