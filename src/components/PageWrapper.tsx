@@ -1,6 +1,6 @@
 import React from "react";
 
-import { pageWrapperProps } from "../types";
+import { pageWrapperProps } from "../types/types";
 
 const PageWrapper = ({ children, pageId }: pageWrapperProps) => {
   return (

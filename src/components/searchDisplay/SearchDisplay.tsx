@@ -4,7 +4,7 @@ import SearchProducts from "../searchProducts/SearchProducts";
 import SearchBrands from "../searchBrands/SearchBrands";
 
 import "./style.css";
-import { searchDisplayProps } from "../../types";
+import { searchDisplayProps } from "../../types/types";
 
 const SearchDisplay = ({ searchResults, searchTerm }: searchDisplayProps) => {
   const { products, brands } = searchResults!;

@@ -5,13 +5,16 @@ import FormButton from "../formButton/FormButton.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
 
-import { profileFormProps } from "../../types.ts";
+import { profileFormProps } from "../../types/types.ts";
 import "./style.css";
 
-const ProfileForm = ({ handleDeliveryProfile, isPending, children, legend, handlePageIndex }: profileFormProps) => {
+const ProfileForm = ({ props, children }: profileFormProps) => {
+  const { handleDeliveryProfile, isPending, legend, handlePageIndex, testValidation, deliveryProfile } = props;
+
   const handleProfile = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleDeliveryProfile();
+    const isValid = testValidation(deliveryProfile);
+    if (isValid) handleDeliveryProfile();
   };
 
   return (

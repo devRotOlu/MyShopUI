@@ -4,7 +4,7 @@ import ProfileCard from "../profileCard/ProfileCard.tsx";
 import ModalCloseButton from "../ModalCloseButton.tsx";
 
 import { checkoutContext } from "../checkout/Checkout.tsx";
-import { addressBookProps } from "../../types.ts";
+import { addressBookProps } from "../../types/types.ts";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";

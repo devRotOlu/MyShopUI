@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-import { productDescriptionProps } from "../../types";
+import { productDescriptionProps } from "../../types/types";
 import "./style.css";
 
 const ProductDescription = ({ description, attributes }: productDescriptionProps) => {

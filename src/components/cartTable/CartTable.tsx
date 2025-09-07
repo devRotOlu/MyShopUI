@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cartTableProps } from "../../types.ts";
+import { cartTableProps } from "../../types/types.ts";
 import "./style.css";
 
 const CartTable = ({ children }: cartTableProps) => {

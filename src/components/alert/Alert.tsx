@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-import { AlertProp } from "../../types.ts";
+import { AlertProp } from "../../types/types.ts";
 import "./style.css";
 import { alertContext } from "../context/AlertProvider.tsx";
 

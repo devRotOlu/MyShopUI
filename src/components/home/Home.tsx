@@ -9,7 +9,7 @@ import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx"
 
 import "./style.css";
 import { userContext } from "../context/UserProvider.tsx";
-import { productType } from "../../types.ts";
+import { productType } from "../../types/types.ts";
 
 const maxProductPerPage = 10;
 const firstPage = 1;

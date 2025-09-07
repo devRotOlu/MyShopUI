@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import throttle from "lodash.throttle";
 
-import { breadCrumbProps } from "../../types";
+import { breadCrumbProps } from "../../types/types";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
 import "./style.css";
 

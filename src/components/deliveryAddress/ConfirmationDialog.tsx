@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-import { ConfirmationDialogProps } from "../../types";
+import { ConfirmationDialogProps } from "../../types/types";
 
 const ConfirmationDialog = ({ setShowModal, handleDeletion }: ConfirmationDialogProps) => {
   return (

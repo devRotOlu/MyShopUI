@@ -10,7 +10,7 @@ import SortPanel from "../sortPanel/SortPanel";
 import HomeCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 
-import { categoryProps, productType } from "../../types";
+import { categoryProps, productType } from "../../types/types";
 import "./style.css";
 import { appContext } from "../context/AppProvider";
 

@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import ProfileForm from "../profileForm/ProfileForm";
 import AddProfileFormElements from "../addProfileFormElements/AddProfileFormElements";
 
-import { addProfileProps, deliveryDataType } from "../../types";
+import { addProfileProps, deliveryDataType } from "../../types/types";
+import { useValidation } from "../../customHooks/useValidation";
+import { deliveryAddressSchema } from "../../formSchemas";
 import "./style.css";
 
 const AddProfile = ({ addDeliveryProfile, addingDeliveryProfile, setPageIndex }: addProfileProps) => {
+  const { testValidation, validationErrors } = useValidation(deliveryAddressSchema);
   const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({
     firstName: "",
     lastName: "",
@@ -28,8 +31,8 @@ const AddProfile = ({ addDeliveryProfile, addingDeliveryProfile, setPageIndex }:
 
   return (
     <div id="add_profile">
-      <ProfileForm handleDeliveryProfile={handleDeliveryProfile} isPending={addingDeliveryProfile} legend="Add New Address" handlePageIndex={handlePageIndex}>
-        <AddProfileFormElements setDeliveryProfile={setDeliveryProfile} />
+      <ProfileForm props={{ handleDeliveryProfile, isPending: addingDeliveryProfile, legend: "Add New Address", handlePageIndex, testValidation, deliveryProfile }}>
+        <AddProfileFormElements setDeliveryProfile={setDeliveryProfile} validationErrors={validationErrors} />
       </ProfileForm>
     </div>
   );

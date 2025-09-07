@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productRatingsProps } from "../../types";
+import { productRatingsProps } from "../../types/types";
 
 const ProductRatings = ({ rating, styles }: productRatingsProps) => {
   const ratings = Array(5)

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { thumbnailWrapperProps } from "../../types";
+import { thumbnailWrapperProps } from "../../types/types";
 
 const ThumbnailWrapper = ({ setActiveIndex, activeIndex, index, children }: thumbnailWrapperProps) => {
   const isActiveIndex = index === activeIndex;

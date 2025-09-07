@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formCompProp } from "../../types";
+import { formCompProp } from "../../types/types";
 import "./style.css";
 
 const FormComp = ({ children, handleFormSubmit, styles }: formCompProp) => {

@@ -2,7 +2,7 @@ import React from "react";
 
 import Loader from "../Loader";
 
-import { savedItemButtonProps } from "../../types";
+import { savedItemButtonProps } from "../../types/types";
 import "./style.css";
 
 const SavedItemButton = ({ data }: savedItemButtonProps) => {

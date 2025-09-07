@@ -1,7 +1,7 @@
 import React, { MouseEvent, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 
-import { navigationButtonsProps } from "../../types";
+import { navigationButtonsProps } from "../../types/types";
 import "./style.css";
 
 const NavigationButtons = ({ params }: navigationButtonsProps) => {

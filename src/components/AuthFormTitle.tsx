@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AuthFormTitleProp } from "../types";
+import { AuthFormTitleProp } from "../types/types";
 
 const AuthFormTitle = ({ title }: AuthFormTitleProp) => {
   return (

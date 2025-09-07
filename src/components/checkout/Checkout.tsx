@@ -13,7 +13,7 @@ import PayStackDialog from "../payStack/PayStackDialog.tsx";
 import CheckoutPaymentOptions from "../checkoutPaymentOptions/CheckoutPaymentOptions.tsx";
 import CheckoutError from "../checkoutError/CheckoutError.tsx";
 
-import { checkoutContextType, payPlatformType } from "../../types.ts";
+import { checkoutContextType, payPlatformType } from "../../types/types.ts";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
 import { useModal } from "../../customHooks/useModal.ts";
 import "./style.css";

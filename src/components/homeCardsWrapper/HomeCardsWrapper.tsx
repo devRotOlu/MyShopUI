@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./style.css";
-import { homeCardsWrapperProps } from "../../types";
+import { homeCardsWrapperProps } from "../../types/types";
 
 const HomeCardsWrapper = ({ children }: homeCardsWrapperProps) => {
   return (

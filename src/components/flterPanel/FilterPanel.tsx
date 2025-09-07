@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 
 import ProductRatings from "../productRating/ProductRatings";
 
-import { filterPanelProps, selectedPricesType } from "../../types";
+import { filterPanelProps, selectedPricesType } from "../../types/types";
 import { prices } from "../../data";
 import "./style.css";
 import { useGetQueryParams } from "../../customHooks/useGetQueryParams";

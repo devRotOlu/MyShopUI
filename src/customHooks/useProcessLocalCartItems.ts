@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { addedItemType, cartType, updatedItemType, processLocalCartItemsParamType } from "../types";
+import { addedItemType, cartType, updatedItemType, processLocalCartItemsParamType } from "../types/types";
 import { emptyLocalCart, getLocalCartItems } from "../helperFunctions/utilityFunctions";
 
 export const useProcessLocalCartItems = (paremeters: processLocalCartItemsParamType) => {

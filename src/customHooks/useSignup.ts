@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { myShopAxios } from "../api/axios";
-import { signupType, useSignupDataType } from "../types";
+import { signupType, useSignupDataType } from "../types/types";
 
 export const useSignup = (): useSignupDataType => {
   const signUpUser = async (data: signupType) => await myShopAxios.post("Account/signup", data);

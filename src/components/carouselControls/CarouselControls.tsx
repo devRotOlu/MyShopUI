@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-import { caurouselControlProps } from "../../types";
+import { caurouselControlProps } from "../../types/types";
 import "./style.css";
 
 const CarouselControls = ({ handleOnClickNext, handleOnClickPrevious }: caurouselControlProps) => {

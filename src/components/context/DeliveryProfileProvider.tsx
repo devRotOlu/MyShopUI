@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import { deliveryContextType, deliveryDataType, ProvidersProp } from "../../types";
+import { deliveryContextType, deliveryDataType, ProvidersProp } from "../../types/types";
 import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile";
 import Alert from "../alert/Alert";
 import { alertContext } from "./AlertProvider";

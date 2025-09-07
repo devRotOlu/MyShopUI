@@ -13,7 +13,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile";
 import "./style.css";
 import { useModal } from "../../customHooks/useModal";
-import { deliveryDataType } from "../../types";
+import { deliveryDataType } from "../../types/types";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
 import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
 

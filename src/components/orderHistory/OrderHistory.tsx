@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 import OrderedItem from "../orderedItem/OrderedItem";
 
-import { orderHistoryProps } from "../../types";
+import { orderHistoryProps } from "../../types/types";
 import { months, naira } from "../../data";
 import "./style.css";
 

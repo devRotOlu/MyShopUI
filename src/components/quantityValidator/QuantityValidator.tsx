@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { quantityValidatorProps } from "../../types";
+import { quantityValidatorProps } from "../../types/types";
 import "./style.css";
 
 const QuantityValidator = ({ ...props }: quantityValidatorProps) => {

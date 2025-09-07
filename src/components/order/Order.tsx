@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import Thumbnail from "../thumbnail/Thumbnail";
 
-import { orderProps } from "../../types";
+import { orderProps } from "../../types/types";
 import { naira, months } from "../../data";
 import "./style.css";
 

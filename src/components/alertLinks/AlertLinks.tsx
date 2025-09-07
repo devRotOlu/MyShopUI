@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./style.css";
-import { alertLinksType } from "../../types";
+import { alertLinksType } from "../../types/types";
 
 const AlertLinks = ({ children }: alertLinksType) => {
   return (

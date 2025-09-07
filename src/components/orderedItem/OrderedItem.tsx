@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { orderedItemProps } from "../../types";
+import { orderedItemProps } from "../../types/types";
 import { naira } from "../../data";
 import "./style.css";
 

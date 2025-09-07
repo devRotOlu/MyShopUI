@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrandPage from "./brandPage/BrandPage";
 import FilterPanel from "./flterPanel/FilterPanel";
 
-import { productType } from "../types";
+import { productType } from "../types/types";
 import { getBrandProducts } from "../helperFunctions/dataFetchFunctions";
 import { useGetQueryParams } from "../customHooks/useGetQueryParams";
 

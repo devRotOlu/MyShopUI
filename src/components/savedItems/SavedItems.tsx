@@ -12,7 +12,7 @@ import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
-import { wishlistType } from "../../types";
+import { wishlistType } from "../../types/types";
 
 const maxProductPerPage = 20;
 const firstPage = 1;

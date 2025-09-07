@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { updateDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
-import { deliveryDataType, useUpdateDeliveryProfileDataType } from "../types";
+import { deliveryDataType, useUpdateDeliveryProfileDataType } from "../types/types";
 
 export const useUpdateDeliveryProfile = (setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>): useUpdateDeliveryProfileDataType => {
   const { mutate, isSuccess, submittedAt, isPending } = useMutation({

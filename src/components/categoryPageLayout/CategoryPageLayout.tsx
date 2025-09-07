@@ -1,6 +1,6 @@
 import React from "react";
 
-import { categoryPageLayoutProps } from "../../types";
+import { categoryPageLayoutProps } from "../../types/types";
 import "./style.css";
 
 const CategoryPageLayout = ({ filterWrapper, children }: categoryPageLayoutProps) => {

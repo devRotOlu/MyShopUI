@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { textInputProps } from "../../types";
+import { textInputProps } from "../../types/types";
 import "./style.css";
 
 const TextInput = ({ name, type, placeholder, value, handleChange, children, handleFocus, handleBlur }: textInputProps) => {

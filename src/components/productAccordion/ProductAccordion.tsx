@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 
 import { productTabLabels } from "../../data";
-import { productAccordionProps } from "../../types";
+import { productAccordionProps } from "../../types/types";
 
 const ProductAccordion = ({ ...props }: productAccordionProps) => {
   const { productDescription, productReviews } = props;

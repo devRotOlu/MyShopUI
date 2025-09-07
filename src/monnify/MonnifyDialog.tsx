@@ -10,7 +10,7 @@ import MonnifyPaymentOptions from "../components/MonnifyPaymentOptions.tsx";
 
 import { checkoutContext } from "../components/checkout/Checkout.tsx";
 import "./style.css";
-import { monnifyDialogProps } from "../types.ts";
+import { monnifyDialogProps } from "../types/types.ts";
 import { cartContext } from "../components/context/CartProvider.tsx";
 import { naira } from "../data.ts";
 

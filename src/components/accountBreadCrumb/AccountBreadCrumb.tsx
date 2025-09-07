@@ -2,7 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
-import { accountBreadCrumbProps } from "../../types";
+import { accountBreadCrumbProps } from "../../types/types";
 import "./style.css";
 
 const AccountBreadCrumb = ({ currentLinkLabel }: accountBreadCrumbProps) => {

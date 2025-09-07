@@ -1,4 +1,4 @@
-import { deliveryProfileDataType, payOptionType, userProfileDataType, userTabDataType } from "./types";
+import { deliveryProfileDataType, payOptionType, userProfileDataType, userTabDataType } from "./types/types";
 
 export const signupDetails: { name: string; type: "text" | "email" | "number" | "password"; inputLabel: string; placeholder: string }[] = [
   {

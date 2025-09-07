@@ -1,6 +1,6 @@
 import { reactLocalStorage } from "reactjs-localstorage";
 
-import { cartType, encryptDataType } from "../types";
+import { cartType, encryptDataType } from "../types/types";
 
 export const getLocalCartItems = (): cartType[] => reactLocalStorage.getObject("cart", [], true);
 

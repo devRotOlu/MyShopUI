@@ -8,11 +8,14 @@ import Loader from "../Loader";
 import FormButton from "../formButton/FormButton";
 
 import { checkoutContext } from "../checkout/Checkout";
-import { addressFormProps, deliveryDataType } from "../../types";
+import { addressFormProps, deliveryDataType } from "../../types/types.ts";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
+import { deliveryAddressSchema } from "../../formSchemas.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
 import "./style.css";
 
 const AddressForm = ({ setAddAddress }: addressFormProps) => {
+  const { testValidation, validationErrors } = useValidation(deliveryAddressSchema);
   const [deliveryProfile, setDeliveryProfile] = useState<deliveryDataType>({
     firstName: "",
     lastName: "",
@@ -30,7 +33,8 @@ const AddressForm = ({ setAddAddress }: addressFormProps) => {
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    addDeliveryProfile(deliveryProfile);
+    const isValid = testValidation(deliveryProfile);
+    if (isValid) addDeliveryProfile(deliveryProfile);
   };
 
   return (
@@ -42,7 +46,7 @@ const AddressForm = ({ setAddAddress }: addressFormProps) => {
       <div className="flex-grow-1 px-3 pt-3 pb-4">
         <FormComp handleFormSubmit={handleFormSubmit}>
           <div className="d-flex flex-wrap justify-content-between gap-2">
-            <AddProfileFormElements setDeliveryProfile={setDeliveryProfile} />
+            <AddProfileFormElements setDeliveryProfile={setDeliveryProfile} validationErrors={validationErrors} />
           </div>
           <div className="position-relative mt-4">
             <FormButton value={addingDeliveryProfile ? "" : "Continue"} styles={{ backgroundColor: addingDeliveryProfile ? "black" : "var(--light_Green)", fontWeight: "bold", color: "black" }} />

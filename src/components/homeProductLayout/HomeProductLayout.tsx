@@ -1,6 +1,6 @@
 import React from "react";
 
-import { homeProductLayoutProps } from "../../types";
+import { homeProductLayoutProps } from "../../types/types";
 import "./style.css";
 
 const HomeProductLayout = ({ children }: homeProductLayoutProps) => {

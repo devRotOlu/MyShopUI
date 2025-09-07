@@ -1,6 +1,6 @@
 import React from "react";
 
-import { componentOverlayProps } from "../types";
+import { componentOverlayProps } from "../types/types";
 
 const ComponentOverlay = <E extends React.ElementType = "div">({ as, children }: componentOverlayProps<E>) => {
   const Component = as || "div";

@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import ProductRatings from "../productRating/ProductRatings.tsx";
 import SavedItemButton from "../savedItemButton/SavedItemButton.tsx";
 
-import { productCardProp } from "../../types.ts";
+import { productCardProp } from "../../types/types.ts";
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
 import { naira } from "../../data.ts";

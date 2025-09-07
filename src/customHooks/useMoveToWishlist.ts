@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 import { moveToWishlist } from "../helperFunctions/dataFetchFunctions";
-import { useMoveToWishlistDataType } from "../types";
+import { useMoveToWishlistDataType } from "../types/types";
 
 export const useMoveToWishlist = (): useMoveToWishlistDataType => {
   const [isItemExistErrorIndex, setIsItemExistErrorIndex] = useState<number>(0);

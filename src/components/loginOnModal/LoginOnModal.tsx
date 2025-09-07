@@ -14,16 +14,25 @@ import LoginDetails from "../loginDetails/LoginDetails.tsx";
 import { userContext } from "../context/UserProvider.tsx";
 import { loginDetails } from "../../data.ts";
 import "./style.css";
+import { useHandleLoginFormChange } from "../../customHooks/useHandleLoginFormChange.ts";
+import { useLoginSubmit } from "../../customHooks/useLoginSubmit.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
+import { loginSchema } from "../../formSchemas.ts";
 
 const LoginOnModal = () => {
   const location = useLocation();
   const pathnameRef = useRef(location.pathname);
-  const { setShowModal, isLoginError, handleLoginFormSubmit, loginInputValues, handleLoginInputChange, isAuthenticating, isJustLoggedIn } = useContext(userContext);
+  const { setShowModal, isLoginError, signingUser, isAuthenticating, isJustLoggedIn } = useContext(userContext);
+  const { formValues, handleLoginInputChange } = useHandleLoginFormChange();
+  const { testValidation, validationErrors } = useValidation(loginSchema);
+  const { handleSubmit, prevFormValues } = useLoginSubmit(signingUser, formValues, testValidation);
+
+  const isError = prevFormValues.email === formValues.email && prevFormValues.password === formValues.password && isLoginError;
 
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }) => {
     return (
-      <LoginFormElement key={name} isError={isLoginError} name={name} inputLabel={inputLabel}>
-        <TextInput handleChange={(event) => handleLoginInputChange(event, name)} value={loginInputValues[name as keyof typeof loginInputValues]} name={name} type={type} placeholder={placeholder} />
+      <LoginFormElement key={name} isError={isError} name={name} inputLabel={inputLabel} validationErrors={validationErrors}>
+        <TextInput handleChange={(event) => handleLoginInputChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );
   });
@@ -41,7 +50,7 @@ const LoginOnModal = () => {
 
   return (
     <div id="login_modal">
-      <FormComp handleFormSubmit={handleLoginFormSubmit} styles={{ height: "100%", position: "relative", width: "100%", backgroundColor: "white" }}>
+      <FormComp handleFormSubmit={handleSubmit} styles={{ height: "100%", position: "relative", width: "100%", backgroundColor: "white" }}>
         <div className="d-flex justify-content-between py-2 align-items-center " id="modal_login_header">
           <h2>Login</h2>
           <ModalCloseButton setShowModal={setShowModal} />

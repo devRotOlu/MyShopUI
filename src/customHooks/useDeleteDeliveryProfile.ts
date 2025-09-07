@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { deleteDeliveryProfile } from "../helperFunctions/dataFetchFunctions";
-import { deliveryDataType, useDeleteDeliveryProfileDataType } from "../types";
+import { deliveryDataType, useDeleteDeliveryProfileDataType } from "../types/types";
 
 export const useDeleteDeliveryProfile = (setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>): useDeleteDeliveryProfileDataType => {
   const profileIndexRef = useRef(-1);

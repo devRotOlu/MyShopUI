@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-import { itemToggleButtonProps } from "../../types";
+import { itemToggleButtonProps } from "../../types/types";
 import "./style.css";
 
 const ItemToggleButton = ({ itemQuantity, handleDecreaseItem, handleIncreaseItem, styles }: itemToggleButtonProps) => {

@@ -15,15 +15,21 @@ import PageLink from "../pageLink/PageLink.tsx";
 import ResetPasswordInstruction from "../passwordResetInstruction/PasswordResetInstruction.tsx";
 import ForgotPasswordSuccessAlert from "../forgotPasswordSuccessAlert/ForgotPasswordSuccessAlert.tsx";
 import PasswordResetErrorAlert from "../passwordResetErrorAlert/PasswordResetErrorAlert.tsx";
+import ValidationError from "../validationError/ValidationError.tsx";
 
 import "./style.css";
 import { sendEmailForPassWordReset } from "../../helperFunctions/dataFetchFunctions.ts";
+import { baseAuthSchema } from "../../formSchemas.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
 
 const ForgotPassword = () => {
   const [isFirstResetEmail, setIsFirstResetEmail] = useState(false);
   const [email, setEmail] = useState("");
   const [emailRef, setEmailRef] = useState("");
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+
+  const { validationErrors, testValidation } = useValidation(baseAuthSchema);
+
   const { isPending, isSuccess, mutate } = useMutation({
     mutationFn: async () => {
       return await sendEmailForPassWordReset(email);
@@ -49,11 +55,14 @@ const ForgotPassword = () => {
   };
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    mutate();
+    const isValidated = testValidation({ email });
+    if (isValidated) mutate();
   };
+
   if (isSuccess && !isFirstResetEmail) {
     setIsFirstResetEmail(true);
   }
+
   return (
     <AuthPageWrapper id="forgot_password">
       <FormComp handleFormSubmit={handleFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
@@ -75,6 +84,7 @@ const ForgotPassword = () => {
                     Enter Your Email Address
                   </p>
                 </TextInput>
+                {validationErrors.email && <ValidationError error={validationErrors.email} />}
                 <div className="position-relative">
                   <FormButton value="Send Reset Link" styles={{ backgroundColor: "var(--light_Green)" }} />
                   {isPending && (

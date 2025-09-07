@@ -13,7 +13,7 @@ import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
 
 import { getOrders, getUserReviews } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
-import { orderType, userReviewType } from "../../types";
+import { orderType, userReviewType } from "../../types/types";
 import "./style.css";
 
 const Orders = () => {

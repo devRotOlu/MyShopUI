@@ -1,7 +1,7 @@
 import React, { useContext, forwardRef } from "react";
 import { Icon } from "@iconify/react";
 
-import { checkoutPaymentOptionProps } from "../../types";
+import { checkoutPaymentOptionProps } from "../../types/types";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 

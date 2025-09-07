@@ -1,6 +1,6 @@
 import React from "react";
 
-import { paymentTitleProp } from "../types";
+import { paymentTitleProp } from "../types/types";
 
 const MonnifyPaymentOptionTitle = ({ title, children }: paymentTitleProp) => {
   return (

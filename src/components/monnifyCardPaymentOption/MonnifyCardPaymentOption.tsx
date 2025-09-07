@@ -8,14 +8,17 @@ import MonnifyPaymentOptionTitle from "../MonnifyPaymentOptionTitle.tsx";
 import ResetPayOptionBtn from "../../monnify/ResetPayOptionBtn.tsx";
 import Loader from "../Loader.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
+import ValidationError from "../validationError/ValidationError.tsx";
 
-import { cardType, cardPaymentType } from "../../types.ts";
+import { cardType, cardPaymentType } from "../../types/types.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import { checkoutContext } from "../checkout/Checkout.tsx";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";
 import { encryptData } from "../../helperFunctions/utilityFunctions.ts";
 import { appContext } from "../context/AppProvider.tsx";
+import { monnifyCardSchema } from "../../formSchemas.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
 
 const cardMaxChar = {
   max_pin: 4,
@@ -45,6 +48,7 @@ const CardPayment = () => {
 
   const { transactionRef, sendCardDetails, profileIndex, sendingCardDetails, orderInstruction, setIsMonnifyError } = useContext(checkoutContext);
   const { deliveryProfiles } = useContext(deliveryContext);
+  const { validationErrors, testValidation } = useValidation(monnifyCardSchema);
 
   const [card, setCard] = useState<cardType>({
     number: "",
@@ -57,6 +61,9 @@ const CardPayment = () => {
 
   const handleCardRequest = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const _card = { ...card, number: card.number.replaceAll(" ", "") };
+    const isValidated = testValidation(_card);
+    if (!isValidated) return;
     const { cvv, number, expiry, pin } = card;
     const expiryMonth = expiry[0] + expiry[1];
     let expiryYear = expiry[3] + expiry[4];
@@ -128,12 +135,24 @@ const CardPayment = () => {
       <div className="d-flex flex-sm-row flex-column pt-3 pb-5 px-3" id="card_payment">
         <Cards number={number} cvc={cvv} name={`${firstName} ${lastName}`} expiry={expiry} focused={focus} />
         <FormComp handleFormSubmit={handleCardRequest} styles={{ width: "100%" }}>
-          <TextInput placeholder="Card Number" name="number" type="text" value={number} handleChange={handleCardChange} handleFocus={handleInputFocus} />
-          <div className="d-flex justify-content-between gap-3">
-            <TextInput placeholder="Expiry" name="expiry" type="text" value={expiry} handleChange={handleCardChange} handleFocus={handleInputFocus} />
-            <TextInput placeholder="CVV" name="cvv" type="text" value={cvv} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+          <div>
+            <TextInput placeholder="Card Number" name="number" type="text" value={number} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+            {validationErrors.number && <ValidationError error={validationErrors.number} />}
           </div>
-          <TextInput placeholder="Pin" name="pin" type="text" value={pin} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+          <div className="d-flex justify-content-between gap-3">
+            <div>
+              <TextInput placeholder="Expiry" name="expiry" type="text" value={expiry} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+              {validationErrors.expiry && <ValidationError error={validationErrors.expiry} />}
+            </div>
+            <div>
+              <TextInput placeholder="CVV" name="cvv" type="text" value={cvv} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+              {validationErrors.cvv && <ValidationError error={validationErrors.cvv} />}
+            </div>
+          </div>
+          <div>
+            <TextInput placeholder="Pin" name="pin" type="text" value={pin} handleChange={handleCardChange} handleFocus={handleInputFocus} />
+            {validationErrors.pin && <ValidationError error={validationErrors.pin} />}
+          </div>
           <div className="position-relative">
             <FormButton value="Pay Now" styles={{ backgroundColor: "var(--lighter_pink)" }} />
             {sendingCardDetails && (

@@ -9,7 +9,7 @@ import CategoryPageLayout from "../categoryPageLayout/CategoryPageLayout";
 import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 import SortPanel from "../sortPanel/SortPanel";
 
-import { brandPageProps, productType } from "../../types";
+import { brandPageProps, productType } from "../../types/types";
 import { appContext } from "../context/AppProvider";
 import HomeProductCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 

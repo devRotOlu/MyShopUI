@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
 
-import { dialogHeaderProps } from "../../types";
+import { dialogHeaderProps } from "../../types/types";
 import logo from "../../assests/logo_new_2.png";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";

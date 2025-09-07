@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import ProductRatings from "../productRating/ProductRatings";
 import RatingStats from "../ratingStats/RatingStats";
 
-import { productReviewsProps } from "../../types";
+import { productReviewsProps } from "../../types/types";
 import { months } from "../../data";
 import { userContext } from "../context/UserProvider";
 import "./style.css";

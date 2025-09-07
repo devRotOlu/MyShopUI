@@ -1,6 +1,6 @@
 import React from "react";
 
-import { categoryCardsWrapperProps } from "../../types";
+import { categoryCardsWrapperProps } from "../../types/types";
 import "./style.css";
 
 const CategoryCardsWrapper = ({ children }: categoryCardsWrapperProps) => {

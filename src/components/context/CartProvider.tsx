@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "../alert/Alert";
 import AlertLinks from "../alertLinks/AlertLinks";
 
-import { addedItemType, cartContextType, cartType, ProvidersProp, updatedItemType } from "../../types";
+import { addedItemType, cartContextType, cartType, ProvidersProp, updatedItemType } from "../../types/types";
 import { userContext } from "./UserProvider";
 import { alertContext } from "./AlertProvider";
 import { useGetCartItems } from "../../customHooks/useGetCartItems";

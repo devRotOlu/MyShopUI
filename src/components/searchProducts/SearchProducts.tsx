@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { searchProductsProps } from "../../types";
+import { searchProductsProps } from "../../types/types";
 import "./style.css";
 
 const SearchProducts = ({ products, children }: searchProductsProps) => {

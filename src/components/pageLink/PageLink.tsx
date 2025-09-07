@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { pageLinkProps } from "../../types";
+import { pageLinkProps } from "../../types/types";
 import "./style.css";
 
 const PageLink = ({ link, linkLabel }: pageLinkProps) => {

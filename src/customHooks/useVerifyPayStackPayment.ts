@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { reactLocalStorage } from "reactjs-localstorage";
 
 import { verifyPayStackPayment } from "../helperFunctions/dataFetchFunctions";
-import { deliveryDataType, useVerifyPayStackPaymentDataType } from "../types";
+import { deliveryDataType, useVerifyPayStackPaymentDataType } from "../types/types";
 
 export const useVerifyPayStackPayment = (payStackReference: string, deliveryProfiles: deliveryDataType[]): useVerifyPayStackPaymentDataType => {
   const { isSuccess, refetch, isError, data } = useQuery({

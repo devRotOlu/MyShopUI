@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AuthFormElementWrapperProp } from "../../types";
+import { AuthFormElementWrapperProp } from "../../types/types";
 import "./style.css";
 
 const AuthFormElementWrapper = ({ children }: AuthFormElementWrapperProp) => {

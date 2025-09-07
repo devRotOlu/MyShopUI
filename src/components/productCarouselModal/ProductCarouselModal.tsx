@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productCarouselModalProps } from "../../types";
+import { productCarouselModalProps } from "../../types/types";
 import "./style.css";
 
 const ProductCarouselModal = ({ modalCloseButton, carouselContent }: productCarouselModalProps) => {

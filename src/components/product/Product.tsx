@@ -11,7 +11,7 @@ import ProductDescription from "../productDescription/ProductDescription";
 import ProductReviews from "../productReviews/ProductReviews";
 import ProductAccordion from "../productAccordion/ProductAccordion";
 
-import { productProps } from "../../types";
+import { productProps } from "../../types/types";
 import "./style.css";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";

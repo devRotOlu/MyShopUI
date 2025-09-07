@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { validateAccessToken } from "../helperFunctions/dataFetchFunctions";
-import { userDataType, useTokenValidationDataType } from "../types";
+import { userDataType, useTokenValidationDataType } from "../types/types";
 import { useEffect } from "react";
 
 export const useTokenValidation = (setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void, setLoginData: (value: React.SetStateAction<userDataType>) => void, setIsOldSession: (value: React.SetStateAction<boolean>) => void): useTokenValidationDataType => {

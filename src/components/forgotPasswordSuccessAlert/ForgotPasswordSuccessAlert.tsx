@@ -1,6 +1,6 @@
 import React from "react";
 
-import { forgotPasswordSuccessAlertProps } from "../../types";
+import { forgotPasswordSuccessAlertProps } from "../../types/types";
 import "./style.css";
 
 const ForgotPasswordSuccessAlert = ({ email, mutate }: forgotPasswordSuccessAlertProps) => {

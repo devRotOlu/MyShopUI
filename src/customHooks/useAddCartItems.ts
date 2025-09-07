@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { addItemsToCart } from "../helperFunctions/dataFetchFunctions";
 import { useContext, useEffect } from "react";
 import { userContext } from "../components/context/UserProvider";
-import { addedItemType, useAddCartItemsDataType } from "../types";
+import { addedItemType, useAddCartItemsDataType } from "../types/types";
 
 export const useAddCartItems = (addedItems: addedItemType[]): useAddCartItemsDataType => {
   const { isLoggedIn } = useContext(userContext);

@@ -1,7 +1,7 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { skeletonProps } from "../../types";
+import { skeletonProps } from "../../types/types";
 import "./style.css";
 
 const ProductCardSkeleton = ({ count }: skeletonProps) => {

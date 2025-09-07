@@ -5,7 +5,7 @@ import SearchBar from "../searchBar/SearchBar";
 import SearchDisplay from "../searchDisplay/SearchDisplay";
 import BrandWrapper from "../brandWrapper/BrandWrapper";
 
-import { searchbarBrandWrapperProps, searchResultType } from "../../types";
+import { searchbarBrandWrapperProps, searchResultType } from "../../types/types";
 import "./style.css";
 import { useLocation } from "react-router-dom";
 

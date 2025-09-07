@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import "./style.css";
 import { searchProduct } from "../../helperFunctions/dataFetchFunctions";
-import { searchBarProps } from "../../types";
+import { searchBarProps } from "../../types/types";
 
 const SearchBar = ({ ...props }: searchBarProps) => {
   const { setSearchResults, setUserInput, searchTerm, userInput, setIsFocused } = props;

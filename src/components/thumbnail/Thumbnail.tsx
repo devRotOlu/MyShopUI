@@ -1,6 +1,6 @@
 import React from "react";
 
-import { thumbnailProps } from "../../types";
+import { thumbnailProps } from "../../types/types";
 import "./style.css";
 
 const Thumbnail = ({ url, name }: thumbnailProps) => {

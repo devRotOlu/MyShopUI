@@ -1,6 +1,12 @@
 import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent } from "react";
 import { AxiosResponse } from "axios";
 import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
+import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
+import z, { ZodObject, ZodRawShape } from "zod";
+
+export type validationErrorType = {
+  error: string;
+};
 
 type baseUserType = {
   firstName: string;
@@ -85,6 +91,7 @@ export type LoginProp = {
 };
 
 export type loginFormElementProp = {
+  validationErrors: Partial<Record<keyof loginSchemaType, string>>;
   name: string;
   inputLabel: string;
   children: ReactNode;
@@ -105,11 +112,19 @@ export type useModalDataType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export type useLoginSubmitDataType = {
+  prevFormValues: {
+    email: string;
+    password: string;
+  };
+  handleSubmit: (event: FormEvent<Element>) => void;
+};
+
 export type useLogoutDataType = {
   logoutUser: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isLoggedOut: boolean;
   logoutTime: number;
-  isLoggingOut:boolean
+  isLoggingOut: boolean;
 };
 
 export type useDeleteAccountDataType = {
@@ -119,14 +134,16 @@ export type useDeleteAccountDataType = {
   accountDeletionTime: number;
 };
 
+export type useHandleLoginFormChangeData = {
+  handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
+  formValues: loginStateType;
+};
+
 export type useLoginData = {
+  signingUser: UseMutateFunction<AxiosResponse<any, any>, Error, loginStateType, unknown>;
   isAuthenticating: boolean;
   loginTime: number;
-  loginInputValues: loginStateType;
-  setLoginInputValues: Dispatch<SetStateAction<loginStateType>>;
-  handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
   isLoginError: boolean;
-  handleLoginFormSubmit: (event: FormEvent) => void;
 };
 
 export type useMonnifyType = {
@@ -439,6 +456,7 @@ export type orderType = {
 
 export type addProfileFormElementProps = {
   setDeliveryProfile: (value: React.SetStateAction<deliveryDataType>) => void;
+  validationErrors: Partial<Record<keyof deliveryAddressSchemaType, string>>;
 };
 
 export type deliveryDataType = baseUserType &
@@ -531,6 +549,10 @@ export type cartTableProps = {
 export type failedRequestType = {
   resolve: (value?: any) => void;
   reject: (error?: any) => void;
+};
+
+export type passwordChecklistDisplayProps = {
+  value: string;
 };
 
 export type signupType = baseUserType & { email: string; phoneNumber: string; password: string };
@@ -896,6 +918,7 @@ export type deliveryContextType = {
 };
 
 export type userContextType = userProviderSignUpType & {
+  signingUser: UseMutateFunction<AxiosResponse<any, any>, Error, loginStateType, unknown>;
   isLoggedOut: boolean;
   confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
   isValidatingToken: boolean;
@@ -905,11 +928,7 @@ export type userContextType = userProviderSignUpType & {
   deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
   isDeletingAccount: boolean;
   isJustLoggedIn: boolean;
-  handleLoginFormSubmit: (event: FormEvent) => void;
   isLoginError: boolean;
-  handleLoginInputChange: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
-  loginInputValues: loginStateType;
-  setLoginInputValues: Dispatch<SetStateAction<loginStateType>>;
   initialDeliveryProfile: deliveryDataType;
   modifyingProfile: boolean;
   profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
@@ -976,6 +995,11 @@ export type useAddDeliveryProfileDataType = {
   addingDeliveryProfile: boolean;
 };
 
+export type useValidationDataType<T extends ZodRawShape> = {
+  validationErrors: Partial<Record<keyof z.infer<ZodObject<T>>, string>>;
+  testValidation: (data: unknown) => data is z.infer<ZodObject<T>>;
+};
+
 export type useVerifyPayStackPaymentDataType = {
   isPaystackPaymentSuccess: boolean;
   isPaystackPaymentError: boolean;
@@ -991,11 +1015,15 @@ export type useUpdateDeliveryProfileDataType = {
 };
 
 export type profileFormProps = {
-  handlePageIndex: () => void;
+  props: {
+    testValidation: (data: unknown) => data is deliveryDataType;
+    handlePageIndex: () => void;
+    handleDeliveryProfile: () => void;
+    isPending: boolean;
+    legend: string;
+    deliveryProfile: deliveryDataType;
+  };
   children: React.ReactNode;
-  handleDeliveryProfile: () => void;
-  isPending: boolean;
-  legend: string;
 };
 
 export type ProfileWrapperProps = {

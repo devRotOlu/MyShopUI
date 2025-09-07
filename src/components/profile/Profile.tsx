@@ -8,13 +8,16 @@ import ComponentOverlay from "../ComponentOverlay.tsx";
 import Loader from "../Loader.tsx";
 import BreadCrumb from "../breadCrumb/BreadCrumb.tsx";
 import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
+import ValidationError from "../validationError/ValidationError.tsx";
+import AccountTab from "../dashboard/AccountTab.tsx";
 
 import { userContext } from "../context/UserProvider.tsx";
-import { profileDataType } from "../../types";
+import { profileDataType } from "../../types/types.ts";
 import { userProfileData } from "../../data";
 import "./style.css";
-import AccountTab from "../dashboard/AccountTab.tsx";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
+import { profileSchema } from "../../formSchemas.ts";
 
 const Profile = () => {
   const { loginData, profileMutate, modifyingProfile, isAuthenticating, isValidatingToken } = useContext(userContext);
@@ -22,6 +25,7 @@ const Profile = () => {
   const formBtnRef = useRef<HTMLDivElement>(null!);
 
   useCalHeightOnResize(formBtnRef, "--profile-btn-wrap");
+  const { testValidation, validationErrors } = useValidation(profileSchema);
 
   const [profile, setProfile] = useState<profileDataType>({
     firstName: "",
@@ -48,25 +52,31 @@ const Profile = () => {
   const profileInputs = userProfileData.map(({ name, label }, index) => {
     let value = profile[name as keyof typeof profile];
     value = value ? value : "";
+    const error = validationErrors[name as keyof typeof validationErrors];
     if (name === "city" || name === "state") {
       return (
         <div className="input_wrapper">
           <TextInput key={index} name={name} type="text" value={value} handleChange={handleInputChange}>
             <p className="mb-1">{label}</p>
           </TextInput>
+          {error !== undefined && <ValidationError error={error} />}
         </div>
       );
     }
     return (
-      <TextInput key={index} name={name} type="text" value={value} handleChange={handleInputChange}>
-        <p className="mb-1">{label}</p>
-      </TextInput>
+      <div className="w-100">
+        <TextInput key={index} name={name} type="text" value={value} handleChange={handleInputChange}>
+          <p className="mb-1">{label}</p>
+        </TextInput>
+        {error !== undefined && <ValidationError error={error} />}
+      </div>
     );
   });
 
   const handleProfileSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    profileMutate(profile);
+    const isValidated = testValidation(profile);
+    if (isValidated) profileMutate(profile);
   };
 
   return (

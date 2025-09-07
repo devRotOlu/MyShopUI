@@ -6,7 +6,7 @@ import ComponentOverlay from "../ComponentOverlay.tsx";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
 
 import { useCartItem } from "../../customHooks/useCartItem";
-import { cartItemProp } from "../../types";
+import { cartItemProp } from "../../types/types.ts";
 import { naira } from "../../data";
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
 import "./style.css";

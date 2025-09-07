@@ -1,6 +1,6 @@
 import React from "react";
 
-import { resetPasswordInstructionProps } from "../../types";
+import { resetPasswordInstructionProps } from "../../types/types";
 import "./style.css";
 
 const ResetPasswordInstruction = ({ instruction }: resetPasswordInstructionProps) => {

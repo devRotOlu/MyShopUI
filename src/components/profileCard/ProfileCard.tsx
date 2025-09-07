@@ -1,7 +1,7 @@
 import React, { useContext, MouseEvent } from "react";
 import { Icon } from "@iconify/react";
 
-import { profileCardProps } from "../../types";
+import { profileCardProps } from "../../types/types";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
 import "./style.css";
 

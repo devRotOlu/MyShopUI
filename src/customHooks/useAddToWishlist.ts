@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { addToWishlist } from "../helperFunctions/dataFetchFunctions";
-import { useAddToWhishlistDataType } from "../types";
+import { useAddToWhishlistDataType } from "../types/types";
 
 export const useAddToWhishlist = (): useAddToWhishlistDataType => {
   const { mutate, isPending, isSuccess } = useMutation({

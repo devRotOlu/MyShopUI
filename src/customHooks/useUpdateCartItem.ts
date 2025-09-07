@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { updateCartItem } from "../helperFunctions/dataFetchFunctions";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
-import { useUpdateItemDataType } from "../types";
+import { useUpdateItemDataType } from "../types/types";
 import { userContext } from "../components/context/UserProvider";
 
 export const useUpdateCartItem = (setLocalStorageIndex: Dispatch<SetStateAction<number>>): useUpdateItemDataType => {

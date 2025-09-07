@@ -6,7 +6,7 @@ import LoginOnModal from "../loginOnModal/LoginOnModal";
 import Alert from "../alert/Alert";
 import Modal from "../modal/Modal";
 
-import { ProvidersProp, productType, userContextType, userDataType } from "../../types";
+import { ProvidersProp, productType, userContextType, userDataType } from "../../types/types";
 import { getProducts, modifyProfile } from "../../helperFunctions/dataFetchFunctions";
 import { useModal } from "../../customHooks/useModal";
 import { useLogin } from "../../customHooks/useLogin";
@@ -49,7 +49,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
 
   const [products, setProducts] = useState<productType[]>([]);
 
-  const { isLoginError, handleLoginInputChange, handleLoginFormSubmit, loginInputValues, setLoginInputValues, loginTime, isAuthenticating } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
+  const { isLoginError, loginTime, isAuthenticating, signingUser } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime, isLoggingOut } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
@@ -179,6 +179,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
   return (
     <userContext.Provider
       value={{
+        signingUser,
         signup,
         isSigningUp,
         isSignupError,
@@ -191,10 +192,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
         deleteAccount,
         isJustLoggedIn: loginTimeRef.current !== loginTime && isLoggedIn === true,
         isLoginError,
-        handleLoginFormSubmit,
-        handleLoginInputChange,
-        loginInputValues,
-        setLoginInputValues,
         modifyingProfile,
         profileMutate,
         setShowModal,

@@ -15,11 +15,20 @@ import Loader from "../Loader.tsx";
 import LoginDetails from "../loginDetails/LoginDetails.tsx";
 
 import { loginDetails } from "../../data.ts";
+import { useHandleLoginFormChange } from "../../customHooks/useHandleLoginFormChange.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
+import { useLoginSubmit } from "../../customHooks/useLoginSubmit.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
+import { loginSchema } from "../../formSchemas.ts";
 
 const LoginPage = () => {
-  const { isLoginError, loginInputValues, handleLoginInputChange, handleLoginFormSubmit, isJustLoggedIn, isAuthenticating, confirmEmail } = useContext(userContext);
+  const { isLoginError, isJustLoggedIn, isAuthenticating, confirmEmail, signingUser } = useContext(userContext);
+  const { formValues, handleLoginInputChange } = useHandleLoginFormChange();
+  const { testValidation, validationErrors } = useValidation(loginSchema);
+  const { handleSubmit, prevFormValues } = useLoginSubmit(signingUser, formValues, testValidation);
+
+  const isError = prevFormValues.email === formValues.email && prevFormValues.password === formValues.password && isLoginError;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,15 +51,15 @@ const LoginPage = () => {
 
   const formElements = loginDetails.map(({ name, inputLabel, type, placeholder }, index) => {
     return (
-      <LoginFormElement key={index} isError={isLoginError} name={name} inputLabel={inputLabel}>
-        <TextInput handleChange={(event) => handleLoginInputChange(event, name)} value={loginInputValues[name as keyof typeof loginInputValues]} name={name} type={type} placeholder={placeholder} />
+      <LoginFormElement key={index} isError={isError} name={name} inputLabel={inputLabel} validationErrors={validationErrors}>
+        <TextInput handleChange={(event) => handleLoginInputChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder} />
       </LoginFormElement>
     );
   });
 
   return (
     <AuthPageWrapper id="login_page">
-      <FormComp handleFormSubmit={handleLoginFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
+      <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
         <AuthFormTitle title="Login" />
         <AuthFormElementWrapper>
           {formElements}

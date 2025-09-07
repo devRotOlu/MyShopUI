@@ -9,11 +9,15 @@ import TransferDetailsTable from "./transferDetailsTable/TransferDetailsTable.ts
 import MonnifyPaymentOptionTitle from "./MonnifyPaymentOptionTitle.tsx";
 import ResetPayOptionBtn from "../monnify/ResetPayOptionBtn.tsx";
 import Loader from "./Loader.tsx";
+import ValidationError from "./validationError/ValidationError.tsx";
 
 import { checkoutContext } from "./checkout/Checkout.tsx";
+import { monnifyTransferSchema } from "../formSchemas.ts";
+import { useValidation } from "../customHooks/useValidation.ts";
 
 const MonnifyBankTransferOption = () => {
   const { bankCode, setBankCode, sendTransferDetails, isFetchingTransferDetails, detailsSent, isTransactionSuccessful } = useContext(checkoutContext);
+  const { testValidation, validationErrors } = useValidation(monnifyTransferSchema);
 
   useEffect(() => {
     return () => setBankCode("");
@@ -26,7 +30,8 @@ const MonnifyBankTransferOption = () => {
 
   const handleDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    sendTransferDetails();
+    const isValidated = testValidation({ bankCode });
+    if (isValidated) sendTransferDetails();
   };
 
   if (detailsSent && !isTransactionSuccessful) {
@@ -45,9 +50,12 @@ const MonnifyBankTransferOption = () => {
       <div className="pt-3 pb-5 px-3">
         <FormComp handleFormSubmit={handleDetailsSubmit} styles={{ backgroundColor: "inherit" }}>
           <>
-            <TextInput value={bankCode} handleChange={handleBankCode} name="bankCode" type="text">
-              <p>Bank Code</p>
-            </TextInput>
+            <div>
+              <TextInput value={bankCode} handleChange={handleBankCode} name="bankCode" type="text">
+                <p>Bank Code</p>
+              </TextInput>
+              {validationErrors.bankCode && <ValidationError error={validationErrors.bankCode} />}
+            </div>
             <div className="position-relative">
               <FormButton value="Pay Now" styles={{ backgroundColor: "var(--lighter_pink)" }} />
               {isFetchingTransferDetails && (

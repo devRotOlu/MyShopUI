@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { userContext } from "../components/context/UserProvider";
 import { getWishlist } from "../helperFunctions/dataFetchFunctions";
-import { useGetWishlistData, wishlistType } from "../types";
+import { useGetWishlistData, wishlistType } from "../types/types";
 
 export const useGetWishlist = (setWishList: React.Dispatch<React.SetStateAction<wishlistType[]>>): useGetWishlistData => {
   const { loginData, isLoggedIn } = useContext(userContext);

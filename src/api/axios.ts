@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { updateTokens } from "../helperFunctions/dataFetchFunctions.ts";
-import { failedRequestType } from "../types.ts";
+import { failedRequestType } from "../types/types.ts";
 
 axios.defaults.withCredentials = true;
 

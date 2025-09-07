@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "../alert/Alert";
 import AlertLinks from "../alertLinks/AlertLinks";
 
-import { ProvidersProp, wishlistContextType, wishlistType } from "../../types";
+import { ProvidersProp, wishlistContextType, wishlistType } from "../../types/types";
 import { alertContext } from "./AlertProvider";
 import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";

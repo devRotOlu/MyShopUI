@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { productSummaryModalProps } from "../../types";
+import { productSummaryModalProps } from "../../types/types";
 import "./style.css";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";

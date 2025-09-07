@@ -13,13 +13,20 @@ import FormButton from "../formButton/FormButton";
 import PasswordResetInstruction from "../passwordResetInstruction/PasswordResetInstruction.tsx";
 import ResetPasswordSuccessAlert from "../resetPasswordSuccessAlert/ResetPasswordSuccessAlert.tsx";
 import PasswordResetErrorAlert from "../passwordResetErrorAlert/PasswordResetErrorAlert.tsx";
+import PasswordChecklistDisplay from "../PasswordChecklistDisplay.tsx";
 
 import { resetPassword } from "../../helperFunctions/dataFetchFunctions.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
+import { passwordResetSchema } from "../../formSchemas.ts";
+import ValidationError from "../validationError/ValidationError.tsx";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+  const { validationErrors, testValidation } = useValidation(passwordResetSchema);
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const userId = searchParams.get("id") || "";
@@ -42,8 +49,10 @@ const ResetPassword = () => {
   }
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    mutate();
+    const isValidated = testValidation({ password: newPassword, confirmPassword });
+    if (isValidated) mutate();
   };
+
   return (
     <AuthPageWrapper id="reset_password">
       <FormComp handleFormSubmit={handleFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
@@ -52,16 +61,23 @@ const ResetPassword = () => {
         {isSuccess && <ResetPasswordSuccessAlert />}
         {!isSuccess && !isError && <PasswordResetInstruction instruction="Enter a new password below to change your password." />}
         <AuthFormElementWrapper>
-          <TextInput value={newPassword} name="password" type="password" placeholder="Password" handleChange={handlePassword}>
-            <p className="fw-bold mb-1" id="input_label">
-              Password
-            </p>
-          </TextInput>
-          <TextInput value={confirmPassword} name="confirm-password" type="password" placeholder="Confirm Password" handleChange={handleConfirmPassword}>
-            <p className="fw-bold mb-1" id="input_label">
-              Confirm Password
-            </p>
-          </TextInput>
+          <div>
+            <TextInput handleBlur={() => setIsFocusedPassword(false)} handleFocus={() => setIsFocusedPassword(true)} value={newPassword} name="password" type="password" placeholder="Password" handleChange={handlePassword}>
+              <p className="fw-bold mb-1" id="input_label">
+                Password
+              </p>
+            </TextInput>
+            {validationErrors.password && <ValidationError error={validationErrors.password} />}
+            {isFocusedPassword && <PasswordChecklistDisplay value={newPassword} />}
+          </div>
+          <div>
+            <TextInput value={confirmPassword} name="confirm-password" type="password" placeholder="Confirm Password" handleChange={handleConfirmPassword}>
+              <p className="fw-bold mb-1" id="input_label">
+                Confirm Password
+              </p>
+            </TextInput>
+            {validationErrors.confirmPassword && <ValidationError error={validationErrors.confirmPassword} />}
+          </div>
           <div className="position-relative">
             <FormButton value="Reset Password" styles={{ backgroundColor: "var(--light_Green)" }} />
             {(isPending || isSuccess) && (

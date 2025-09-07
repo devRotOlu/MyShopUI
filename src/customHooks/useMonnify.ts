@@ -2,7 +2,7 @@ import { useEffect, useRef, useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getTransactionStatus, getTranserInfo, initializePayment, sendCardDetails } from "../helperFunctions/dataFetchFunctions";
-import { bankDetailsType, useMonnifyType } from "../types";
+import { bankDetailsType, useMonnifyType } from "../types/types";
 import { userContext } from "../components/context/UserProvider";
 
 export const useMonnify = (bankCode: string): useMonnifyType => {

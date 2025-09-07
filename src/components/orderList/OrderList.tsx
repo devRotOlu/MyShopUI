@@ -2,7 +2,7 @@ import React, { useState, MouseEvent } from "react";
 
 import CancelledOrders from "../CancelledOrders";
 
-import { orderListProps } from "../../types";
+import { orderListProps } from "../../types/types";
 import "./style.css";
 
 const OrderList = ({ orders, children }: orderListProps) => {

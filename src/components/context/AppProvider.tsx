@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 import Modal from "../modal/Modal";
 
-import { ProvidersProp } from "../../types";
+import { ProvidersProp } from "../../types/types";
 import { getPublicKey } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "./UserProvider";
 

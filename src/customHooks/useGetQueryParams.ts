@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-import { useGetQueryParamsDataType } from "../types";
+import { useGetQueryParamsDataType } from "../types/types";
 
 export const useGetQueryParams = (): useGetQueryParamsDataType => {
   const [searchParams] = useSearchParams();

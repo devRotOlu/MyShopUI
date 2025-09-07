@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 
-import { ProvidersProp } from "../../types";
+import { ProvidersProp } from "../../types/types";
 
 export type alertDataType = {
   showAlert: boolean;

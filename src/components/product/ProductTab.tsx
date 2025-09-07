@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productTabProps } from "../../types";
+import { productTabProps } from "../../types/types";
 import { productTabLabels } from "../../data";
 
 const ProductTab = ({ setTabIndex, tabIndex, reviewsLength }: productTabProps) => {

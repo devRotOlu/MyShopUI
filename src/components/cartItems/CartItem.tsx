@@ -5,7 +5,7 @@ import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
 import QuantityValidator from "../quantityValidator/QuantityValidator.tsx";
 
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
-import { cartItemProp } from "../../types.ts";
+import { cartItemProp } from "../../types/types.ts";
 import { naira } from "../../data.ts";
 import "./style.css";
 import { useCartItem } from "../../customHooks/useCartItem.ts";

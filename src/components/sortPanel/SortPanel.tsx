@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { sortPanelProps } from "../../types";
+import { sortPanelProps } from "../../types/types";
 import "./style.css";
 import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
 import { appContext } from "../context/AppProvider";

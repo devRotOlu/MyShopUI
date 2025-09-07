@@ -1,6 +1,6 @@
 import React from "react";
 
-import { resetPasswordErrorProps } from "../../types";
+import { resetPasswordErrorProps } from "../../types/types";
 import "./style.css";
 
 const PasswordResetErrorAlert = ({ message }: resetPasswordErrorProps) => {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { loaderProps } from "../types";
+import { loaderProps } from "../types/types";
 
 const Loader = ({ size, color }: loaderProps) => {
   return (

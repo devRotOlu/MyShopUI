@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ratingStatsProps } from "../../types";
+import { ratingStatsProps } from "../../types/types";
 import "./style.css";
 
 const RatingStats = ({ ratingFrequency, reviewsLength }: ratingStatsProps) => {

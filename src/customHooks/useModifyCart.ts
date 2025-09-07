@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { addItemToCart, updateCartItem } from "../helperFunctions/dataFetchFunctions";
-import { cartType, productType, useModifyCartDataType } from "../types";
+import { cartType, productType, useModifyCartDataType } from "../types/types";
 import { getLocalCartItems, setLocalCart } from "../helperFunctions/utilityFunctions";
 import { userContext } from "../components/context/UserProvider";
 

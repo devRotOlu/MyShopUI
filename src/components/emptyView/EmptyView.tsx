@@ -1,6 +1,6 @@
 import React from "react";
 
-import { emptyViewProps } from "../../types";
+import { emptyViewProps } from "../../types/types";
 import "./style.css";
 
 const EmptyView = ({ children }: emptyViewProps) => {

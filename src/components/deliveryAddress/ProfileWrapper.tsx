@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-import { ProfileWrapperProps } from "../../types";
+import { ProfileWrapperProps } from "../../types/types";
 
 const ProfileWrapper = ({ children, setPageIndex, profileHeader, headerText }: ProfileWrapperProps) => {
   return (

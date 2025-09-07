@@ -2,7 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { NavLink } from "react-router-dom";
 
-import { TabProps } from "../../types";
+import { TabProps } from "../../types/types";
 
 const getActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? "isActive" : "");
 

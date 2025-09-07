@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getCartItems } from "../helperFunctions/dataFetchFunctions";
 import { userContext } from "../components/context/UserProvider";
-import { cartType, useGetCartItemsDataType } from "../types";
+import { cartType, useGetCartItemsDataType } from "../types/types";
 
 export const useGetCartItems = (setCart: (value: React.SetStateAction<cartType[]>) => void): useGetCartItemsDataType => {
   const {

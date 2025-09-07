@@ -3,7 +3,7 @@ import React, { useContext, MouseEvent } from "react";
 import Loader from "../Loader";
 import CloseTransferBtn from "../checkout/CloseTransferBtn";
 
-import { transferDetailsProp } from "../../types";
+import { transferDetailsProp } from "../../types/types";
 import { checkoutContext } from "../checkout/Checkout";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
 import "./style.css";

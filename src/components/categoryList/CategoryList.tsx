@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./style.css";
 import { getCategories } from "../../helperFunctions/dataFetchFunctions";
-import { productCategoryType } from "../../types";
+import { productCategoryType } from "../../types/types";
 
 let wordsToRemove = ["and", "&", ",", " "];
 let regex = new RegExp(wordsToRemove.join("|"), "gi");

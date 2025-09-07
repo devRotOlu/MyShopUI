@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { loginFormElementProp } from "../../types";
+import ValidationError from "../validationError/ValidationError";
+
+import { loginFormElementProp } from "../../types/types";
 import "./style.css";
 
-const LoginFormElement = ({ name, inputLabel, children, isError }: loginFormElementProp) => {
+const LoginFormElement = ({ name, inputLabel, children, isError, validationErrors }: loginFormElementProp) => {
   var formElement;
   if (name === "password") {
     formElement = (
@@ -14,6 +16,7 @@ const LoginFormElement = ({ name, inputLabel, children, isError }: loginFormElem
           <Link to="/account/forgot-password">Forgot Password?</Link>
         </div>
         {children}
+        {validationErrors.password && <ValidationError error={validationErrors.password} />}
       </>
     );
   } else {
@@ -21,6 +24,7 @@ const LoginFormElement = ({ name, inputLabel, children, isError }: loginFormElem
       <>
         <p className="mb-1">{inputLabel}</p>
         {children}
+        {validationErrors.email && <ValidationError error={validationErrors.email} />}
         {isError ? (
           <p className="text-danger" id="errorReport">
             The email or password you have entered is incorrect. Please try again.

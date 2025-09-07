@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-import { modalCloseButtonProps } from "../types";
+import { modalCloseButtonProps } from "../types/types";
 
 const ModalCloseButton = ({ setShowModal }: modalCloseButtonProps) => {
   return (

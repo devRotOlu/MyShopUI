@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { updateCartItems } from "../helperFunctions/dataFetchFunctions";
 import { userContext } from "../components/context/UserProvider";
-import { updatedItemType, useUpdateCartItemsDataType } from "../types";
+import { updatedItemType, useUpdateCartItemsDataType } from "../types/types";
 
 export const useUpdateCartItems = (updatedItems: updatedItemType[]): useUpdateCartItemsDataType => {
   const { isLoggedIn } = useContext(userContext);

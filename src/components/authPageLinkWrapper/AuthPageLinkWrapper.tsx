@@ -1,6 +1,6 @@
 import React from "react";
 
-import { authFormLinkProps } from "../../types";
+import { authFormLinkProps } from "../../types/types";
 import "./style.css";
 
 const AuthPageLinkWrapper = ({ linkSectionTitle, children }: authFormLinkProps) => {

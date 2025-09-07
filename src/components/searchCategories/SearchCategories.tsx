@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { searchCategoriesProps } from "../../types";
+import { searchCategoriesProps } from "../../types/types";
 
 const SearchCategories = ({ categories, children }: searchCategoriesProps) => {
   const _categories = categories.map(({ id, name }) => {

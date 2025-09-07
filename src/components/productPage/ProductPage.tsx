@@ -15,7 +15,7 @@ import ProductCarouselModal from "../productCarouselModal/ProductCarouselModal";
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
 import { checkProductInWishlist, getProduct } from "../../helperFunctions/dataFetchFunctions";
-import { productPageProps, productType } from "../../types";
+import { productPageProps, productType } from "../../types/types";
 import { userContext } from "../context/UserProvider";
 
 const ProductPage = ({ productName }: productPageProps) => {

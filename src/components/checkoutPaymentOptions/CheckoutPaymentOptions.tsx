@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 
-import { checkoutPaymentOptionsProps } from "../../types";
+import { checkoutPaymentOptionsProps } from "../../types/types";
 import "./style.css";
 
 const CheckoutPaymentOptions = ({ setPayOption }: checkoutPaymentOptionsProps) => {

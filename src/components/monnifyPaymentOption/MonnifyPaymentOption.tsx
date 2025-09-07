@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
 
-import { monnifyPaymentOptionProp } from "../../types";
+import { monnifyPaymentOptionProp } from "../../types/types";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 

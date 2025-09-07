@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { cartContext } from "../components/context/CartProvider";
 import { userContext } from "../components/context/UserProvider";
 import { useModifyCart } from "./useModifyCart";
-import { cartType, useCartItemDataType } from "../types";
+import { cartType, useCartItemDataType } from "../types/types";
 
 export const useCartItem = (item: cartType): useCartItemDataType => {
   const [validateQuantity, setValidateQuantity] = useState(false);

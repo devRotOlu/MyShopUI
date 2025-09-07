@@ -1,5 +1,4 @@
 import React, { useState, FormEvent, ChangeEvent, useContext } from "react";
-import PasswordChecklist from "react-password-checklist";
 
 import TextInput from "../textInput/TextInput.tsx";
 import FormButton from "../formButton/FormButton.tsx";
@@ -11,19 +10,23 @@ import AuthFormTitle from "../AuthFormTitle.tsx";
 import AuthFormElementWrapper from "../authFromElementWrapper/AuthFormElementWrapper.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
+import ValidationError from "../validationError/ValidationError.tsx";
+import PasswordChecklistDisplay from "../PasswordChecklistDisplay.tsx";
 
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
-import { signupType } from "../../types.ts";
+import { signupType } from "../../types/types.ts";
 import { userContext } from "../context/UserProvider.tsx";
+import { signUpSchema } from "../../formSchemas.ts";
+import { useValidation } from "../../customHooks/useValidation.ts";
 
 const SignUp = () => {
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [formValues, setFormValues] = useState<signupType>({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
+
+  const { validationErrors, testValidation } = useValidation(signUpSchema);
 
   const { signup, isSigningUp, isSignupError } = useContext(userContext);
-
-  const [formValues, setFormValues] = useState<signupType>({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>, name: string) => {
     setFormValues((preValues) => {
@@ -33,7 +36,8 @@ const SignUp = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    signup(formValues);
+    const isValidated = testValidation(formValues);
+    if (isValidated) signup(formValues);
   };
 
   const formElements = signupDetails.map(({ name, inputLabel, type, placeholder }) => {
@@ -43,6 +47,7 @@ const SignUp = () => {
           <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder}>
             <p>{inputLabel}</p>
           </TextInput>
+          {validationErrors.email && <ValidationError error={validationErrors.email} />}
           {isSignupError && (
             <p id="error_report" className="text-danger">
               This email is already in use, please login or use a different email address.
@@ -57,19 +62,18 @@ const SignUp = () => {
           <TextInput handleBlur={() => setIsFocusedPassword(false)} handleFocus={() => setIsFocusedPassword(true)} handleChange={(event) => handleChange(event, name)} value={value} name={name} type={type} placeholder={placeholder}>
             <p>{inputLabel}</p>
           </TextInput>
-          {isFocusedPassword && (
-            <div className={`d-${isValidPassword ? "none" : "block"}`}>
-              <PasswordChecklist rules={["specialChar", "capitalAndLowercase", "number"]} value={value} onChange={setIsValidPassword} style={{ fontSize: "12px" }} iconSize={12} />
-            </div>
-          )}
+          {validationErrors.password && <ValidationError error={validationErrors.password} />}
+          {isFocusedPassword && <PasswordChecklistDisplay value={value} />}
         </div>
       );
     }
+    const error = validationErrors[name as keyof typeof validationErrors];
     return (
       <div key={name}>
         <TextInput handleChange={(event) => handleChange(event, name)} value={formValues[name as keyof typeof formValues]} name={name} type={type} placeholder={placeholder}>
           <p>{inputLabel}</p>
         </TextInput>
+        {error !== undefined && <ValidationError error={error} />}
       </div>
     );
   });

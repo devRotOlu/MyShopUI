@@ -2,7 +2,7 @@ import React, { ReactNode, useState, MouseEvent } from "react";
 
 import CarouselControls from "../carouselControls/CarouselControls";
 
-import { carouselProps } from "../../types";
+import { carouselProps } from "../../types/types";
 import "./style.css";
 
 const minIndex = 0;
