@@ -49,7 +49,7 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
 
     const url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
-  }, [sortOrder, pathname, navigate, search]);
+  }, [sortOrder, pathname, navigate, search, queryParam]);
 
   const _sortButtons = sortButtons.map(({ label, value }, index) => {
     const isActiveBtn = sortIndex === index;

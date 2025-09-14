@@ -24,7 +24,7 @@ const SearchBar = ({ ...props }: searchBarProps) => {
       const products = data?.data;
       setSearchResults(products);
     }
-  }, [data]);
+  }, [data, setSearchResults]);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };

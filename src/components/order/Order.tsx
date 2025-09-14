@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import Thumbnail from "../thumbnail/Thumbnail";
 
@@ -26,14 +26,12 @@ const Order = ({ ...props }: orderProps) => {
     return <Thumbnail name={name} url={url} key={index} />;
   });
 
-  const totalCost = orderedItems.reduce((acc, item) => {
-    return acc + item.cartItem.product.unitPrice * item.orderedQuantity;
-  }, 0);
+  const totalCost = useMemo(() => orderedItems.reduce((acc, item) => acc + item.cartItem.product.unitPrice * item.orderedQuantity, 0), [orderedItems]);
 
   useEffect(() => {
     const key = `${orderIndex}`;
     setOrderCosts((prev) => ({ ...prev, [key]: totalCost }));
-  }, []);
+  }, [orderIndex, setOrderCosts, totalCost]);
 
   const dateArray = orderDate.split("-");
   const month = months[Number(dateArray[1])];
