@@ -37,7 +37,7 @@ const Sidebar = () => {
         element?.removeEventListener("click", handleClick);
       });
     };
-  }, []);
+  }, [setModalIndex]);
   return (
     <div className="bg-white  w-100 d-flex flex-column" id="side_bar">
       <div className="p-3 position-fixed top-0 vw-100 opacity-100 bg-white" id="toggle_wrapper">

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 
 import Thumbnail from "../thumbnail/Thumbnail";
 
@@ -26,26 +26,20 @@ const Order = ({ ...props }: orderProps) => {
     return <Thumbnail name={name} url={url} key={index} />;
   });
 
-  useMemo(() => {
-    let totalCost = 0;
-    for (let index = 0; index < orderedItems.length; index++) {
-      const {
-        cartItem: {
-          product: { unitPrice },
-        },
-        orderedQuantity,
-      } = orderedItems[index];
-      totalCost += unitPrice * orderedQuantity;
-    }
+  const totalCost = orderedItems.reduce((acc, item) => {
+    return acc + item.cartItem.product.unitPrice * item.orderedQuantity;
+  }, 0);
+
+  useEffect(() => {
     const key = `${orderIndex}`;
-    setOrderCosts((prevCosts) => ({ ...prevCosts, [key]: totalCost }));
+    setOrderCosts((prev) => ({ ...prev, [key]: totalCost }));
   }, []);
 
   const dateArray = orderDate.split("-");
   const month = months[Number(dateArray[1])];
   const day = dateArray[2];
   const year = dateArray[0];
-  const totalCost = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
+  const orderTotalCost = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
   return (
     <div className="order bg-white px-sm-0 px-3">
       <div className="py-3">
@@ -61,7 +55,7 @@ const Order = ({ ...props }: orderProps) => {
           <div>
             <p className="text-muted">
               <span className="fw-bold">Total</span>: {naira}
-              {totalCost?.toLocaleString()}
+              {orderTotalCost?.toLocaleString()}
             </p>
             <p className="text-muted">
               <span className="fw-bold">Order No</span>: {orderId}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef, FocusEvent } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, FocusEvent } from "react";
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,25 +8,23 @@ import { searchBarProps } from "../../types/types";
 
 const SearchBar = ({ ...props }: searchBarProps) => {
   const { setSearchResults, setUserInput, searchTerm, userInput, setIsFocused } = props;
-  const { data, dataUpdatedAt, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["search_results"],
     queryFn: () => searchProduct(searchTerm),
     enabled: false,
   });
-  const dataUpdatedAtRef = useRef(dataUpdatedAt);
   useEffect(() => {
     if (searchTerm) {
       refetch();
     }
-  }, [searchTerm]);
+  }, [searchTerm, refetch]);
 
   useEffect(() => {
-    if (dataUpdatedAt !== dataUpdatedAtRef.current) {
-      dataUpdatedAtRef.current = dataUpdatedAt;
+    if (data) {
       const products = data?.data;
       setSearchResults(products);
     }
-  }, [data, dataUpdatedAt]);
+  }, [data]);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
@@ -39,7 +37,7 @@ const SearchBar = ({ ...props }: searchBarProps) => {
     setIsFocused(true);
   };
   return (
-    <form onSubmit={handleSubmit} className="input-group w-100" id="search_bar">
+    <form role="search" onSubmit={handleSubmit} className="input-group w-100" id="search_bar">
       <input onMouseDown={(e) => e.stopPropagation()} onFocus={handleFocus} value={userInput} onChange={handleSearch} type="text" className="form-control" placeholder="Search for products, brands, and categories..." aria-label="search bar" aria-describedby="basic-addon2" />
       <button aria-label="search" type="submit" className="input-group-text" id="basic-addon2">
         <Icon id="search_icon" icon="ic:baseline-search" />

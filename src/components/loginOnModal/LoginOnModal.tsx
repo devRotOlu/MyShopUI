@@ -37,15 +37,17 @@ const LoginOnModal = () => {
     );
   });
 
-  if (isJustLoggedIn) {
-    setShowModal(false);
-  }
+  useEffect(() => {
+    if (isJustLoggedIn) {
+      setShowModal(false);
+    }
+  }, [isJustLoggedIn, setShowModal]);
 
   useEffect(() => {
     if (pathnameRef.current !== location.pathname) {
       setShowModal(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, setShowModal]);
 
   return (
     <div id="login_modal">

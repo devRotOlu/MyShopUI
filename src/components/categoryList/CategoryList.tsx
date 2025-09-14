@@ -22,7 +22,7 @@ const CategoryList = () => {
       const categories = data?.data;
       setCategories(categories);
     }
-  }, [isSuccess]);
+  }, [isSuccess, data]);
 
   const _categoryLinks = categories.map(({ name, id }) => {
     let link = name.replace(regex, "-");

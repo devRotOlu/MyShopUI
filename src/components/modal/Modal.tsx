@@ -29,7 +29,7 @@ const Modal = ({ children, styles, setCloseModal }: modalProps) => {
       document.body.style.overflow = "auto";
       previouslyFocusedElement.current?.focus();
     };
-  }, []);
+  }, [setCloseModal]);
 
   return (
     <div id="app_modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabIndex={-1} ref={modalRef}>

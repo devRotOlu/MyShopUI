@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { sortPanelProps } from "../../types/types";
@@ -26,7 +26,9 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
   const navigate = useNavigate();
   const isInitialRenderRef = useRef(true);
   const { search, pathname } = useLocation();
-  const queryParam = Object.fromEntries(new URLSearchParams(search));
+  const queryParam = useMemo(() => {
+    return Object.fromEntries(new URLSearchParams(search));
+  }, [search]);
   const { sortOrder: _sortOrder } = useGetQueryParams();
   const [sortOrder, setSortOrder] = useState<"desc" | "asc" | undefined>(_sortOrder);
   const oldProducts = totalProducts * (currentPage - 1);
@@ -47,7 +49,7 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
 
     const url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
-  }, [sortOrder]);
+  }, [sortOrder, pathname, navigate, search]);
 
   const _sortButtons = sortButtons.map(({ label, value }, index) => {
     const isActiveBtn = sortIndex === index;

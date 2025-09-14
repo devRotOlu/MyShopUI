@@ -24,7 +24,7 @@ const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps
       setIsMonnifyError(false);
       setMonnifyOption("");
     };
-  }, []);
+  }, [initializePayment, setIsMonnifyError, setMonnifyOption]);
 
   if (isInitializingPayment) {
     return <Loader color="white" />;

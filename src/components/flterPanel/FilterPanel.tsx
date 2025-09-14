@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, MouseEventHandler } from "react";
+import React, { useEffect, useRef, useState, MouseEventHandler, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -11,7 +11,7 @@ import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
 
 const FilterPanel = ({ products }: filterPanelProps) => {
   const { search, pathname } = useLocation();
-  const queryParam = Object.fromEntries(new URLSearchParams(search));
+  const queryParam = useMemo(() => Object.fromEntries(new URLSearchParams(search)), [search]);
   const { min, max, rating } = useGetQueryParams();
   const [selectedPrices, setSelectedPrices] = useState<selectedPricesType>({ minPrice: min, maxPrice: max });
   const [selectedRating, setSelectedRating] = useState<number | undefined>(rating);
@@ -50,7 +50,7 @@ const FilterPanel = ({ products }: filterPanelProps) => {
     if (selectedRating) queryParam["rating"] = selectedRating.toString();
     const url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
-  }, [minPrice, maxPrice, selectedRating]);
+  }, [minPrice, maxPrice, selectedRating, queryParam, pathname, navigate]);
 
   const _categories = Array.from(categories).map((category, index) => {
     return (
