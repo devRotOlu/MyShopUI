@@ -7,7 +7,7 @@ const ProfileWrapper = ({ children, setPageIndex, profileHeader, headerText }: P
   return (
     <div className="pt-3 pb-5">
       <div className="d-sm-flex d-none gap-2 align-items-center border-bottom pb-2 px-3">
-        <button onClick={() => setPageIndex("0")}>
+        <button aria-label="back" onClick={() => setPageIndex("0")}>
           <Icon icon="eva:arrow-back-fill" fontSize="16px" />
         </button>
         {profileHeader}

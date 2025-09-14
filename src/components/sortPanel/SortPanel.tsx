@@ -26,7 +26,7 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
   const navigate = useNavigate();
   const isInitialRenderRef = useRef(true);
   const { search, pathname } = useLocation();
-  let queryParam = Object.fromEntries(new URLSearchParams(search));
+  const queryParam = Object.fromEntries(new URLSearchParams(search));
   const { sortOrder: _sortOrder } = useGetQueryParams();
   const [sortOrder, setSortOrder] = useState<"desc" | "asc" | undefined>(_sortOrder);
   const oldProducts = totalProducts * (currentPage - 1);
@@ -45,15 +45,14 @@ const SortPanel = ({ totalProducts, productPerPage, currentPage }: sortPanelProp
     if (sortOrder) queryParam["sortOrder"] = sortOrder;
     else delete queryParam["sortOrder"];
 
-    let url = pathname + "?" + new URLSearchParams(queryParam).toString();
+    const url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortOrder]);
 
   const _sortButtons = sortButtons.map(({ label, value }, index) => {
     const isActiveBtn = sortIndex === index;
     return (
-      <button onClick={() => handleClick(value, index)} className={`px-3 py-1 sort_btn ${sortIndex === index ? "active_btn" : ""}`} style={{ borderColor: isActiveBtn ? "var(--lighter_pink)" : "var(--cerebral_grey)", color: isActiveBtn ? "var(--lighter_pink)" : "black" }}>
+      <button key={index} onClick={() => handleClick(value, index)} className={`px-3 py-1 sort_btn ${sortIndex === index ? "active_btn" : ""}`} style={{ borderColor: isActiveBtn ? "var(--lighter_pink)" : "var(--cerebral_grey)", color: isActiveBtn ? "var(--lighter_pink)" : "black" }}>
         {label}
       </button>
     );

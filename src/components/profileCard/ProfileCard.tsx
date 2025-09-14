@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent } from "react";
+import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
 
 import { profileCardProps } from "../../types/types";
@@ -14,13 +14,13 @@ const ProfileCard = ({ ...props }: profileCardProps) => {
   const borderColor = selectedIndex === profileIndex ? "var(--dark_orange)" : "var(--darker_Grey)";
   const bgColor = selectedIndex === profileIndex ? "var(--lavender_blush)" : "";
 
-  const handleBtnClick = (_: MouseEvent<HTMLDivElement>) => {
+  const handleBtnClick = () => {
     handleCardClick(profileIndex);
     setSelectedIndex(profileIndex);
   };
 
   return (
-    <div className="w-100 pb-4 profileCard" onClick={handleBtnClick} style={{ border: `solid thin ${borderColor}`, backgroundColor: bgColor }}>
+    <div role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && handleBtnClick()} className="w-100 pb-4 profileCard" onClick={handleBtnClick} style={{ border: `solid thin ${borderColor}`, backgroundColor: bgColor }}>
       <div className="py-2 px-1  border-bottom">
         <label>
           <input type="radio" name="profile" />

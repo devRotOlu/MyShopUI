@@ -1,6 +1,7 @@
-import React, { ReactNode, useState, MouseEvent } from "react";
+import React, { ReactNode, useState, MouseEventHandler } from "react";
 
 import CarouselControls from "../carouselControls/CarouselControls";
+import CarouselImage from "../carouselImage/CarouselImage";
 
 import { carouselProps } from "../../types/types";
 import "./style.css";
@@ -12,10 +13,10 @@ const Carousel = ({ images, name, activeIndex, setActiveIndex }: carouselProps) 
 
   const maxIndex = images.length - 1;
 
-  const handleOnClickPrevious = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickPrevious: MouseEventHandler<HTMLButtonElement> = () => {
     setActiveIndex((prevIndex) => (prevIndex > minIndex ? --prevIndex : maxIndex));
   };
-  const handleOnClickNext = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickNext: MouseEventHandler<HTMLButtonElement> = () => {
     setActiveIndex((prevIndex) => (prevIndex < maxIndex ? ++prevIndex : minIndex));
   };
 
@@ -23,11 +24,7 @@ const Carousel = ({ images, name, activeIndex, setActiveIndex }: carouselProps) 
   for (let index = 0; index < images.length; index++) {
     if (index === activeIndex) {
       const { url } = images[index];
-      carouselItems = [
-        <div className="w-100" key={index}>
-          <img src={url} alt={name} className="w-100" />
-        </div>,
-      ];
+      carouselItems = [<CarouselImage key={url} url={url} name={name} index={index} />];
       break;
     }
   }

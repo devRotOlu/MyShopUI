@@ -38,7 +38,7 @@ const OrderHistory = ({ props }: orderHistoryProps) => {
   return (
     <div id="order_details" className="pb-5 bg-white rounded">
       <div className="pt-3 pb-2 d-flex gap-2 align-items-center p-sm-x-3 px-2">
-        <button className="d-sm-block d-none" onClick={() => setOrderIndex(-1)}>
+        <button aria-label="back" className="d-sm-block d-none" onClick={() => setOrderIndex(-1)}>
           <Icon fontSize={20} icon="material-symbols-light:arrow-back" />
         </button>{" "}
         <h2 className="fs-6 text-muted ">Order Details</h2>

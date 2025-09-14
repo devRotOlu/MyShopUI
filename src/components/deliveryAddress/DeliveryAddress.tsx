@@ -1,4 +1,4 @@
-import React, { useContext, useState, MouseEvent } from "react";
+import React, { useContext, useState, MouseEventHandler } from "react";
 
 import PageWrapper from "../PageWrapper";
 import AccountTab from "../dashboard/AccountTab";
@@ -31,7 +31,7 @@ const DeliveryAddress = () => {
     setPageIndex("0");
   }
 
-  const handleDeletion = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleDeletion: MouseEventHandler<HTMLButtonElement> = () => {
     const profile = deliveryProfiles[profileofInterestIndex];
     const id = Number(profile.id);
     handleProfileDeletion(id, profileofInterestIndex);
@@ -109,7 +109,7 @@ const DeliveryAddress = () => {
         </div>
       </PageWrapper>
       {showModal && (
-        <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Modal setCloseModal={() => setShowModal(false)} styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <ConfirmationDialog setShowModal={setShowModal} handleDeletion={handleDeletion} />
         </Modal>
       )}

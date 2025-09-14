@@ -1,17 +1,17 @@
-import React, { MouseEvent, useEffect, useRef } from "react";
+import React, { MouseEventHandler, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 
 import { navigationButtonsProps } from "../../types/types";
 import "./style.css";
 
-const NavigationButtons = ({ params }: navigationButtonsProps) => {
+const NavigationButtons = <T,>({ params }: navigationButtonsProps<T>) => {
   const { itemCount, maxItemPerPage, setCurrentItems, items, setCurrentPage, currentPage, firstPage, currentItems } = params;
   const maxPage = Math.ceil(itemCount / maxItemPerPage);
   const initialIndex = maxPage >= 1 ? maxItemPerPage - 1 : itemCount - 1;
   const prevIndexRef = useRef(initialIndex);
   const currentIndexRef = useRef(initialIndex);
 
-  const handleNextBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleNextBtnClick: MouseEventHandler<HTMLButtonElement> = () => {
     const isNextPage = currentIndexRef.current < itemCount - 1;
     if (isNextPage) {
       setCurrentPage((prevIndex) => (prevIndex !== maxPage ? ++prevIndex : prevIndex));
@@ -23,7 +23,7 @@ const NavigationButtons = ({ params }: navigationButtonsProps) => {
       setCurrentItems(currentItems);
     }
   };
-  const handlePreviousBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
+  const handlePreviousBtnClick: MouseEventHandler<HTMLButtonElement> = () => {
     const isPreviousPage = initialIndex !== currentIndexRef.current;
     if (isPreviousPage) {
       setCurrentPage((prevIndex) => (prevIndex !== firstPage ? --prevIndex : prevIndex));

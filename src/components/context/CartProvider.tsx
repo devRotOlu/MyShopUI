@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "../alert/Alert";
 import AlertLinks from "../alertLinks/AlertLinks";
 
-import { addedItemType, cartContextType, cartType, ProvidersProp, updatedItemType } from "../../types/types";
+import { addedItemType, cartContextType, cartType, providersProp, updatedItemType } from "../../types/types";
 import { userContext } from "./UserProvider";
 import { alertContext } from "./AlertProvider";
 import { useGetCartItems } from "../../customHooks/useGetCartItems";
@@ -18,7 +18,7 @@ import { getLocalCartItems } from "../../helperFunctions/utilityFunctions";
 
 export const cartContext = React.createContext({} as cartContextType);
 
-const CartProvider = ({ children }: ProvidersProp) => {
+const CartProvider = ({ children }: providersProp) => {
   const [localStorageIndex, setLocalStorageIndex] = useState(1);
   const [cart, setCart] = useState<cartType[]>([]);
 

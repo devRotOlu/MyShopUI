@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent } from "react";
+import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent, MouseEventHandler } from "react";
 import { AxiosResponse } from "axios";
 import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
@@ -52,7 +52,7 @@ export type authPageWrapperProp = {
   id: string;
 };
 
-export type ProvidersProp = {
+export type providersProp = {
   children: ReactNode;
 };
 
@@ -121,7 +121,7 @@ export type useLoginSubmitDataType = {
 };
 
 export type useLogoutDataType = {
-  logoutUser: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  logoutUser: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, void, unknown>;
   isLoggedOut: boolean;
   logoutTime: number;
   isLoggingOut: boolean;
@@ -130,7 +130,7 @@ export type useLogoutDataType = {
 export type useDeleteAccountDataType = {
   isDeletingAccount: boolean;
   isAccountDeleted: boolean;
-  deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  deleteAccount: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, void, unknown>;
   accountDeletionTime: number;
 };
 
@@ -140,7 +140,7 @@ export type useHandleLoginFormChangeData = {
 };
 
 export type useLoginData = {
-  signingUser: UseMutateFunction<AxiosResponse<any, any>, Error, loginStateType, unknown>;
+  signingUser: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, loginStateType, unknown>;
   isAuthenticating: boolean;
   loginTime: number;
   isLoginError: boolean;
@@ -159,14 +159,14 @@ export type useMonnifyType = {
   isLoadedStatus: boolean;
   isTransactionSuccessful: boolean;
   isFetchingTransactionStatus: boolean;
-  refetchTransactionStatus: UseMutateFunction<AxiosResponse<any, any>, Error, transferStatusType, unknown>;
-  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, sendCardDetailsType, unknown>;
+  refetchTransactionStatus: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, transferStatusType, unknown>;
+  sendCardDetails: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, sendCardDetailsType, unknown>;
   cardDetailsSent: boolean;
   isCardPaymentError: boolean;
   isInitializingPayment: boolean;
-  initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<unknown, unknown>, Error>>;
   transactionRef: string;
-  sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<unknown, unknown>, Error>>;
   detailsSent: boolean;
 };
 
@@ -238,7 +238,7 @@ export type sortPanelProps = {
 };
 
 export type searchbarBrandWrapperProps = {
-  hideSearcbar: boolean;
+  hideSearchbar: boolean;
 };
 
 export type searchResultType = {
@@ -316,22 +316,22 @@ export type productCardProp = {
 };
 
 export type useMoveToWishlistDataType = {
-  moveItemToWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  moveItemToWishlist: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, number, unknown>;
   isMovedToWishlist: boolean;
   isMovingToWishlist: boolean;
   isItemExistErrorIndex: number;
 };
 
-export type navigationButtonsProps = {
+export type navigationButtonsProps<T> = {
   params: {
     firstPage: number;
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     itemCount: number;
     maxItemPerPage: number;
-    setCurrentItems: React.Dispatch<React.SetStateAction<any[]>>;
-    currentItems: any[];
-    items: any[];
+    setCurrentItems: React.Dispatch<React.SetStateAction<T[]>>;
+    currentItems: T[];
+    items: T[];
   };
 };
 
@@ -356,7 +356,7 @@ type userAddressType = {
 };
 
 type userProviderSignUpType = {
-  signup: UseMutateFunction<AxiosResponse<any, any>, Error, signupType, unknown>;
+  signup: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, signupType, unknown>;
   isSigningUp: boolean;
   isSignupError: boolean;
 };
@@ -370,7 +370,7 @@ export type useTokenValidationDataType = {
 };
 
 export type useConfirmEmailDataType = {
-  confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
+  confirmEmail: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, confirmEmailDTO, unknown>;
   isEmailConfirmed: boolean;
   isEmailConfirmedFailed: boolean;
 };
@@ -400,9 +400,9 @@ export type activeOrdersProps = {
 
 export type orderProps = {
   order: orderType;
-  setOrderCosts: Dispatch<SetStateAction<{}>>;
+  setOrderCosts: Dispatch<SetStateAction<Record<string, number>>>;
   orderIndex: number;
-  orderCosts: {};
+  orderCosts: Record<string, number>;
   setOrderIndex: Dispatch<SetStateAction<number>>;
 };
 
@@ -514,7 +514,7 @@ export type processLocalCartItemsParamType = {
     setCart: (value: React.SetStateAction<cartType[]>) => void;
     customerId: string;
     cartFetched: boolean;
-    cartData: any;
+    cartData: unknown;
     cartItemsAdded: boolean;
     itemsUpdated: boolean;
     setLocalAddedItems: React.Dispatch<React.SetStateAction<addedItemType[]>>;
@@ -547,8 +547,8 @@ export type cartTableProps = {
 };
 
 export type failedRequestType = {
-  resolve: (value?: any) => void;
-  reject: (error?: any) => void;
+  resolve: (value?: unknown) => void;
+  reject: (error?: unknown) => void;
 };
 
 export type passwordChecklistDisplayProps = {
@@ -625,7 +625,7 @@ export type transferStatusType = {
 
 export type paystackVerificationDTO = {
   reference: string;
-  profileId: Number;
+  profileId: number;
   orderInstruction?: string;
 };
 
@@ -667,17 +667,17 @@ export type checkoutContextType = {
   detailsSent: boolean;
   isLoadedDetails: boolean;
   transactionRef: string;
-  sendCardDetails: UseMutateFunction<AxiosResponse<any, any>, Error, sendCardDetailsType, unknown>;
+  sendCardDetails: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, sendCardDetailsType, unknown>;
   bankCode: string;
   setBankCode: React.Dispatch<React.SetStateAction<string>>;
-  sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  sendTransferDetails: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<unknown, unknown>, Error>>;
   isFetchingTransferDetails: boolean;
   isLoadedStatus: boolean;
-  refetchTransactionStatus: UseMutateFunction<AxiosResponse<any, any>, Error, transferStatusType, unknown>;
+  refetchTransactionStatus: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, transferStatusType, unknown>;
   isFetchingTransactionStatus: boolean;
   bankDetails: bankDetailsType;
   isTransactionSuccessful: boolean;
-  initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  initializePayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<unknown, unknown>, Error>>;
 };
 
 export type monnifyDialogProps = {
@@ -729,7 +729,7 @@ export type productTabProps = {
 export type productProps = {
   product: productType;
   children: ReactNode;
-  data: any;
+  isWishlistItem: boolean | undefined;
 };
 
 export type productDescriptionProps = {
@@ -778,6 +778,12 @@ export type pageWrapperProps = {
   pageId: string;
 };
 
+export type carouselImageProps = {
+  name: string;
+  url: string;
+  index: number;
+};
+
 export type carouselProps = {
   activeIndex: number;
   images: { url: string }[];
@@ -822,8 +828,8 @@ export type savedItemButtonProps = {
     styles: CSSProperties;
     icon: ReactNode;
     showAlert?: boolean;
-    handleAddToWishlist: (_: MouseEvent<HTMLButtonElement>) => void;
-    handleRemoveFromWishlist: (_: MouseEvent<HTMLButtonElement>) => void;
+    handleAddToWishlist: MouseEventHandler<HTMLButtonElement>;
+    handleRemoveFromWishlist: MouseEventHandler<HTMLButtonElement>;
     isBeingAdded: boolean;
     isBeingRemoved: boolean;
     isSaved: boolean;
@@ -871,7 +877,7 @@ export type cartContextType = {
   cartFetched: boolean;
   isFetchingCart: boolean;
   setLocalStorageIndex: React.Dispatch<React.SetStateAction<number>>;
-  moveItemToWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, number, unknown>;
+  moveItemToWishlist: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, number, unknown>;
   isMovingToWishlist: boolean;
   isAddedCartItem: boolean;
   isAddingCartItem: boolean;
@@ -885,7 +891,7 @@ export type cartContextType = {
   cartItemsTotalPrice: number;
 };
 
-export type useDeleteWishlistDataType = { deleteFromWishlist: UseMutateFunction<AxiosResponse<any, any>, Error, addWishlistType, unknown>; isDeletingWishlistItem: boolean; isDeletedWishlistItem: boolean };
+export type useDeleteWishlistDataType = { deleteFromWishlist: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, addWishlistType, unknown>; isDeletingWishlistItem: boolean; isDeletedWishlistItem: boolean };
 
 export type wishlistContextType = useGetWishlistData &
   useDeleteWishlistDataType &
@@ -909,32 +915,31 @@ export type deliveryContextType = {
   handleProfileDeletion: (profileId: number, profileIndex: number) => void;
   isUpdatedAddress: boolean;
   updatingDeliveryProfile: boolean;
-  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, deliveryDataType, unknown>;
   isAddedAddress: boolean;
   addingDeliveryProfile: boolean;
-  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, deliveryDataType, unknown>;
   deliveryProfiles: deliveryDataType[];
   setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
 };
 
+export type productContextType = { productsFetched: boolean; isLoadingProducts: boolean; products: productType[]; productImageAspectRatio: number };
+
 export type userContextType = userProviderSignUpType & {
-  signingUser: UseMutateFunction<AxiosResponse<any, any>, Error, loginStateType, unknown>;
+  signingUser: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, loginStateType, unknown>;
   isLoggedOut: boolean;
-  confirmEmail: UseMutateFunction<AxiosResponse<any, any>, Error, confirmEmailDTO, unknown>;
+  confirmEmail: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, confirmEmailDTO, unknown>;
   isValidatingToken: boolean;
-  productsFetched: boolean;
-  isLoadingProducts: boolean;
   isAuthenticating: boolean;
-  deleteAccount: UseMutateFunction<AxiosResponse<any, any>, Error, void, unknown>;
+  deleteAccount: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, void, unknown>;
   isDeletingAccount: boolean;
   isJustLoggedIn: boolean;
   isLoginError: boolean;
   initialDeliveryProfile: deliveryDataType;
   modifyingProfile: boolean;
-  profileMutate: UseMutateFunction<AxiosResponse<any, any>, Error, modifyUserType, unknown>;
+  profileMutate: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, modifyUserType, unknown>;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   isLoggedIn: boolean | undefined;
-  products: productType[];
   loginData: userDataType;
   setLoginData: Dispatch<SetStateAction<userDataType>>;
   isOldSession: boolean;
@@ -947,13 +952,13 @@ export type useGetDeliveryProfileDataType = {
 };
 
 export type ConfirmationDialogProps = {
-  handleDeletion: (_: MouseEvent<HTMLButtonElement>) => void;
+  handleDeletion: MouseEventHandler<HTMLButtonElement>;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type useAddCartItemsDataType = {
   cartItemsAdded: boolean;
-  addCartItems: UseMutateFunction<AxiosResponse<any, any>, Error, addedItemType[], unknown>;
+  addCartItems: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, addedItemType[], unknown>;
 };
 
 export type useDeleteCartItemDataType = {
@@ -965,12 +970,12 @@ export type useDeleteCartItemDataType = {
 
 export type useUpdateCartItemsDataType = {
   itemsUpdated: boolean;
-  updateCartItems: UseMutateFunction<AxiosResponse<any, any>, Error, updatedItemType[], unknown>;
+  updateCartItems: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, updatedItemType[], unknown>;
 };
 
 export type useGetCartItemsDataType = {
   cartFetched: boolean;
-  cartData: AxiosResponse<any, any> | undefined;
+  cartData: AxiosResponse<unknown, unknown> | undefined;
   isFetchingCart: boolean;
   getCartQueryFinished: boolean;
 };
@@ -991,7 +996,7 @@ export type useDeleteDeliveryProfileDataType = {
 export type useAddDeliveryProfileDataType = {
   profileAdditionTime: number;
   profileAdded: boolean;
-  addDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  addDeliveryProfile: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, deliveryDataType, unknown>;
   addingDeliveryProfile: boolean;
 };
 
@@ -1003,14 +1008,14 @@ export type useValidationDataType<T extends ZodRawShape> = {
 export type useVerifyPayStackPaymentDataType = {
   isPaystackPaymentSuccess: boolean;
   isPaystackPaymentError: boolean;
-  verifyPayStackPayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  verifyPayStackPayment: (options?: RefetchOptions) => Promise<QueryObserverResult<AxiosResponse<unknown, unknown>, Error>>;
   orderId?: string;
 };
 
 export type useUpdateDeliveryProfileDataType = {
   profileUpdated: boolean;
   profileUpdateTime: number;
-  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
 };
 
@@ -1042,7 +1047,7 @@ export type addProfileProps = {
 export type editProfileProps = {
   setPageIndex: React.Dispatch<React.SetStateAction<"0" | "1" | "2">>;
   profileToEditIndex: number;
-  updateDeliveryProfile: UseMutateFunction<AxiosResponse<any, any>, Error, deliveryDataType, unknown>;
+  updateDeliveryProfile: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, deliveryDataType, unknown>;
   updatingDeliveryProfile: boolean;
 };
 
@@ -1058,5 +1063,3 @@ export type forgotPasswordSuccessAlertProps = {
   email: string;
   mutate: (variables: void, options?: MutateOptions<void, Error, void, unknown> | undefined) => void;
 };
-
-export type changeDeliveryAddressProps = {};

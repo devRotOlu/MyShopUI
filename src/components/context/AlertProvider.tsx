@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 
-import { ProvidersProp } from "../../types/types";
+import { providersProp } from "../../types/types";
 
 export type alertDataType = {
   showAlert: boolean;
@@ -17,7 +17,7 @@ const initialAlert = {
   showAlert: false,
 };
 
-const AlertProvider = ({ children }: ProvidersProp) => {
+const AlertProvider = ({ children }: providersProp) => {
   const [alert, setAlert] = useState<alertDataType>(initialAlert);
 
   // Show alert function

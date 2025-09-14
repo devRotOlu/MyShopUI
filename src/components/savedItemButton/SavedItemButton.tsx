@@ -12,12 +12,12 @@ const SavedItemButton = ({ data }: savedItemButtonProps) => {
     <div className="d-inline-flex gap-1 align-items-center justify-content-center" id="saved_item_btn_wrapper">
       <div>
         {!isSaved && (
-          <button style={styles} onClick={handleAddToWishlist} id="add_item_btn">
+          <button aria-label="safe-item" style={styles} onClick={handleAddToWishlist} id="add_item_btn">
             {isBeingAdded ? <Loader size="spinner-border-sm" color="white" /> : <> {icon}</>}
           </button>
         )}
         {isSaved && (
-          <button onClick={handleRemoveFromWishlist} id="remove_item_btn" style={{ backgroundColor: isBeingRemoved ? "white" : "", ...styles }}>
+          <button aria-label="safe-item" onClick={handleRemoveFromWishlist} id="remove_item_btn" style={{ backgroundColor: isBeingRemoved ? "white" : "", ...styles }}>
             {isBeingRemoved ? <Loader size="spinner-border-sm" color="warning" /> : <> {icon}</>}
           </button>
         )}

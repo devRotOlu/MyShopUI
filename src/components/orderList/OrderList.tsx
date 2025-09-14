@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEventHandler } from "react";
 
 import CancelledOrders from "../CancelledOrders";
 
@@ -7,12 +7,12 @@ import "./style.css";
 
 const OrderList = ({ orders, children }: orderListProps) => {
   const [showActiveOrders, setShowActiveOrders] = useState(true);
-  const handleActiveOrders = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleActiveOrders: MouseEventHandler<HTMLButtonElement> = () => {
     if (!showActiveOrders) {
       setShowActiveOrders(true);
     }
   };
-  const handleCancelledOrders = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleCancelledOrders: MouseEventHandler<HTMLButtonElement> = () => {
     if (showActiveOrders) {
       setShowActiveOrders(false);
     }

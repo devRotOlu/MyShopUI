@@ -23,7 +23,7 @@
   }
 }
 
-#product_summary_modal > div:last-child > div:last-child button {
+#product_summary_modal > div:last-child > button:last-child {
   background-color: var(--light_Green);
   padding: 0.7rem 4rem;
 }
@@ -34,7 +34,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-  #product_summary_modal > div:last-child > div:last-child button {
+  #product_summary_modal > div:last-child > button:last-child {
     padding: 0.7rem 2rem;
   }
 }

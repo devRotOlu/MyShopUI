@@ -40,7 +40,7 @@ const BrandPage = ({ ...props }: brandPageProps) => {
             </HomeProductCardWrapper>
           </div>
         )}
-        {products?.length && (
+        {products?.length !== 0 && (
           <>
             <BreadCrumb handleFilterModal={handleFilterModal} currentLinkLabel={brand}>
               <SortPanel currentPage={currentPage} productPerPage={maxProductPerPage} totalProducts={products.length} />

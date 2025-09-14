@@ -6,8 +6,8 @@ import "./style.css";
 import { getCategories } from "../../helperFunctions/dataFetchFunctions";
 import { productCategoryType } from "../../types/types";
 
-let wordsToRemove = ["and", "&", ",", " "];
-let regex = new RegExp(wordsToRemove.join("|"), "gi");
+const wordsToRemove = ["and", "&", ",", " "];
+const regex = new RegExp(wordsToRemove.join("|"), "gi");
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<productCategoryType[]>([]);
@@ -22,7 +22,6 @@ const CategoryList = () => {
       const categories = data?.data;
       setCategories(categories);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const _categoryLinks = categories.map(({ name, id }) => {

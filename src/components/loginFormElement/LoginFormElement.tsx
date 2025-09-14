@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
 import ValidationError from "../validationError/ValidationError";
@@ -7,7 +7,7 @@ import { loginFormElementProp } from "../../types/types";
 import "./style.css";
 
 const LoginFormElement = ({ name, inputLabel, children, isError, validationErrors }: loginFormElementProp) => {
-  var formElement;
+  let formElement: ReactElement;
   if (name === "password") {
     formElement = (
       <>

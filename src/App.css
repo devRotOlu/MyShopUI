@@ -47,6 +47,16 @@
   padding: 0;
 }
 
+:focus-visible {
+  outline: 2px solid #0078d4;
+  outline-offset: 2px;
+}
+
+[tabindex]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #0078d4;
+}
+
 body {
   font-family: Archivo_Light;
   background-color: var(--Light_Grey);

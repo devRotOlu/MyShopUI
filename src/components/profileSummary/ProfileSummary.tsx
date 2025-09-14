@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent } from "react";
+import React, { useContext, MouseEventHandler } from "react";
 import { Icon } from "@iconify/react";
 
 import { profileSummaryProps } from "../../types/types";
@@ -10,12 +10,12 @@ const ProfileSummary = ({ setPageIndex, profileIndex, setProfileofInterestIndex,
 
   const { streetAddress, state, city, firstName, lastName, phoneNumber, isDefaultProfile } = deliveryProfiles[profileIndex];
 
-  const handleProfileDeletion = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleProfileDeletion: MouseEventHandler<HTMLButtonElement> = () => {
     setProfileofInterestIndex(profileIndex);
     setShowModal(true);
   };
 
-  const handleProfileEdit = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleProfileEdit: MouseEventHandler<HTMLButtonElement> = () => {
     setProfileofInterestIndex(profileIndex);
     setPageIndex("1");
   };

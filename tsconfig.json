@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node"],
+    "types": ["jest", "node"],
     "allowImportingTsExtensions": true,
     "downlevelIteration": true
   },

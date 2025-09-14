@@ -32,4 +32,6 @@ const CheckoutPaymentOption = forwardRef<HTMLDivElement, checkoutPaymentOptionPr
   );
 });
 
+CheckoutPaymentOption.displayName = "CheckoutPaymentOption"; // 👈 fix
+
 export default CheckoutPaymentOption;

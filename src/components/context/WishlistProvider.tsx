@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "../alert/Alert";
 import AlertLinks from "../alertLinks/AlertLinks";
 
-import { ProvidersProp, wishlistContextType, wishlistType } from "../../types/types";
+import { providersProp, wishlistContextType, wishlistType } from "../../types/types";
 import { alertContext } from "./AlertProvider";
 import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
 import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
@@ -13,7 +13,7 @@ import { userContext } from "./UserProvider";
 
 export const wishlistContext = React.createContext({} as wishlistContextType);
 
-const WishlistProvider = ({ children }: ProvidersProp) => {
+const WishlistProvider = ({ children }: providersProp) => {
   const { handleAlert } = useContext(alertContext);
   const { isLoggedIn } = useContext(userContext);
   const [wishList, setWishList] = useState<wishlistType[]>([]);

@@ -48,7 +48,6 @@ const PayStackDialog = () => {
 
   useEffect(() => {
     reactLocalStorage.remove("orderInstruction");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

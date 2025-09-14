@@ -47,7 +47,7 @@ const ProductReview = ({ productId, setShowModal, userReviews }: productReviewPr
     .map((_, index) => {
       const isMarked = rating >= index + 1;
       return (
-        <button className="star_icon" key={index} onClick={() => setRating(index + 1)}>
+        <button aria-label="set-ratings" className="star_icon" key={index} onClick={() => setRating(index + 1)}>
           <Icon color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} icon="material-symbols-light:star" />
         </button>
       );

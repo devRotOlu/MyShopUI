@@ -68,7 +68,7 @@ const CardPayment = () => {
     const expiryMonth = expiry[0] + expiry[1];
     let expiryYear = expiry[3] + expiry[4];
     const year = new Date().getFullYear();
-    var yearCount = year % 100;
+    const yearCount = year % 100;
     if (Number(expiryYear) >= yearCount) {
       expiryYear = `${Math.trunc(year / 100)}${expiryYear}`;
     } else {
@@ -104,7 +104,8 @@ const CardPayment = () => {
   };
 
   const handleCardChange = (event: FormEvent<HTMLInputElement>) => {
-    let { value, name } = event.currentTarget;
+    let { value } = event.currentTarget;
+    const { name } = event.currentTarget;
     const { max_cvv, max_number, max_pin, max_expiry } = cardMaxChar;
     if (name === "number" && value.length > 4 && value.length <= 19) {
       value = splitString(value.replaceAll(" ", ""), " ", 4);
@@ -114,7 +115,7 @@ const CardPayment = () => {
       value = splitString(value.replaceAll("/", ""), "/", 2);
     }
 
-    var toSetCard = (name === "number" && value.length <= max_number) || (name === "cvv" && value.length <= max_cvv) || (name === "pin" && value.length <= max_pin) || (name === "expiry" && value.length <= max_expiry);
+    const toSetCard = (name === "number" && value.length <= max_number) || (name === "cvv" && value.length <= max_cvv) || (name === "pin" && value.length <= max_pin) || (name === "expiry" && value.length <= max_expiry);
 
     if (toSetCard) {
       setCard((prevCard) => ({ ...prevCard, [name]: value }));

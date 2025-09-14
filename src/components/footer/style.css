@@ -1,10 +1,10 @@
-#footer span.icon_wrapper {
+#footer a.icon_wrapper {
   border-radius: 50%;
   height: 30px;
   width: 30px;
 }
 
-#footer span.social_icons {
+#footer a.social_icons {
   background-color: var(--Hex_Gray18);
 }
 #footer > ul {

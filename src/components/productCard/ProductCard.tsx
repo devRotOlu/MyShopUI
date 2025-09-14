@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent, useRef, useEffect, useState } from "react";
+import React, { useContext, MouseEvent, useRef, useEffect, useState, MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -14,6 +14,7 @@ import { userContext } from "../context/UserProvider.tsx";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
 import { alertContext } from "../context/AlertProvider.tsx";
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
+import { productContext } from "../context/ProductProvider.tsx";
 
 const ProductCard = ({ product }: productCardProp) => {
   const [targetProduct, setTargetProduct] = useState(-1);
@@ -26,6 +27,7 @@ const ProductCard = ({ product }: productCardProp) => {
   } = useContext(userContext);
   const { handleAlert } = useContext(alertContext);
   const { addItemToWishList, isAddingToWishList, deleteFromWishlist, isDeletedWishlistItem, wishList, isAddedToWishlist } = useContext(wishlistContext);
+  const { productImageAspectRatio } = useContext(productContext);
 
   const { name, unitPrice, quantity, images, id, averageRating: rating, reviews } = product;
   const navigate = useNavigate();
@@ -46,11 +48,11 @@ const ProductCard = ({ product }: productCardProp) => {
 
   const isBeingAddedToCart = (isAddingCartItem || isUpdatingCartItem) && isAddedItemRef.current;
 
-  const handleClick = (event: MouseEvent) => {
+  const _handleAddToWishlist = (event: MouseEvent) => {
     event.stopPropagation();
   };
 
-  const handleAddToWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleAddToWishlist: MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
       setTargetProduct(id);
       addItemToWishList(customerId, id);
@@ -63,7 +65,7 @@ const ProductCard = ({ product }: productCardProp) => {
     }
   };
 
-  const handleRemoveFromWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleRemoveFromWishlist: MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
       setTargetProduct(id);
       deleteFromWishlist({ customerId, productId: id });
@@ -87,12 +89,16 @@ const ProductCard = ({ product }: productCardProp) => {
     return item.product.id === id;
   });
 
+  const navigateToProduct = () => {
+    navigate(`/product/${name}-${id}`);
+  };
+
   return (
-    <div className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigate(`/product/${name}-${id}`)}>
+    <div role="button" tabIndex={0} className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigateToProduct()} onKeyDown={(e) => e.key === "Enter" && navigateToProduct()}>
       <div className="w-100 d-flex flex-column gap-2 pb-1">
         <div className="product_image w-100 position-relative">
-          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%" }} />
-          <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={handleClick}>
+          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%", aspectRatio: `${productImageAspectRatio}` }} />
+          <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={_handleAddToWishlist} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && e.stopPropagation()}>
             <SavedItemButton
               data={{ styles: { height: "1.5rem", width: "1.5rem" }, icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />, handleAddToWishlist, handleRemoveFromWishlist, isBeingAdded: isBeingAddedToWishlist, isBeingRemoved: isBeingRemovedFromWishlist, isSaved }}
             />

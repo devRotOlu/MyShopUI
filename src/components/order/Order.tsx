@@ -39,14 +39,13 @@ const Order = ({ ...props }: orderProps) => {
     }
     const key = `${orderIndex}`;
     setOrderCosts((prevCosts) => ({ ...prevCosts, [key]: totalCost }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dateArray = orderDate.split("-");
   const month = months[Number(dateArray[1])];
   const day = dateArray[2];
   const year = dateArray[0];
-  const totalCost: number = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
+  const totalCost = orderCosts[`${orderIndex}` as keyof typeof orderCosts];
   return (
     <div className="order bg-white px-sm-0 px-3">
       <div className="py-3">

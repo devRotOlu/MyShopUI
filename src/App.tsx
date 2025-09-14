@@ -13,6 +13,7 @@ import DeliveryProfileProvider from "./components/context/DeliveryProfileProvide
 import Routes from "./components/Routes.tsx";
 
 import "./App.css";
+import ProductProvider from "./components/context/ProductProvider.tsx";
 function App() {
   return (
     <SkeletonTheme baseColor="#696969" highlightColor="#525252">
@@ -21,9 +22,11 @@ function App() {
           <DeliveryProfileProvider>
             <WishlistProvider>
               <CartProvider>
-                <AppProvider>
-                  <Routes />
-                </AppProvider>
+                <ProductProvider>
+                  <AppProvider>
+                    <Routes />
+                  </AppProvider>
+                </ProductProvider>
               </CartProvider>
             </WishlistProvider>
           </DeliveryProfileProvider>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, MouseEvent, useState, useEffect } from "react";
+import React, { useContext, useRef, useState, useEffect, MouseEventHandler } from "react";
 
 import ProfileCard from "../profileCard/ProfileCard.tsx";
 import ModalCloseButton from "../ModalCloseButton.tsx";
@@ -29,7 +29,7 @@ const AddressBook = ({ setAddAddress }: addressBookProps) => {
     profileIndexRef.current = profileIndex;
   };
 
-  const handleBtnClick = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleBtnClick: MouseEventHandler<HTMLButtonElement> = () => {
     setProfileIndex(profileIndexRef.current);
     setShowModal(false);
   };
@@ -40,7 +40,7 @@ const AddressBook = ({ setAddAddress }: addressBookProps) => {
     if (!element) return;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         setWidth(entry.contentRect.width);
       }
     });

@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import LoginOnModal from "../loginOnModal/LoginOnModal";
 import Alert from "../alert/Alert";
 import Modal from "../modal/Modal";
 
-import { ProvidersProp, productType, userContextType, userDataType } from "../../types/types";
-import { getProducts, modifyProfile } from "../../helperFunctions/dataFetchFunctions";
+import { providersProp, userContextType, userDataType } from "../../types/types";
+import { modifyProfile } from "../../helperFunctions/dataFetchFunctions";
 import { useModal } from "../../customHooks/useModal";
 import { useLogin } from "../../customHooks/useLogin";
 import { alertContext } from "./AlertProvider";
@@ -32,7 +32,7 @@ const initialDeliveryProfile = {
   lga: "",
 };
 
-const UserProvider = ({ children }: ProvidersProp) => {
+const UserProvider = ({ children }: providersProp) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
   const [loginData, setLoginData] = useState<userDataType>({
@@ -47,16 +47,12 @@ const UserProvider = ({ children }: ProvidersProp) => {
   });
   const [isOldSession, setIsOldSession] = useState(false);
 
-  const [products, setProducts] = useState<productType[]>([]);
-
   const { isLoginError, loginTime, isAuthenticating, signingUser } = useLogin(setIsOldSession, setIsLoggedIn, setLoginData);
   const { logoutUser, isLoggedOut, logoutTime, isLoggingOut } = useLogout(setIsLoggedIn);
   const { isAccountDeleted, isDeletingAccount, deleteAccount, accountDeletionTime } = useDeleteAccount(setIsLoggedIn);
   const { isValidatingToken } = useTokenValidation(setIsLoggedIn, setLoginData, setIsOldSession);
   const { isEmailConfirmed, confirmEmail, isEmailConfirmedFailed } = useConfirmEmail();
   const { isSigningUp, isSignupError, isSignupSuccess, signup } = useSignup();
-
-  const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
 
   const {
     mutate: profileMutate,
@@ -68,10 +64,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
   });
 
   const { handleAlert } = useContext(alertContext);
-
-  if (productsFetched && !products.length) {
-    setProducts(productData.data);
-  }
 
   const modifyingProfileRef = useRef(false);
 
@@ -186,8 +178,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
         isLoggedOut,
         confirmEmail,
         isValidatingToken,
-        productsFetched,
-        isLoadingProducts,
         isAuthenticating,
         deleteAccount,
         isJustLoggedIn: loginTimeRef.current !== loginTime && isLoggedIn === true,
@@ -196,7 +186,6 @@ const UserProvider = ({ children }: ProvidersProp) => {
         profileMutate,
         setShowModal,
         isLoggedIn,
-        products,
         loginData,
         setLoginData,
         isOldSession,
@@ -208,7 +197,7 @@ const UserProvider = ({ children }: ProvidersProp) => {
     >
       {children}
       {showModal && (
-        <Modal styles={{ display: "flex", justifyContent: "end" }}>
+        <Modal setCloseModal={() => setShowModal(false)} styles={{ display: "flex", justifyContent: "end" }}>
           <LoginOnModal />
         </Modal>
       )}

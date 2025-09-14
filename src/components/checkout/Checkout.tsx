@@ -122,12 +122,21 @@ const Checkout = () => {
         </PageWrapper>
       </>
       {showModal && (
-        <Modal styles={styles}>
+        <Modal styles={styles} setCloseModal={() => setShowModal(false)}>
           {payOption === "monnify" && <MonnifyDialog isMonnifyError={isMonnifyError} setIsMonnifyError={setIsMonnifyError} />}
           {!displayedPayStackError && payOption === "" && <AddressDialog />}
           {payOption === "payStack" && <PayStackDialog />}
           {displayedPayStackError && (
-            <div onClick={() => (isPayStackErrorDisplayedRef.current = true)}>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => (isPayStackErrorDisplayedRef.current = true)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  isPayStackErrorDisplayedRef.current = true;
+                }
+              }}
+            >
               <CheckoutError />
             </div>
           )}

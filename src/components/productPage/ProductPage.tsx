@@ -78,18 +78,30 @@ const ProductPage = ({ productName }: productPageProps) => {
       <PageWrapper pageId="productPage">
         <div className="w-100">
           <BreadCrumb currentLinkLabel={category} />
-          <Product product={product!} data={wishlistQuery.data?.data}>
+          <Product product={product!} isWishlistItem={wishlistQuery.data?.data!.isWishlistItem}>
             <>
-              <div className="w-100" id="carousel_holder" onClick={() => setShowModal(true)}>
+              <div
+                className="w-100"
+                id="carousel_holder"
+                onClick={() => setShowModal(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setShowModal(true);
+                  }
+                }}
+              >
                 {carousel}
               </div>
+
               {thumbnailsWraps}
             </>
           </Product>
         </div>
       </PageWrapper>
       {showModal && (
-        <Modal styles={{ display: "flex", justifyContent: "center" }}>
+        <Modal setCloseModal={() => setShowModal(false)} styles={{ display: "flex", justifyContent: "center" }}>
           <ProductCarouselModal
             modalCloseButton={<ModalCloseButton setShowModal={setShowModal} />}
             carouselContent={

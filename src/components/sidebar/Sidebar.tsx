@@ -37,7 +37,6 @@ const Sidebar = () => {
         element?.removeEventListener("click", handleClick);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="bg-white  w-100 d-flex flex-column" id="side_bar">

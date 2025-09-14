@@ -6,15 +6,15 @@ import { useLocation } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 import Modal from "../modal/Modal";
 
-import { ProvidersProp } from "../../types/types";
+import { providersProp } from "../../types/types";
 import { getPublicKey } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "./UserProvider";
 
-export type appContextType = { publicKeyPem: any; setModalIndex: React.Dispatch<React.SetStateAction<number>>; modalIndex: number; handleFilter: (modalIndex: number, filterInstance: ReactNode) => void; setSortIndex: React.Dispatch<React.SetStateAction<number>>; sortIndex: number };
+export type appContextType = { publicKeyPem: string; setModalIndex: React.Dispatch<React.SetStateAction<number>>; modalIndex: number; handleFilter: (modalIndex: number, filterInstance: ReactNode) => void; setSortIndex: React.Dispatch<React.SetStateAction<number>>; sortIndex: number };
 
 export const appContext = createContext({} as appContextType);
 
-const AppProvider = ({ children }: ProvidersProp) => {
+const AppProvider = ({ children }: providersProp) => {
   const { isLoggedIn } = useContext(userContext);
 
   const { pathname } = useLocation();
@@ -30,7 +30,7 @@ const AppProvider = ({ children }: ProvidersProp) => {
     enabled: isLoggedIn ? true : false,
   });
 
-  const publicKeyPem = data?.data;
+  const publicKeyPem: string = data?.data;
   const handleFilter = (modalIndex: number, filterInstance: ReactNode) => {
     setModalIndex(modalIndex);
     setFilterInstance(filterInstance);
@@ -75,7 +75,7 @@ const AppProvider = ({ children }: ProvidersProp) => {
     <appContext.Provider value={{ publicKeyPem, modalIndex, setModalIndex, handleFilter, setSortIndex, sortIndex }}>
       {children}
       {modalIndex !== 0 && (
-        <Modal styles={{ height: "100%", width: "100%" }}>
+        <Modal setCloseModal={() => setModalIndex(0)} styles={{ height: "100%", width: "100%" }}>
           {modalIndex === 1 && <Sidebar />}
           {modalIndex === 2 && <>{filterInstance}</>}
           {modalIndex === 3 && <>{filterInstance}</>}

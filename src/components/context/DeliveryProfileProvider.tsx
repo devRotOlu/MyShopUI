@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import { deliveryContextType, deliveryDataType, ProvidersProp } from "../../types/types";
-import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile";
 import Alert from "../alert/Alert";
+
+import { deliveryContextType, deliveryDataType, providersProp } from "../../types/types";
+import { useAddDeliveryProfile } from "../../customHooks/useAddDeliveryProfile";
 import { alertContext } from "./AlertProvider";
 import { useUpdateDeliveryProfile } from "../../customHooks/useUpdateDeliveryProfile";
 import { useDeleteDeliveryProfile } from "../../customHooks/useDeleteDeliveryProfile";
 
 export const deliveryContext = React.createContext({} as deliveryContextType);
 
-const DeliveryProfileProvider = ({ children }: ProvidersProp) => {
+const DeliveryProfileProvider = ({ children }: providersProp) => {
   const [deliveryProfiles, setDeliveryProfiles] = useState<deliveryDataType[]>([]);
   const { addDeliveryProfile, addingDeliveryProfile, profileAdded, profileAdditionTime } = useAddDeliveryProfile(setDeliveryProfiles);
   const { updateDeliveryProfile, updatingDeliveryProfile, profileUpdateTime, profileUpdated } = useUpdateDeliveryProfile(setDeliveryProfiles);

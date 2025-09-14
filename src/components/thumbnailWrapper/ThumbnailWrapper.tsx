@@ -7,7 +7,18 @@ const ThumbnailWrapper = ({ setActiveIndex, activeIndex, index, children }: thum
   const borderColor = isActiveIndex ? "var(--dark_orange)" : "var(--darker_Grey)";
   const borderThickness = isActiveIndex ? "2px" : "Thin";
   return (
-    <div className="thumbnailWrap" onClick={() => setActiveIndex(index)} style={{ border: `solid ${borderThickness} ${borderColor}` }}>
+    <div
+      className="thumbnailWrap"
+      role="button"
+      tabIndex={0}
+      onClick={() => setActiveIndex(index)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          setActiveIndex(index);
+        }
+      }}
+      style={{ border: `solid ${borderThickness} ${borderColor}` }}
+    >
       {children}
     </div>
   );

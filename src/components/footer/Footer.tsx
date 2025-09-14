@@ -18,12 +18,12 @@ const Footer = () => {
       </li>
     );
   });
-  const _socials = socials.map(({ icon }, index) => {
+  const _socials = socials.map(({ icon, name }, index) => {
     return (
       <li key={index}>
-        <span className="icon_wrapper social_icons d-flex justify-content-center align-items-center" key={index}>
+        <a className="icon_wrapper social_icons d-flex justify-content-center align-items-center" key={index} href={`https://${name}.com`}>
           <Icon icon={icon} fontSize={16} color="white" />
-        </span>
+        </a>
       </li>
     );
   });

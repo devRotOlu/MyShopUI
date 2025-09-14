@@ -2,3 +2,7 @@
   width: 150px;
   align-self: center;
 }
+
+#dialog_header #brand > img {
+  aspect-ratio: 1103/243;
+}

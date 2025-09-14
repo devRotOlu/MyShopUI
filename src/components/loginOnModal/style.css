@@ -3,23 +3,17 @@
   min-height: 100vh;
 }
 
-#login_modal div#modal_login_link a {
+#login_modal button#modal_login_link a {
   color: var(--deep_pink);
 }
 
-#login_modal div#modal_login_link {
+#login_modal button#modal_login_link {
   position: absolute;
   bottom: 0;
   padding: 10px;
   box-shadow: 1px 0 10px -7px;
   width: 100%;
 }
-
-/* #login_modal div#modal_login {
-  width: fit-content;
-  padding: 0 20px;
-  min-height: 100vh;
-} */
 
 #login_modal button#modal_cancel_btn {
   height: fit-content;

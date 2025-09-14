@@ -1,6 +1,9 @@
 .brand_wrapper {
   width: fit-content;
 }
+.brand_wrapper div.brand > img {
+  aspect-ratio: 897/203;
+}
 .brand_wrapper div.brand {
   width: 120px;
 }

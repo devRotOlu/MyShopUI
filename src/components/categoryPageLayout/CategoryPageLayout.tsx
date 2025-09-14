@@ -9,12 +9,7 @@ const CategoryPageLayout = ({ filterWrapper, children }: categoryPageLayoutProps
       <div className="d-md-block d-none " id="filter_wrapper">
         <div>{filterWrapper}</div>
       </div>
-      <div className="flex-grow-1">
-        {/* <div id="product_card_wrapper" className="w-100">
-          {products}
-        </div> */}
-        {children}
-      </div>
+      <div className="flex-grow-1">{children}</div>
     </div>
   );
 };

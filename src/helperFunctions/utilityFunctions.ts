@@ -33,7 +33,7 @@ export function toBase64(bytes: ArrayBuffer) {
   return btoa(String.fromCharCode(...new Uint8Array(bytes)));
 }
 
-export const encryptData = async (data: any, publicKeyPem: any): Promise<encryptDataType> => {
+export const encryptData = async (data: unknown, publicKeyPem: string): Promise<encryptDataType> => {
   const publicKey = await getCryptoKey(publicKeyPem);
   // 2. Generate AES key and IV
   const aesKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState, MouseEvent } from "react";
+import React, { useContext, useEffect, useRef, useState, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
@@ -23,7 +23,7 @@ import { useAddToWhishlist } from "../../customHooks/useAddToWishlist";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
 
-const Product = ({ product, children, data }: productProps) => {
+const Product = ({ product, children, isWishlistItem }: productProps) => {
   const [quantityToAdd, setQuantityToAdd] = useState(1);
   const [validateQuantity, setValidateQuantity] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
@@ -39,7 +39,7 @@ const Product = ({ product, children, data }: productProps) => {
   const { deleteFromWishlist, isDeletingWishlistItem } = useDeleteWishlist();
   const { addItemToWishList, isAddingToWishList } = useAddToWhishlist();
 
-  const isSaved: boolean = data?.isWishlistItem || false;
+  const isSaved = isWishlistItem ?? false;
 
   const { name, description, unitPrice, quantity, id: productId, reviews, averageRating, attributes } = product;
 
@@ -49,7 +49,7 @@ const Product = ({ product, children, data }: productProps) => {
 
   const brand = brandIndex > -1 ? attributes[brandIndex].value : "";
 
-  const handleAddToWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleAddToWishlist: MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
       addItemToWishList(customerId, productId);
     } else {
@@ -61,7 +61,7 @@ const Product = ({ product, children, data }: productProps) => {
     }
   };
 
-  const handleRemoveFromWishlist = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleRemoveFromWishlist: MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
       deleteFromWishlist({ customerId, productId });
     } else {

@@ -15,7 +15,7 @@ const DialogHeader = ({ children }: dialogHeaderProps) => {
         <div id="brand">
           <img src={logo} alt="App Brand" style={{ width: "100%" }} />
         </div>
-        <button onClick={() => setShowModal(false)} className="align-self-end">
+        <button aria-label="cancel" onClick={() => setShowModal(false)} className="align-self-end">
           <Icon icon="mdi:cancel-box" fontSize={30} />
         </button>
       </div>

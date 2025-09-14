@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent } from "react";
+import React, { useContext, MouseEventHandler } from "react";
 
 import Loader from "../Loader";
 import CloseTransferBtn from "../checkout/CloseTransferBtn";
@@ -11,7 +11,7 @@ import "./style.css";
 const TransferDetails = ({ children }: transferDetailsProp) => {
   const { isFetchingTransactionStatus, refetchTransactionStatus, profileIndex, transactionRef, orderInstruction } = useContext(checkoutContext);
   const { deliveryProfiles } = useContext(deliveryContext);
-  const handleTransactionStatus = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleTransactionStatus: MouseEventHandler<HTMLButtonElement> = () => {
     const deliveryProfile = deliveryProfiles[profileIndex];
     const profileId = Number(deliveryProfile.id);
     refetchTransactionStatus({
@@ -25,7 +25,7 @@ const TransferDetails = ({ children }: transferDetailsProp) => {
       <p className="text-white bg-dark text-center py-2">TRANSFER DETAILS</p>
       <div className="pt-3 pb-5 px-3">
         <div className="d-flex flex-column gap-3">
-          <p className="text-center">Kindly transfer into the given account using the USSD code then click 'I have made a transfer' button to complete the transaction.</p>
+          <p className="text-center">Kindly transfer into the given account using the USSD code then click &apos;I have made a transfer&apos; button to complete the transaction.</p>
           {children}
           {isFetchingTransactionStatus && (
             <div className="d-flex align-items-center flex-column gap-3">

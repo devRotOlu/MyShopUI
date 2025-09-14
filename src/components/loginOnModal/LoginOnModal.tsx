@@ -45,7 +45,6 @@ const LoginOnModal = () => {
     if (pathnameRef.current !== location.pathname) {
       setShowModal(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   return (
@@ -69,9 +68,9 @@ const LoginOnModal = () => {
           </div>
           <LoginDetails />
         </AuthFormElementWrapper>
-        <div className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
+        <button className="d-flex justify-content-center" id="modal_login_link" onClick={() => setShowModal(false)}>
           <Link to="/account/signup">Don’t have an account? Sign Up</Link>
-        </div>
+        </button>
       </FormComp>
     </div>
   );

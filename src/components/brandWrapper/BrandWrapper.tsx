@@ -19,19 +19,19 @@ const BrandWrapper = () => {
       <div className="d-flex align-items-center gap-2">
         <div className="d-md-none">
           {!isHomePage && (
-            <button onClick={() => navigate(-1)}>
+            <button aria-label="back" onClick={() => navigate(-1)}>
               <Icon icon="ic:baseline-arrow-back" fontSize={22} />
             </button>
           )}
           {isHomePage && (
             <>
               {modalIndex === 0 && (
-                <button onClick={() => setModalIndex(1)}>
+                <button aria-label="open-modal" onClick={() => setModalIndex(1)}>
                   <Icon icon="formkit:open" fontSize={22} />
                 </button>
               )}
               {modalIndex === 1 && (
-                <button onClick={() => setModalIndex(0)}>
+                <button aria-label="close-modal" onClick={() => setModalIndex(0)}>
                   <Icon icon="formkit:close" fontSize={22} />
                 </button>
               )}

@@ -17,7 +17,7 @@ export const myShopAxios = axios.create({
   },
 });
 
-const processQueue = (error: any) => {
+const processQueue = (error: unknown) => {
   failedRequests.forEach(({ reject }) => {
     reject(error);
   });

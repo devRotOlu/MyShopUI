@@ -6,6 +6,10 @@
   width: 200px;
 }
 
+.auth_page #brand > img {
+  aspect-ratio: 1103/243;
+}
+
 @media screen and (max-width: 450px) {
   #auth_wrapper {
     width: 100%;

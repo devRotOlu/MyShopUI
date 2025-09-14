@@ -15,7 +15,7 @@ const Alert = ({ alertMessage, alertTitle, children, styles }: AlertProp) => {
         {children}
       </div>
       <div className="d-flex align-items-center justify-content-center">
-        <button onClick={() => handleAlert({ showAlert: false })} className="d-flex">
+        <button aria-label="cancel" onClick={() => handleAlert({ showAlert: false })} className="d-flex">
           <Icon icon="iconoir:cancel" style={{ fontSize: "30px" }} />
         </button>
       </div>

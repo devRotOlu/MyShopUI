@@ -6,6 +6,10 @@
   width: 120px;
 }
 
+#checkout_header #brand > img {
+  aspect-ratio: 1103/243;
+}
+
 #checkout_header h1 {
   font-size: 28px;
 }

@@ -17,7 +17,7 @@ export const useGetCartItems = (setCart: (value: React.SetStateAction<cartType[]
     queryFn: async () => {
       return await getCartItems(email);
     },
-    refetchInterval: isLoggedIn ? 3000 : false,
+    refetchInterval: isLoggedIn ? 30000 : false,
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
   });

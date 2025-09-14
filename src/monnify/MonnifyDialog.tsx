@@ -24,7 +24,6 @@ const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps
       setIsMonnifyError(false);
       setMonnifyOption("");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isInitializingPayment) {

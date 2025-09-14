@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, MouseEvent } from "react";
+import React, { useEffect, useRef, useState, MouseEventHandler } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -11,7 +11,7 @@ import { useGetQueryParams } from "../../customHooks/useGetQueryParams";
 
 const FilterPanel = ({ products }: filterPanelProps) => {
   const { search, pathname } = useLocation();
-  let queryParam = Object.fromEntries(new URLSearchParams(search));
+  const queryParam = Object.fromEntries(new URLSearchParams(search));
   const { min, max, rating } = useGetQueryParams();
   const [selectedPrices, setSelectedPrices] = useState<selectedPricesType>({ minPrice: min, maxPrice: max });
   const [selectedRating, setSelectedRating] = useState<number | undefined>(rating);
@@ -43,13 +43,13 @@ const FilterPanel = ({ products }: filterPanelProps) => {
     if (minPrice || maxPrice) {
       delete queryParam["min"];
       delete queryParam["max"];
-      minPrice && (queryParam["min"] = minPrice.toString());
-      maxPrice && (queryParam["max"] = maxPrice.toString());
+      if (minPrice) queryParam["min"] = minPrice.toString();
+      if (maxPrice) queryParam["max"] = maxPrice.toString();
     }
-    selectedRating && (queryParam["rating"] = selectedRating.toString());
-    let url = pathname + "?" + new URLSearchParams(queryParam).toString();
+
+    if (selectedRating) queryParam["rating"] = selectedRating.toString();
+    const url = pathname + "?" + new URLSearchParams(queryParam).toString();
     navigate(url);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minPrice, maxPrice, selectedRating]);
 
   const _categories = Array.from(categories).map((category, index) => {
@@ -87,13 +87,13 @@ const FilterPanel = ({ products }: filterPanelProps) => {
       );
     });
   const { isExpandCategory, isExpandPriceList, isExpandRatings } = isExpand;
-  const handleCategoryToggle = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleCategoryToggle: MouseEventHandler<HTMLButtonElement> = () => {
     setIsExpand((prevObj) => ({ ...prevObj, isExpandCategory: !prevObj.isExpandCategory }));
   };
-  const handlePriceListToggle = (_: MouseEvent<HTMLButtonElement>) => {
+  const handlePriceListToggle: MouseEventHandler<HTMLButtonElement> = () => {
     setIsExpand((prevObj) => ({ ...prevObj, isExpandPriceList: !prevObj.isExpandPriceList }));
   };
-  const handleRatingsToggle = (_: MouseEvent<HTMLButtonElement>) => {
+  const handleRatingsToggle: MouseEventHandler<HTMLButtonElement> = () => {
     setIsExpand((prevObj) => ({ ...prevObj, isExpandRatings: !prevObj.isExpandRatings }));
   };
   return (
@@ -103,11 +103,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <p className="fw-bold list_header">Browse Categories</p>
           <div>
             {isExpandCategory ? (
-              <button onClick={handleCategoryToggle}>
+              <button aria-label="expand-category" onClick={handleCategoryToggle}>
                 <Icon icon="charm:plus" fontSize={20} />
               </button>
             ) : (
-              <button onClick={handleCategoryToggle}>
+              <button aria-label="minimize-category" onClick={handleCategoryToggle}>
                 <Icon icon="charm:minus" fontSize={20} />
               </button>
             )}
@@ -120,11 +120,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <p className="fw-bold list_header">Price</p>
           <div>
             {isExpandPriceList ? (
-              <button onClick={handlePriceListToggle}>
+              <button aria-label="expand-list" onClick={handlePriceListToggle}>
                 <Icon icon="charm:plus" fontSize={20} />
               </button>
             ) : (
-              <button onClick={handlePriceListToggle}>
+              <button aria-label="minimize-list" onClick={handlePriceListToggle}>
                 <Icon icon="charm:minus" fontSize={20} />
               </button>
             )}
@@ -137,11 +137,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <p className="fw-bold list_header">Rating</p>
           <div>
             {isExpandRatings ? (
-              <button onClick={handleRatingsToggle}>
+              <button aria-label="expand-ratings" onClick={handleRatingsToggle}>
                 <Icon icon="charm:plus" fontSize={20} />
               </button>
             ) : (
-              <button onClick={handleRatingsToggle}>
+              <button aria-label="minimize-ratings" onClick={handleRatingsToggle}>
                 <Icon icon="charm:minus" fontSize={20} />
               </button>
             )}

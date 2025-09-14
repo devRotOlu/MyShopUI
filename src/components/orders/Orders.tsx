@@ -85,7 +85,7 @@ const Orders = () => {
         </div>
       </PageWrapper>
       {showModal && (
-        <Modal styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Modal setCloseModal={() => setShowModal(false)} styles={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <ProductReview productId={reviewId} setShowModal={setShowModal} userReviews={userReviews} />
         </Modal>
       )}

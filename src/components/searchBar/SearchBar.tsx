@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef, FocusEvent, MouseEvent } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useRef, FocusEvent } from "react";
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -18,7 +18,6 @@ const SearchBar = ({ ...props }: searchBarProps) => {
     if (searchTerm) {
       refetch();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const SearchBar = ({ ...props }: searchBarProps) => {
       const products = data?.data;
       setSearchResults(products);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dataUpdatedAt]);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,13 +38,10 @@ const SearchBar = ({ ...props }: searchBarProps) => {
     event.stopPropagation();
     setIsFocused(true);
   };
-  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-  };
   return (
     <form onSubmit={handleSubmit} className="input-group w-100" id="search_bar">
-      <input onClick={handleClick} onFocus={handleFocus} value={userInput} onChange={handleSearch} type="text" className="form-control" placeholder="Search for products, brands, and categories..." aria-label="search bar" aria-describedby="basic-addon2" />
-      <button type="submit" className="input-group-text" id="basic-addon2">
+      <input onMouseDown={(e) => e.stopPropagation()} onFocus={handleFocus} value={userInput} onChange={handleSearch} type="text" className="form-control" placeholder="Search for products, brands, and categories..." aria-label="search bar" aria-describedby="basic-addon2" />
+      <button aria-label="search" type="submit" className="input-group-text" id="basic-addon2">
         <Icon id="search_icon" icon="ic:baseline-search" />
       </button>
     </form>

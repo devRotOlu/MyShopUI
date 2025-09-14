@@ -8,13 +8,13 @@ import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper.tsx";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
 
 import "./style.css";
-import { userContext } from "../context/UserProvider.tsx";
 import { productType } from "../../types/types.ts";
+import { productContext } from "../context/ProductProvider.tsx";
 
 const maxProductPerPage = 10;
 const firstPage = 1;
 const Home = () => {
-  const { products, isLoadingProducts, productsFetched } = useContext(userContext);
+  const { products, isLoadingProducts, productsFetched } = useContext(productContext);
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<productType[]>([]);
 
