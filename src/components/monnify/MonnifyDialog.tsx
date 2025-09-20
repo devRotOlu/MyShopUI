@@ -1,18 +1,18 @@
 import React, { useContext, useEffect } from "react";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 
-import Loader from "../components/Loader.tsx";
-import MonnifyCardPaymentOption from "../components/monnifyCardPaymentOption/MonnifyCardPaymentOption.tsx";
-import DialogHeader from "../components/dialogHeader/DialogHeader.tsx";
-import CheckoutError from "../components/checkoutError/CheckoutError.tsx";
-import MonnifyBankTransferOption from "../components/MonnifyBankTransferOption.tsx";
-import MonnifyPaymentOptions from "../components/MonnifyPaymentOptions.tsx";
+import Loader from "../Loader.tsx";
+import MonnifyCardPaymentOption from "../monnifyCardPaymentOption/MonnifyCardPaymentOption.tsx";
+import DialogHeader from "../dialogHeader/DialogHeader.tsx";
+import CheckoutError from "../checkoutError/CheckoutError.tsx";
+import MonnifyBankTransferOption from "../MonnifyBankTransferOption.tsx";
+import MonnifyPaymentOptions from "../MonnifyPaymentOptions.tsx";
 
-import { checkoutContext } from "../components/checkout/Checkout.tsx";
+import { checkoutContext } from "../checkout/Checkout.tsx";
 import "./style.css";
-import { monnifyDialogProps } from "../types/types.ts";
-import { cartContext } from "../components/context/CartProvider.tsx";
-import { naira } from "../data.ts";
+import { monnifyDialogProps } from "../../types/types.ts";
+import { cartContext } from "../context/CartProvider.tsx";
+import { naira } from "../../data.ts";
 
 const MonnifyDialog = ({ isMonnifyError, setIsMonnifyError }: monnifyDialogProps) => {
   const { initializePayment, transactionRef, monnifyOption, setMonnifyOption, isInitializingPayment } = useContext(checkoutContext);

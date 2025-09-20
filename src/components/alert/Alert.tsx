@@ -8,14 +8,14 @@ import { alertContext } from "../context/AlertProvider.tsx";
 const Alert = ({ alertMessage, alertTitle, children, styles }: AlertProp) => {
   const { handleAlert } = useContext(alertContext);
   return (
-    <div className="d-flex text-white justify-content-between" id="alert" style={styles}>
+    <div className="d-flex text-white justify-content-between" id="alert" style={styles} role="alert">
       <div className="flex-grow-1 px-2 d-flex flex-column gap-1 justify-content-center">
         {alertTitle ? <p>{alertTitle}</p> : ""}
         <p>{alertMessage}</p>
         {children}
       </div>
       <div className="d-flex align-items-center justify-content-center">
-        <button aria-label="cancel" onClick={() => handleAlert({ showAlert: false })} className="d-flex">
+        <button aria-label="Close alert" onClick={() => handleAlert({ showAlert: false })} className="d-flex">
           <Icon icon="iconoir:cancel" style={{ fontSize: "30px" }} />
         </button>
       </div>

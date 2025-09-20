@@ -32,7 +32,6 @@ const Routes = () => {
             <Route path="/cart/overview" element={<Cart />} />
             <Route path="/category/:productCategory" element={<CategoryPageWrapper />} />
             <Route path="/brand/:brand" element={<BrandPageWrapper />} />
-            {/* <Route path="/search" element={<SearchPage />} /> */}
           </Route>
           <Route path="/account/signup" element={<SignUp />} />
           <Route path="/account/login" element={<LoginPage />} />

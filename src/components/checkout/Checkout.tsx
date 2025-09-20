@@ -2,7 +2,7 @@ import React, { useState, CSSProperties, useRef, useEffect, useContext } from "r
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 import CheckoutHeader from "../checkoutHeader/CheckoutHeader.tsx";
-import MonnifyDialog from "../../monnify/MonnifyDialog.tsx";
+import MonnifyDialog from "../monnify/MonnifyDialog.tsx";
 import DeliveryOption from "../deliveryOption/DeliveryOption.tsx";
 import CheckoutPaymentOption from "../checkoutPaymentOption/CheckoutPaymentOption.tsx";
 import PageWrapper from "../PageWrapper.tsx";

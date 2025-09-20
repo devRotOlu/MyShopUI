@@ -14,11 +14,11 @@ import PasswordResetInstruction from "../passwordResetInstruction/PasswordResetI
 import ResetPasswordSuccessAlert from "../resetPasswordSuccessAlert/ResetPasswordSuccessAlert.tsx";
 import PasswordResetErrorAlert from "../passwordResetErrorAlert/PasswordResetErrorAlert.tsx";
 import PasswordChecklistDisplay from "../PasswordChecklistDisplay.tsx";
+import ValidationError from "../validationError/ValidationError.tsx";
 
 import { resetPassword } from "../../helperFunctions/dataFetchFunctions.ts";
 import { useValidation } from "../../customHooks/useValidation.ts";
 import { passwordResetSchema } from "../../formSchemas.ts";
-import ValidationError from "../validationError/ValidationError.tsx";
 
 const ResetPassword = () => {
   const navigate = useNavigate();

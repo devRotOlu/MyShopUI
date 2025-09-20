@@ -6,6 +6,7 @@ import HomeProductLayout from "../homeProductLayout/HomeProductLayout.tsx";
 import ProductCard from "../productCard/ProductCard.tsx";
 import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper.tsx";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import "./style.css";
 import { productType } from "../../types/types.ts";
@@ -25,6 +26,12 @@ const Home = () => {
 
   return (
     <PageWrapper pageId="home">
+      <SEOEnhanzer
+        title="Buy Phones, Fashion, Electronics in MyShop"
+        description="Shop Online for Electronics, Phones, Computers, Accessories, Fashion, Shoes, Household Equipments, Wines, Babies, Toys, Furnitures, Groceries, Sport and Fitness, Books and more in Nigeria from top brands with 100% satisfaction and fast shipping. MyShop Online Shopping."
+        imageUrl=""
+        url=""
+      />
       {isLoadingProducts && (
         <HomeCardsWrapper>
           <ProductCardSkeleton count={5} />

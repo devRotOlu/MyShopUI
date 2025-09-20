@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
-//import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import Loader from "../Loader";

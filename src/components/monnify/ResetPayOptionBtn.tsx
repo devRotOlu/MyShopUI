@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
 
-import { checkoutContext } from "../components/checkout/Checkout";
+import { checkoutContext } from "../checkout/Checkout";
 
 const ResetPayOptionBtn = () => {
   const { setMonnifyOption } = useContext(checkoutContext);

@@ -7,7 +7,7 @@ import ComponentOverlay from "./ComponentOverlay.tsx.tsx";
 import TransferDetails from "./transferDetails/TransferDetails.tsx";
 import TransferDetailsTable from "./transferDetailsTable/TransferDetailsTable.tsx";
 import MonnifyPaymentOptionTitle from "./MonnifyPaymentOptionTitle.tsx";
-import ResetPayOptionBtn from "../monnify/ResetPayOptionBtn.tsx";
+import ResetPayOptionBtn from "./monnify/ResetPayOptionBtn.tsx";
 import Loader from "./Loader.tsx";
 import ValidationError from "./validationError/ValidationError.tsx";
 

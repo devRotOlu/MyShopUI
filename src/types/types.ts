@@ -4,6 +4,13 @@ import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction }
 import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
 import z, { ZodObject, ZodRawShape } from "zod";
 
+export type SEO_OptimizerProps = {
+  title: string;
+  description: string;
+  url: string;
+  imageUrl: string;
+};
+
 export type validationErrorType = {
   error: string;
 };

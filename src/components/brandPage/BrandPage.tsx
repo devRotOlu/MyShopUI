@@ -8,10 +8,10 @@ import NavigationButtons from "../navigationButtons/NavigationButtons";
 import CategoryPageLayout from "../categoryPageLayout/CategoryPageLayout";
 import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 import SortPanel from "../sortPanel/SortPanel";
+import HomeProductCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 
 import { brandPageProps, productType } from "../../types/types";
 import { appContext } from "../context/AppProvider";
-import HomeProductCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 
 const maxProductPerPage = 20;
 const firstPage = 1;

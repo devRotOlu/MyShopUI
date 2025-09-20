@@ -5,7 +5,7 @@ import FormComp from "../formComp/FormComp.tsx";
 import FormButton from "../formButton/FormButton.tsx";
 import TextInput from "../textInput/TextInput.tsx";
 import MonnifyPaymentOptionTitle from "../MonnifyPaymentOptionTitle.tsx";
-import ResetPayOptionBtn from "../../monnify/ResetPayOptionBtn.tsx";
+import ResetPayOptionBtn from "../monnify/ResetPayOptionBtn.tsx";
 import Loader from "../Loader.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ValidationError from "../validationError/ValidationError.tsx";
@@ -15,28 +15,16 @@ import { userContext } from "../context/UserProvider.tsx";
 import { checkoutContext } from "../checkout/Checkout.tsx";
 import { deliveryContext } from "../context/DeliveryProfileProvider.tsx";
 import "./style.css";
-import { encryptData } from "../../helperFunctions/utilityFunctions.ts";
 import { appContext } from "../context/AppProvider.tsx";
 import { monnifyCardSchema } from "../../formSchemas.ts";
 import { useValidation } from "../../customHooks/useValidation.ts";
+import { splitString } from "../../helperFunctions/utilityFunctions.ts";
 
 const cardMaxChar = {
   max_pin: 4,
   max_cvv: 3,
   max_number: 22,
   max_expiry: 5,
-};
-
-const splitString = (value: string, separator: string, divisor: number): string => {
-  let valueArray = value.split("");
-  valueArray = valueArray.map((str, index) => {
-    const position = index + 1;
-    if (position !== 1 && position % divisor === 1) {
-      return separator + str;
-    }
-    return str;
-  });
-  return valueArray.join("");
 };
 
 const CardPayment = () => {
@@ -91,6 +79,7 @@ const CardPayment = () => {
     };
 
     if (publicKeyPem) {
+      const { encryptData } = await import("../../helperFunctions/utilityFunctions.ts");
       const { encryptedBody, encryptedIV, encryptedKey } = await encryptData(requestContent, publicKeyPem);
 
       sendCardDetails({

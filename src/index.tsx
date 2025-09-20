@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { HelmetProvider } from "react-helmet-async";
 
 import App from "./App.tsx";
 
@@ -14,7 +15,9 @@ root.render(
     {/* <React.StrictMode> */}
     <QueryClientProvider client={client}>
       <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </SkeletonTheme>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

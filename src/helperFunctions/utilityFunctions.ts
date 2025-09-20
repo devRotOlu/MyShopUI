@@ -61,3 +61,37 @@ export const encryptData = async (data: unknown, publicKeyPem: string): Promise<
 };
 
 export const truncateName = (name: string, possibleLength: number = 100) => (name.length > 30 ? name.substring(0, possibleLength) + "..." : name);
+
+export const splitString = (value: string, separator: string, divisor: number): string => {
+  let valueArray = value.split("");
+  valueArray = valueArray.map((str, index) => {
+    const position = index + 1;
+    if (position !== 1 && position % divisor === 1) {
+      return separator + str;
+    }
+    return str;
+  });
+  return valueArray.join("");
+};
+
+/**
+ * Generates a transformed Cloudinary URL for Open Graph / social share images
+ *
+ * @param url - Original Cloudinary image URL
+ * @returns Transformed URL (1200x630 padded, white background, optimized)
+ */
+export const getOgImageUrl = (url: string): string => {
+  try {
+    // Split at "/upload/"
+    const [prefix, suffix] = url.split("/upload/");
+
+    if (!suffix) return url; // if URL doesn't match expected pattern, return original
+
+    // Insert transformation string
+    const transformation = "w_1200,h_630,c_pad,b_white,f_auto,q_auto";
+
+    return `${prefix}/upload/${transformation}/${suffix}`;
+  } catch {
+    return url;
+  }
+};
