@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./style.css";
-import logo from "../../assests/logo_new_2.png";
+import logo from "../../assests/logo_new_2.webp";
 
 const CheckoutHeader = () => {
   return (

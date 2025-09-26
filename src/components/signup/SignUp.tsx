@@ -12,6 +12,7 @@ import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
 import ValidationError from "../validationError/ValidationError.tsx";
 import PasswordChecklistDisplay from "../PasswordChecklistDisplay.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import { signupDetails } from "../../data.ts";
 import "./signup.css";
@@ -78,33 +79,36 @@ const SignUp = () => {
     );
   });
   return (
-    <AuthPageWrapper id="signup">
-      <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
-        <AuthFormTitle title="Create An Account" />
-        <AuthFormElementWrapper>
-          <div className="d-flex flex-column gap-3">
-            {formElements}
-            <p className="text-center text-muted" id="policy">
-              By signing up you accept our terms and conditions
-              <br /> & privacy policy
-            </p>
-            <div className="position-relative">
-              <FormButton value="Create Account" styles={{ backgroundColor: "var(--light_Green)" }} />
-              {isSigningUp && (
-                <ComponentOverlay>
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    <Loader color="white" size="spinner-border-sm" />
-                  </div>
-                </ComponentOverlay>
-              )}
+    <>
+      <SEOEnhanzer title="SignUp | MyShop Online Shopping" description="Signup to create your MyShop account" robots="noindex, follow" />
+      <AuthPageWrapper id="signup">
+        <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
+          <AuthFormTitle title="Create An Account" />
+          <AuthFormElementWrapper>
+            <div className="d-flex flex-column gap-3">
+              {formElements}
+              <p className="text-center text-muted" id="policy">
+                By signing up you accept our terms and conditions
+                <br /> & privacy policy
+              </p>
+              <div className="position-relative">
+                <FormButton value="Create Account" styles={{ backgroundColor: "var(--light_Green)" }} />
+                {isSigningUp && (
+                  <ComponentOverlay>
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                      <Loader color="white" size="spinner-border-sm" />
+                    </div>
+                  </ComponentOverlay>
+                )}
+              </div>
             </div>
-          </div>
-        </AuthFormElementWrapper>
-        <AuthPageLinkWrapper linkSectionTitle="Already have an account?">
-          <PageLink link="/account/login" linkLabel="Login" />
-        </AuthPageLinkWrapper>
-      </FormComp>
-    </AuthPageWrapper>
+          </AuthFormElementWrapper>
+          <AuthPageLinkWrapper linkSectionTitle="Already have an account?">
+            <PageLink link="/account/login" linkLabel="Login" />
+          </AuthPageLinkWrapper>
+        </FormComp>
+      </AuthPageWrapper>
+    </>
   );
 };
 

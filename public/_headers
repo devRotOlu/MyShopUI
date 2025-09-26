@@ -13,6 +13,15 @@
 /manifest.json
   Cache-Control: public, max-age=86400
 
-/favicon.png
+/favicon.webp
   Cache-Control: public, max-age=604800, immutable
+
+/*
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self' https://myshopapi-ggcb.onrender.com https://res.cloudinary.com; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://res.cloudinary.com https://encrypted-tbn0.gstatic.com; connect-src 'self' https://myshopapi-ggcb.onrender.com
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Referrer-Policy: strict-origin-when-cross-origin
+
+
 

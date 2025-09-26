@@ -95,7 +95,7 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
           <div className="pt-2">{_reviews}</div>
         </div>
       )}
-      {reviews.length > 0 && <p>No product review yet. Be the first to review this product.</p>}
+      {reviews.length === 0 && <p>No product review yet. Be the first to review this product.</p>}
     </div>
   );
 };

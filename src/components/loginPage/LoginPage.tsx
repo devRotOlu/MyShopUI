@@ -13,6 +13,7 @@ import FormButton from "../formButton/FormButton.tsx";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import Loader from "../Loader.tsx";
 import LoginDetails from "../loginDetails/LoginDetails.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import { loginDetails } from "../../data.ts";
 import { useHandleLoginFormChange } from "../../customHooks/useHandleLoginFormChange.ts";
@@ -58,28 +59,31 @@ const LoginPage = () => {
   });
 
   return (
-    <AuthPageWrapper id="login_page">
-      <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
-        <AuthFormTitle title="Login" />
-        <AuthFormElementWrapper>
-          {formElements}
-          <div className="position-relative">
-            <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
-            {isAuthenticating && (
-              <ComponentOverlay>
-                <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                  <Loader color="white" size="spinner-border-sm" />
-                </div>
-              </ComponentOverlay>
-            )}
-          </div>
-          <LoginDetails />
-        </AuthFormElementWrapper>
-        <AuthPageLinkWrapper linkSectionTitle="Don't have an Account?">
-          <PageLink link="/account/signup" linkLabel="Create an Account" />
-        </AuthPageLinkWrapper>
-      </FormComp>
-    </AuthPageWrapper>
+    <>
+      <SEOEnhanzer title="Login | MyShop Online Shopping" description="Login to access your MyShop account" robots="noindex, follow" />
+      <AuthPageWrapper id="login_page">
+        <FormComp handleFormSubmit={handleSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
+          <AuthFormTitle title="Login" />
+          <AuthFormElementWrapper>
+            {formElements}
+            <div className="position-relative">
+              <FormButton value="Login" styles={{ backgroundColor: "var(--light_Green)" }} />
+              {isAuthenticating && (
+                <ComponentOverlay>
+                  <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                    <Loader color="white" size="spinner-border-sm" />
+                  </div>
+                </ComponentOverlay>
+              )}
+            </div>
+            <LoginDetails />
+          </AuthFormElementWrapper>
+          <AuthPageLinkWrapper linkSectionTitle="Don't have an Account?">
+            <PageLink link="/account/signup" linkLabel="Create an Account" />
+          </AuthPageLinkWrapper>
+        </FormComp>
+      </AuthPageWrapper>
+    </>
   );
 };
 

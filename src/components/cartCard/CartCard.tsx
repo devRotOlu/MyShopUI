@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Icon } from "@iconify/react";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import ComponentOverlay from "../ComponentOverlay.tsx";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
+import ProductImage from "../../ProductImage.tsx";
 
-import { productContext } from "../context/ProductProvider.tsx";
 import { useCartItem } from "../../customHooks/useCartItem";
 import { cartItemProp } from "../../types/types.ts";
 import { naira } from "../../data";
@@ -13,7 +13,6 @@ import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
 import "./style.css";
 
 const CartCard = ({ item }: cartItemProp) => {
-  const { productImageAspectRatio } = useContext(productContext);
   const { handleAddToWishlist, handleDeleteItem, handleQuantityUpdate, validateQuantity, setValidateQuantity, beingModified } = useCartItem(item);
   const {
     product: { images, name, quantity, unitPrice },
@@ -25,7 +24,7 @@ const CartCard = ({ item }: cartItemProp) => {
       <div className="border-bottom pb-2">
         <div className="d-flex gap-4 image_container">
           <div className="image_holder">
-            <img src={url} alt={name} style={{ width: "100%", aspectRatio: `${productImageAspectRatio}` }} />
+            <ProductImage name={name} url={url} imageSizes="(max-width: 260px) 300px, 150px" />
           </div>
           <div>
             <p className="fw-bold text-muted mb-1">{truncateName(name, 50)}</p>

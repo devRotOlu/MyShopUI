@@ -31,7 +31,13 @@
 
 @media screen and (max-width: 767px) {
   #category_card_wrapper {
-    grid-template-columns: repeat(2, 47%);
+    grid-template-columns: repeat(3, 31%);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #category_card_wrapper {
+    grid-template-columns: repeat(3, 32%);
   }
 }
 
@@ -47,7 +53,7 @@
   }
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 250px) {
   #category_card_wrapper {
     grid-template-columns: repeat(1, 90%);
   }

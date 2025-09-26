@@ -16,6 +16,7 @@ import ResetPasswordInstruction from "../passwordResetInstruction/PasswordResetI
 import ForgotPasswordSuccessAlert from "../forgotPasswordSuccessAlert/ForgotPasswordSuccessAlert.tsx";
 import PasswordResetErrorAlert from "../passwordResetErrorAlert/PasswordResetErrorAlert.tsx";
 import ValidationError from "../validationError/ValidationError.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import "./style.css";
 import { sendEmailForPassWordReset } from "../../helperFunctions/dataFetchFunctions.ts";
@@ -64,47 +65,50 @@ const ForgotPassword = () => {
   }
 
   return (
-    <AuthPageWrapper id="forgot_password">
-      <FormComp handleFormSubmit={handleFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
-        <AuthFormTitle title={isFirstResetEmail ? "Password Link Sent" : "Forgot Password"} />
-        <div id="elements_wrapper">
-          {isInvalidEmail && (
-            <PasswordResetErrorAlert
-              message={`We could not initiate password reset for your email: ${emailRef}.
+    <>
+      <SEOEnhanzer title="Forgot Password | MyShop Online Shopping" description="ForgotPassword to renew your MyShop account password" robots="noindex, follow" />
+      <AuthPageWrapper id="forgot_password">
+        <FormComp handleFormSubmit={handleFormSubmit} styles={{ borderRadius: "5px", boxShadow: "1px 1px 10px -7px, -1px -1px 10px -7px", backgroundColor: "white" }}>
+          <AuthFormTitle title={isFirstResetEmail ? "Password Link Sent" : "Forgot Password"} />
+          <div id="elements_wrapper">
+            {isInvalidEmail && (
+              <PasswordResetErrorAlert
+                message={`We could not initiate password reset for your email: ${emailRef}.
                                   Please check that the address is valid and try again`}
-            />
-          )}
-          {isFirstResetEmail && <ForgotPasswordSuccessAlert email={email} mutate={mutate} />}
-          {!isFirstResetEmail && !isInvalidEmail && <ResetPasswordInstruction instruction="Can’t remember your login credentials? Enter your details below and we’ll send instructions if your account exists." />}
-          {!isFirstResetEmail && (
-            <>
-              <AuthFormElementWrapper>
-                <TextInput name="email" type="email" placeholder="Enter Your Email Address" handleChange={handleEmailInput} value={email}>
-                  <p className="fw-bold mb-1" id="input_label">
-                    Enter Your Email Address
-                  </p>
-                </TextInput>
-                {validationErrors.email && <ValidationError error={validationErrors.email} />}
-                <div className="position-relative">
-                  <FormButton value="Send Reset Link" styles={{ backgroundColor: "var(--light_Green)" }} />
-                  {isPending && (
-                    <ComponentOverlay>
-                      <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                        <Loader color="white" size="spinner-border-sm" />
-                      </div>
-                    </ComponentOverlay>
-                  )}
-                </div>
-              </AuthFormElementWrapper>
-            </>
-          )}
-        </div>
+              />
+            )}
+            {isFirstResetEmail && <ForgotPasswordSuccessAlert email={email} mutate={mutate} />}
+            {!isFirstResetEmail && !isInvalidEmail && <ResetPasswordInstruction instruction="Can’t remember your login credentials? Enter your details below and we’ll send instructions if your account exists." />}
+            {!isFirstResetEmail && (
+              <>
+                <AuthFormElementWrapper>
+                  <TextInput name="email" type="email" placeholder="Enter Your Email Address" handleChange={handleEmailInput} value={email}>
+                    <p className="fw-bold mb-1" id="input_label">
+                      Enter Your Email Address
+                    </p>
+                  </TextInput>
+                  {validationErrors.email && <ValidationError error={validationErrors.email} />}
+                  <div className="position-relative">
+                    <FormButton value="Send Reset Link" styles={{ backgroundColor: "var(--light_Green)" }} />
+                    {isPending && (
+                      <ComponentOverlay>
+                        <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                          <Loader color="white" size="spinner-border-sm" />
+                        </div>
+                      </ComponentOverlay>
+                    )}
+                  </div>
+                </AuthFormElementWrapper>
+              </>
+            )}
+          </div>
 
-        <AuthPageLinkWrapper linkSectionTitle="I remember my password">
-          <PageLink link="/account/login" linkLabel="Login" />
-        </AuthPageLinkWrapper>
-      </FormComp>
-    </AuthPageWrapper>
+          <AuthPageLinkWrapper linkSectionTitle="I remember my password">
+            <PageLink link="/account/login" linkLabel="Login" />
+          </AuthPageLinkWrapper>
+        </FormComp>
+      </AuthPageWrapper>
+    </>
   );
 };
 

@@ -11,12 +11,15 @@ import Modal from "../modal/Modal";
 import ModalCloseButton from "../ModalCloseButton";
 import BreadCrumb from "../breadCrumb/BreadCrumb";
 import ProductCarouselModal from "../productCarouselModal/ProductCarouselModal";
+import SEOEnhanzer from "../../SEOEnhanzer";
+import ProductImage from "../../ProductImage";
 
 import { useModal } from "../../customHooks/useModal";
 import "./style.css";
 import { checkProductInWishlist, getProduct } from "../../helperFunctions/dataFetchFunctions";
 import { productPageProps, productType } from "../../types/types";
 import { userContext } from "../context/UserProvider";
+import { getOgImageUrl, generateProductDescription } from "../../helperFunctions/utilityFunctions";
 
 const ProductPage = ({ productName }: productPageProps) => {
   const {
@@ -58,7 +61,7 @@ const ProductPage = ({ productName }: productPageProps) => {
 
   const category = product?.category.name;
 
-  const { name, images } = product!;
+  const { name, images, description } = product!;
 
   const carousel = <Carousel name={name} images={images} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />;
 
@@ -66,15 +69,20 @@ const ProductPage = ({ productName }: productPageProps) => {
     const { url } = image;
     return (
       <ThumbnailWrapper key={index} setActiveIndex={setActiveIndex} index={index} activeIndex={activeIndex}>
-        <Thumbnail url={url} name={`${name}-${index + 1}`} key={index} />
+        <Thumbnail key={index}>
+          <ProductImage url={url} name={`${name}-${index + 1}`} imageSizes="200px" />
+        </Thumbnail>
       </ThumbnailWrapper>
     );
   });
 
   const thumbnailsWraps = <div className="d-flex justify-content-center gap-2 w-100 mt-2 overflow-auto px-0 pb-2">{thumbnails}</div>;
 
+  const url = getOgImageUrl(images[0].url);
+
   return (
     <>
+      <SEOEnhanzer title={`${name} | MyShop Online Shopping`} description={generateProductDescription(description, name)} imageUrl={url} />
       <PageWrapper pageId="productPage">
         <div className="w-100">
           <BreadCrumb currentLinkLabel={category} />

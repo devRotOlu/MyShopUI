@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 
 import ProductRatings from "../productRating/ProductRatings.tsx";
 import SavedItemButton from "../savedItemButton/SavedItemButton.tsx";
+import ProductImage from "../../ProductImage.tsx";
 
 import { productCardProp } from "../../types/types.ts";
 import "./style.css";
@@ -14,7 +15,6 @@ import { userContext } from "../context/UserProvider.tsx";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
 import { alertContext } from "../context/AlertProvider.tsx";
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
-import { productContext } from "../context/ProductProvider.tsx";
 
 const ProductCard = ({ product }: productCardProp) => {
   const [targetProduct, setTargetProduct] = useState(-1);
@@ -27,7 +27,6 @@ const ProductCard = ({ product }: productCardProp) => {
   } = useContext(userContext);
   const { handleAlert } = useContext(alertContext);
   const { addItemToWishList, isAddingToWishList, deleteFromWishlist, isDeletedWishlistItem, wishList, isAddedToWishlist } = useContext(wishlistContext);
-  const { productImageAspectRatio } = useContext(productContext);
 
   const { name, unitPrice, quantity, images, id, averageRating: rating, reviews } = product;
   const navigate = useNavigate();
@@ -97,7 +96,7 @@ const ProductCard = ({ product }: productCardProp) => {
     <div role="button" tabIndex={0} className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigateToProduct()} onKeyDown={(e) => e.key === "Enter" && navigateToProduct()}>
       <div className="w-100 d-flex flex-column gap-2 pb-1">
         <div className="product_image w-100 position-relative">
-          <img src={images[0].url} loading="lazy" alt={name} style={{ width: "100%", aspectRatio: `${productImageAspectRatio}` }} />
+          <ProductImage url={images[0].url} name={name} imageSizes="(max-width: 200px) 200px,(max-width: 1200px) 300px, 400px" />
           <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={_handleAddToWishlist} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && e.stopPropagation()}>
             <SavedItemButton
               data={{ styles: { height: "1.5rem", width: "1.5rem" }, icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />, handleAddToWishlist, handleRemoveFromWishlist, isBeingAdded: isBeingAddedToWishlist, isBeingRemoved: isBeingRemovedFromWishlist, isSaved }}
@@ -109,7 +108,7 @@ const ProductCard = ({ product }: productCardProp) => {
         </div>
       </div>
       <div>
-        <div className="product_price border-bottom border-top d-flex justify-content-between flex-wrap py-2">
+        <div className="product_price border-bottom border-top d-flex justify-content-between flex-wrap py-2 gap-1">
           <p className="fw-bold">
             {naira}
             {unitPrice.toLocaleString()}

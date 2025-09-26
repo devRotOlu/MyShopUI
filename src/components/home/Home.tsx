@@ -25,27 +25,27 @@ const Home = () => {
   });
 
   return (
-    <PageWrapper pageId="home">
+    <>
       <SEOEnhanzer
         title="Buy Phones, Fashion, Electronics in MyShop"
         description="Shop Online for Electronics, Phones, Computers, Accessories, Fashion, Shoes, Household Equipments, Wines, Babies, Toys, Furnitures, Groceries, Sport and Fitness, Books and more in Nigeria from top brands with 100% satisfaction and fast shipping. MyShop Online Shopping."
-        imageUrl=""
-        url=""
       />
-      {isLoadingProducts && (
-        <HomeCardsWrapper>
-          <ProductCardSkeleton count={5} />
-        </HomeCardsWrapper>
-      )}
-      {productsFetched && (
-        <HomeProductLayout>
-          <HomeCardsWrapper>{productCards}</HomeCardsWrapper>
-          <div className="d-flex justify-content-center w-100 mt-5">
-            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
-          </div>
-        </HomeProductLayout>
-      )}
-    </PageWrapper>
+      <PageWrapper pageId="home">
+        {isLoadingProducts && (
+          <HomeCardsWrapper>
+            <ProductCardSkeleton count={5} />
+          </HomeCardsWrapper>
+        )}
+        {productsFetched && (
+          <HomeProductLayout>
+            <HomeCardsWrapper>{productCards}</HomeCardsWrapper>
+            <div className="d-flex justify-content-center w-100 mt-5">
+              <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: products, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
+            </div>
+          </HomeProductLayout>
+        )}
+      </PageWrapper>
+    </>
   );
 };
 

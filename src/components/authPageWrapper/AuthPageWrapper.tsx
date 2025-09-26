@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { authPageWrapperProp } from "../../types/types.ts";
-import logo from "../../assests/logo_new_2.png";
+import logo from "../../assests/logo_new_2.webp";
 import "./style.css";
 
 const AuthPageWrapper = ({ children, id }: authPageWrapperProp) => {

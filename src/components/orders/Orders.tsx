@@ -10,6 +10,7 @@ import OrderHistory from "../orderHistory/OrderHistory";
 import Modal from "../modal/Modal";
 import ProductReview from "../productReview/ProductReview";
 import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
+import SEOEnhanzer from "../../SEOEnhanzer";
 
 import { getOrders, getUserReviews } from "../../helperFunctions/dataFetchFunctions";
 import { userContext } from "../context/UserProvider";
@@ -72,6 +73,7 @@ const Orders = () => {
   const userReviews: userReviewType[] = userReviewsQuery.data?.data ?? [];
   return (
     <>
+      <SEOEnhanzer title="Account Orders | MyShop Online Shopping" description="View your past orders and track current purchases" robots="noindex, nofollow" />
       <PageWrapper pageId="orders">
         <div className="w-100">
           <AccountBreadCrumb currentLinkLabel="Account Orders" />

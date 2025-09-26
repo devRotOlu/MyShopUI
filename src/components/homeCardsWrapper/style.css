@@ -13,7 +13,7 @@
 
 @media screen and (max-width: 900px) {
   #home_cards_wrapper {
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: repeat(4, 24%);
   }
 }
 
@@ -25,16 +25,11 @@
 
 @media screen and (max-width: 700px) {
   #home_cards_wrapper {
-    grid-template-columns: repeat(2, 40%);
-  }
-}
-@media screen and (max-width: 600px) {
-  #home_cards_wrapper {
-    grid-template-columns: repeat(2, 44%);
+    grid-template-columns: repeat(3, 32%);
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 400px) {
   #home_cards_wrapper {
     grid-template-columns: repeat(2, 47%);
   }

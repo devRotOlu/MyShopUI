@@ -1,7 +1,7 @@
 import React, { ReactNode, useState, MouseEventHandler } from "react";
 
 import CarouselControls from "../carouselControls/CarouselControls";
-import CarouselImage from "../carouselImage/CarouselImage";
+import ProductImage from "../../ProductImage";
 
 import { carouselProps } from "../../types/types";
 import "./style.css";
@@ -24,7 +24,11 @@ const Carousel = ({ images, name, activeIndex, setActiveIndex }: carouselProps) 
   for (let index = 0; index < images.length; index++) {
     if (index === activeIndex) {
       const { url } = images[index];
-      carouselItems = [<CarouselImage key={url} url={url} name={name} index={index} />];
+      carouselItems = [
+        <div key={index}>
+          <ProductImage name={name} url={url} imageSizes="(max-width: 300px) 200px,(max-width:500px) 400px, 500px" />
+        </div>,
+      ];
       break;
     }
   }

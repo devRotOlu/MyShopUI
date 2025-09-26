@@ -7,16 +7,21 @@ import Archivo_Light from "./assests/Archivo/Archivo-Regular.ttf";
 import Archivo_Italic from "./assests/Archivo/Archivo-Italic.ttf";
 
 import { SEO_OptimizerProps } from "./types/types";
+import { getOgImageUrl } from "./helperFunctions/utilityFunctions";
+import { useLocation } from "react-router-dom";
 
 const siteName = "MyShop";
-const defaultImage = "";
+const defaultImage = getOgImageUrl("https://res.cloudinary.com/dbtv7vwpx/image/upload/v1758410429/logo_new_2_vpg8ib.png");
+const baseUrl = "https://maishop.netlify.app/";
 
-const SEOEnhanzer = ({ title, description, url, imageUrl }: SEO_OptimizerProps) => {
+const SEOEnhanzer = ({ title, description, imageUrl, robots }: SEO_OptimizerProps) => {
+  const location = useLocation();
+  const url = `${baseUrl}${location.pathname}${location.search || ""}`;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-
+      <meta name="robots" content={robots || "index, follow"} />
       {/* ✅ Canonical */}
       <link rel="canonical" href={url} />
 

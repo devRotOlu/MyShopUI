@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";
 import "./style.css";
+import ProductImage from "../../ProductImage";
 
 const OrderDetails = () => {
   const { cart, cartItemsTotalPrice } = useContext(cartContext);
@@ -17,8 +18,8 @@ const OrderDetails = () => {
     const imageSrc = images[0].url;
     return (
       <div key={id} className="d-flex gap-3 py-4 cart_item">
-        <div>
-          <img style={{ width: "60px", height: "60px" }} src={imageSrc} alt={name} />
+        <div style={{ width: "60px", height: "60px" }}>
+          <ProductImage url={imageSrc} name={name} imageSizes="150px" />
         </div>
         <div className="flex-grow-1 gap-2 d-flex flex-column">
           <p>{name}</p>

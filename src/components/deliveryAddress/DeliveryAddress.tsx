@@ -10,6 +10,7 @@ import AddProfile from "../addProfile/AddProfile";
 import Modal from "../modal/Modal";
 import ConfirmationDialog from "./ConfirmationDialog";
 import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb";
+import SEOEnhanzer from "../../SEOEnhanzer";
 
 import { useGetDeliveryProfile } from "../../customHooks/useGetDeliveryProfile";
 import "./style.css";
@@ -60,6 +61,7 @@ const DeliveryAddress = () => {
 
   return (
     <>
+      <SEOEnhanzer title="Delivery Addresses | MyShop Online Shopping" description="View, add, or update your delivery addresses for faster checkout" robots="noindex, nofollow" />
       <PageWrapper pageId="delivery_page">
         <div className="w-100">
           <AccountBreadCrumb currentLinkLabel="Delivery Addresses" />

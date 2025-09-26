@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { appContext } from "../context/AppProvider";
 import { cartContext } from "../context/CartProvider";
-import logo from "../../assests/logo_new.png";
+import logo from "../../assests/logo_new.webp";
 import "./style.css";
 
 const BrandWrapper = () => {

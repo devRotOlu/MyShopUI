@@ -3,6 +3,7 @@ import React, { MouseEventHandler, useContext } from "react";
 import ComponentOverlay from "../ComponentOverlay.tsx.tsx";
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton.tsx";
 import QuantityValidator from "../quantityValidator/QuantityValidator.tsx";
+import ProductImage from "../../ProductImage.tsx";
 
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
 import { cartItemProp } from "../../types/types.ts";
@@ -12,10 +13,8 @@ import { useCartItem } from "../../customHooks/useCartItem.ts";
 import { userContext } from "../context/UserProvider.tsx";
 import { alertContext } from "../context/AlertProvider.tsx";
 import { promptWishlistLoginAlert } from "../uiHelpers/utilities.tsx";
-import { productContext } from "../context/ProductProvider.tsx";
 
 const CartItem = ({ item, index, itemCount }: cartItemProp) => {
-  const { productImageAspectRatio } = useContext(productContext);
   const { isLoggedIn, setShowModal } = useContext(userContext);
   const { handleAddToWishlist, handleDeleteItem, handleQuantityUpdate, beingModified, validateQuantity, setValidateQuantity } = useCartItem(item);
   const { handleAlert } = useContext(alertContext);
@@ -41,7 +40,7 @@ const CartItem = ({ item, index, itemCount }: cartItemProp) => {
       <td className={`${index !== itemCount! - 1 ? "border-bottom" : ""} h-100 py-3`}>
         <div className="d-flex gap-4">
           <div style={{ width: "6rem" }}>
-            <img src={images[0].url} alt={name} style={{ width: "100%", aspectRatio: `${productImageAspectRatio}` }} />
+            <ProductImage url={images[0].url} name={name} imageSizes="150px" />
           </div>
           <div className="d-flex flex-column gap-2">
             <p className="fw-bold text-muted">{truncateName(name, 50)}</p>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import logo from "../../assests/logo_new.png";
+import logo from "../../assests/logo_new.webp";
 import "./style.css";
 
 const Brand = () => {

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
+import ProductImage from "../../ProductImage";
+
 import { productSummaryModalProps } from "../../types/types";
 import "./style.css";
 import { cartContext } from "../context/CartProvider";
@@ -15,7 +17,7 @@ const ProductSummaryModal = ({ product, children, quantityToAdd, brand }: produc
 
       <div className="d-flex gap-xl-4 gap-lg-2 gap-1 align-items-center w-50">
         <div style={{ height: "70px", width: "70px" }}>
-          <img src={images[0].url} alt={name} className="h-100 w-100" />
+          <ProductImage url={images[0].url} name={name} imageSizes="200px" />
         </div>
         <div id="name_wrapper">
           {brand && (

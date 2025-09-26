@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent, MouseEventHandler } from "react";
+import React, { FormEvent, ReactNode, SetStateAction, ChangeEvent, CSSProperties, Dispatch, MouseEvent, FocusEvent, MouseEventHandler, ReactElement } from "react";
 import { AxiosResponse } from "axios";
 import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
@@ -7,8 +7,8 @@ import z, { ZodObject, ZodRawShape } from "zod";
 export type SEO_OptimizerProps = {
   title: string;
   description: string;
-  url: string;
-  imageUrl: string;
+  imageUrl?: string;
+  robots?: "index, follow" | "noindex, nofollow" | "noindex, follow";
 };
 
 export type validationErrorType = {
@@ -769,8 +769,7 @@ export type breadCrumbProps = accountBreadCrumbProps & {
 };
 
 export type thumbnailProps = {
-  url: string;
-  name: string;
+  children: ReactElement<HTMLImageElement>;
 };
 
 export type thumbnailWrapperProps = {

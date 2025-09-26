@@ -10,6 +10,7 @@ import PageWrapper from "../PageWrapper.tsx";
 import CartBreadCrumb from "../cartBreadCrumb/CartBreadCrumb.tsx";
 import CartCard from "../cartCard/CartCard.tsx";
 import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import "./style.css";
 import { cartContext } from "../context/CartProvider.tsx";
@@ -39,6 +40,7 @@ const Cart = () => {
 
   return (
     <>
+      <SEOEnhanzer title="Shopping Cart | MyShop Online Shopping" description="Your shopping cart at MyShop. Check product details, update quantities, and proceed to a safe and secure checkout." robots="noindex, nofollow" />
       <PageWrapper pageId="cart">
         {isLoadingContent && (
           <div className="pt-3 px-5 h-100 w-100 bg-white flex-grow-1 ">

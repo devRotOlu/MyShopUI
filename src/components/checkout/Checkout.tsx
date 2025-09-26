@@ -12,6 +12,7 @@ import AddressDialog from "../addressDialog/AddressDialog.tsx";
 import PayStackDialog from "../payStack/PayStackDialog.tsx";
 import CheckoutPaymentOptions from "../checkoutPaymentOptions/CheckoutPaymentOptions.tsx";
 import CheckoutError from "../checkoutError/CheckoutError.tsx";
+import SEOEnhanzer from "../../SEOEnhanzer.tsx";
 
 import { checkoutContextType, payPlatformType } from "../../types/types.ts";
 import { useMonnify } from "../../customHooks/useMonnify.ts";
@@ -106,6 +107,7 @@ const Checkout = () => {
   return (
     <checkoutContext.Provider value={{ ...monnifyData, monnifyOption, setMonnifyOption, setShowModal, profileIndex, setProfileIndex, setOrderInstruction, orderInstruction, bankCode, setBankCode, setIsMonnifyError }} key={location.pathname}>
       <>
+        <SEOEnhanzer title="Complete Order | MyShop Online Shopping" description="Complete your secure checkout at MyShop. Review your order, choose delivery options, and make payment safely." robots="noindex, nofollow" />
         <CheckoutHeader />
         <PageWrapper pageId="checkout">
           <div className="d-flex flex-md-row flex-column gap-md-3 w-100 py-5 px-sm-4 ">

@@ -74,6 +74,27 @@ export const splitString = (value: string, separator: string, divisor: number): 
   return valueArray.join("");
 };
 
+type splitUrlDataType = {
+  prefix: string;
+  suffix: string;
+  separator: string;
+};
+
+/**
+ *
+ * @param url - Original Cloudinary image URL
+ * @returns - object containing splitted url parts or null
+ */
+export const splitUrl = (url: string): splitUrlDataType | null => {
+  const separator = "/upload/";
+  try {
+    const [prefix, suffix] = url.split(separator);
+    return { prefix, suffix, separator };
+  } catch (error) {
+    return null;
+  }
+};
+
 /**
  * Generates a transformed Cloudinary URL for Open Graph / social share images
  *
@@ -81,17 +102,34 @@ export const splitString = (value: string, separator: string, divisor: number): 
  * @returns Transformed URL (1200x630 padded, white background, optimized)
  */
 export const getOgImageUrl = (url: string): string => {
-  try {
-    // Split at "/upload/"
-    const [prefix, suffix] = url.split("/upload/");
-
-    if (!suffix) return url; // if URL doesn't match expected pattern, return original
+  const data = splitUrl(url);
+  if (data) {
+    const { prefix, suffix, separator } = data;
 
     // Insert transformation string
     const transformation = "w_1200,h_630,c_pad,b_white,f_auto,q_auto";
 
-    return `${prefix}/upload/${transformation}/${suffix}`;
-  } catch {
+    return `${prefix}${separator}${transformation}/${suffix}`;
+  } else {
+    // if URL doesn't match expected pattern, return original
     return url;
   }
+};
+
+export const generateProductDescription = (description: string, name: string): string => {
+  if (description) {
+    const trimmed = description.length > 160 ? description.slice(0, 157) + "..." : description;
+    return `Buy ${name} – ${trimmed} Order now on MyShop with fast delivery.`;
+  }
+  return `Buy ${name} at MyShop – great prices, secure checkout, and fast delivery.`;
+};
+
+// seoUtils.ts
+
+export const generateCategoryDescription = (categoryName: string): string => {
+  return `Shop ${categoryName} at MyShop – discover the best ${categoryName.toLowerCase()} from top brands. Fast delivery and secure checkout.`;
+};
+
+export const genBrandDescription = (brand: string): string => {
+  return `Discover ${brand} products at MyShop. Shop quality items from ${brand} with great prices and fast delivery`;
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ProductImage from "../../ProductImage";
+
 import { orderedItemProps } from "../../types/types";
 import { naira } from "../../data";
 import "./style.css";
@@ -19,8 +21,10 @@ const OrderedItem = ({ item, isReviewed, handleReview }: orderedItemProps) => {
     <tr className="order_item">
       <td className="py-2 px-sm-3 px-2 w-100">
         <div className="d-flex gap-2 w-100 flex-wrap">
-          <div>
-            <img src={image.url} alt={name} />
+          <div className="flex-fill">
+            <div style={{ width: "120px", position: "relative" }}>
+              <ProductImage url={image.url} name={name} imageSizes="120px" styles={{ height: "120px" }} />
+            </div>
           </div>
           <div className="order_details">
             <p className="text-muted">

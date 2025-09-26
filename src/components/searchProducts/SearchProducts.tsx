@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ProductImage from "../../ProductImage";
+
 import { searchProductsProps } from "../../types/types";
 import "./style.css";
 
@@ -11,8 +13,7 @@ const SearchProducts = ({ products, children }: searchProductsProps) => {
     return (
       <li key={id} className="product_link_list">
         <Link to={`/product/${productName}`} className="px-2 py-1 d-flex gap-2 align-items-center">
-          <img src={image} alt={name} />
-          <p>{name}</p>
+          <ProductImage url={image} name={name} imageSizes="200px" />
         </Link>
       </li>
     );

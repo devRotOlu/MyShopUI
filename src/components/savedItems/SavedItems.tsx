@@ -9,6 +9,7 @@ import EmptyView from "../emptyView/EmptyView";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
 import ProductCard from "../productCard/ProductCard";
 import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper";
+import SEOEnhanzer from "../../SEOEnhanzer";
 
 import { wishlistContext } from "../context/WishlistProvider";
 import "./style.css";
@@ -30,34 +31,37 @@ const SavedItems = () => {
   });
 
   return (
-    <PageWrapper pageId="saved_items">
-      {isEmptyView && (
-        <EmptyView>
-          <div className="d-flex flex-column gap-3 align-items-center">
-            <Icon icon="mdi:favourite" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
-            <p className="fw-bold text-center">You haven't added any items yet.</p>
+    <>
+      <SEOEnhanzer title="Saved Items | MyShop Online Shopping" description="All your saved items in one place. Easily add them to cart when you’re ready to buy" robots="noindex, nofollow" />
+      <PageWrapper pageId="saved_items">
+        {isEmptyView && (
+          <EmptyView>
+            <div className="d-flex flex-column gap-3 align-items-center">
+              <Icon icon="mdi:favourite" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
+              <p className="fw-bold text-center">You haven't added any items yet.</p>
+            </div>
+          </EmptyView>
+        )}
+        {showContent && (
+          <div className="align-self-stretch w-100" id="bread_crumb_wrapper">
+            <BreadCrumb currentLinkLabel="Saved Items" />
           </div>
-        </EmptyView>
-      )}
-      {showContent && (
-        <div className="align-self-stretch w-100" id="bread_crumb_wrapper">
-          <BreadCrumb currentLinkLabel="Saved Items" />
-        </div>
-      )}
-      {isLoadingWishlist && (
-        <HomeCardsWrapper>
-          <ProductCardSkeleton count={5} />
-        </HomeCardsWrapper>
-      )}
-      {showContent && (
-        <HomeProductLayout>
-          <HomeCardsWrapper>{products}</HomeCardsWrapper>
-          <div className="align-self-end d-flex justify-content-center w-100 my-4">
-            <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
-          </div>
-        </HomeProductLayout>
-      )}
-    </PageWrapper>
+        )}
+        {isLoadingWishlist && (
+          <HomeCardsWrapper>
+            <ProductCardSkeleton count={5} />
+          </HomeCardsWrapper>
+        )}
+        {showContent && (
+          <HomeProductLayout>
+            <HomeCardsWrapper>{products}</HomeCardsWrapper>
+            <div className="align-self-end d-flex justify-content-center w-100 my-4">
+              <NavigationButtons params={{ itemCount: products.length, maxItemPerPage: maxProductPerPage, setCurrentItems: setCurrentProducts, items: wishList, currentPage, setCurrentPage, firstPage, currentItems: currentProducts }} />
+            </div>
+          </HomeProductLayout>
+        )}
+      </PageWrapper>
+    </>
   );
 };
 

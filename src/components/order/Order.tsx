@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 
 import Thumbnail from "../thumbnail/Thumbnail";
+import ProductImage from "../../ProductImage";
 
 import { orderProps } from "../../types/types";
 import { naira, months } from "../../data";
@@ -23,7 +24,11 @@ const Order = ({ ...props }: orderProps) => {
       },
     } = item;
     const { url } = images[0];
-    return <Thumbnail name={name} url={url} key={index} />;
+    return (
+      <Thumbnail key={index}>
+        <ProductImage name={name} url={url} imageSizes="200px" />
+      </Thumbnail>
+    );
   });
 
   const totalCost = useMemo(() => orderedItems.reduce((acc, item) => acc + item.cartItem.product.unitPrice * item.orderedQuantity, 0), [orderedItems]);
