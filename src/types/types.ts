@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
 import z, { ZodObject, ZodRawShape } from "zod";
+import ProductImage from "../ProductImage";
 
 export type SEO_OptimizerProps = {
   title: string;

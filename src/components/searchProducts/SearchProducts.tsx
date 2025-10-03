@@ -13,7 +13,10 @@ const SearchProducts = ({ products, children }: searchProductsProps) => {
     return (
       <li key={id} className="product_link_list">
         <Link to={`/product/${productName}`} className="px-2 py-1 d-flex gap-2 align-items-center">
-          <ProductImage url={image} name={name} imageSizes="200px" />
+          <div>
+            <ProductImage url={image} name={name} imageSizes="100px" />
+          </div>
+          <p>{name}</p>
         </Link>
       </li>
     );

@@ -30,9 +30,9 @@ const SearchbarBrandWrapper = ({ hideSearchbar }: searchbarBrandWrapperProps) =>
   }, [isFocused, searchResults]);
 
   useEffect(() => {
-    window.addEventListener("click", () => {
-      setIsFocused(false);
-    });
+    const handleMouseDown = () => setIsFocused(false);
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, []);
 
   return (

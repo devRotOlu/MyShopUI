@@ -1,6 +1,7 @@
 import React, { useContext, MouseEvent, useRef, useEffect, useState, MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useInView } from "react-intersection-observer";
 
 import ProductRatings from "../productRating/ProductRatings.tsx";
 import SavedItemButton from "../savedItemButton/SavedItemButton.tsx";
@@ -17,6 +18,7 @@ import { alertContext } from "../context/AlertProvider.tsx";
 import { truncateName } from "../../helperFunctions/utilityFunctions.ts";
 
 const ProductCard = ({ product }: productCardProp) => {
+  const { ref, inView } = useInView({ triggerOnce: true, rootMargin: "100px" });
   const [targetProduct, setTargetProduct] = useState(-1);
 
   const { handleAddCartItem, isAddingCartItem, isUpdatingCartItem, isAddedCartItem } = useContext(cartContext);
@@ -96,7 +98,7 @@ const ProductCard = ({ product }: productCardProp) => {
     <div role="button" tabIndex={0} className="product_card rounded d-flex flex-column justify-content-between flex-grow-1" onClick={() => navigateToProduct()} onKeyDown={(e) => e.key === "Enter" && navigateToProduct()}>
       <div className="w-100 d-flex flex-column gap-2 pb-1">
         <div className="product_image w-100 position-relative">
-          <ProductImage url={images[0].url} name={name} imageSizes="(max-width: 200px) 200px,(max-width: 1200px) 300px, 400px" />
+          <ProductImage url={images[0].url} name={name} imageSizes="(max-width: 200px) 200px,(max-width: 1200px) 300px, 400px" ref={ref} loading={inView ? "eager" : "lazy"} />
           <div className="position-absolute top-0 d-flex justify-content-end w-100" onClick={_handleAddToWishlist} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && e.stopPropagation()}>
             <SavedItemButton
               data={{ styles: { height: "1.5rem", width: "1.5rem" }, icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="0.8rem" color="white" />, handleAddToWishlist, handleRemoveFromWishlist, isBeingAdded: isBeingAddedToWishlist, isBeingRemoved: isBeingRemovedFromWishlist, isSaved }}
