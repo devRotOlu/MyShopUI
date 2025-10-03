@@ -914,7 +914,9 @@ export type useGetWishlistData = {
 };
 
 export type emptyViewProps = {
-  children: ReactNode;
+  icon: string;
+  label?: string;
+  message: string;
 };
 
 export type deliveryContextType = {

@@ -47,17 +47,7 @@ const Cart = () => {
             <SkeletonPageLoader count={3} />
           </div>
         )}
-        {isEmptyView && (
-          <EmptyView>
-            <div className="d-flex flex-column gap-4 align-items-center" id="empty_view_content">
-              <Icon icon="mdi:cart-remove" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
-              <div className="d-flex flex-column gap-2">
-                <p className="fw-bold text-center">Your cart is empty.</p>
-                <p className="text-muted">You have not added any item to your cart.</p>
-              </div>
-            </div>
-          </EmptyView>
-        )}
+        {isEmptyView && <EmptyView icon="mdi:cart-remove" label="Your cart is empty." message="You have not added any item to your cart." />}
         {showContent && (
           <div className="w-100 mb-md-5" id="cart_main_content">
             <CartBreadCrumb />

@@ -7,6 +7,7 @@ import ProductCard from "../productCard/ProductCard.tsx";
 import HomeCardsWrapper from "../homeCardsWrapper/HomeCardsWrapper.tsx";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton.tsx";
 import SEOEnhanzer from "../../SEOEnhanzer.tsx";
+import EmptyView from "../emptyView/EmptyView.tsx";
 
 import "./style.css";
 import { productType } from "../../types/types.ts";
@@ -23,6 +24,8 @@ const Home = () => {
     const { id } = product;
     return <ProductCard key={id} product={product} />;
   });
+
+  const isEmptyView = isLoadingProducts === false && productsFetched === false;
 
   return (
     <>
@@ -44,6 +47,7 @@ const Home = () => {
             </div>
           </HomeProductLayout>
         )}
+        {isEmptyView && <EmptyView icon="mdi:package-variant-remove" label="No products available" message="Please check back later or explore other categories." />}
       </PageWrapper>
     </>
   );

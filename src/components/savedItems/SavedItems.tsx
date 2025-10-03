@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Icon } from "@iconify/react";
 
 import BreadCrumb from "../breadCrumb/BreadCrumb";
 import PageWrapper from "../PageWrapper";
@@ -34,14 +33,7 @@ const SavedItems = () => {
     <>
       <SEOEnhanzer title="Saved Items | MyShop Online Shopping" description="All your saved items in one place. Easily add them to cart when you’re ready to buy" robots="noindex, nofollow" />
       <PageWrapper pageId="saved_items">
-        {isEmptyView && (
-          <EmptyView>
-            <div className="d-flex flex-column gap-3 align-items-center">
-              <Icon icon="mdi:favourite" style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
-              <p className="fw-bold text-center">You haven't added any items yet.</p>
-            </div>
-          </EmptyView>
-        )}
+        {isEmptyView && <EmptyView icon="mdi:favourite" message="You haven't added any items yet." />}
         {showContent && (
           <div className="align-self-stretch w-100" id="bread_crumb_wrapper">
             <BreadCrumb currentLinkLabel="Saved Items" />
