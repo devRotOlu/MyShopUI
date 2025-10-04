@@ -34,7 +34,7 @@ const Cart = () => {
 
   const isLoadingContent = isFetchingCart || isFetchingLocalCart;
   const isEmptyView = (getCartQueryFinished || isLoggedIn === false) && cart.length === 0 && isLoadingContent === false;
-  const showContent = isLoadingContent && (getCartQueryFinished || isLoggedIn === false) && cart.length !== 0;
+  const showContent = isLoadingContent === false && (getCartQueryFinished || isLoggedIn === false) && cart.length !== 0;
 
   useCalHeightOnResize(checkoutLinkRef, "--checkout_link_height");
 
