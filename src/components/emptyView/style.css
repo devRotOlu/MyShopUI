@@ -6,3 +6,7 @@
   border-radius: 5px;
   box-shadow: 1px 1px 10px -7px, -1px -1px 10px -7px;
 }
+
+#empty_view #message {
+  font-size: 14px;
+}

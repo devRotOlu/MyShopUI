@@ -12,7 +12,9 @@ const EmptyView = ({ icon, label, message }: emptyViewProps) => {
           <Icon icon={icon} style={{ fontSize: "4rem", color: "var(--lighter_pink)" }} />
           <div className="d-flex flex-column gap-2">
             {label !== undefined && <p className="fw-bold text-center">{label}</p>}
-            <p className="text-muted">{message}</p>
+            <p id="message" className="text-muted">
+              {message}
+            </p>
           </div>
         </div>
       </div>

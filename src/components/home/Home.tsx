@@ -16,7 +16,7 @@ import { productContext } from "../context/ProductProvider.tsx";
 const maxProductPerPage = 10;
 const firstPage = 1;
 const Home = () => {
-  const { products, isLoadingProducts, productsFetched } = useContext(productContext);
+  const { products, isLoadingProducts, isProductFetchedSuccess, isProductFetched } = useContext(productContext);
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProducts, setCurrentProducts] = useState<productType[]>([]);
 
@@ -25,7 +25,8 @@ const Home = () => {
     return <ProductCard key={id} product={product} />;
   });
 
-  const isEmptyView = isLoadingProducts === false && productsFetched === false;
+  const isEmptyView = (isLoadingProducts === false && isProductFetchedSuccess === false && isProductFetched) || (isProductFetchedSuccess && products.length === 0);
+  const isLoading = isLoadingProducts || isProductFetched === false;
 
   return (
     <>
@@ -34,12 +35,12 @@ const Home = () => {
         description="Shop Online for Electronics, Phones, Computers, Accessories, Fashion, Shoes, Household Equipments, Wines, Babies, Toys, Furnitures, Groceries, Sport and Fitness, Books and more in Nigeria from top brands with 100% satisfaction and fast shipping. MyShop Online Shopping."
       />
       <PageWrapper pageId="home">
-        {isLoadingProducts && (
+        {isLoading && (
           <HomeCardsWrapper>
             <ProductCardSkeleton count={5} />
           </HomeCardsWrapper>
         )}
-        {productsFetched && (
+        {isProductFetchedSuccess && (
           <HomeProductLayout>
             <HomeCardsWrapper>{productCards}</HomeCardsWrapper>
             <div className="d-flex justify-content-center w-100 mt-5">

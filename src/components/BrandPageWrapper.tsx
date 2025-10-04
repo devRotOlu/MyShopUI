@@ -15,14 +15,14 @@ const BrandPageWrapper = () => {
   const { min, max, rating, sortOrder } = useGetQueryParams();
 
   const key = brand + min + max + rating;
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetched, isSuccess } = useQuery({
     queryKey: ["brand_products", brand, `min-${min}`, `max-${max}`, `rating-${rating}`, `sortOrder-${sortOrder}`],
     queryFn: () => getBrandProducts(brand, min, max, rating, sortOrder),
     refetchOnWindowFocus: false,
   });
   const products: productType[] = data?.data || [];
   return (
-    <BrandPage key={key} brand={brand} isLoading={isLoading} products={products}>
+    <BrandPage key={key} brand={brand} isLoading={isLoading} products={products} isFetched={isFetched} isSuccess={isSuccess}>
       <FilterPanel products={products} />
     </BrandPage>
   );

@@ -196,6 +196,8 @@ export type categoryProps = {
   products: productType[];
   isLoading: boolean;
   children: ReactNode;
+  isSuccess: boolean;
+  isFetched: boolean;
 };
 
 export type searchBarProps = {
@@ -264,10 +266,12 @@ export type filterPanelProps = {
 };
 
 export type brandPageProps = {
+  isSuccess: boolean;
   brand: string;
   isLoading: boolean;
   products: productType[];
   children: ReactNode;
+  isFetched: boolean;
 };
 
 export type homeProductLayoutProps = {
@@ -932,7 +936,7 @@ export type deliveryContextType = {
   setDeliveryProfiles: Dispatch<SetStateAction<deliveryDataType[]>>;
 };
 
-export type productContextType = { productsFetched: boolean; isLoadingProducts: boolean; products: productType[]; productImageAspectRatio: number };
+export type productContextType = { isProductFetchedSuccess: boolean; isLoadingProducts: boolean; products: productType[]; productImageAspectRatio: number; isProductFetched: boolean };
 
 export type userContextType = userProviderSignUpType & {
   signingUser: UseMutateFunction<AxiosResponse<unknown, unknown>, Error, loginStateType, unknown>;

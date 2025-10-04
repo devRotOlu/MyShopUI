@@ -10,6 +10,7 @@ import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 import SortPanel from "../sortPanel/SortPanel";
 import HomeProductCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 import SEOEnhanzer from "../../SEOEnhanzer";
+import EmptyView from "../emptyView/EmptyView";
 
 import { brandPageProps, productType } from "../../types/types";
 import { appContext } from "../context/AppProvider";
@@ -18,7 +19,7 @@ import { genBrandDescription } from "../../helperFunctions/utilityFunctions";
 const maxProductPerPage = 20;
 const firstPage = 1;
 const BrandPage = ({ ...props }: brandPageProps) => {
-  const { brand, products, isLoading, children } = props;
+  const { brand, products, isLoading, children, isFetched, isSuccess } = props;
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProduct, setCurrentProducts] = useState<productType[]>([]);
   const { handleFilter } = useContext(appContext);
@@ -32,19 +33,22 @@ const BrandPage = ({ ...props }: brandPageProps) => {
     handleFilter(2, children);
   };
 
+  const isEmptyView = (isFetched && isLoading === false && isSuccess === false) || (isSuccess && products.length === 0);
+  const isLoadingProducts = isLoading || isFetched === false;
+
   return (
     <>
       <SEOEnhanzer title={`${brand} | MyShop Online Shopping`} description={genBrandDescription(brand)} />
       <PageWrapper pageId="brands">
         <div className="align-self-stretch w-100">
-          {isLoading && (
+          {isLoadingProducts && (
             <div id="home_wrapper_container">
               <HomeProductCardWrapper>
                 <ProductCardSkeleton count={4} />
               </HomeProductCardWrapper>
             </div>
           )}
-          {products?.length !== 0 && (
+          {isSuccess && (
             <>
               <BreadCrumb handleFilterModal={handleFilterModal} currentLinkLabel={brand}>
                 <SortPanel currentPage={currentPage} productPerPage={maxProductPerPage} totalProducts={products.length} />
@@ -60,6 +64,7 @@ const BrandPage = ({ ...props }: brandPageProps) => {
             </>
           )}
         </div>
+        {isEmptyView && <EmptyView icon="mdi:package-variant-remove" label="No products available" message="Please check back later or explore other categories." />}
       </PageWrapper>
     </>
   );

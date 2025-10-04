@@ -10,6 +10,7 @@ import SortPanel from "../sortPanel/SortPanel";
 import HomeCardWrapper from "../homeCardsWrapper/HomeCardsWrapper";
 import CategoryCardsWrapper from "../categoryCardsWrapper/CategoryCardsWrapper";
 import SEOEnhanzer from "../../SEOEnhanzer";
+import EmptyView from "../emptyView/EmptyView";
 
 import { categoryProps, productType } from "../../types/types";
 import "./style.css";
@@ -18,7 +19,8 @@ import { generateCategoryDescription } from "../../helperFunctions/utilityFuncti
 
 const maxProductPerPage = 20;
 const firstPage = 1;
-const Category = ({ products, isLoading, children }: categoryProps) => {
+const Category = ({ ...props }: categoryProps) => {
+  const { products, isLoading, children, isFetched, isSuccess } = props;
   const [currentPage, setCurrentPage] = useState(firstPage);
   const [currentProduct, setCurrentProducts] = useState<productType[]>([]);
   const { handleFilter } = useContext(appContext);
@@ -32,13 +34,17 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
   };
 
   const category = products?.length ? products[0].category.name : "";
+  console.log(products, "products");
+  console.log(isSuccess, "isSuccess");
+  const isEmptyView = (isFetched && isLoading === false && isSuccess === false) || (isSuccess && products.length === 0);
+  const isLoadingProducts = isLoading || isFetched === false;
 
   return (
     <>
       <SEOEnhanzer title={`${category} | MyShop Online Shopping`} description={generateCategoryDescription(category)} />
       <PageWrapper pageId="product_category">
         <div className="align-self-stretch w-100">
-          {isLoading && (
+          {isLoadingProducts && (
             <div id="home_wrapper_container">
               <HomeCardWrapper>
                 <ProductCardSkeleton count={5} />
@@ -61,6 +67,7 @@ const Category = ({ products, isLoading, children }: categoryProps) => {
             </>
           )}
         </div>
+        {isEmptyView && <EmptyView icon="mdi:package-variant-remove" label="No products available" message="Please check back later or explore other categories." />}
       </PageWrapper>
     </>
   );

@@ -17,10 +17,6 @@
   border-radius: 3px;
 }
 
-#cart #empty_view_content > div > p:last-child {
-  font-size: 14px;
-}
-
 #cart #cart_table_wrapper > div:last-child {
   width: 25%;
 }

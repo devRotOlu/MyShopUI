@@ -17,7 +17,7 @@ const CategoryPageWrapper = () => {
   const splittedStrings = productCategory.split("-");
   const id = Number(splittedStrings[splittedStrings.length - 1]);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isSuccess, isFetched } = useQuery({
     queryKey: ["category_products", productCategory, `min-${min}`, `max-${max}`, `rating-${rating}`, `sortOrder-${sortOrder}`],
     queryFn: () => getCategoryProducts(id, min, max, rating, sortOrder),
     refetchOnWindowFocus: false,
@@ -26,7 +26,7 @@ const CategoryPageWrapper = () => {
   const products: productType[] = data?.data || [];
 
   return (
-    <Category products={products} key={productCategory} isLoading={isLoading}>
+    <Category products={products} key={productCategory} isLoading={isLoading} isFetched={isFetched} isSuccess={isSuccess}>
       <FilterPanel products={products} />
     </Category>
   );

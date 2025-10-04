@@ -8,11 +8,11 @@ export const productContext = React.createContext({} as productContextType);
 
 const ProductProvider = ({ children }: providersProp) => {
   const [products, setProducts] = useState<productType[]>([]);
-  const { data: productData, isSuccess: productsFetched, isLoading: isLoadingProducts } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
-  if (productsFetched && !products.length) {
+  const { data: productData, isSuccess: isProductFetchedSuccess, isLoading: isLoadingProducts, isFetched: isProductFetched } = useQuery({ queryKey: ["products"], queryFn: getProducts, staleTime: 3 * 60 * 1000 });
+  if (isProductFetchedSuccess && !products.length) {
     setProducts(productData.data);
   }
-  return <productContext.Provider value={{ products, productsFetched, isLoadingProducts, productImageAspectRatio: 1 }}>{children}</productContext.Provider>;
+  return <productContext.Provider value={{ products, isProductFetchedSuccess, isLoadingProducts, productImageAspectRatio: 1, isProductFetched }}>{children}</productContext.Provider>;
 };
 
 export default ProductProvider;
