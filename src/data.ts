@@ -123,25 +123,25 @@ export const contacts: { contact: string; channel: string; icon: string }[] = [
   {
     contact: "Email Support",
     channel: "rotimiolumide68@gmail.com",
-    icon: "mdi:email",
+    icon: "email",
   },
   {
     contact: "Phone Support",
     channel: "08140836550",
-    icon: "ic:round-phone",
+    icon: "phone",
   },
   {
     contact: "Whatsapp",
     channel: "08140836550",
-    icon: "ic:sharp-whatsapp",
+    icon: "whatsApp",
   },
 ];
 
 export const socials: { name: string; icon: string }[] = [
-  { name: "facebook", icon: "cib:facebook-f" },
-  { name: "instagram", icon: "formkit:instagram" },
-  { name: "x", icon: "garden:twitter-fill-12" },
-  { name: "youtube", icon: "line-md:youtube-filled" },
+  { name: "facebook", icon: "facebook" },
+  { name: "instagram", icon: "instagram" },
+  { name: "x", icon: "x" },
+  { name: "youtube", icon: "youtube" },
 ];
 
 export const naira = "₦";
