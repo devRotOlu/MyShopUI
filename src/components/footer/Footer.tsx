@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { MdOutlineMail } from "react-icons/md";
 
 import { contacts, socials } from "../../data";
 import "./style.css";
