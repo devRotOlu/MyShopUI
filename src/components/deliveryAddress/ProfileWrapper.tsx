@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdOutlineArrowBack } from "react-icons/md";
 
 import { ProfileWrapperProps } from "../../types/types";
 
@@ -8,7 +8,7 @@ const ProfileWrapper = ({ children, setPageIndex, profileHeader, headerText }: P
     <div className="pt-3 pb-5">
       <div className="d-sm-flex d-none gap-2 align-items-center border-bottom pb-2 px-3">
         <button aria-label="back" onClick={() => setPageIndex("0")}>
-          <Icon icon="eva:arrow-back-fill" fontSize="16px" />
+          <MdOutlineArrowBack size={16} />
         </button>
         {profileHeader}
       </div>

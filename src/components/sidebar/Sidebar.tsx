@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 import BrandWrapper from "../brandWrapper/BrandWrapper";
 import CategoryList from "../categoryList/CategoryList";
@@ -85,7 +85,7 @@ const Sidebar = () => {
       </div>
       {isLoggedIn && (
         <div className="mt-3 px-3">
-          <Icon icon="material-symbols-light:logout" fontSize="1.5rem" />{" "}
+          <RiLogoutBoxRLine size="1.5rem" />{" "}
           <button className="ms-2" onClick={handLogout} ref={(el) => setRef(el, 4)}>
             Logout
           </button>

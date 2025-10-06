@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, MouseEventHandler, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
 import ProductRatings from "../productRating/ProductRatings";
 
@@ -104,11 +104,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <div>
             {isExpandCategory ? (
               <button aria-label="expand-category" onClick={handleCategoryToggle}>
-                <Icon icon="charm:plus" fontSize={20} />
+                <FaPlus size={20} />
               </button>
             ) : (
               <button aria-label="minimize-category" onClick={handleCategoryToggle}>
-                <Icon icon="charm:minus" fontSize={20} />
+                <FaMinus size={20} />
               </button>
             )}
           </div>
@@ -121,11 +121,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <div>
             {isExpandPriceList ? (
               <button aria-label="expand-list" onClick={handlePriceListToggle}>
-                <Icon icon="charm:plus" fontSize={20} />
+                <FaPlus size={20} />
               </button>
             ) : (
               <button aria-label="minimize-list" onClick={handlePriceListToggle}>
-                <Icon icon="charm:minus" fontSize={20} />
+                <FaMinus size={20} />
               </button>
             )}
           </div>
@@ -138,11 +138,11 @@ const FilterPanel = ({ products }: filterPanelProps) => {
           <div>
             {isExpandRatings ? (
               <button aria-label="expand-ratings" onClick={handleRatingsToggle}>
-                <Icon icon="charm:plus" fontSize={20} />
+                <FaPlus size={20} />
               </button>
             ) : (
               <button aria-label="minimize-ratings" onClick={handleRatingsToggle}>
-                <Icon icon="charm:minus" fontSize={20} />
+                <FaMinus size={20} />
               </button>
             )}
           </div>

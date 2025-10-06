@@ -52,19 +52,19 @@ export const payOptions: payOptionType[] = [
   {
     payMethod: "Bank Transfer",
     message: "Make Payments using Bank Transfer.",
-    icon: "mdi:bank-transfer",
+    icon: "bankTransfer",
   },
   {
     payMethod: "Card",
     message: "Make Payments with your Credit or Debit Card",
-    icon: "fluent-emoji-flat:credit-card",
+    icon: "creditCard",
   },
 ];
 
 export const userTabData: userTabDataType[] = [
   {
     tab: "My Profile",
-    icon: "ix:user-profile",
+    icon: "profile",
     link: [
       { linkLabel: "Account Information", to: "/account/profile" },
       { linkLabel: "Delivery Address", to: "/account/delivery-addresses" },
@@ -72,12 +72,12 @@ export const userTabData: userTabDataType[] = [
   },
   {
     tab: "My Orders",
-    icon: "ic:twotone-shopping-bag",
+    icon: "shoppingBag",
     link: [{ linkLabel: "Order History", to: "/account/orders" }],
   },
   {
     tab: "Delete Account",
-    icon: "uiw:user-delete",
+    icon: "profileDelete",
     link: [{ linkLabel: "Delete Account", to: "/account/deleteAccount" }],
   },
 ];

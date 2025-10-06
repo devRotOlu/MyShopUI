@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react";
+import { MdCancel } from "react-icons/md";
 
 import { dialogHeaderProps } from "../../types/types";
 import logo from "../../assests/logo_new_2.webp";
@@ -16,7 +16,7 @@ const DialogHeader = ({ children }: dialogHeaderProps) => {
           <img src={logo} alt="App Brand" style={{ width: "100%" }} />
         </div>
         <button aria-label="cancel" onClick={() => setShowModal(false)} className="align-self-end">
-          <Icon icon="mdi:cancel-box" fontSize={30} />
+          <MdCancel size={30} />
         </button>
       </div>
       <div className="px-3 py-2 border-bottom">{children}</div>

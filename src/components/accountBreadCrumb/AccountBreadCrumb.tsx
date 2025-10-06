@@ -1,6 +1,6 @@
 import React from "react";
-import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { FcNext } from "react-icons/fc";
 
 import { accountBreadCrumbProps } from "../../types/types";
 import "./style.css";
@@ -12,11 +12,11 @@ const AccountBreadCrumb = ({ currentLinkLabel }: accountBreadCrumbProps) => {
         <p className="d-flex align-items-center gap-1">
           <span>Home</span>
           <span>
-            <Icon icon="grommet-icons:next" />
+            <FcNext />
           </span>
           <span>My Account</span>
           <span>
-            <Icon icon="grommet-icons:next" />
+            <FcNext />
           </span>
           <span id="current_link_label">{currentLinkLabel}</span>
         </p>

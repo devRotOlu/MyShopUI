@@ -4,6 +4,7 @@ import { MutateOptions, QueryObserverResult, RefetchOptions, UseMutateFunction }
 import { deliveryAddressSchemaType, loginSchemaType } from "./formSchemaTypes";
 import z, { ZodObject, ZodRawShape } from "zod";
 import ProductImage from "../ProductImage";
+import { IconType } from "react-icons";
 
 export type SEO_OptimizerProps = {
   title: string;
@@ -573,10 +574,16 @@ export type MonnifyProps = {
   transactionRef: string;
 };
 
-export type payOptionType = { payMethod: string; message: string; icon: string };
+type basePayOptionType = {
+  payMethod: string;
+  message: string;
+};
+export type payOptionType = basePayOptionType & { icon: string };
 
 export type monnifyPaymentOptionProp = {
-  payOption: payOptionType;
+  payOption: basePayOptionType & {
+    icon: IconType;
+  };
 };
 
 export type bankDetailsType = {
@@ -852,13 +859,17 @@ export type quantityValidatorProps = {
   setValidateQuantity: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type userTabDataType = {
+export type userTabBaseType = {
   tab: string;
-  icon: string;
   link: { linkLabel: string; to: string }[];
 };
+export type userTabDataType = userTabBaseType & {
+  icon: string;
+};
 
-export type TabProps = userTabDataType & {};
+export type TabProps = userTabBaseType & {
+  icon: IconType;
+};
 
 export type profileCardProps = {
   profileIndex: number;
@@ -918,7 +929,7 @@ export type useGetWishlistData = {
 };
 
 export type emptyViewProps = {
-  icon: string;
+  icon: IconType;
   label?: string;
   message: string;
 };

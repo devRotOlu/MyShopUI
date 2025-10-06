@@ -1,6 +1,9 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link } from "react-router-dom";
+import { FaChevronDown } from "react-icons/fa";
+import { MdPersonOutline, MdLogout } from "react-icons/md";
+import { HiOutlineDocumentText } from "react-icons/hi";
+import { AiOutlineHeart } from "react-icons/ai";
 
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
@@ -52,7 +55,7 @@ const AccountDropDown = () => {
     <div className="position-relative" id="account_dropdown" ref={menuRef}>
       <button ref={buttonRef} className="d-flex align-items-center loginTriggerBtn justify-content-center" aria-haspopup="true" aria-expanded={open} onClick={() => setOpen((prev) => !prev)}>
         <span className="text-start text-wrap">My Account</span>
-        <Icon icon="ri:arrow-drop-down-line" style={{ fontSize: "2rem" }} />
+        <FaChevronDown size="2rem" />
       </button>
 
       {/* Dropdown Menu */}
@@ -64,25 +67,25 @@ const AccountDropDown = () => {
           <ol className="p-0 d-flex flex-column m-0">
             <li>
               <Link to="/account/profile" role="menuitem" tabIndex={0}>
-                <Icon icon="et:profile-male" fontSize="1rem" />
+                <MdPersonOutline size="1rem" />
                 <span>My Profile</span>
               </Link>
             </li>
             <li>
               <Link to="/account/orders" role="menuitem" tabIndex={0}>
-                <Icon icon="lsicon:work-order-outline" fontSize="1rem" />
+                <HiOutlineDocumentText size="1rem" />
                 <span>My Orders</span>
               </Link>
             </li>
             <li>
               <Link to="/account/favourites" role="menuitem" tabIndex={0}>
-                <Icon icon="weui:like-outlined" fontSize="1rem" />
+                <AiOutlineHeart size="1rem" />
                 <span>My Saved Items</span>
               </Link>
             </li>
           </ol>
           <button onClick={handLogout} className="d-flex gap-2 align-items-center w-100" role="menuitem">
-            <Icon icon="material-symbols-light:logout" fontSize="1rem" />
+            <MdLogout size="1rem" />
             Log out
           </button>
         </div>

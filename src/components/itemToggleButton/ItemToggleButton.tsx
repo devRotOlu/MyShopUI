@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdRemove, MdAdd } from "react-icons/md";
 
 import { itemToggleButtonProps } from "../../types/types";
 import "./style.css";
@@ -8,11 +8,11 @@ const ItemToggleButton = ({ itemQuantity, handleDecreaseItem, handleIncreaseItem
   return (
     <div id="toggle_items" className="d-flex align-items-center justify-content-between" style={{ borderRadius: "0.15rem", ...styles }}>
       <button aria-label="increase item" onClick={handleDecreaseItem}>
-        <Icon style={{ fontSize: "1.1rem" }} icon="material-symbols:remove" />
+        <MdRemove size="1.1rem" />
       </button>
       <span className="px-3">{itemQuantity}</span>
       <button aria-label="decrease item" onClick={handleIncreaseItem}>
-        <Icon style={{ fontSize: "1.1rem" }} icon="material-symbols:add-2-rounded" />
+        <MdAdd size="1.1rem" />
       </button>
     </div>
   );

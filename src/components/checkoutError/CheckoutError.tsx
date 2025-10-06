@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdCancel } from "react-icons/md";
 
 import CloseTransferBtn from "../checkout/CloseTransferBtn";
 
@@ -11,7 +11,7 @@ const CheckoutError = () => {
       <div className="d-flex flex-column align-items-center gap-3 mb-4 pt-3  px-3">
         <p className="text-danger">OOPS! AN ERROR OCCURRED</p>
         <div>
-          <Icon icon="material-symbols-light:cancel" fontSize="65px" color="red" />
+          <MdCancel size={65} color="red" />
         </div>
         <p className="text-center" style={{ color: "var(--light_Grey)" }}>
           Sorry we could not complete your transaction at this moment

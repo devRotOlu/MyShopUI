@@ -1,12 +1,12 @@
 import React from "react";
 
-import { iconMap } from "../../iconMap";
+import { footerIconMap } from "../../iconMap";
 import { contacts, socials } from "../../data";
 import "./style.css";
 
 const Footer = () => {
   const _contacts = contacts.map(({ contact, channel, icon }, index) => {
-    const IconComponent = iconMap[icon as keyof typeof iconMap];
+    const IconComponent = footerIconMap[icon as keyof typeof footerIconMap];
     return (
       <li key={index} className="d-flex align-items-center gap-3 contact">
         <span className="icon_wrapper bg-white d-flex justify-content-center align-items-center">
@@ -20,7 +20,7 @@ const Footer = () => {
     );
   });
   const _socials = socials.map(({ icon, name }, index) => {
-    const IconComponent = iconMap[icon as keyof typeof iconMap];
+    const IconComponent = footerIconMap[icon as keyof typeof footerIconMap];
     return (
       <li key={index}>
         <a className="icon_wrapper social_icons d-flex justify-content-center align-items-center" key={index} href={`https://${name}.com`}>

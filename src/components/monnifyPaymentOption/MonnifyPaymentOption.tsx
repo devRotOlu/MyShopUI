@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react";
 
 import { monnifyPaymentOptionProp } from "../../types/types";
 import { checkoutContext } from "../checkout/Checkout";
 import "./style.css";
 
 const MonnifyPaymentOption = ({ payOption }: monnifyPaymentOptionProp) => {
-  const { payMethod, message, icon } = payOption;
+  const { payMethod, message, icon: Icon } = payOption;
 
   const { setMonnifyOption } = useContext(checkoutContext);
 
@@ -25,7 +24,7 @@ const MonnifyPaymentOption = ({ payOption }: monnifyPaymentOptionProp) => {
           <span className="text-start fw-light">{message}</span>
         </span>
         <span className="flex-shrink-0">
-          <Icon icon={icon} style={{ fontSize: "2.5rem" }} />
+          <Icon size="2.5rem" />
         </span>
       </button>
     </li>

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdArrowBack, MdClose } from "react-icons/md";
 
 import { appContext } from "../context/AppProvider";
 import { cartContext } from "../context/CartProvider";
@@ -20,19 +22,19 @@ const BrandWrapper = () => {
         <div className="d-md-none">
           {!isHomePage && (
             <button aria-label="back" onClick={() => navigate(-1)}>
-              <Icon icon="ic:baseline-arrow-back" fontSize={22} />
+              <MdArrowBack size={22} />
             </button>
           )}
           {isHomePage && (
             <>
               {modalIndex === 0 && (
                 <button aria-label="open-modal" onClick={() => setModalIndex(1)}>
-                  <Icon icon="formkit:open" fontSize={22} />
+                  <GiHamburgerMenu size={23} />
                 </button>
               )}
               {modalIndex === 1 && (
                 <button aria-label="close-modal" onClick={() => setModalIndex(0)}>
-                  <Icon icon="formkit:close" fontSize={22} />
+                  <MdClose size={22} />
                 </button>
               )}
             </>
@@ -45,7 +47,7 @@ const BrandWrapper = () => {
         </Link>
       </div>
       <Link className="d-md-none position-relative text-dark" to="/cart/overview">
-        <Icon icon="mi-shopping-cart" fontSize={22} />
+        <AiOutlineShoppingCart size={22} />
         <span className="position-absolute top-0 d-flex align-items-center justify-content-center text-white item_count">{cartItemsCount}</span>
       </Link>
     </div>

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { TbHeartOff } from "react-icons/tb";
 
 import BreadCrumb from "../breadCrumb/BreadCrumb";
 import PageWrapper from "../PageWrapper";
@@ -33,7 +34,7 @@ const SavedItems = () => {
     <>
       <SEOEnhanzer title="Saved Items | MyShop Online Shopping" description="All your saved items in one place. Easily add them to cart when you’re ready to buy" robots="noindex, nofollow" />
       <PageWrapper pageId="saved_items">
-        {isEmptyView && <EmptyView icon="mdi:favourite" message="You haven't added any items yet." />}
+        {isEmptyView && <EmptyView icon={TbHeartOff} message="You haven't added any items yet." />}
         {showContent && (
           <div className="align-self-stretch w-100" id="bread_crumb_wrapper">
             <BreadCrumb currentLinkLabel="Saved Items" />

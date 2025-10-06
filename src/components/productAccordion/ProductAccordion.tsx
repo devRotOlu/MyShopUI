@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Icon } from "@iconify/react";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 import { productTabLabels } from "../../data";
 import { productAccordionProps } from "../../types/types";
@@ -13,14 +13,14 @@ const ProductAccordion = ({ ...props }: productAccordionProps) => {
       <li className="w-100 d-flex flex-column gap-2 border-bottom">
         <button className="w-100 d-flex justify-content-between align-items-center p-3" onClick={() => setShowDescription((prevState) => !prevState)}>
           {productTabLabels[0]}
-          <span>{showDescription ? <Icon icon="ep:arrow-down" /> : <Icon icon="ep:arrow-up" />}</span>
+          <span>{showDescription ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}</span>
         </button>
         {showDescription && <div className="px-3">{productDescription}</div>}
       </li>
       <li className="w-100">
         <button className="w-100 d-flex justify-content-between align-items-center p-3" onClick={() => setShowReviews((prevState) => !prevState)}>
           {productTabLabels[1]}
-          <span>{showReviews ? <Icon icon="ep:arrow-down" /> : <Icon icon="ep:arrow-up" />}</span>
+          <span>{showReviews ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}</span>
         </button>
         {showReviews && <div className="px-3 pb-3">{productReviews}</div>}
       </li>

@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useEffect, useRef } from "react";
-import { Icon } from "@iconify/react";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 import { navigationButtonsProps } from "../../types/types";
 import "./style.css";
@@ -60,13 +60,13 @@ const NavigationButtons = <T,>({ params }: navigationButtonsProps<T>) => {
   return (
     <div className="d-flex justify-content-center w-100 align-items-center gap-3" id="navigation_buttons">
       <button disabled={currentPage === firstPage} onClick={handlePreviousBtnClick} className="d-flex align-items-center gap-1 py-1 px-2" id="previous_btn" style={{ color: currentPage !== firstPage ? "black" : "", backgroundColor: currentPage !== firstPage ? "var(--cerebral_grey)" : "" }}>
-        <Icon icon="grommet-icons:form-previous" fontSize={15} />
+        <MdNavigateBefore size={15} />
         Previous
       </button>
       <div>{pageIndicators}</div>
       <button disabled={currentPage === maxPage} className="d-flex align-items-center gap-1 py-1 px-2" id="next_btn" onClick={handleNextBtnClick} style={{ color: currentPage !== maxPage ? "black" : "", backgroundColor: currentPage !== maxPage ? "var(--cerebral_grey)" : "" }}>
         Next
-        <Icon icon="grommet-icons:form-next" fontSize={15} />
+        <MdNavigateNext size={15} />
       </button>
     </div>
   );

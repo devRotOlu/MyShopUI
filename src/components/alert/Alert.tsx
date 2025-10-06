@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { AiOutlineClose } from "react-icons/ai";
 
 import { AlertProp } from "../../types/types.ts";
 import "./style.css";
@@ -16,7 +16,7 @@ const Alert = ({ alertMessage, alertTitle, children, styles }: AlertProp) => {
       </div>
       <div className="d-flex align-items-center justify-content-center">
         <button aria-label="Close alert" onClick={() => handleAlert({ showAlert: false })} className="d-flex">
-          <Icon icon="iconoir:cancel" style={{ fontSize: "30px" }} />
+          <AiOutlineClose size="30px" />
         </button>
       </div>
     </div>

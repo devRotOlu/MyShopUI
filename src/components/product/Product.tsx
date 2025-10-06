@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
+import { BsHeartFill } from "react-icons/bs";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import QuantityValidator from "../quantityValidator/QuantityValidator";
@@ -15,7 +16,6 @@ import { productProps } from "../../types/types";
 import "./style.css";
 import { cartContext } from "../context/CartProvider";
 import { naira } from "../../data";
-import { Icon } from "@iconify/react";
 import { alertContext } from "../context/AlertProvider";
 import { useDeleteWishlist } from "../../customHooks/useDeleteWishlist";
 import { userContext } from "../context/UserProvider";
@@ -158,7 +158,7 @@ const Product = ({ product, children, isWishlistItem }: productProps) => {
                 <SavedItemButton
                   data={{
                     styles: { height: "2.5rem", width: "2.5rem" },
-                    icon: <Icon icon="fluent-mdl2:heart-fill" fontSize="1.2rem" color="white" />,
+                    icon: <BsHeartFill size="1.2rem" color="white" />,
                     showAlert: true,
                     handleAddToWishlist,
                     handleRemoveFromWishlist,

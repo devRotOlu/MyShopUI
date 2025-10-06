@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Icon } from "@iconify/react";
+import { MdStar } from "react-icons/md";
 
 import ProductRatings from "../productRating/ProductRatings";
 import RatingStats from "../ratingStats/RatingStats";
@@ -27,7 +27,7 @@ const ProductReviews = ({ reviews, averageRating: rating }: productReviewsProps)
     .fill(0)
     .map((_, index) => {
       const isMarked = rating >= index + 1;
-      return <Icon color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} icon="material-symbols-light:star" fontSize={20} />;
+      return <MdStar color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} size={20} />;
     });
 
   const _reviews = reviews.map((_review, index) => {

@@ -1,5 +1,5 @@
 import React, { useContext, forwardRef } from "react";
-import { Icon } from "@iconify/react";
+import { MdCheckCircle } from "react-icons/md";
 
 import { checkoutPaymentOptionProps } from "../../types/types";
 import { checkoutContext } from "../checkout/Checkout";
@@ -14,7 +14,7 @@ const CheckoutPaymentOption = forwardRef<HTMLDivElement, checkoutPaymentOptionPr
     <div id="checkout_payment_option" className="">
       <div className="py-2 bg-white border-bottom">
         <h2 className="fs-6 m-0 p-0 d-flex align-items-center">
-          <Icon icon="pixel:check-circle-solid" className="fs-4" color={iconColor} />
+          <MdCheckCircle className="fs-4" color={iconColor} />
           <span className="ms-2">2. Payment Options</span>
         </h2>
       </div>

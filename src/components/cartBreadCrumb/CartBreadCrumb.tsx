@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { MdNavigateNext } from "react-icons/md";
 
 import "./style.css";
 import { naira } from "../../data";
@@ -15,7 +15,7 @@ const CartBreadCrumb = () => {
           <p className="d-flex align-items-center gap-1">
             <span>Home</span>{" "}
             <span>
-              <Icon icon="grommet-icons:next" />
+              <MdNavigateNext />
             </span>
             <span id="current_link_label">Shopping Cart</span>
           </p>

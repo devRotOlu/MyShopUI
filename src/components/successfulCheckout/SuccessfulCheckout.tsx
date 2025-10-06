@@ -1,6 +1,6 @@
 import React from "react";
-import { Icon } from "@iconify/react";
 import { useLocation } from "react-router-dom";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 import SEOEnhanzer from "../../SEOEnhanzer";
 
@@ -18,7 +18,7 @@ const SuccessfulCheckout = () => {
       <main className="vh-100 d-flex justify-content-center align-items-center" id="successful_checkout">
         <div className="d-flex flex-column gap-3">
           <div className="d-flex justify-content-center">
-            <Icon icon="gg:check-o" fontSize="4rem" />
+            <FaRegCheckCircle size="4rem" />
           </div>
           <h1 className="text-center fs-2">Thank you for your order</h1>
           <div className="d-flex justify-content-center">

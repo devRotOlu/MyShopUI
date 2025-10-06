@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { TbPackageOff } from "react-icons/tb";
 
 import PageWrapper from "../PageWrapper";
 import ProductCardSkeleton from "../productCardSkeleton/ProductCardSkeleton";
@@ -67,7 +68,7 @@ const Category = ({ ...props }: categoryProps) => {
             </>
           )}
         </div>
-        {isEmptyView && <EmptyView icon="mdi:package-variant-remove" label="No products available" message="Please check back later or explore other categories." />}
+        {isEmptyView && <EmptyView icon={TbPackageOff} label="No products available" message="Please check back later or explore other categories." />}
       </PageWrapper>
     </>
   );

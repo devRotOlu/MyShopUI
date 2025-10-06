@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
-import { Icon } from "@iconify/react";
 import { useMutation } from "@tanstack/react-query";
+import { MdStar } from "react-icons/md";
 
 import FormButton from "../formButton/FormButton";
 import ComponentOverlay from "../ComponentOverlay.tsx";
@@ -48,7 +48,7 @@ const ProductReview = ({ productId, setShowModal, userReviews }: productReviewPr
       const isMarked = rating >= index + 1;
       return (
         <button aria-label="set-ratings" className="star_icon" key={index} onClick={() => setRating(index + 1)}>
-          <Icon color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} icon="material-symbols-light:star" />
+          <MdStar color={!isMarked ? "var(--cerebral_grey)" : "var(--dark_orange)"} />
         </button>
       );
     });

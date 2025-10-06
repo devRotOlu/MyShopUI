@@ -3,21 +3,23 @@ import React from "react";
 import Tab from "./Tab";
 
 import { userTabData } from "../../data";
+import { accountIconMap } from "../../iconMap";
 import "./style.css";
 
 const AccountTab = () => {
   const tabs = userTabData.map((data, index) => {
     const { icon, tab, link } = data;
+    const IconComponent = accountIconMap[icon as keyof typeof accountIconMap];
     if (userTabData.length - 1 === index) {
       return (
         <div key={index} className="d-flex py-3 pe-md-5 pe-3">
-          <Tab icon={icon} tab={tab} link={link} />
+          <Tab icon={IconComponent} tab={tab} link={link} />
         </div>
       );
     }
     return (
       <div key={index} className="border-bottom border-secondary d-flex gap-2 flex-column py-3 pe-md-5 pe-3">
-        <Tab icon={icon} tab={tab} link={link} />
+        <Tab icon={IconComponent} tab={tab} link={link} />
       </div>
     );
   });

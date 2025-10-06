@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdLanguage } from "react-icons/md";
 
 import { ConfirmationDialogProps } from "../../types/types";
 
@@ -7,7 +7,7 @@ const ConfirmationDialog = ({ setShowModal, handleDeletion }: ConfirmationDialog
   return (
     <div className="d-flex flex-column gap-4 text-white py-3 px-4 rounded" id="delete_confirmation_dialog">
       <div className="d-flex gap-2">
-        <Icon icon="arcticons:emoji-web" />
+        <MdLanguage />
         <p>www.myShop.com</p>
       </div>
       <p>Are you sure you want to delete this address?</p>

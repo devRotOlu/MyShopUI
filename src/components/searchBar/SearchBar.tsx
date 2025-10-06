@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, FocusEvent } from "react";
-import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
+import { MdOutlineSearch } from "react-icons/md";
 
 import "./style.css";
 import { searchProduct } from "../../helperFunctions/dataFetchFunctions";
@@ -40,7 +40,7 @@ const SearchBar = ({ ...props }: searchBarProps) => {
     <form role="search" onSubmit={handleSubmit} className="input-group w-100" id="search_bar">
       <input onMouseDown={(e) => e.stopPropagation()} onFocus={handleFocus} value={userInput} onChange={handleSearch} type="text" className="form-control" placeholder="Search for products, brands, and categories..." aria-label="search bar" aria-describedby="basic-addon2" />
       <button aria-label="search" type="submit" className="input-group-text" id="basic-addon2">
-        <Icon id="search_icon" icon="ic:baseline-search" />
+        <MdOutlineSearch id="search_icon" />
       </button>
     </form>
   );

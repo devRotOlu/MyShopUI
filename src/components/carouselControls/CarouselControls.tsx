@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 
 import { caurouselControlProps } from "../../types/types";
 import "./style.css";
@@ -8,10 +8,10 @@ const CarouselControls = ({ handleOnClickNext, handleOnClickPrevious }: caurouse
   return (
     <div className="d-flex justify-content-between w-100" id="carousel_controls">
       <button onClick={handleOnClickPrevious} aria-label="previous">
-        <Icon icon="ooui:previous-ltr" />
+        <MdOutlineNavigateBefore />
       </button>
       <button aria-label="next" onClick={handleOnClickNext}>
-        <Icon icon="ooui:previous-rtl" />
+        <MdNavigateNext />
       </button>
     </div>
   );

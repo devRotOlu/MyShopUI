@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { MdFavorite, MdCancel } from "react-icons/md";
 
 import ItemToggleButton from "../itemToggleButton/ItemToggleButton";
 import ComponentOverlay from "../ComponentOverlay.tsx";
@@ -56,11 +56,11 @@ const CartCard = ({ item }: cartItemProp) => {
       </div>
       <div className="d-flex gap-2 gap-sm-3 pt-2 w-100 cart_save_remove_btn_wrapper">
         <button className="py-2 d-flex gap-1 justify-content-center align-items-center add_to_wishlist_btn text-muted" onClick={() => handleAddToWishlist()}>
-          <Icon icon="mdi:favourite" fontSize={17} color="var(--cerebral_grey)" />
+          <MdFavorite size={17} color="var(--cerebral_grey)" />
           Save for Later
         </button>
         <button className="py-2 d-flex gap-1 justify-content-center align-items-center remove_btn text-muted" onClick={() => handleDeleteItem()}>
-          <Icon icon="clarity:remove-solid" fontSize={17} color="var(--cerebral_grey)" />
+          <MdCancel size={17} color="var(--cerebral_grey)" />
           Remove item
         </button>
       </div>

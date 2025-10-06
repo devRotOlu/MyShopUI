@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from "react";
-import { Icon } from "@iconify/react";
 import { useNavigate, Link } from "react-router-dom";
+import { MdArrowBack } from "react-icons/md";
+import { BsCartX } from "react-icons/bs";
 
 import CartItem from "../cartItems/CartItem.tsx";
 import CartTable from "../cartTable/CartTable.tsx";
@@ -47,13 +48,13 @@ const Cart = () => {
             <SkeletonPageLoader count={3} />
           </div>
         )}
-        {isEmptyView && <EmptyView icon="mdi:cart-remove" label="Your cart is empty." message="You have not added any item to your cart." />}
+        {isEmptyView && <EmptyView icon={BsCartX} label="Your cart is empty." message="You have not added any item to your cart." />}
         {showContent && (
           <div className="w-100 mb-md-5" id="cart_main_content">
             <CartBreadCrumb />
             <div className="px-sm-3 px-2 ">
               <button id="back_to_shop_btn" onClick={() => navigate(-1)} className="d-flex gap-2 px-3 py-1 align-items-center mb-3 fw-light">
-                <Icon icon="ep:back" />
+                <MdArrowBack />
                 Continue Shopping
               </button>
               <div className="d-flex flex-row gap-xl-5 gap-3 w-100" id="cart_table_wrapper">

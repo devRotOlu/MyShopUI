@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import throttle from "lodash.throttle";
+import { MdArrowForward } from "react-icons/md";
+import { HiFilter } from "react-icons/hi";
+import { TbArrowsSort } from "react-icons/tb";
 
 import { breadCrumbProps } from "../../types/types";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
@@ -44,7 +46,7 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
             <p className="d-flex align-items-center gap-1">
               <span>Home</span>{" "}
               <span>
-                <Icon icon="grommet-icons:next" />
+                <MdArrowForward />
               </span>{" "}
               <span id="current_link_label">{currentLinkLabel}</span>
             </p>
@@ -59,13 +61,13 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
           <div className="d-flex px-5 w-100 py-3">
             <div className="w-50 d-flex justify-content-center">
               <button className="d-flex gap-2" onClick={() => handleFilterModal!()}>
-                <Icon icon="typcn:filter" fontSize="17px" color="var( --dark_wine)" />
+                <HiFilter size={17} color="var( --dark_wine)" />
                 Filter
               </button>
             </div>
             <div className="w-50 d-flex justify-content-center" style={{ borderLeft: "solid thin var( --dark_wine)" }}>
               <button className="d-flex gap-2">
-                <Icon icon="mi:sort" fontSize="17px" color="var( --dark_wine)" />
+                <TbArrowsSort size={17} color="var( --dark_wine)" />
                 Sort
               </button>
             </div>

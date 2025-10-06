@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Icon } from "@iconify/react";
+import { MdOutlinePerson, MdOutlineLocationOn, MdOutlinePhoneEnabled } from "react-icons/md";
 
 import { profileCardProps } from "../../types/types";
 import { deliveryContext } from "../context/DeliveryProfileProvider";
@@ -31,19 +31,19 @@ const ProfileCard = ({ ...props }: profileCardProps) => {
       </div>
       <div className="pt-2 px-1">
         <div className="d-flex gap-2 align-items-center">
-          <Icon icon="iconamoon:profile-thin" color="var(--dark_orange)" />
+          <MdOutlinePerson color="var(--dark_orange)" />
           <p>
             {firstName} {lastName}
           </p>
         </div>
         <div className="mt-3 d-flex gap-2 align-items-center">
-          <Icon icon="ion:location-outline" color="var(--dark_orange)" />
+          <MdOutlineLocationOn color="var(--dark_orange)" />
           <p>
             {streetAddress}, {city}, {state}
           </p>
         </div>
         <div className="mt-3 d-flex gap-2 align-items-center">
-          <Icon icon="lets-icons:phone-light" color="var(--dark_orange)" />
+          <MdOutlinePhoneEnabled color="var(--dark_orange)" />
           <p>{phoneNumber}</p>
         </div>
       </div>
