@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import throttle from "lodash.throttle";
-import { MdArrowForward } from "react-icons/md";
 import { HiFilter } from "react-icons/hi";
 import { TbArrowsSort } from "react-icons/tb";
+import { MdNavigateNext } from "react-icons/md";
 
 import { breadCrumbProps } from "../../types/types";
 import { useCalHeightOnResize } from "../../customHooks/useCalHeightOnResize";
@@ -46,7 +46,7 @@ const BreadCrumb = ({ currentLinkLabel, handleFilterModal, children }: breadCrum
             <p className="d-flex align-items-center gap-1">
               <span>Home</span>{" "}
               <span>
-                <MdArrowForward />
+                <MdNavigateNext size={20} />
               </span>{" "}
               <span id="current_link_label">{currentLinkLabel}</span>
             </p>

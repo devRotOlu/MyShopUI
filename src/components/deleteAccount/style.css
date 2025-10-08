@@ -1,10 +1,6 @@
-/* #delete_account p {
-  font-size: 15px;
-} */
-
-/* #delete_account #content_wrapper {
-  padding: 0 7rem;
-} */
+#delete_account {
+  min-height: 100vh;
+}
 
 #delete_account #signTerms {
   appearance: none;

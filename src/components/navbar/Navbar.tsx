@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { PiShoppingCartSimple } from "react-icons/pi";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import throttle from "lodash.throttle";
 
 import AccountDropDown from "../accountDropdown/AccountDropDown.tsx";
@@ -57,8 +57,8 @@ const Navbar = () => {
             )}
             <div className="py-2">
               <Link to="/cart/overview" className="text-light d-flex align-items-center">
-                <PiShoppingCartSimple />
-                <span className="ms-2 me-5">
+                <AiOutlineShoppingCart size={20} fontWeight="bold" />
+                <span className="ms-2 me-3">
                   My <br />
                   Cart
                 </span>

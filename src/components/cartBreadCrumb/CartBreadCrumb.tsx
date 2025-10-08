@@ -15,7 +15,7 @@ const CartBreadCrumb = () => {
           <p className="d-flex align-items-center gap-1">
             <span>Home</span>{" "}
             <span>
-              <MdNavigateNext />
+              <MdNavigateNext size={20} />
             </span>
             <span id="current_link_label">Shopping Cart</span>
           </p>

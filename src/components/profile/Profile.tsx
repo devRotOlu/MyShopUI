@@ -6,7 +6,7 @@ import TextInput from "../textInput/TextInput";
 import FormButton from "../formButton/FormButton";
 import ComponentOverlay from "../ComponentOverlay.tsx";
 import Loader from "../Loader.tsx";
-import BreadCrumb from "../breadCrumb/BreadCrumb.tsx";
+import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb.tsx";
 import SkeletonPageLoader from "../SkeletonPageLoader.tsx";
 import ValidationError from "../validationError/ValidationError.tsx";
 import AccountTab from "../dashboard/AccountTab.tsx";
@@ -92,7 +92,7 @@ const Profile = () => {
         {!isAuthenticating && !isValidatingToken && (
           <>
             <div className="d-md-block d-none w-100">
-              <BreadCrumb currentLinkLabel="Account Information" />
+              <AccountBreadCrumb currentLinkLabel="Account Information" route="/account/profile" />
             </div>
             <div className="d-flex flex-sm-row flex-column justify-content-center gap-lg-4 gap-3 pb-sm-5 px-md-3 px-0">
               <AccountTab />

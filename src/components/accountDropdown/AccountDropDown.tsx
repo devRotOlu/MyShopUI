@@ -54,8 +54,7 @@ const AccountDropDown = () => {
   return (
     <div className="position-relative" id="account_dropdown" ref={menuRef}>
       <button ref={buttonRef} className="d-flex align-items-center loginTriggerBtn justify-content-center" aria-haspopup="true" aria-expanded={open} onClick={() => setOpen((prev) => !prev)}>
-        <span className="text-start text-wrap">My Account</span>
-        <FaChevronDown size="2rem" />
+        <span className="text-start text-wrap me-1">My Account</span> <FaChevronDown />
       </button>
 
       {/* Dropdown Menu */}

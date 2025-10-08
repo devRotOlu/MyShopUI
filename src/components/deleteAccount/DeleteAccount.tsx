@@ -5,6 +5,7 @@ import PageWrapper from "../PageWrapper";
 import ComponentOverlay from "../ComponentOverlay.tsx";
 import Loader from "../Loader.tsx";
 import SEOEnhanzer from "../../SEOEnhanzer.tsx";
+import AccountBreadCrumb from "../accountBreadCrumb/AccountBreadCrumb.tsx";
 
 import { userContext } from "../context/UserProvider.tsx";
 import "./style.css";
@@ -17,7 +18,10 @@ const DeleteAccount = () => {
     <>
       <SEOEnhanzer title="Delete Account | MyShop Online Shopping" description="Permanently delete your MyShop account and personal data" robots="noindex, nofollow" />
       <PageWrapper pageId="delete_account">
-        <div className="d-flex justify-content-center gap-3 py-sm-5 w-100">
+        <div className="d-md-block d-none w-100">
+          <AccountBreadCrumb currentLinkLabel="Delete Account" route="/account/deleteAccount" />
+        </div>
+        <div className="d-flex justify-content-center gap-3  w-100 pb-sm-5">
           <AccountTab />
           <div className="bg-white d-flex align-items-sm-center justify-content-center rounded pb-sm-0 pb-5" id="content_wrapper">
             <div className="d-flex flex-column gap-5 pt-sm-0 pt-3">

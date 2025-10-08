@@ -76,9 +76,9 @@ const Orders = () => {
       <SEOEnhanzer title="Account Orders | MyShop Online Shopping" description="View your past orders and track current purchases" robots="noindex, nofollow" />
       <PageWrapper pageId="orders">
         <div className="w-100">
-          <AccountBreadCrumb currentLinkLabel="Account Orders" />
+          <AccountBreadCrumb currentLinkLabel="Account Orders" route="/account/orders" />
         </div>
-        <div className="d-flex justify-content-center gap-md-4 gap-3 w-100 pb-sm-5 pb-sm-5 px-md-3 px-sm-2 px-0">
+        <div className="d-flex justify-content-center gap-md-4 gap-3 w-100 pb-sm-5 px-md-3 px-sm-2 px-0">
           <AccountTab />
           <div id="page_content" className="bg-white">
             {!displayOrderHistory && <OrderList orders={orders}>{activeOrders}</OrderList>}

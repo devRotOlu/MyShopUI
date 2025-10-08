@@ -15,6 +15,9 @@ const CategoryList = () => {
   const { data, isSuccess } = useQuery({
     queryKey: ["product_categories"],
     queryFn: getCategories,
+    refetchOnMount: false,
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -23,6 +26,8 @@ const CategoryList = () => {
       setCategories(categories);
     }
   }, [isSuccess, data]);
+
+  if (!isSuccess) return null;
 
   const _categoryLinks = categories.map(({ name, id }) => {
     let link = name.replace(regex, "-");

@@ -773,6 +773,7 @@ export type productRatingsProps = {
 
 export type accountBreadCrumbProps = {
   currentLinkLabel: string;
+  route?: string;
 };
 
 export type breadCrumbProps = accountBreadCrumbProps & {

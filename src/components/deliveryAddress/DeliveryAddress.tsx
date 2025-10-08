@@ -64,7 +64,7 @@ const DeliveryAddress = () => {
       <SEOEnhanzer title="Delivery Addresses | MyShop Online Shopping" description="View, add, or update your delivery addresses for faster checkout" robots="noindex, nofollow" />
       <PageWrapper pageId="delivery_page">
         <div className="w-100">
-          <AccountBreadCrumb currentLinkLabel="Delivery Addresses" />
+          <AccountBreadCrumb currentLinkLabel="Delivery Addresses" route="/account/delivery-addresses" />
         </div>
         <div className="d-flex justify-content-center gap-md-4 gap-3 w-100 pb-sm-5 pb-0 px-sm-3 px-0">
           <AccountTab />
