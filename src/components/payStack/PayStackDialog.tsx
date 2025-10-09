@@ -51,7 +51,14 @@ const PayStackDialog = () => {
 
   return (
     <div className="w-100 h-100  d-flex justify-content-center align-items-center" id="paystack_dialog">
-      {isFetching && <Loader color="white" />}
+      {isFetching && (
+        <div tabIndex={0}>
+          <Loader color="white" />
+          <button style={{ opacity: 0, position: "absolute" }} tabIndex={0} aria-hidden="true">
+            Hidden Focus Trap
+          </button>
+        </div>
+      )}
       {!isFetching && (
         <div id="payment_wrapper" className="bg-white">
           <DialogHeader>
